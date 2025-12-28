@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -6,38 +15,57 @@
         "slide-1": {
           "type": "slide",
           "settings": {
-            "heading": "All things floral"
+            "image": "shopify://shop_images/hero-banner.jpg",
+            "subheading": "",
+            "heading": "All things floral",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary"
           }
         },
         "slide-2": {
           "type": "slide",
           "settings": {
-            "heading": "Elegant arrangements"
+            "image": "shopify://shop_images/hero-banner-2.jpg",
+            "subheading": "",
+            "heading": "All things floral",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "secondary"
           }
         }
       },
-      "block_order": ["slide-1", "slide-2"],
+      "block_order": [
+        "slide-1",
+        "slide-2"
+      ],
       "settings": {
         "height": "100",
         "content_position": "center",
+        "content_max_width": 800,
         "overlay_opacity": 30,
         "enable_parallax": true,
         "autoplay": true,
         "autoplay_speed": 5,
         "show_navigation": true,
         "left_link_label": "Artwork",
+        "left_link_url": "",
         "right_link_label": "Shop",
+        "right_link_url": "",
         "color_scheme": "scheme-1"
       }
     },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {
+        "subheading": "",
         "heading": "Thoughtful Gifts & Floral Creations",
         "description": "Discover our curated selection of blooms and hand-made objects, from locally crafted ceramics to candles and keepsakes sourced from artists around the world.",
+        "collection": "",
         "products_to_show": 4,
         "columns": 4,
         "gap": 24,
+        "show_vendor": false,
         "show_view_all": true,
         "view_all_label": "Explore the shop",
         "color_scheme": "scheme-1"
@@ -50,6 +78,8 @@
           "type": "collection_link",
           "settings": {
             "title": "Bury Me West",
+            "link": "",
+            "open_new_tab": false,
             "show_product": true,
             "product_title": "One of a kind stoneware planter",
             "product_price": "$200.00 USD",
@@ -59,13 +89,21 @@
         "link-2": {
           "type": "collection_link",
           "settings": {
-            "title": "Elizabeth Hooper Studio"
+            "title": "Elizabeth Hooper Studio",
+            "link": "",
+            "open_new_tab": false,
+            "show_product": false,
+            "product_title": "",
+            "product_price": "",
+            "show_add_to_cart": true
           }
         },
         "link-3": {
           "type": "collection_link",
           "settings": {
             "title": "Chase Gamblin",
+            "link": "",
+            "open_new_tab": false,
             "show_product": true,
             "product_title": "Multicolored Lamp",
             "product_price": "$3,588.00 USD",
@@ -73,7 +111,11 @@
           }
         }
       },
-      "block_order": ["link-1", "link-2", "link-3"],
+      "block_order": [
+        "link-1",
+        "link-2",
+        "link-3"
+      ],
       "settings": {}
     },
     "workshops": {
@@ -98,7 +140,10 @@
           }
         }
       },
-      "block_order": ["workshop-1", "workshop-2"],
+      "block_order": [
+        "workshop-1",
+        "workshop-2"
+      ],
       "settings": {
         "heading": "Workshops",
         "autoplay": true,
@@ -110,24 +155,33 @@
       "type": "image-with-text",
       "blocks": {
         "logo-1": {
-          "type": "logo"
+          "type": "logo",
+          "settings": {}
         },
         "logo-2": {
-          "type": "logo"
+          "type": "logo",
+          "settings": {}
         },
         "logo-3": {
-          "type": "logo"
+          "type": "logo",
+          "settings": {}
         }
       },
-      "block_order": ["logo-1", "logo-2", "logo-3"],
+      "block_order": [
+        "logo-1",
+        "logo-2",
+        "logo-3"
+      ],
       "settings": {
+        "caption": "Your support helps us bring beauty, healing, and hope to those who need it most.",
+        "image_width": 50,
+        "layout": "image-left",
+        "subheading": "",
         "heading": "Back to the Roots",
         "text": "<p><strong>Back to the Roots</strong> is a floral arrangement workshop born from a micro grant awarded to Patricio Rivera by the <strong>City of Dallas Office of Culture and Arts</strong>, benefiting <strong>Vogel Alcove</strong>.</p><p>This experience will be offered to ten <strong>parents experiencing homelessness</strong>, creating a safe space to reconnect with nature, creativity, and community.</p><p>To expand this initiative and reach more families, we've received <strong>fiscal sponsorship</strong> from Fractured Atlas to collect fully tax-deductible donations.</p>",
-        "caption": "Your support helps us bring beauty, healing, and hope to those who need it most.",
         "button_label": "Get directions",
+        "button_link": "",
         "button_style": "link",
-        "layout": "image-left",
-        "image_width": 50,
         "show_logos": true,
         "color_scheme": "scheme-3"
       }
@@ -141,4 +195,3 @@
     "community"
   ]
 }
-
