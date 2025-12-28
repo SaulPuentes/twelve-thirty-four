@@ -3,11 +3,10 @@
     "main": {
       "type": "main-cart",
       "settings": {
-        "show_vendor": false,
-        "color_scheme": "scheme-1"
+        "show_cart_note": true,
+        "show_dynamic_checkout": true
       }
     }
   },
   "order": ["main"]
 }
-

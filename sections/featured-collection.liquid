@@ -29,7 +29,7 @@
         {%- endif -%}
       </div>
 
-      {%- if section.settings.show_view_all and collection.all_products_count > products_to_show -%}
+      {%- if section.settings.show_view_all and collection != blank and collection.all_products_count > products_to_show -%}
         <a href="{{ collection.url }}" class="featured-collection__view-all">
           <span class="featured-collection__arrow">→</span>
           <span>{{ section.settings.view_all_label | default: 'Explore the shop' }}</span>

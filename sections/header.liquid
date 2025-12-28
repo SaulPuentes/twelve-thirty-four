@@ -92,12 +92,17 @@
         </a>
       {%- endif -%}
 
-      <a href="{{ routes.cart_url }}" class="header__action header__cart" aria-label="{{ 'accessibility.cart' | t }}" data-cart-toggle>
+      <button
+        type="button"
+        class="header__action header__cart"
+        aria-label="{{ 'accessibility.cart' | t }}"
+        data-cart-toggle
+      >
         {% render 'icon', icon: 'cart', size: 20 %}
         <span class="header__cart-count{% if cart.item_count == 0 %} hidden{% endif %}" data-cart-count>
           {{ cart.item_count }}
         </span>
-      </a>
+      </button>
     </div>
   </div>
 </header>
@@ -181,10 +186,15 @@
     }
 
     // Cart drawer toggle
-    if (cartToggle && cartDrawer) {
+    if (cartToggle) {
       cartToggle.addEventListener('click', function(e) {
         e.preventDefault();
-        cartDrawer.open();
+        const drawer = document.querySelector('cart-drawer');
+        if (drawer) {
+          drawer.open();
+        } else {
+          window.location.href = '{{ routes.cart_url }}';
+        }
       });
     }
   });
