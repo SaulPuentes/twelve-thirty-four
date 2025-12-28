@@ -8,7 +8,7 @@
 
 <section
   id="Hero-{{ section.id }}"
-  class="hero-slideshow color-{{ section.settings.color_scheme }}"
+  class="hero-slideshow color-{{ section.settings.color_scheme }} hero-slideshow--text-{{ section.settings.text_color }}"
   data-hero-slideshow
   style="
     --hero-height: {{ section.settings.height }}vh;
@@ -416,6 +416,73 @@
       padding: 0 1rem;
     }
   }
+
+  /* Text color variants */
+  .hero-slideshow--text-white {
+    color: #ffffff;
+  }
+
+  .hero-slideshow--text-white .hero-slideshow__subheading,
+  .hero-slideshow--text-white .hero-slideshow__heading,
+  .hero-slideshow--text-white .hero-slideshow__side-link,
+  .hero-slideshow--text-white .hero-slideshow__nav-dot {
+    color: #ffffff;
+  }
+
+  .hero-slideshow--text-white .button--primary {
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
+  }
+
+  .hero-slideshow--text-white .button--primary:hover {
+    background-color: transparent;
+    color: #ffffff;
+  }
+
+  .hero-slideshow--text-white .button--secondary {
+    background-color: transparent;
+    color: #ffffff;
+    border-color: #ffffff;
+  }
+
+  .hero-slideshow--text-white .button--secondary:hover {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  .hero-slideshow--text-black {
+    color: #000000;
+  }
+
+  .hero-slideshow--text-black .hero-slideshow__subheading,
+  .hero-slideshow--text-black .hero-slideshow__heading,
+  .hero-slideshow--text-black .hero-slideshow__side-link,
+  .hero-slideshow--text-black .hero-slideshow__nav-dot {
+    color: #000000;
+  }
+
+  .hero-slideshow--text-black .button--primary {
+    background-color: #000000;
+    color: #ffffff;
+    border-color: #000000;
+  }
+
+  .hero-slideshow--text-black .button--primary:hover {
+    background-color: transparent;
+    color: #000000;
+  }
+
+  .hero-slideshow--text-black .button--secondary {
+    background-color: transparent;
+    color: #000000;
+    border-color: #000000;
+  }
+
+  .hero-slideshow--text-black .button--secondary:hover {
+    background-color: #000000;
+    color: #ffffff;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -465,6 +532,16 @@
       "step": 5,
       "unit": "%",
       "default": 30
+    },
+    {
+      "type": "select",
+      "id": "text_color",
+      "label": "Text and links color",
+      "options": [
+        { "value": "white", "label": "White" },
+        { "value": "black", "label": "Black" }
+      ],
+      "default": "white"
     },
     {
       "type": "checkbox",
