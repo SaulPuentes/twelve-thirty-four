@@ -271,6 +271,46 @@
     ]
   },
   {
+    "name": "Popups & Overlays",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "popover_color_scheme",
+        "label": "Popover color scheme",
+        "default": "scheme-1"
+      },
+      {
+        "type": "color_scheme",
+        "id": "drawer_color_scheme",
+        "label": "Drawer color scheme",
+        "default": "scheme-1"
+      },
+      {
+        "type": "color_scheme",
+        "id": "quick_add_color_scheme",
+        "label": "Quick add color scheme",
+        "default": "scheme-1"
+      }
+    ]
+  },
+  {
+    "name": "Badges",
+    "settings": [
+      {
+        "type": "color_scheme",
+        "id": "badge_sale_color_scheme",
+        "label": "Sale badge color scheme",
+        "default": "scheme-1"
+      },
+      {
+        "type": "color_scheme",
+        "id": "badge_sold_out_color_scheme",
+        "label": "Sold out badge color scheme",
+        "default": "scheme-2"
+      }
+    ]
+  },
+  {
     "name": "Social Media",
     "settings": [
       {
