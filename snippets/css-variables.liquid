@@ -64,13 +64,16 @@
       --color-background: {{ scheme.last.settings.background }};
       --color-foreground: {{ scheme.last.settings.foreground }};
       --color-foreground-heading: {{ scheme.last.settings.foreground_heading }};
-      --color-accent: {{ scheme.last.settings.accent }};
+      --color-primary: {{ scheme.last.settings.primary }};
+      --color-accent: {{ scheme.last.settings.primary }};
       --color-border: {{ scheme.last.settings.border }};
-      --color-button-background: {{ scheme.last.settings.button_background }};
-      --color-button-text: {{ scheme.last.settings.button_text }};
-      --color-button-secondary-background: {{ scheme.last.settings.button_secondary_background }};
-      --color-button-secondary-text: {{ scheme.last.settings.button_secondary_text }};
-      --color-button-secondary-border: {{ scheme.last.settings.button_secondary_border }};
+      --color-shadow: {{ scheme.last.settings.shadow }};
+      --color-button-background: {{ scheme.last.settings.primary_button_background }};
+      --color-button-text: {{ scheme.last.settings.primary_button_text }};
+      --color-button-border: {{ scheme.last.settings.primary_button_border }};
+      --color-button-secondary-background: {{ scheme.last.settings.secondary_button_background }};
+      --color-button-secondary-text: {{ scheme.last.settings.secondary_button_text }};
+      --color-button-secondary-border: {{ scheme.last.settings.secondary_button_border }};
 
       background-color: var(--color-background);
       color: var(--color-foreground);

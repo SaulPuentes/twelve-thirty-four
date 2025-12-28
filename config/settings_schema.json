@@ -75,8 +75,8 @@
           },
           {
             "type": "color",
-            "id": "accent",
-            "label": "Accent",
+            "id": "primary",
+            "label": "Primary / Links",
             "default": "#B76A6A"
           },
           {
@@ -86,50 +86,67 @@
             "default": "#DDDDDD"
           },
           {
+            "type": "color",
+            "id": "shadow",
+            "label": "Shadow",
+            "default": "#000000"
+          },
+          {
             "type": "header",
-            "content": "Buttons"
+            "content": "Primary button"
           },
           {
             "type": "color",
-            "id": "button_background",
-            "label": "Primary button background",
+            "id": "primary_button_background",
+            "label": "Background",
             "default": "#111111"
           },
           {
             "type": "color",
-            "id": "button_text",
-            "label": "Primary button text",
+            "id": "primary_button_text",
+            "label": "Text",
             "default": "#FFFFFF"
           },
           {
             "type": "color",
-            "id": "button_secondary_background",
-            "label": "Secondary button background",
-            "default": "transparent"
+            "id": "primary_button_border",
+            "label": "Border",
+            "default": "#111111"
+          },
+          {
+            "type": "header",
+            "content": "Secondary button"
           },
           {
             "type": "color",
-            "id": "button_secondary_text",
-            "label": "Secondary button text",
+            "id": "secondary_button_background",
+            "label": "Background",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "secondary_button_text",
+            "label": "Text",
             "default": "#111111"
           },
           {
             "type": "color",
-            "id": "button_secondary_border",
-            "label": "Secondary button border",
+            "id": "secondary_button_border",
+            "label": "Border",
             "default": "#111111"
           }
         ],
         "role": {
           "text": "foreground",
           "background": "background",
-          "links": "accent",
+          "links": "primary",
           "icons": "foreground",
-          "primary_button": "button_background",
-          "on_primary_button": "button_text",
-          "secondary_button": "button_secondary_background",
-          "on_secondary_button": "button_secondary_text",
-          "secondary_button_border": "button_secondary_border"
+          "primary_button": "primary_button_background",
+          "on_primary_button": "primary_button_text",
+          "primary_button_border": "primary_button_border",
+          "secondary_button": "secondary_button_background",
+          "on_secondary_button": "secondary_button_text",
+          "secondary_button_border": "secondary_button_border"
         }
       }
     ]

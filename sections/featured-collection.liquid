@@ -1,6 +1,6 @@
 {%- liquid
   assign collection = collections[section.settings.collection]
-  assign products_to_show = section.settings.products_to_show
+  assign products_to_show = section.settings.products_to_show | plus: 0
   assign columns = section.settings.columns
 -%}
 
