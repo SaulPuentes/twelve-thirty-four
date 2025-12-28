@@ -1,0 +1,96 @@
+{%- comment -%}
+  Product Recommendations Section
+  Displays related products based on Shopify's recommendation engine
+{%- endcomment -%}
+
+<section class="product-recommendations section-spacing">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="product-recommendations__heading h3">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    <product-recommendations
+      class="product-recommendations__grid"
+      data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.products_to_show }}"
+    >
+      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+        <div class="product-grid">
+          {%- for product in recommendations.products -%}
+            <div class="product-grid__item">
+              {%- render 'product-card', product: product -%}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </product-recommendations>
+  </div>
+</section>
+
+<style>
+  .product-recommendations__heading {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .product-recommendations .product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-recommendations .product-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+
+<script>
+  class ProductRecommendations extends HTMLElement {
+    connectedCallback() {
+      const url = this.dataset.url;
+      if (!url) return;
+
+      fetch(url)
+        .then(response => response.text())
+        .then(text => {
+          const html = new DOMParser().parseFromString(text, 'text/html');
+          const recommendations = html.querySelector('product-recommendations');
+          if (recommendations && recommendations.innerHTML.trim().length) {
+            this.innerHTML = recommendations.innerHTML;
+          }
+        })
+        .catch(e => console.error('Error loading recommendations:', e));
+    }
+  }
+
+  customElements.define('product-recommendations', ProductRecommendations);
+</script>
+
+{% schema %}
+{
+  "name": "Product recommendations",
+  "tag": "section",
+  "class": "section-product-recommendations",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You may also like"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "label": "Products to show"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,32 @@
+{%- comment -%}
+  Scripts Snippet
+  Loads all required JavaScript files for the theme
+{%- endcomment -%}
+
+{%- comment -%} Global JavaScript {%- endcomment -%}
+<script src="{{ 'global.js' | asset_url }}" defer></script>
+
+{%- comment -%} Hero Slideshow (only on pages with hero) {%- endcomment -%}
+{%- if template == 'index' -%}
+  <script src="{{ 'hero-slideshow.js' | asset_url }}" defer></script>
+{%- endif -%}
+
+{%- comment -%} Expose routes and settings to JS {%- endcomment -%}
+<script>
+  window.Shopify = window.Shopify || {};
+  window.Shopify.routes = {
+    root: '{{ routes.root_url }}',
+    cart: '{{ routes.cart_url }}',
+    cart_add: '{{ routes.cart_add_url }}',
+    cart_change: '{{ routes.cart_change_url }}',
+    cart_update: '{{ routes.cart_update_url }}',
+    search: '{{ routes.search_url }}',
+    predictive_search: '{{ routes.predictive_search_url }}'
+  };
+  window.Shopify.currency = {
+    active: '{{ cart.currency.iso_code }}',
+    rate: {{ cart.currency.rate }}
+  };
+  window.Shopify.locale = '{{ request.locale.iso_code }}';
+</script>
+

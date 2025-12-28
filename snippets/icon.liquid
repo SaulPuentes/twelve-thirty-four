@@ -1,0 +1,105 @@
+{%- comment -%}
+  Renders an icon with SVG.
+  
+  Accepts:
+  - icon: {String} The icon name (required)
+  - size: {Number} Icon size in pixels (default: 24)
+  - class: {String} Additional CSS classes
+  
+  Usage:
+  {% render 'icon', icon: 'cart', size: 20, class: 'icon-class' %}
+{%- endcomment -%}
+
+{%- liquid
+  assign icon_size = size | default: 24
+  assign icon_class = class | default: ''
+-%}
+
+<svg
+  class="icon icon-{{ icon }} {{ icon_class }}"
+  width="{{ icon_size }}"
+  height="{{ icon_size }}"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  {%- case icon -%}
+    {%- when 'menu' -%}
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+
+    {%- when 'close' -%}
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+
+    {%- when 'cart' -%}
+      <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <path d="M16 10a4 4 0 0 1-8 0"></path>
+
+    {%- when 'search' -%}
+      <circle cx="11" cy="11" r="7"></circle>
+      <path d="m20 20-4.35-4.35"></path>
+
+    {%- when 'account' -%}
+      <circle cx="12" cy="8" r="4"></circle>
+      <path d="M20 21c0-4.418-3.582-8-8-8s-8 3.582-8 8"></path>
+
+    {%- when 'arrow-right' -%}
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
+
+    {%- when 'arrow-left' -%}
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+
+    {%- when 'chevron-right' -%}
+      <polyline points="9 18 15 12 9 6"></polyline>
+
+    {%- when 'chevron-left' -%}
+      <polyline points="15 18 9 12 15 6"></polyline>
+
+    {%- when 'chevron-down' -%}
+      <polyline points="6 9 12 15 18 9"></polyline>
+
+    {%- when 'chevron-up' -%}
+      <polyline points="18 15 12 9 6 15"></polyline>
+
+    {%- when 'plus' -%}
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+
+    {%- when 'minus' -%}
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+
+    {%- when 'instagram' -%}
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+
+    {%- when 'facebook' -%}
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+
+    {%- when 'pinterest' -%}
+      <circle cx="12" cy="12" r="10"></circle>
+      <path d="M8 12c0-4 2-6 4-6s4 2 4 6-2 8-4 8c-1 0-2-1-2-1"></path>
+      <path d="M10 18l1-4"></path>
+
+    {%- when 'tiktok' -%}
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path>
+
+    {%- when 'twitter' -%}
+      <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+
+    {%- when 'mail' -%}
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+      <polyline points="22,6 12,13 2,6"></polyline>
+
+  {%- endcase -%}
+</svg>
+

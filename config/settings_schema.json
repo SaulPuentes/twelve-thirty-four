@@ -1,0 +1,296 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Twelve Thirty Four",
+    "theme_version": "1.0.0",
+    "theme_author": "Twelve Thirty Four Studio",
+    "theme_documentation_url": "https://twelvethirtyfour.com/docs",
+    "theme_support_url": "https://twelvethirtyfour.com/support"
+  },
+  {
+    "name": "Logo & Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo_inverse",
+        "label": "Logo (light version)",
+        "info": "Used on dark backgrounds or transparent headers"
+      },
+      {
+        "type": "range",
+        "id": "logo_height",
+        "label": "Logo height (desktop)",
+        "min": 20,
+        "max": 100,
+        "step": 2,
+        "unit": "px",
+        "default": 40
+      },
+      {
+        "type": "range",
+        "id": "logo_height_mobile",
+        "label": "Logo height (mobile)",
+        "min": 16,
+        "max": 80,
+        "step": 2,
+        "unit": "px",
+        "default": 32
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color_scheme_group",
+        "id": "color_schemes",
+        "definition": [
+          {
+            "type": "color",
+            "id": "background",
+            "label": "Background",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "foreground",
+            "label": "Text",
+            "default": "#111111"
+          },
+          {
+            "type": "color",
+            "id": "foreground_heading",
+            "label": "Headings",
+            "default": "#111111"
+          },
+          {
+            "type": "color",
+            "id": "accent",
+            "label": "Accent",
+            "default": "#B76A6A"
+          },
+          {
+            "type": "color",
+            "id": "border",
+            "label": "Border",
+            "default": "#DDDDDD"
+          },
+          {
+            "type": "header",
+            "content": "Buttons"
+          },
+          {
+            "type": "color",
+            "id": "button_background",
+            "label": "Primary button background",
+            "default": "#111111"
+          },
+          {
+            "type": "color",
+            "id": "button_text",
+            "label": "Primary button text",
+            "default": "#FFFFFF"
+          },
+          {
+            "type": "color",
+            "id": "button_secondary_background",
+            "label": "Secondary button background",
+            "default": "transparent"
+          },
+          {
+            "type": "color",
+            "id": "button_secondary_text",
+            "label": "Secondary button text",
+            "default": "#111111"
+          },
+          {
+            "type": "color",
+            "id": "button_secondary_border",
+            "label": "Secondary button border",
+            "default": "#111111"
+          }
+        ],
+        "role": {
+          "text": "foreground",
+          "background": "background",
+          "links": "accent",
+          "icons": "foreground",
+          "primary_button": "button_background",
+          "on_primary_button": "button_text",
+          "secondary_button": "button_secondary_background",
+          "on_secondary_button": "button_secondary_text",
+          "secondary_button_border": "button_secondary_border"
+        }
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Fonts"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "default": "inter_n4",
+        "label": "Body font"
+      },
+      {
+        "type": "font_picker",
+        "id": "type_heading_font",
+        "default": "literata_n4",
+        "label": "Heading font"
+      },
+      {
+        "type": "header",
+        "content": "Font sizes"
+      },
+      {
+        "type": "select",
+        "id": "body_font_size",
+        "label": "Body text size",
+        "options": [
+          { "value": "14", "label": "14px" },
+          { "value": "16", "label": "16px" },
+          { "value": "18", "label": "18px" }
+        ],
+        "default": "16"
+      },
+      {
+        "type": "select",
+        "id": "heading_scale",
+        "label": "Heading scale",
+        "options": [
+          { "value": "small", "label": "Small" },
+          { "value": "medium", "label": "Medium" },
+          { "value": "large", "label": "Large" }
+        ],
+        "default": "medium"
+      }
+    ]
+  },
+  {
+    "name": "Layout",
+    "settings": [
+      {
+        "type": "select",
+        "id": "page_width",
+        "label": "Page width",
+        "options": [
+          { "value": "1200", "label": "Narrow (1200px)" },
+          { "value": "1400", "label": "Standard (1400px)" },
+          { "value": "1600", "label": "Wide (1600px)" }
+        ],
+        "default": "1400"
+      },
+      {
+        "type": "range",
+        "id": "section_spacing",
+        "label": "Space between sections",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "default": 48
+      }
+    ]
+  },
+  {
+    "name": "Buttons",
+    "settings": [
+      {
+        "type": "range",
+        "id": "button_border_radius",
+        "label": "Button corner radius",
+        "min": 0,
+        "max": 40,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "select",
+        "id": "button_style",
+        "label": "Button style",
+        "options": [
+          { "value": "solid", "label": "Solid" },
+          { "value": "outline", "label": "Outline" }
+        ],
+        "default": "solid"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "Cart type",
+        "options": [
+          { "value": "drawer", "label": "Drawer" },
+          { "value": "page", "label": "Page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_cart_note",
+        "label": "Enable cart note",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram",
+        "info": "https://instagram.com/shopname"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook",
+        "info": "https://facebook.com/shopname"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest",
+        "info": "https://pinterest.com/shopname"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok",
+        "info": "https://tiktok.com/@shopname"
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "Twitter / X",
+        "info": "https://twitter.com/shopname"
+      }
+    ]
+  }
+]
+

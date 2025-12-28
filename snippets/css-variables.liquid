@@ -1,0 +1,89 @@
+<style>
+  :root {
+    /* Typography */
+    --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
+    --font-body-style: {{ settings.type_body_font.style }};
+    --font-body-weight: {{ settings.type_body_font.weight }};
+
+    --font-heading-family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
+    --font-heading-style: {{ settings.type_heading_font.style }};
+    --font-heading-weight: {{ settings.type_heading_font.weight }};
+
+    --font-size-base: {{ settings.body_font_size }}px;
+
+    /* Heading Scale */
+    {%- case settings.heading_scale -%}
+      {%- when 'small' -%}
+        --font-size-h1: 2.5rem;
+        --font-size-h2: 2rem;
+        --font-size-h3: 1.5rem;
+        --font-size-h4: 1.25rem;
+        --font-size-h5: 1.125rem;
+        --font-size-h6: 1rem;
+      {%- when 'medium' -%}
+        --font-size-h1: 3.5rem;
+        --font-size-h2: 2.5rem;
+        --font-size-h3: 2rem;
+        --font-size-h4: 1.5rem;
+        --font-size-h5: 1.25rem;
+        --font-size-h6: 1rem;
+      {%- when 'large' -%}
+        --font-size-h1: 4.5rem;
+        --font-size-h2: 3.5rem;
+        --font-size-h3: 2.5rem;
+        --font-size-h4: 2rem;
+        --font-size-h5: 1.5rem;
+        --font-size-h6: 1.25rem;
+    {%- endcase -%}
+
+    /* Layout */
+    --page-width: {{ settings.page_width }}px;
+    --section-spacing: {{ settings.section_spacing }}px;
+    --page-margin: 2rem;
+    --page-margin-mobile: 1.5rem;
+
+    /* Buttons */
+    --button-border-radius: {{ settings.button_border_radius }}px;
+
+    /* Animation */
+    --animation-speed: 300ms;
+    --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media screen and (max-width: 749px) {
+    :root {
+      --font-size-h1: clamp(2rem, 8vw, 3rem);
+      --font-size-h2: clamp(1.75rem, 6vw, 2.5rem);
+      --font-size-h3: clamp(1.5rem, 5vw, 2rem);
+    }
+  }
+
+  /* Color Scheme Variables */
+  {% for scheme in settings.color_schemes %}
+    .color-{{ scheme.first }} {
+      --color-background: {{ scheme.last.settings.background }};
+      --color-foreground: {{ scheme.last.settings.foreground }};
+      --color-foreground-heading: {{ scheme.last.settings.foreground_heading }};
+      --color-accent: {{ scheme.last.settings.accent }};
+      --color-border: {{ scheme.last.settings.border }};
+      --color-button-background: {{ scheme.last.settings.button_background }};
+      --color-button-text: {{ scheme.last.settings.button_text }};
+      --color-button-secondary-background: {{ scheme.last.settings.button_secondary_background }};
+      --color-button-secondary-text: {{ scheme.last.settings.button_secondary_text }};
+      --color-button-secondary-border: {{ scheme.last.settings.button_secondary_border }};
+
+      background-color: var(--color-background);
+      color: var(--color-foreground);
+    }
+
+    .color-{{ scheme.first }} h1,
+    .color-{{ scheme.first }} h2,
+    .color-{{ scheme.first }} h3,
+    .color-{{ scheme.first }} h4,
+    .color-{{ scheme.first }} h5,
+    .color-{{ scheme.first }} h6 {
+      color: var(--color-foreground-heading);
+    }
+  {% endfor %}
+</style>
+

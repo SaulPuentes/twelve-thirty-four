@@ -1,0 +1,144 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-slideshow",
+      "blocks": {
+        "slide-1": {
+          "type": "slide",
+          "settings": {
+            "heading": "All things floral"
+          }
+        },
+        "slide-2": {
+          "type": "slide",
+          "settings": {
+            "heading": "Elegant arrangements"
+          }
+        }
+      },
+      "block_order": ["slide-1", "slide-2"],
+      "settings": {
+        "height": "100",
+        "content_position": "center",
+        "overlay_opacity": 30,
+        "enable_parallax": true,
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "show_navigation": true,
+        "left_link_label": "Artwork",
+        "right_link_label": "Shop",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "featured-collection": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "Thoughtful Gifts & Floral Creations",
+        "description": "Discover our curated selection of blooms and hand-made objects, from locally crafted ceramics to candles and keepsakes sourced from artists around the world.",
+        "products_to_show": 4,
+        "columns": 4,
+        "gap": 24,
+        "show_view_all": true,
+        "view_all_label": "Explore the shop",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "collection-links": {
+      "type": "collection-links",
+      "blocks": {
+        "link-1": {
+          "type": "collection_link",
+          "settings": {
+            "title": "Bury Me West",
+            "show_product": true,
+            "product_title": "One of a kind stoneware planter",
+            "product_price": "$200.00 USD",
+            "show_add_to_cart": true
+          }
+        },
+        "link-2": {
+          "type": "collection_link",
+          "settings": {
+            "title": "Elizabeth Hooper Studio"
+          }
+        },
+        "link-3": {
+          "type": "collection_link",
+          "settings": {
+            "title": "Chase Gamblin",
+            "show_product": true,
+            "product_title": "Multicolored Lamp",
+            "product_price": "$3,588.00 USD",
+            "show_add_to_cart": true
+          }
+        }
+      },
+      "block_order": ["link-1", "link-2", "link-3"],
+      "settings": {}
+    },
+    "workshops": {
+      "type": "slideshow-with-text",
+      "blocks": {
+        "workshop-1": {
+          "type": "slide",
+          "settings": {
+            "title": "Floral Design Fundamentals",
+            "description": "<p>Learn the art of minimalist floral arrangement in our intimate workshop. Discover how to create stunning compositions that celebrate the natural beauty of each stem. Perfect for beginners and enthusiasts alike.</p>",
+            "date": "Every Saturday, 2:00 PM - 5:00 PM",
+            "contact": "contact@bypatriciorivera.com"
+          }
+        },
+        "workshop-2": {
+          "type": "slide",
+          "settings": {
+            "title": "Advanced Seasonal Arrangements",
+            "description": "<p>Elevate your floral artistry with advanced techniques using seasonal blooms. Master the balance between structure and organic flow while working with nature's changing palette.</p>",
+            "date": "Every Sunday, 10:00 AM - 1:00 PM",
+            "contact": "contact@bypatriciorivera.com"
+          }
+        }
+      },
+      "block_order": ["workshop-1", "workshop-2"],
+      "settings": {
+        "heading": "Workshops",
+        "autoplay": true,
+        "autoplay_speed": 5,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "community": {
+      "type": "image-with-text",
+      "blocks": {
+        "logo-1": {
+          "type": "logo"
+        },
+        "logo-2": {
+          "type": "logo"
+        },
+        "logo-3": {
+          "type": "logo"
+        }
+      },
+      "block_order": ["logo-1", "logo-2", "logo-3"],
+      "settings": {
+        "heading": "Back to the Roots",
+        "text": "<p><strong>Back to the Roots</strong> is a floral arrangement workshop born from a micro grant awarded to Patricio Rivera by the <strong>City of Dallas Office of Culture and Arts</strong>, benefiting <strong>Vogel Alcove</strong>.</p><p>This experience will be offered to ten <strong>parents experiencing homelessness</strong>, creating a safe space to reconnect with nature, creativity, and community.</p><p>To expand this initiative and reach more families, we've received <strong>fiscal sponsorship</strong> from Fractured Atlas to collect fully tax-deductible donations.</p>",
+        "caption": "Your support helps us bring beauty, healing, and hope to those who need it most.",
+        "button_label": "Get directions",
+        "button_style": "link",
+        "layout": "image-left",
+        "image_width": 50,
+        "show_logos": true,
+        "color_scheme": "scheme-3"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "featured-collection",
+    "collection-links",
+    "workshops",
+    "community"
+  ]
+}
+

@@ -1,0 +1,27 @@
+{%- comment -%}
+  Stylesheets Snippet
+  Loads all required CSS files for the theme
+{%- endcomment -%}
+
+<title>{{ page_title }}{% if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif %}{% if current_page != 1 %} &ndash; Page {{ current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}</title>
+
+{% if page_description %}
+  <meta name="description" content="{{ page_description | escape }}">
+{% endif %}
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+
+{%- comment -%} Preconnect to CDN {%- endcomment -%}
+<link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+{%- comment -%} Preload critical CSS {%- endcomment -%}
+{{ 'base.css' | asset_url | preload_tag: as: 'style' }}
+
+{%- comment -%} Base stylesheet {%- endcomment -%}
+{{ 'base.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%} CSS Variables from theme settings {%- endcomment -%}
+{% render 'css-variables' %}
+

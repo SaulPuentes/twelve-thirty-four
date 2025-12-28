@@ -1,0 +1,73 @@
+{
+  "current": {
+    "color_schemes": {
+      "scheme-1": {
+        "settings": {
+          "background": "#FFFFFF",
+          "foreground": "#111111",
+          "foreground_heading": "#111111",
+          "accent": "#B76A6A",
+          "border": "#DDDDDD",
+          "button_background": "#111111",
+          "button_text": "#FFFFFF",
+          "button_secondary_background": "transparent",
+          "button_secondary_text": "#111111",
+          "button_secondary_border": "#111111"
+        }
+      },
+      "scheme-2": {
+        "settings": {
+          "background": "#111111",
+          "foreground": "#FFFFFF",
+          "foreground_heading": "#FFFFFF",
+          "accent": "#B76A6A",
+          "border": "#333333",
+          "button_background": "#FFFFFF",
+          "button_text": "#111111",
+          "button_secondary_background": "transparent",
+          "button_secondary_text": "#FFFFFF",
+          "button_secondary_border": "#FFFFFF"
+        }
+      },
+      "scheme-3": {
+        "settings": {
+          "background": "#2c2c2c",
+          "foreground": "#FFFFFF",
+          "foreground_heading": "#FFFFFF",
+          "accent": "#B76A6A",
+          "border": "#444444",
+          "button_background": "#FFFFFF",
+          "button_text": "#2c2c2c",
+          "button_secondary_background": "transparent",
+          "button_secondary_text": "#FFFFFF",
+          "button_secondary_border": "#FFFFFF"
+        }
+      },
+      "scheme-4": {
+        "settings": {
+          "background": "#F5F5F0",
+          "foreground": "#111111",
+          "foreground_heading": "#111111",
+          "accent": "#B76A6A",
+          "border": "#DDDDDD",
+          "button_background": "#111111",
+          "button_text": "#FFFFFF",
+          "button_secondary_background": "transparent",
+          "button_secondary_text": "#111111",
+          "button_secondary_border": "#111111"
+        }
+      }
+    },
+    "type_body_font": "inter_n4",
+    "type_heading_font": "literata_n4",
+    "body_font_size": "16",
+    "heading_scale": "medium",
+    "page_width": "1400",
+    "section_spacing": "48",
+    "button_border_radius": "0",
+    "button_style": "solid",
+    "cart_type": "drawer",
+    "show_cart_note": true
+  }
+}
+

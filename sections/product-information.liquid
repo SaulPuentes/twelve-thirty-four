@@ -1,0 +1,417 @@
+{%- comment -%}
+  Product Information Section
+  Displays the main product details including media gallery, title, price, variants, and buy buttons
+{%- endcomment -%}
+
+<section class="product-section section-spacing">
+  <div class="page-width">
+    <div class="product-grid">
+      {%- comment -%} Media Gallery {%- endcomment -%}
+      <div class="product-media-gallery">
+        {%- if product.media.size > 0 -%}
+          <div class="product-media-main">
+            {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
+            <img
+              src="{{ featured_media | image_url: width: 1000 }}"
+              alt="{{ featured_media.alt | escape }}"
+              width="{{ featured_media.width }}"
+              height="{{ featured_media.height }}"
+              loading="eager"
+              class="product-media-main__image"
+            >
+          </div>
+          {%- if product.media.size > 1 -%}
+            <div class="product-media-thumbnails">
+              {%- for media in product.media -%}
+                <button
+                  class="product-media-thumbnail{% if media == featured_media %} is-active{% endif %}"
+                  data-media-id="{{ media.id }}"
+                >
+                  <img
+                    src="{{ media | image_url: width: 200 }}"
+                    alt="{{ media.alt | escape }}"
+                    width="100"
+                    height="100"
+                    loading="lazy"
+                  >
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        {%- else -%}
+          <div class="product-media-placeholder">
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Product Details {%- endcomment -%}
+      <div class="product-details">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'vendor' -%}
+              {%- if product.vendor -%}
+                <p class="product-vendor" {{ block.shopify_attributes }}>
+                  {{ product.vendor }}
+                </p>
+              {%- endif -%}
+
+            {%- when 'title' -%}
+              <h1 class="product-title h2" {{ block.shopify_attributes }}>
+                {{ product.title }}
+              </h1>
+
+            {%- when 'price' -%}
+              <div class="product-price" {{ block.shopify_attributes }}>
+                {%- if product.compare_at_price > product.price -%}
+                  <s class="product-price__compare">
+                    {{ product.compare_at_price | money }}
+                  </s>
+                {%- endif -%}
+                <span class="product-price__current">
+                  {{ product.price | money }}
+                </span>
+              </div>
+
+            {%- when 'variant-picker' -%}
+              {%- unless product.has_only_default_variant -%}
+                <div class="product-variants" {{ block.shopify_attributes }}>
+                  {%- for option in product.options_with_values -%}
+                    <div class="product-option">
+                      <label class="product-option__label">
+                        {{ option.name }}
+                      </label>
+                      <div class="product-option__values">
+                        {%- for value in option.values -%}
+                          <label class="product-option__value">
+                            <input
+                              type="radio"
+                              name="option{{ option.position }}"
+                              value="{{ value }}"
+                              {% if value == option.selected_value %}checked{% endif %}
+                              class="visually-hidden"
+                            >
+                            <span>{{ value }}</span>
+                          </label>
+                        {%- endfor -%}
+                      </div>
+                    </div>
+                  {%- endfor -%}
+                </div>
+              {%- endunless -%}
+
+            {%- when 'quantity-selector' -%}
+              <div class="product-quantity" {{ block.shopify_attributes }}>
+                <label class="product-quantity__label">{{ 'products.product.quantity.label' | t }}</label>
+                <quantity-selector class="quantity-selector">
+                  <button type="button" name="minus" class="quantity-selector__button">−</button>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value="1"
+                    min="1"
+                    max="{{ product.selected_or_first_available_variant.inventory_quantity | default: 10 }}"
+                    class="quantity-selector__input"
+                  >
+                  <button type="button" name="plus" class="quantity-selector__button">+</button>
+                </quantity-selector>
+              </div>
+
+            {%- when 'buy-buttons' -%}
+              <div class="product-buy-buttons" {{ block.shopify_attributes }}>
+                <product-form>
+                  {%- form 'product', product, id: 'product-form', novalidate: 'novalidate' -%}
+                    <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                    <button
+                      type="submit"
+                      name="add"
+                      class="button button--primary button--full-width"
+                      {% if product.selected_or_first_available_variant.available == false %}disabled{% endif %}
+                    >
+                      {%- if product.selected_or_first_available_variant.available -%}
+                        {{ 'products.product.add_to_cart' | t }}
+                      {%- else -%}
+                        {{ 'products.product.sold_out' | t }}
+                      {%- endif -%}
+                    </button>
+                  {%- endform -%}
+                </product-form>
+                
+                {%- if block.settings.show_dynamic_checkout -%}
+                  <div class="product-dynamic-checkout">
+                    {{ form | payment_button }}
+                  </div>
+                {%- endif -%}
+              </div>
+
+            {%- when 'description' -%}
+              {%- if product.description != blank -%}
+                <div class="product-description rte" {{ block.shopify_attributes }}>
+                  {{ product.description }}
+                </div>
+              {%- endif -%}
+
+            {%- when 'accordion' -%}
+              <details class="product-accordion" {{ block.shopify_attributes }}>
+                <summary class="product-accordion__header">
+                  {{ block.settings.title }}
+                  <span class="product-accordion__icon">+</span>
+                </summary>
+                <div class="product-accordion__content rte">
+                  {{ block.settings.content }}
+                </div>
+              </details>
+
+            {%- when 'share' -%}
+              <div class="product-share" {{ block.shopify_attributes }}>
+                <button class="product-share__button" onclick="navigator.share({ url: window.location.href, title: '{{ product.title | escape }}' })">
+                  {% render 'icon', icon: 'share' %}
+                  {{ 'products.product.share' | t }}
+                </button>
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-grid {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media screen and (min-width: 990px) {
+    .product-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .product-media-main__image {
+    width: 100%;
+    height: auto;
+  }
+
+  .product-media-thumbnails {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    overflow-x: auto;
+  }
+
+  .product-media-thumbnail {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    border: 1px solid transparent;
+    background: none;
+    cursor: pointer;
+  }
+
+  .product-media-thumbnail.is-active {
+    border-color: var(--color-foreground);
+  }
+
+  .product-media-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .product-vendor {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin: 0;
+  }
+
+  .product-title {
+    margin: 0;
+  }
+
+  .product-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-size: 1.25rem;
+  }
+
+  .product-price__compare {
+    opacity: 0.5;
+    font-size: 1rem;
+  }
+
+  .product-option {
+    margin-bottom: 1rem;
+  }
+
+  .product-option__label {
+    margin-bottom: 0.5rem;
+  }
+
+  .product-option__values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .product-option__value {
+    display: inline-flex;
+    cursor: pointer;
+  }
+
+  .product-option__value span {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-border);
+    transition: all 0.2s ease;
+  }
+
+  .product-option__value input:checked + span {
+    border-color: var(--color-foreground);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .product-quantity__label {
+    margin-bottom: 0.5rem;
+  }
+
+  .product-buy-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .button--full-width {
+    width: 100%;
+  }
+
+  .product-accordion {
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 1rem;
+  }
+
+  .product-accordion__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    list-style: none;
+  }
+
+  .product-accordion__header::-webkit-details-marker {
+    display: none;
+  }
+
+  .product-accordion[open] .product-accordion__icon {
+    transform: rotate(45deg);
+  }
+
+  .product-accordion__content {
+    padding-top: 1rem;
+  }
+
+  .product-share__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    font-size: 0.875rem;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+
+  .product-share__button:hover {
+    opacity: 1;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product information",
+  "tag": "section",
+  "class": "section-product-information",
+  "blocks": [
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "variant-picker",
+      "name": "Variant picker",
+      "limit": 1
+    },
+    {
+      "type": "quantity-selector",
+      "name": "Quantity selector",
+      "limit": 1
+    },
+    {
+      "type": "buy-buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_dynamic_checkout",
+          "label": "Show dynamic checkout buttons",
+          "info": "Using the payment methods available on your store, customers see their preferred option, like PayPal or Apple Pay.",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Shipping & Returns"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Free shipping on orders over $50. Returns accepted within 30 days.</p>"
+        }
+      ]
+    },
+    {
+      "type": "share",
+      "name": "Share",
+      "limit": 1
+    }
+  ]
+}
+{% endschema %}
+

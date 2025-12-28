@@ -1,0 +1,85 @@
+{%- comment -%}
+  Main Page Section
+  Displays the content of a Shopify page
+{%- endcomment -%}
+
+<section class="page-section section-spacing">
+  <div class="page-width">
+    <div class="page-content" style="max-width: {{ section.settings.content_width }}px; margin: 0 auto;">
+      {%- if section.settings.show_title -%}
+        <h1 class="page-title h2">{{ page.title }}</h1>
+      {%- endif -%}
+
+      {%- if page.content != blank -%}
+        <div class="page-body rte">
+          {{ page.content }}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-title {
+    text-align: {{ section.settings.title_alignment }};
+    margin-bottom: 2rem;
+  }
+
+  .page-body {
+    text-align: {{ section.settings.content_alignment }};
+  }
+
+  .page-body img {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Page content",
+  "tag": "section",
+  "class": "section-main-page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_title",
+      "label": "Show page title",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "title_alignment",
+      "label": "Title alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "min": 400,
+      "max": 1200,
+      "step": 50,
+      "default": 800,
+      "unit": "px",
+      "label": "Content max width"
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "heading": "Page not found",
+        "description": "The page you were looking for doesn't exist. You may have mistyped the address or the page may have moved.",
+        "button_label": "Continue shopping",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": ["main"]
+}
+

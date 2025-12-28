@@ -1,0 +1,297 @@
+{%- comment -%}
+  Contact Form Section
+  Displays a customizable contact form
+{%- endcomment -%}
+
+<section class="contact-section section-spacing">
+  <div class="page-width">
+    <div class="contact-grid">
+      {%- comment -%} Contact Info {%- endcomment -%}
+      <div class="contact-info">
+        {%- if section.settings.heading != blank -%}
+          <h1 class="contact-heading h2">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <p class="contact-subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.email != blank or section.settings.phone != blank or section.settings.address != blank -%}
+          <div class="contact-details">
+            {%- if section.settings.email != blank -%}
+              <div class="contact-detail">
+                <span class="contact-detail__label">{{ 'contact.form.email' | t }}</span>
+                <a href="mailto:{{ section.settings.email }}" class="contact-detail__value">
+                  {{ section.settings.email }}
+                </a>
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.phone != blank -%}
+              <div class="contact-detail">
+                <span class="contact-detail__label">{{ 'contact.form.phone' | t }}</span>
+                <a href="tel:{{ section.settings.phone | replace: ' ', '' }}" class="contact-detail__value">
+                  {{ section.settings.phone }}
+                </a>
+              </div>
+            {%- endif -%}
+
+            {%- if section.settings.address != blank -%}
+              <div class="contact-detail">
+                <span class="contact-detail__label">{{ 'contact.form.address' | t }}</span>
+                <p class="contact-detail__value">{{ section.settings.address }}</p>
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Contact Form {%- endcomment -%}
+      <div class="contact-form-wrapper">
+        {%- form 'contact', id: 'ContactForm', class: 'contact-form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="form-success">
+              <p>{{ 'contact.form.success_message' | t }}</p>
+            </div>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="form-errors">
+              {{ form.errors | default_errors }}
+            </div>
+          {%- endif -%}
+
+          <div class="form-group">
+            <label for="ContactFormName">{{ 'contact.form.name' | t }} <span class="required">*</span></label>
+            <input
+              type="text"
+              id="ContactFormName"
+              name="contact[{{ 'contact.form.name' | t }}]"
+              value="{{ form.name }}"
+              required
+              autocomplete="name"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="ContactFormEmail">{{ 'contact.form.email' | t }} <span class="required">*</span></label>
+            <input
+              type="email"
+              id="ContactFormEmail"
+              name="contact[email]"
+              value="{{ form.email }}"
+              required
+              autocomplete="email"
+              autocapitalize="off"
+            >
+          </div>
+
+          {%- if section.settings.show_phone -%}
+            <div class="form-group">
+              <label for="ContactFormPhone">{{ 'contact.form.phone' | t }}</label>
+              <input
+                type="tel"
+                id="ContactFormPhone"
+                name="contact[{{ 'contact.form.phone' | t }}]"
+                value="{{ form.phone }}"
+                autocomplete="tel"
+              >
+            </div>
+          {%- endif -%}
+
+          <div class="form-group form-group--full">
+            <label for="ContactFormMessage">{{ 'contact.form.message' | t }} <span class="required">*</span></label>
+            <textarea
+              id="ContactFormMessage"
+              name="contact[{{ 'contact.form.message' | t }}]"
+              rows="6"
+              required
+            >{{ form.body }}</textarea>
+          </div>
+
+          <div class="form-group form-group--submit">
+            <button type="submit" class="button button--primary">
+              {{ 'contact.form.submit' | t }}
+            </button>
+          </div>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-grid {
+    display: grid;
+    gap: 3rem;
+  }
+
+  @media screen and (min-width: 990px) {
+    .contact-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .contact-heading {
+    margin-bottom: 1rem;
+  }
+
+  .contact-subheading {
+    opacity: 0.8;
+    margin-bottom: 2rem;
+    max-width: 500px;
+  }
+
+  .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .contact-detail__label {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.25rem;
+  }
+
+  .contact-detail__value {
+    font-size: 1rem;
+    text-decoration: none;
+    margin: 0;
+  }
+
+  .contact-detail__value:hover {
+    text-decoration: underline;
+  }
+
+  .contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-group--full {
+    grid-column: 1 / -1;
+  }
+
+  .form-group--submit {
+    grid-column: 1 / -1;
+  }
+
+  .form-group label {
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .form-group .required {
+    color: #e53935;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--color-border);
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-foreground);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+  }
+
+  .form-success {
+    grid-column: 1 / -1;
+    padding: 1rem;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    text-align: center;
+  }
+
+  .form-errors {
+    grid-column: 1 / -1;
+    padding: 1rem;
+    background-color: #ffebee;
+    color: #c62828;
+  }
+
+  @media screen and (max-width: 749px) {
+    .contact-form {
+      grid-template-columns: 1fr;
+    }
+
+    .form-group {
+      grid-column: 1;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": "section",
+  "class": "section-contact-form",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Get in touch"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Have a question or want to work together? Drop us a message and we'll get back to you as soon as possible."
+    },
+    {
+      "type": "header",
+      "content": "Contact information"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "hello@example.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "+1 (555) 123-4567"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address"
+    },
+    {
+      "type": "header",
+      "content": "Form settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_phone",
+      "label": "Show phone field",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
+

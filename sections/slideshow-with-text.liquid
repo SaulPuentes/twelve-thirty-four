@@ -1,0 +1,407 @@
+{%- liquid
+  assign first_slide = section.blocks | first
+  assign has_multiple_slides = false
+  if section.blocks.size > 1
+    assign has_multiple_slides = true
+  endif
+-%}
+
+<section
+  id="SlideshowWithText-{{ section.id }}"
+  class="slideshow-text section-spacing color-{{ section.settings.color_scheme }}"
+  data-slideshow-text
+>
+  <div class="page-width">
+    <div class="slideshow-text__grid">
+      {%- comment -%} Left Column - Text {%- endcomment -%}
+      <div class="slideshow-text__content">
+        <div class="slideshow-text__header">
+          {%- if section.settings.heading != blank -%}
+            <h2 class="slideshow-text__heading h2">{{ section.settings.heading }}</h2>
+          {%- endif -%}
+        </div>
+
+        <div class="slideshow-text__slides-text">
+          {%- for block in section.blocks -%}
+            <div
+              class="slideshow-text__slide-content{% if forloop.first %} slideshow-text__slide-content--active{% endif %}"
+              data-slide-content="{{ forloop.index0 }}"
+              {{ block.shopify_attributes }}
+            >
+              {%- if block.settings.title != blank -%}
+                <h3 class="slideshow-text__slide-title h3">{{ block.settings.title }}</h3>
+              {%- endif -%}
+
+              {%- if block.settings.description != blank -%}
+                <div class="slideshow-text__slide-description">
+                  {{ block.settings.description }}
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.date != blank or block.settings.contact != blank -%}
+                <div class="slideshow-text__slide-meta">
+                  {%- if block.settings.date != blank -%}
+                    <p class="slideshow-text__meta-item">
+                      <span class="slideshow-text__meta-label">Date:</span>
+                      {{ block.settings.date }}
+                    </p>
+                  {%- endif -%}
+                  {%- if block.settings.contact != blank -%}
+                    <p class="slideshow-text__meta-item">
+                      <span class="slideshow-text__meta-label">Contact:</span>
+                      <a href="mailto:{{ block.settings.contact }}">{{ block.settings.contact }}</a>
+                    </p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if has_multiple_slides -%}
+          <div class="slideshow-text__nav">
+            {%- for block in section.blocks -%}
+              <button
+                type="button"
+                class="slideshow-text__nav-dot{% if forloop.first %} slideshow-text__nav-dot--active{% endif %}"
+                data-slide-nav="{{ forloop.index0 }}"
+                aria-label="{{ 'accessibility.slide_number' | t: number: forloop.index }}"
+              ></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right Column - Images {%- endcomment -%}
+      <div class="slideshow-text__media">
+        {%- for block in section.blocks -%}
+          <div
+            class="slideshow-text__slide-image{% if forloop.first %} slideshow-text__slide-image--active{% endif %}"
+            data-slide-image="{{ forloop.index0 }}"
+          >
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 1200 }}"
+                alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                width="600"
+                height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
+                class="slideshow-text__image"
+                loading="lazy"
+              >
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'slideshow-text__placeholder' }}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const section = document.querySelector('[data-slideshow-text]');
+    if (!section) return;
+
+    const contents = section.querySelectorAll('[data-slide-content]');
+    const images = section.querySelectorAll('[data-slide-image]');
+    const navDots = section.querySelectorAll('[data-slide-nav]');
+
+    if (contents.length <= 1) return;
+
+    let currentIndex = 0;
+    let isAnimating = false;
+    const autoplayInterval = {{ section.settings.autoplay_speed }}000;
+
+    function goToSlide(index) {
+      if (isAnimating || index === currentIndex) return;
+      isAnimating = true;
+
+      // Fade out current
+      contents[currentIndex].classList.remove('slideshow-text__slide-content--active');
+      images[currentIndex].classList.remove('slideshow-text__slide-image--active');
+      if (navDots.length) navDots[currentIndex].classList.remove('slideshow-text__nav-dot--active');
+
+      // Fade in new
+      contents[index].classList.add('slideshow-text__slide-content--active');
+      images[index].classList.add('slideshow-text__slide-image--active');
+      if (navDots.length) navDots[index].classList.add('slideshow-text__nav-dot--active');
+
+      currentIndex = index;
+
+      setTimeout(function() {
+        isAnimating = false;
+      }, 600);
+    }
+
+    function nextSlide() {
+      const next = (currentIndex + 1) % contents.length;
+      goToSlide(next);
+    }
+
+    // Navigation dots click
+    navDots.forEach(function(dot, index) {
+      dot.addEventListener('click', function() {
+        goToSlide(index);
+      });
+    });
+
+    // Autoplay
+    {% if section.settings.autoplay %}
+      let autoplayTimer = setInterval(nextSlide, autoplayInterval);
+
+      section.addEventListener('mouseenter', function() {
+        clearInterval(autoplayTimer);
+      });
+
+      section.addEventListener('mouseleave', function() {
+        autoplayTimer = setInterval(nextSlide, autoplayInterval);
+      });
+    {% endif %}
+  });
+</script>
+
+{% stylesheet %}
+  .slideshow-text {
+    padding: var(--section-spacing, 4rem) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .slideshow-text__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    min-height: 600px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .slideshow-text__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+  }
+
+  .slideshow-text__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .slideshow-text__heading {
+    margin: 0;
+  }
+
+  .slideshow-text__slides-text {
+    position: relative;
+    margin-top: 3rem;
+  }
+
+  @media screen and (min-width: 990px) {
+    .slideshow-text__slides-text {
+      margin-top: 0;
+    }
+  }
+
+  .slideshow-text__slide-content {
+    opacity: 0;
+    transform: translateX(1rem);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .slideshow-text__slide-content--active {
+    opacity: 1;
+    transform: translateX(0);
+    position: relative;
+  }
+
+  .slideshow-text__slide-title {
+    margin: 0 0 1rem;
+  }
+
+  .slideshow-text__slide-description {
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--color-foreground);
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .slideshow-text__slide-meta {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+  }
+
+  .slideshow-text__meta-item {
+    margin: 0 0 0.5rem;
+    color: var(--color-foreground);
+    opacity: 0.7;
+  }
+
+  .slideshow-text__meta-label {
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+
+  .slideshow-text__meta-item a {
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .slideshow-text__nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+
+  .slideshow-text__nav-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: var(--color-foreground);
+    opacity: 0.3;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: width 0.3s ease, opacity 0.3s ease;
+  }
+
+  .slideshow-text__nav-dot--active {
+    width: 2rem;
+    border-radius: 0.25rem;
+    opacity: 1;
+  }
+
+  .slideshow-text__media {
+    position: relative;
+    min-height: 400px;
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 990px) {
+    .slideshow-text__media {
+      min-height: auto;
+    }
+  }
+
+  .slideshow-text__slide-image {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .slideshow-text__slide-image--active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .slideshow-text__image,
+  .slideshow-text__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Slideshow with text",
+  "tag": "section",
+  "class": "section-slideshow-text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Workshops"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-rotate slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Change slides every",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 5
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Floral Design Fundamentals"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Learn the art of minimalist floral arrangement in our intimate workshop. Discover how to create stunning compositions that celebrate the natural beauty of each stem.</p>"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Date",
+          "default": "Every Saturday, 2:00 PM - 5:00 PM"
+        },
+        {
+          "type": "text",
+          "id": "contact",
+          "label": "Contact email"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slideshow with text",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Floral Design Fundamentals"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Advanced Seasonal Arrangements"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

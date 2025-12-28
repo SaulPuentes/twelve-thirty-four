@@ -1,0 +1,53 @@
+{%- if request.page_type == 'index' -%}
+  {%- assign og_title = shop.name -%}
+  {%- assign og_description = shop.description | default: '' -%}
+{%- elsif request.page_type == 'product' -%}
+  {%- assign og_title = product.title | strip_html -%}
+  {%- assign og_description = product.description | strip_html | truncate: 200 -%}
+{%- elsif request.page_type == 'collection' -%}
+  {%- assign og_title = collection.title | strip_html -%}
+  {%- assign og_description = collection.description | strip_html | truncate: 200 -%}
+{%- elsif request.page_type == 'article' -%}
+  {%- assign og_title = article.title | strip_html -%}
+  {%- assign og_description = article.excerpt_or_content | strip_html | truncate: 200 -%}
+{%- elsif request.page_type == 'blog' -%}
+  {%- assign og_title = blog.title | strip_html -%}
+  {%- assign og_description = '' -%}
+{%- elsif request.page_type == 'page' -%}
+  {%- assign og_title = page.title | strip_html -%}
+  {%- assign og_description = page.content | strip_html | truncate: 200 -%}
+{%- else -%}
+  {%- assign og_title = page_title | default: shop.name -%}
+  {%- assign og_description = page_description | default: shop.description -%}
+{%- endif -%}
+
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:title" content="{{ og_title }}">
+<meta property="og:type" content="website">
+{%- if og_description != blank -%}
+  <meta property="og:description" content="{{ og_description }}">
+{%- endif -%}
+{%- if request.page_type == 'product' -%}
+  <meta property="og:image" content="https:{{ product.featured_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ product.featured_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="{{ 1200 | divided_by: product.featured_image.aspect_ratio | round }}">
+  <meta property="product:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
+  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+{%- elsif request.page_type == 'collection' and collection.image -%}
+  <meta property="og:image" content="https:{{ collection.image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ collection.image | image_url: width: 1200 }}">
+{%- elsif request.page_type == 'article' and article.image -%}
+  <meta property="og:image" content="https:{{ article.image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ article.image | image_url: width: 1200 }}">
+{%- elsif settings.logo -%}
+  <meta property="og:image" content="https:{{ settings.logo | image_url: width: 1200 }}">
+{%- endif -%}
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title }}">
+{%- if og_description != blank -%}
+  <meta name="twitter:description" content="{{ og_description }}">
+{%- endif -%}
+

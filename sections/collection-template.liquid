@@ -1,0 +1,254 @@
+{%- comment -%}
+  Collection Template Section
+  Displays a grid of products for a collection
+{%- endcomment -%}
+
+{%- paginate collection.products by section.settings.products_per_page -%}
+  <section class="collection-section section-spacing">
+    <div class="page-width">
+      {%- comment -%} Collection Header {%- endcomment -%}
+      <div class="collection-header">
+        <h1 class="collection-title h2">{{ collection.title }}</h1>
+        {%- if collection.description != blank and section.settings.show_description -%}
+          <div class="collection-description rte">
+            {{ collection.description }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Toolbar {%- endcomment -%}
+      {%- if section.settings.enable_sorting or section.settings.enable_filtering -%}
+        <div class="collection-toolbar">
+          <div class="collection-toolbar__left">
+            <p class="collection-count">
+              {{ 'collections.general.items_count' | t: count: collection.products_count }}
+            </p>
+          </div>
+          
+          {%- if section.settings.enable_sorting -%}
+            <div class="collection-toolbar__right">
+              <div class="collection-sort">
+                <label for="SortBy" class="visually-hidden">{{ 'collections.sorting.title' | t }}</label>
+                <select id="SortBy" class="collection-sort__select" onchange="window.location.href = this.value">
+                  {%- for option in collection.sort_options -%}
+                    <option value="{{ option.url }}" {% if option.value == collection.sort_by %}selected{% endif %}>
+                      {{ option.name }}
+                    </option>
+                  {%- endfor -%}
+                </select>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Product Grid {%- endcomment -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="collection-grid" style="--grid-columns: {{ section.settings.columns_desktop }}; --grid-columns-mobile: {{ section.settings.columns_mobile }};">
+          {%- for product in collection.products -%}
+            <div class="collection-grid__item">
+              {%- render 'product-card', product: product -%}
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Pagination {%- endcomment -%}
+        {%- if paginate.pages > 1 -%}
+          <nav class="pagination" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+            <ul class="pagination__list">
+              {%- if paginate.previous -%}
+                <li>
+                  <a href="{{ paginate.previous.url }}" class="pagination__link pagination__link--prev">
+                    ← {{ 'general.pagination.previous' | t }}
+                  </a>
+                </li>
+              {%- endif -%}
+
+              {%- for part in paginate.parts -%}
+                <li>
+                  {%- if part.is_link -%}
+                    <a href="{{ part.url }}" class="pagination__link">{{ part.title }}</a>
+                  {%- else -%}
+                    {%- if part.title == paginate.current_page -%}
+                      <span class="pagination__link pagination__link--current" aria-current="page">{{ part.title }}</span>
+                    {%- else -%}
+                      <span class="pagination__link">{{ part.title }}</span>
+                    {%- endif -%}
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+
+              {%- if paginate.next -%}
+                <li>
+                  <a href="{{ paginate.next.url }}" class="pagination__link pagination__link--next">
+                    {{ 'general.pagination.next' | t }} →
+                  </a>
+                </li>
+              {%- endif -%}
+            </ul>
+          </nav>
+        {%- endif -%}
+      {%- else -%}
+        <div class="collection-empty">
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endpaginate -%}
+
+<style>
+  .collection-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .collection-title {
+    margin-bottom: 1rem;
+  }
+
+  .collection-description {
+    max-width: 600px;
+    margin: 0 auto;
+    opacity: 0.8;
+  }
+
+  .collection-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .collection-count {
+    font-size: 0.875rem;
+    opacity: 0.7;
+    margin: 0;
+  }
+
+  .collection-sort__select {
+    min-width: 150px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    cursor: pointer;
+  }
+
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns-mobile, 2), 1fr);
+    gap: 1.5rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-grid {
+      grid-template-columns: repeat(var(--grid-columns, 4), 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .collection-empty {
+    text-align: center;
+    padding: 4rem 0;
+    opacity: 0.7;
+  }
+
+  .pagination {
+    margin-top: 3rem;
+    text-align: center;
+  }
+
+  .pagination__list {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .pagination__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    text-decoration: none;
+    border: 1px solid var(--color-border);
+    transition: all 0.2s ease;
+  }
+
+  .pagination__link:hover {
+    border-color: var(--color-foreground);
+  }
+
+  .pagination__link--current {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    border-color: var(--color-foreground);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collection template",
+  "tag": "section",
+  "class": "section-collection-template",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 4,
+      "default": 16,
+      "label": "Products per page"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Desktop columns"
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2,
+      "label": "Mobile columns"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_sorting",
+      "label": "Enable sorting",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_filtering",
+      "label": "Enable filtering",
+      "default": true
+    }
+  ]
+}
+{% endschema %}
+

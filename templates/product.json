@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "layout": "gallery-left",
+        "show_vendor": false,
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1"
+      }
+    },
+    "recommendations": {
+      "type": "featured-collection",
+      "settings": {
+        "heading": "You may also like",
+        "products_to_show": 4,
+        "columns": 4,
+        "gap": 24,
+        "show_view_all": false,
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": ["main", "recommendations"]
+}
+

@@ -1,0 +1,243 @@
+{%- liquid
+  assign collection = collections[section.settings.collection]
+  assign products_to_show = section.settings.products_to_show
+  assign columns = section.settings.columns
+-%}
+
+<section
+  id="FeaturedCollection-{{ section.id }}"
+  class="featured-collection section-spacing color-{{ section.settings.color_scheme }}"
+  style="
+    --featured-collection-columns: {{ columns }};
+    --featured-collection-gap: {{ section.settings.gap }}px;
+  "
+>
+  <div class="page-width">
+    {%- comment -%} Header {%- endcomment -%}
+    <div class="featured-collection__header">
+      <div class="featured-collection__header-text">
+        {%- if section.settings.subheading != blank -%}
+          <p class="featured-collection__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="featured-collection__heading h2">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <p class="featured-collection__description">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.show_view_all and collection.all_products_count > products_to_show -%}
+        <a href="{{ collection.url }}" class="featured-collection__view-all">
+          <span class="featured-collection__arrow">→</span>
+          <span>{{ section.settings.view_all_label | default: 'Explore the shop' }}</span>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Products Grid {%- endcomment -%}
+    <div class="featured-collection__grid">
+      {%- if collection != blank -%}
+        {%- for product in collection.products limit: products_to_show -%}
+          {% render 'product-card', product: product, show_vendor: section.settings.show_vendor %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..products_to_show) -%}
+          <div class="product-card product-card--placeholder">
+            <div class="product-card__media">
+              {{ 'product-' | append: i | placeholder_svg_tag: 'product-card__placeholder' }}
+            </div>
+            <div class="product-card__info">
+              <h3 class="product-card__title">{{ 'onboarding.product_title' | t }}</h3>
+              <p class="product-card__price">{{ 100 | times: i | money }}</p>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .featured-collection {
+    padding: var(--section-spacing, 4rem) 0;
+  }
+
+  .featured-collection__header {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  @media screen and (min-width: 990px) {
+    .featured-collection__header {
+      grid-template-columns: 2fr 1fr;
+      align-items: end;
+    }
+  }
+
+  .featured-collection__subheading {
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    opacity: 0.6;
+    margin: 0 0 0.5rem;
+  }
+
+  .featured-collection__heading {
+    margin: 0 0 1rem;
+  }
+
+  .featured-collection__description {
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-foreground);
+    opacity: 0.6;
+    margin: 0;
+    max-width: 630px;
+  }
+
+  .featured-collection__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .featured-collection__view-all:hover {
+    opacity: 0.7;
+  }
+
+  .featured-collection__arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .featured-collection__view-all:hover .featured-collection__arrow {
+    transform: translateX(4px);
+    border-color: var(--color-foreground);
+  }
+
+  .featured-collection__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--featured-collection-gap, 1.5rem);
+  }
+
+  @media screen and (min-width: 750px) {
+    .featured-collection__grid {
+      grid-template-columns: repeat(var(--featured-collection-columns, 4), 1fr);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "tag": "section",
+  "class": "section-featured-collection",
+  "settings": [
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Thoughtful Gifts & Floral Creations"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover our curated selection of blooms and hand-made objects, from locally crafted ceramics to candles and keepsakes sourced from artists around the world."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between products",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "Show vendor",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "View all link"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View all' link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "Link label",
+      "default": "Explore the shop"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection"
+    }
+  ]
+}
+{% endschema %}
+
