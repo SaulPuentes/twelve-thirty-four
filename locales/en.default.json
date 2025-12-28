@@ -353,7 +353,25 @@
       "quantity_maximum": "Maximum of {{ maximum }}",
       "in_cart": "in cart",
       "default_title": "Default Title",
-      "sticky_add_to_cart": "Quick add to cart bar"
+      "sticky_add_to_cart": "Quick add to cart bar",
+      "quantity": {
+        "decrease": "Decrease quantity",
+        "increase": "Increase quantity",
+        "input_label": "Quantity"
+      }
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue shopping",
+      "note": "Order note",
+      "note_placeholder": "Add a note to your order...",
+      "subtotal": "Subtotal",
+      "taxes_shipping_at_checkout": "Taxes and shipping calculated at checkout",
+      "view_cart": "View cart",
+      "checkout": "Checkout"
     }
   }
 }
