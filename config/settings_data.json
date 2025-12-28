@@ -76,5 +76,75 @@
     "button_style": "solid",
     "cart_type": "drawer",
     "show_cart_note": true
+  },
+  "presets": {
+    "Twelve Thirty Four": {
+      "color_schemes": {
+        "scheme-1": {
+          "settings": {
+            "background": "#FFFFFF",
+            "foreground": "#111111",
+            "foreground_heading": "#111111",
+            "primary": "#B76A6A",
+            "border": "#DDDDDD",
+            "shadow": "#000000",
+            "primary_button_background": "#111111",
+            "primary_button_text": "#FFFFFF",
+            "primary_button_border": "#111111",
+            "secondary_button_background": "#FFFFFF",
+            "secondary_button_text": "#111111",
+            "secondary_button_border": "#111111"
+          }
+        },
+        "scheme-2": {
+          "settings": {
+            "background": "#111111",
+            "foreground": "#FFFFFF",
+            "foreground_heading": "#FFFFFF",
+            "primary": "#B76A6A",
+            "border": "#333333",
+            "shadow": "#000000",
+            "primary_button_background": "#FFFFFF",
+            "primary_button_text": "#111111",
+            "primary_button_border": "#FFFFFF",
+            "secondary_button_background": "rgba(0,0,0,0)",
+            "secondary_button_text": "#FFFFFF",
+            "secondary_button_border": "#FFFFFF"
+          }
+        },
+        "scheme-3": {
+          "settings": {
+            "background": "#2c2c2c",
+            "foreground": "#FFFFFF",
+            "foreground_heading": "#FFFFFF",
+            "primary": "#B76A6A",
+            "border": "#444444",
+            "shadow": "#000000",
+            "primary_button_background": "#FFFFFF",
+            "primary_button_text": "#2c2c2c",
+            "primary_button_border": "#FFFFFF",
+            "secondary_button_background": "rgba(0,0,0,0)",
+            "secondary_button_text": "#FFFFFF",
+            "secondary_button_border": "#FFFFFF"
+          }
+        },
+        "scheme-4": {
+          "settings": {
+            "background": "#F5F5F0",
+            "foreground": "#111111",
+            "foreground_heading": "#111111",
+            "primary": "#B76A6A",
+            "border": "#DDDDDD",
+            "shadow": "#000000",
+            "primary_button_background": "#111111",
+            "primary_button_text": "#FFFFFF",
+            "primary_button_border": "#111111",
+            "secondary_button_background": "#F5F5F0",
+            "secondary_button_text": "#111111",
+            "secondary_button_border": "#111111"
+          }
+        }
+      }
+    }
   }
 }

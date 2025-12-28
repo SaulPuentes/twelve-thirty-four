@@ -8,7 +8,7 @@
 
 <section
   id="Hero-{{ section.id }}"
-  class="hero-slideshow color-{{ section.settings.color_scheme }} hero-slideshow--text-{{ section.settings.text_color }}"
+  class="hero-slideshow"
   data-hero-slideshow
   style="
     --hero-height: {{ section.settings.height }}vh;
@@ -48,7 +48,7 @@
     <div class="hero-slideshow__content-inner hero-slideshow__content--{{ section.settings.content_position }}">
       {%- for block in section.blocks -%}
         <div
-          class="hero-slideshow__text{% if forloop.first %} hero-slideshow__text--active{% endif %}"
+          class="hero-slideshow__text hero-slideshow--text-{{ block.settings.text_color }}{% if forloop.first %} hero-slideshow__text--active{% endif %}"
           data-text="{{ forloop.index0 }}"
         >
           {%- if block.settings.subheading != blank -%}
@@ -74,7 +74,7 @@
 
       {%- comment -%} Side Links (like prototype) {%- endcomment -%}
       {%- if section.settings.left_link_label != blank or section.settings.right_link_label != blank -%}
-        <div class="hero-slideshow__side-links">
+        <div class="hero-slideshow__side-links hero-slideshow--text-{{ first_slide.settings.text_color }}">
           {%- if section.settings.left_link_label != blank -%}
             <a href="{{ section.settings.left_link_url }}" class="hero-slideshow__side-link hero-slideshow__side-link--left">
               <span>{{ section.settings.left_link_label }}</span>
@@ -95,7 +95,7 @@
 
   {%- comment -%} Navigation Dots {%- endcomment -%}
   {%- if has_multiple_slides and section.settings.show_navigation -%}
-    <div class="hero-slideshow__nav">
+    <div class="hero-slideshow__nav hero-slideshow--text-{{ first_slide.settings.text_color }}">
       {%- for block in section.blocks -%}
         <button
           type="button"
@@ -534,16 +534,6 @@
       "default": 30
     },
     {
-      "type": "select",
-      "id": "text_color",
-      "label": "Text and links color",
-      "options": [
-        { "value": "white", "label": "White" },
-        { "value": "black", "label": "Black" }
-      ],
-      "default": "white"
-    },
-    {
       "type": "checkbox",
       "id": "enable_parallax",
       "label": "Enable parallax effect",
@@ -600,12 +590,6 @@
       "type": "url",
       "id": "right_link_url",
       "label": "Right link URL"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
     }
   ],
   "blocks": [
@@ -617,6 +601,16 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "text_color",
+          "label": "Text and link color",
+          "options": [
+            { "value": "white", "label": "White" },
+            { "value": "black", "label": "Black" }
+          ],
+          "default": "white"
         },
         {
           "type": "text",
@@ -659,13 +653,15 @@
         {
           "type": "slide",
           "settings": {
-            "heading": "All things floral"
+            "heading": "All things floral",
+            "text_color": "white"
           }
         },
         {
           "type": "slide",
           "settings": {
-            "heading": "Elegant arrangements"
+            "heading": "Elegant arrangements",
+            "text_color": "white"
           }
         }
       ]
