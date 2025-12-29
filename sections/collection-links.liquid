@@ -35,12 +35,20 @@
         endif
       -%}
 
-      <a
-        href="{{ item_link }}"
+      <div
         class="collection-links__item{% if is_product %} collection-links__item--product{% endif %}"
         {{ block.shopify_attributes }}
-        {% if block.settings.open_new_tab %}target="_blank" rel="noopener"{% endif %}
       >
+        {%- comment -%} Stretched link - covers entire card but sits below interactive elements {%- endcomment -%}
+        <a
+          href="{{ item_link }}"
+          class="collection-links__link"
+          {% if block.settings.open_new_tab %}target="_blank" rel="noopener"{% endif %}
+          aria-label="{{ item_title | escape }}"
+        >
+          <span class="visually-hidden">{{ item_title }}</span>
+        </a>
+
         <div class="collection-links__media">
           {%- if item_image != blank -%}
             <img
@@ -85,7 +93,7 @@
             {%- endif -%}
           </div>
         {%- endif -%}
-      </a>
+      </div>
     {%- else -%}
       {%- for i in (1..3) -%}
         <div class="collection-links__item collection-links__item--placeholder">
@@ -122,9 +130,15 @@
     position: relative;
     aspect-ratio: 3 / 4;
     overflow: hidden;
-    display: block;
-    text-decoration: none;
     color: #fff;
+  }
+
+  /* Stretched link - covers entire card */
+  .collection-links__link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    text-decoration: none;
   }
 
   .collection-links__media {
@@ -161,7 +175,8 @@
     left: 0;
     right: 0;
     padding: 2rem 2.5rem;
-    z-index: 10;
+    z-index: 2;
+    pointer-events: none;
   }
 
   .collection-links__label {
@@ -183,7 +198,7 @@
     left: 0;
     right: 0;
     padding: 2rem 2.5rem;
-    z-index: 10;
+    z-index: 2;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -191,6 +206,7 @@
     transform: translateY(100%);
     opacity: 0;
     transition: transform 0.3s ease, opacity 0.3s ease;
+    pointer-events: none;
   }
 
   /* Always show on mobile */
@@ -198,16 +214,19 @@
     .collection-links__product {
       transform: translateY(0);
       opacity: 1;
+      pointer-events: auto;
     }
   }
 
   .collection-links__item:hover .collection-links__product {
     transform: translateY(0);
     opacity: 1;
+    pointer-events: auto;
   }
 
   .collection-links__product-info {
     flex: 1;
+    pointer-events: none;
   }
 
   .collection-links__product-title {
@@ -226,6 +245,8 @@
   }
 
   .collection-links__add-to-cart {
+    position: relative;
+    z-index: 3;
     padding: 0.5rem 1rem;
     background: transparent;
     border: 1px solid #fff;
@@ -237,6 +258,7 @@
     cursor: pointer;
     white-space: nowrap;
     transition: background-color 0.3s ease, color 0.3s ease;
+    pointer-events: auto;
   }
 
   .collection-links__add-to-cart:hover {
@@ -278,23 +300,25 @@
     text-transform: uppercase;
     opacity: 0.7;
   }
+
+  /* Visually hidden but accessible */
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
 {% endstylesheet %}
 
 {% javascript %}
   (function() {
     const section = document.getElementById('CollectionLinks-{{ section.id }}');
     if (!section) return;
-
-    // Handle clicks on anchor tags - prevent navigation if clicking on button
-    section.querySelectorAll('.collection-links__item').forEach(anchor => {
-      anchor.addEventListener('click', function(event) {
-        // Check if click was on an interactive element (button)
-        const interactiveElement = event.target.closest('button, input, label, select');
-        if (interactiveElement) {
-          event.preventDefault();
-        }
-      });
-    });
 
     // Handle add to cart button clicks
     section.querySelectorAll('.collection-links__add-to-cart').forEach(button => {
