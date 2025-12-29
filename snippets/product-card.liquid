@@ -75,7 +75,9 @@
     position: relative;
   }
 
-  .product-card__link {
+  /* Override base.css absolute positioning for standalone product cards */
+  .product-card > .product-card__link {
+    position: static;
     display: block;
     text-decoration: none;
     color: inherit;

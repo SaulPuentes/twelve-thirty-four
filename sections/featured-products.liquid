@@ -159,13 +159,16 @@
     }
   }
 
-  /* Product card styles for this section */
+  /* Product card styles for this section - override base.css absolute positioning */
   .featured-products .product-card {
     position: relative;
     display: block;
+    height: auto;
   }
 
   .featured-products .product-card__link {
+    /* Override base.css position: absolute; inset: 0; */
+    position: static;
     display: block;
     text-decoration: none;
     color: inherit;
