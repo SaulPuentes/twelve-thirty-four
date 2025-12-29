@@ -285,74 +285,75 @@
     const section = document.getElementById('CollectionLinks-{{ section.id }}');
     if (!section) return;
 
-    // Use capture phase to intercept click before anchor processes it
-    section.addEventListener('click', async function(event) {
-      const button = event.target.closest('.collection-links__add-to-cart');
-      if (!button) return;
-
-      // Stop the event from reaching the anchor tag
-      event.preventDefault();
-      event.stopImmediatePropagation();
-
-      const variantId = button.dataset.variantId;
-      if (!variantId || button.disabled) return;
-
-      // Disable button and show loading state
-      button.disabled = true;
-      button.dataset.loading = 'true';
-      button.removeAttribute('data-added');
-
-      try {
-        // Use the global cart handler
-        if (window.cart && typeof window.cart.addItem === 'function') {
-          await window.cart.addItem(parseInt(variantId, 10), 1);
-        } else {
-          // Fallback: Direct API call
-          const response = await fetch('/cart/add.js', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              items: [{ id: parseInt(variantId, 10), quantity: 1 }]
-            })
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to add item to cart');
-          }
-
-          // Update cart count
-          const cartResponse = await fetch('/cart.js');
-          const cart = await cartResponse.json();
-          document.querySelectorAll('[data-cart-count]').forEach(el => {
-            el.textContent = cart.item_count;
-            el.classList.toggle('hidden', cart.item_count === 0);
-          });
+    // Handle clicks on anchor tags - prevent navigation if clicking on button
+    section.querySelectorAll('.collection-links__item').forEach(anchor => {
+      anchor.addEventListener('click', function(event) {
+        // Check if click was on an interactive element (button)
+        const interactiveElement = event.target.closest('button, input, label, select');
+        if (interactiveElement) {
+          event.preventDefault();
         }
+      });
+    });
 
-        // Show success state
-        button.removeAttribute('data-loading');
-        button.dataset.added = 'true';
-
-        // Reset after 2 seconds
-        setTimeout(() => {
-          button.removeAttribute('data-added');
-          button.disabled = false;
-        }, 2000);
-
-      } catch (error) {
-        console.error('Error adding to cart:', error);
-        button.removeAttribute('data-loading');
-        button.disabled = false;
-      }
-    }, true); // Use capture phase
-
-    // Also prevent anchor clicks when clicking button area
+    // Handle add to cart button clicks
     section.querySelectorAll('.collection-links__add-to-cart').forEach(button => {
-      button.addEventListener('click', function(event) {
+      button.addEventListener('click', async function(event) {
         event.preventDefault();
         event.stopPropagation();
+
+        const variantId = button.dataset.variantId;
+        if (!variantId || button.disabled) return;
+
+        // Disable button and show loading state
+        button.disabled = true;
+        button.dataset.loading = 'true';
+        button.removeAttribute('data-added');
+
+        try {
+          // Use the global cart handler
+          if (window.cart && typeof window.cart.addItem === 'function') {
+            await window.cart.addItem(parseInt(variantId, 10), 1);
+          } else {
+            // Fallback: Direct API call
+            const response = await fetch('/cart/add.js', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                items: [{ id: parseInt(variantId, 10), quantity: 1 }]
+              })
+            });
+
+            if (!response.ok) {
+              throw new Error('Failed to add item to cart');
+            }
+
+            // Update cart count
+            const cartResponse = await fetch('/cart.js');
+            const cart = await cartResponse.json();
+            document.querySelectorAll('[data-cart-count]').forEach(el => {
+              el.textContent = cart.item_count;
+              el.classList.toggle('hidden', cart.item_count === 0);
+            });
+          }
+
+          // Show success state
+          button.removeAttribute('data-loading');
+          button.dataset.added = 'true';
+
+          // Reset after 2 seconds
+          setTimeout(() => {
+            button.removeAttribute('data-added');
+            button.disabled = false;
+          }, 2000);
+
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          button.removeAttribute('data-loading');
+          button.disabled = false;
+        }
       });
     });
   })();
