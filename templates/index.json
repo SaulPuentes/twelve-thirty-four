@@ -56,19 +56,50 @@
         "right_link_url": ""
       }
     },
-    "featured-collection": {
-      "type": "featured-collection",
+    "featured-products": {
+      "type": "featured-products",
+      "blocks": {
+        "product-1": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        },
+        "product-2": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        },
+        "product-3": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        },
+        "product-4": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
+        }
+      },
+      "block_order": [
+        "product-1",
+        "product-2",
+        "product-3",
+        "product-4"
+      ],
       "settings": {
         "subheading": "",
         "heading": "Thoughtful Gifts & Floral Creations",
         "description": "Discover our curated selection of blooms and hand-made objects, from locally crafted ceramics to candles and keepsakes sourced from artists around the world.",
-        "collection": "",
-        "products_to_show": 4,
         "columns": 4,
         "gap": 24,
         "show_vendor": false,
         "show_view_all": true,
         "view_all_label": "Explore the shop",
+        "view_all_link": "",
         "color_scheme": "scheme-1"
       }
     },
@@ -190,7 +221,7 @@
   },
   "order": [
     "hero",
-    "featured-collection",
+    "featured-products",
     "collection-links",
     "workshops",
     "community"
