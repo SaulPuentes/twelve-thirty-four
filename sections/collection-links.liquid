@@ -12,19 +12,47 @@
 >
   <div class="collection-links__grid">
     {%- for block in section.blocks -%}
+      {%- liquid
+        assign link_type = block.settings.link_type | default: 'custom'
+        assign is_product = false
+        assign item_link = block.settings.link | default: '#'
+        assign item_title = block.settings.title | default: 'Collection'
+        assign item_image = block.settings.image
+        assign product_title = block.settings.product_title
+        assign product_price = block.settings.product_price
+        assign selected_product = block.settings.product
+
+        if link_type == 'product' and selected_product != blank
+          assign is_product = true
+          assign item_link = selected_product.url
+          assign item_title = block.settings.title | default: selected_product.title
+          assign product_title = selected_product.title
+          assign product_price = selected_product.price | money
+
+          if item_image == blank and selected_product.featured_media != blank
+            assign item_image = selected_product.featured_media
+          endif
+        endif
+
+        assign show_product_info = block.settings.show_product
+        if is_product
+          assign show_product_info = true
+        endif
+      -%}
+
       <a
-        href="{{ block.settings.link | default: '#' }}"
-        class="collection-links__item"
+        href="{{ item_link }}"
+        class="collection-links__item{% if is_product %} collection-links__item--product{% endif %}"
         {{ block.shopify_attributes }}
         {% if block.settings.open_new_tab %}target="_blank" rel="noopener"{% endif %}
       >
         <div class="collection-links__media">
-          {%- if block.settings.image != blank -%}
+          {%- if item_image != blank -%}
             <img
-              src="{{ block.settings.image | image_url: width: 1200 }}"
-              alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+              src="{{ item_image | image_url: width: 1200 }}"
+              alt="{{ item_image.alt | default: item_title | escape }}"
               width="600"
-              height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
+              height="{{ 600 | divided_by: item_image.aspect_ratio | round }}"
               class="collection-links__image"
               loading="lazy"
             >
@@ -35,21 +63,34 @@
         </div>
 
         <div class="collection-links__content">
-          <span class="collection-links__label">{{ block.settings.title | default: 'Collection' }}</span>
+          <span class="collection-links__label">{{ item_title }}</span>
         </div>
 
-        {%- if block.settings.show_product and block.settings.product_title != blank -%}
+        {%- if show_product_info and product_title != blank -%}
           <div class="collection-links__product">
             <div class="collection-links__product-info">
-              <h3 class="collection-links__product-title">{{ block.settings.product_title }}</h3>
-              {%- if block.settings.product_price != blank -%}
-                <p class="collection-links__product-price">{{ block.settings.product_price }}</p>
+              <h3 class="collection-links__product-title">{{ product_title }}</h3>
+              {%- if product_price != blank -%}
+                <p class="collection-links__product-price">{{ product_price }}</p>
               {%- endif -%}
             </div>
             {%- if block.settings.show_add_to_cart -%}
-              <button type="button" class="collection-links__add-to-cart">
-                Add to Cart
-              </button>
+              {%- if is_product and selected_product.available -%}
+                <button
+                  type="button"
+                  class="collection-links__add-to-cart"
+                  data-product-id="{{ selected_product.selected_or_first_available_variant.id }}"
+                  onclick="event.preventDefault(); event.stopPropagation(); this.closest('section').dispatchEvent(new CustomEvent('quick-add', { detail: { variantId: this.dataset.productId } }));"
+                >
+                  Add to Cart
+                </button>
+              {%- elsif is_product and selected_product.available == false -%}
+                <span class="collection-links__sold-out">Sold Out</span>
+              {%- else -%}
+                <button type="button" class="collection-links__add-to-cart">
+                  Add to Cart
+                </button>
+              {%- endif -%}
             {%- endif -%}
           </div>
         {%- endif -%}
@@ -221,6 +262,15 @@
     background-color: #fff;
     color: #111;
   }
+
+  .collection-links__sold-out {
+    padding: 0.5rem 1rem;
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -235,15 +285,36 @@
       "name": "Collection link",
       "settings": [
         {
+          "type": "select",
+          "id": "link_type",
+          "label": "Link type",
+          "options": [
+            { "value": "custom", "label": "Custom link" },
+            { "value": "product", "label": "Product" }
+          ],
+          "default": "custom"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
           "type": "image_picker",
           "id": "image",
-          "label": "Image"
+          "label": "Image",
+          "info": "Optional. If not set and a product is selected, the product image will be used."
         },
         {
           "type": "text",
           "id": "title",
           "label": "Title",
-          "default": "Collection name"
+          "default": "Collection name",
+          "info": "Optional. If not set and a product is selected, the product title will be used."
+        },
+        {
+          "type": "header",
+          "content": "Custom link settings"
         },
         {
           "type": "url",
@@ -264,17 +335,20 @@
           "type": "checkbox",
           "id": "show_product",
           "label": "Show product info",
-          "default": false
+          "default": false,
+          "info": "For custom links. Product links always show product info."
         },
         {
           "type": "text",
           "id": "product_title",
-          "label": "Product title"
+          "label": "Product title",
+          "info": "For custom links only"
         },
         {
           "type": "text",
           "id": "product_price",
-          "label": "Product price"
+          "label": "Product price",
+          "info": "For custom links only"
         },
         {
           "type": "checkbox",
@@ -292,19 +366,22 @@
         {
           "type": "collection_link",
           "settings": {
-            "title": "Bury Me West"
+            "title": "Bury Me West",
+            "link_type": "custom"
           }
         },
         {
           "type": "collection_link",
           "settings": {
-            "title": "Elizabeth Hooper Studio"
+            "title": "Elizabeth Hooper Studio",
+            "link_type": "custom"
           }
         },
         {
           "type": "collection_link",
           "settings": {
-            "title": "Chase Gamblin"
+            "title": "Chase Gamblin",
+            "link_type": "custom"
           }
         }
       ]
@@ -312,4 +389,3 @@
   ]
 }
 {% endschema %}
-
