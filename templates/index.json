@@ -109,36 +109,36 @@
         "link-1": {
           "type": "collection_link",
           "settings": {
+            "link_type": "product",
+            "product": "bury-me-west-12-one-of-a-kind-stoneware-vase",
             "title": "Bury Me West",
+            "product_title": "One of a kind stoneware planter",
             "link": "",
             "open_new_tab": false,
-            "show_product": true,
-            "product_title": "One of a kind stoneware planter",
-            "product_price": "$200.00 USD",
             "show_add_to_cart": true
           }
         },
         "link-2": {
           "type": "collection_link",
           "settings": {
+            "link_type": "custom",
+            "product": "",
             "title": "Elizabeth Hooper Studio",
+            "product_title": "",
             "link": "",
             "open_new_tab": false,
-            "show_product": false,
-            "product_title": "",
-            "product_price": "",
             "show_add_to_cart": true
           }
         },
         "link-3": {
           "type": "collection_link",
           "settings": {
+            "link_type": "product",
+            "product": "chase-gamblin-multicolored-vase",
             "title": "Chase Gamblin",
+            "product_title": "Multicolored Lamp",
             "link": "",
             "open_new_tab": false,
-            "show_product": true,
-            "product_title": "Multicolored Lamp",
-            "product_price": "$3,588.00 USD",
             "show_add_to_cart": true
           }
         }
