@@ -72,10 +72,12 @@
                 <button
                   type="button"
                   class="collection-links__add-to-cart"
-                  data-product-id="{{ selected_product.selected_or_first_available_variant.id }}"
-                  onclick="event.preventDefault(); event.stopPropagation(); this.closest('section').dispatchEvent(new CustomEvent('quick-add', { detail: { variantId: this.dataset.productId } }));"
+                  data-variant-id="{{ selected_product.selected_or_first_available_variant.id }}"
+                  aria-label="{{ 'products.product.add_to_cart' | t }}"
                 >
-                  Add to Cart
+                  <span class="collection-links__add-to-cart-text">Add to Cart</span>
+                  <span class="collection-links__add-to-cart-loading" aria-hidden="true">Adding...</span>
+                  <span class="collection-links__add-to-cart-added" aria-hidden="true">Added!</span>
                 </button>
               {%- else -%}
                 <span class="collection-links__sold-out">Sold Out</span>
@@ -252,6 +254,32 @@
     color: #111;
   }
 
+  .collection-links__add-to-cart:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .collection-links__add-to-cart-loading,
+  .collection-links__add-to-cart-added {
+    display: none;
+  }
+
+  .collection-links__add-to-cart[data-loading="true"] .collection-links__add-to-cart-text {
+    display: none;
+  }
+
+  .collection-links__add-to-cart[data-loading="true"] .collection-links__add-to-cart-loading {
+    display: inline;
+  }
+
+  .collection-links__add-to-cart[data-added="true"] .collection-links__add-to-cart-text {
+    display: none;
+  }
+
+  .collection-links__add-to-cart[data-added="true"] .collection-links__add-to-cart-added {
+    display: inline;
+  }
+
   .collection-links__sold-out {
     padding: 0.5rem 1rem;
     font-family: var(--font-body-family);
@@ -261,6 +289,74 @@
     opacity: 0.7;
   }
 {% endstylesheet %}
+
+{% javascript %}
+  (function() {
+    const section = document.getElementById('CollectionLinks-{{ section.id }}');
+    if (!section) return;
+
+    section.addEventListener('click', async function(event) {
+      const button = event.target.closest('.collection-links__add-to-cart');
+      if (!button) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+
+      const variantId = button.dataset.variantId;
+      if (!variantId) return;
+
+      // Disable button and show loading state
+      button.disabled = true;
+      button.dataset.loading = 'true';
+      button.removeAttribute('data-added');
+
+      try {
+        // Use the global cart handler
+        if (window.cart && typeof window.cart.addItem === 'function') {
+          await window.cart.addItem(parseInt(variantId, 10), 1);
+        } else {
+          // Fallback: Direct API call
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              items: [{ id: parseInt(variantId, 10), quantity: 1 }]
+            })
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to add item to cart');
+          }
+
+          // Update cart count
+          const cartResponse = await fetch('/cart.js');
+          const cart = await cartResponse.json();
+          document.querySelectorAll('[data-cart-count]').forEach(el => {
+            el.textContent = cart.item_count;
+            el.classList.toggle('hidden', cart.item_count === 0);
+          });
+        }
+
+        // Show success state
+        button.removeAttribute('data-loading');
+        button.dataset.added = 'true';
+
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.removeAttribute('data-added');
+          button.disabled = false;
+        }, 2000);
+
+      } catch (error) {
+        console.error('Error adding to cart:', error);
+        button.removeAttribute('data-loading');
+        button.disabled = false;
+      }
+    });
+  })();
+{% endjavascript %}
 
 {% schema %}
 {
