@@ -315,35 +315,38 @@
   }
 {% endstylesheet %}
 
-{% javascript %}
-  (function() {
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
     const section = document.getElementById('CollectionLinks-{{ section.id }}');
     if (!section) return;
 
     // Handle add to cart button clicks
-    section.querySelectorAll('.collection-links__add-to-cart').forEach(button => {
+    section.querySelectorAll('.collection-links__add-to-cart').forEach(function(button) {
       button.addEventListener('click', async function(event) {
         event.preventDefault();
         event.stopPropagation();
 
-        const variantId = button.dataset.variantId;
-        if (!variantId || button.disabled) return;
+        const variantId = this.dataset.variantId;
+        if (!variantId || this.disabled) return;
+
+        const btn = this;
 
         // Disable button and show loading state
-        button.disabled = true;
-        button.dataset.loading = 'true';
-        button.removeAttribute('data-added');
+        btn.disabled = true;
+        btn.setAttribute('data-loading', 'true');
+        btn.removeAttribute('data-added');
 
         try {
-          // Use the global cart handler
+          // Use the global cart handler if available
           if (window.cart && typeof window.cart.addItem === 'function') {
             await window.cart.addItem(parseInt(variantId, 10), 1);
           } else {
-            // Fallback: Direct API call
-            const response = await fetch('/cart/add.js', {
+            // Fallback: Direct API call to Shopify Cart API
+            const response = await fetch(window.Shopify?.routes?.root + 'cart/add.js' || '/cart/add.js', {
               method: 'POST',
               headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
               },
               body: JSON.stringify({
                 items: [{ id: parseInt(variantId, 10), quantity: 1 }]
@@ -351,37 +354,39 @@
             });
 
             if (!response.ok) {
-              throw new Error('Failed to add item to cart');
+              const errorData = await response.json();
+              throw new Error(errorData.description || 'Failed to add item to cart');
             }
 
             // Update cart count
-            const cartResponse = await fetch('/cart.js');
+            const cartResponse = await fetch(window.Shopify?.routes?.root + 'cart.js' || '/cart.js');
             const cart = await cartResponse.json();
-            document.querySelectorAll('[data-cart-count]').forEach(el => {
+            document.querySelectorAll('[data-cart-count]').forEach(function(el) {
               el.textContent = cart.item_count;
               el.classList.toggle('hidden', cart.item_count === 0);
             });
           }
 
           // Show success state
-          button.removeAttribute('data-loading');
-          button.dataset.added = 'true';
+          btn.removeAttribute('data-loading');
+          btn.setAttribute('data-added', 'true');
 
           // Reset after 2 seconds
-          setTimeout(() => {
-            button.removeAttribute('data-added');
-            button.disabled = false;
+          setTimeout(function() {
+            btn.removeAttribute('data-added');
+            btn.disabled = false;
           }, 2000);
 
         } catch (error) {
           console.error('Error adding to cart:', error);
-          button.removeAttribute('data-loading');
-          button.disabled = false;
+          btn.removeAttribute('data-loading');
+          btn.disabled = false;
+          alert('Could not add to cart: ' + error.message);
         }
       });
     });
-  })();
-{% endjavascript %}
+  });
+</script>
 
 {% schema %}
 {
