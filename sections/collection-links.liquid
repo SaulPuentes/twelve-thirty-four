@@ -295,15 +295,17 @@
     const section = document.getElementById('CollectionLinks-{{ section.id }}');
     if (!section) return;
 
+    // Use capture phase to intercept click before anchor processes it
     section.addEventListener('click', async function(event) {
       const button = event.target.closest('.collection-links__add-to-cart');
       if (!button) return;
 
+      // Stop the event from reaching the anchor tag
       event.preventDefault();
-      event.stopPropagation();
+      event.stopImmediatePropagation();
 
       const variantId = button.dataset.variantId;
-      if (!variantId) return;
+      if (!variantId || button.disabled) return;
 
       // Disable button and show loading state
       button.disabled = true;
@@ -354,6 +356,14 @@
         button.removeAttribute('data-loading');
         button.disabled = false;
       }
+    }, true); // Use capture phase
+
+    // Also prevent anchor clicks when clicking button area
+    section.querySelectorAll('.collection-links__add-to-cart').forEach(button => {
+      button.addEventListener('click', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+      });
     });
   })();
 {% endjavascript %}
