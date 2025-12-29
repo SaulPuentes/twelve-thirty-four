@@ -25,14 +25,9 @@
         if link_type == 'product' and selected_product != blank
           assign is_product = true
           assign item_link = selected_product.url
-          assign product_title = selected_product.title
+          assign item_title = block.settings.title | default: selected_product.title
+          assign product_title = block.settings.product_title | default: selected_product.title
           assign product_price = selected_product.price | money
-
-          if block.settings.title != blank
-            assign item_title = block.settings.title
-          else
-            assign item_title = selected_product.title
-          endif
 
           if item_image == blank and selected_product.featured_media != blank
             assign item_image = selected_product.featured_media
@@ -290,27 +285,42 @@
         },
         {
           "type": "header",
-          "content": "Product settings"
+          "content": "Content"
         },
         {
           "type": "product",
           "id": "product",
-          "label": "Product"
+          "label": "Product",
+          "info": "Select a product when using Product link type"
         },
         {
-          "type": "checkbox",
-          "id": "show_add_to_cart",
-          "label": "Show add to cart button",
-          "default": true
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Overrides product image if set"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Collection name",
+          "info": "Label shown at the top of the card. Defaults to product title if not set."
+        },
+        {
+          "type": "text",
+          "id": "product_title",
+          "label": "Product title override",
+          "info": "Overrides the product name shown in the overlay (product link type only)"
         },
         {
           "type": "header",
-          "content": "Custom link settings"
+          "content": "Custom link"
         },
         {
           "type": "url",
           "id": "link",
-          "label": "Link URL"
+          "label": "Link URL",
+          "info": "For custom link type only"
         },
         {
           "type": "checkbox",
@@ -320,19 +330,14 @@
         },
         {
           "type": "header",
-          "content": "Appearance"
+          "content": "Options"
         },
         {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "info": "Overrides product title when using product link type"
-        },
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image",
-          "info": "Overrides product image when using product link type"
+          "type": "checkbox",
+          "id": "show_add_to_cart",
+          "label": "Show add to cart button",
+          "default": true,
+          "info": "Product link type only"
         }
       ]
     }
