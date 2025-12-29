@@ -62,25 +62,25 @@
         "product-1": {
           "type": "product",
           "settings": {
-            "product": ""
+            "product": "10in-anthurium-big-red"
           }
         },
         "product-2": {
           "type": "product",
           "settings": {
-            "product": ""
+            "product": "11"
           }
         },
         "product-3": {
           "type": "product",
           "settings": {
-            "product": ""
+            "product": "14"
           }
         },
         "product-4": {
           "type": "product",
           "settings": {
-            "product": ""
+            "product": "10in-red-emerald-philodendron"
           }
         }
       },
