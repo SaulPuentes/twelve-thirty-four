@@ -18,25 +18,25 @@
         assign item_link = block.settings.link | default: '#'
         assign item_title = block.settings.title | default: 'Collection'
         assign item_image = block.settings.image
-        assign product_title = block.settings.product_title
-        assign product_price = block.settings.product_price
+        assign product_title = ''
+        assign product_price = ''
         assign selected_product = block.settings.product
 
         if link_type == 'product' and selected_product != blank
           assign is_product = true
           assign item_link = selected_product.url
-          assign item_title = block.settings.title | default: selected_product.title
           assign product_title = selected_product.title
           assign product_price = selected_product.price | money
+
+          if block.settings.title != blank
+            assign item_title = block.settings.title
+          else
+            assign item_title = selected_product.title
+          endif
 
           if item_image == blank and selected_product.featured_media != blank
             assign item_image = selected_product.featured_media
           endif
-        endif
-
-        assign show_product_info = block.settings.show_product
-        if is_product
-          assign show_product_info = true
         endif
       -%}
 
@@ -66,16 +66,14 @@
           <span class="collection-links__label">{{ item_title }}</span>
         </div>
 
-        {%- if show_product_info and product_title != blank -%}
+        {%- if is_product -%}
           <div class="collection-links__product">
             <div class="collection-links__product-info">
               <h3 class="collection-links__product-title">{{ product_title }}</h3>
-              {%- if product_price != blank -%}
-                <p class="collection-links__product-price">{{ product_price }}</p>
-              {%- endif -%}
+              <p class="collection-links__product-price">{{ product_price }}</p>
             </div>
             {%- if block.settings.show_add_to_cart -%}
-              {%- if is_product and selected_product.available -%}
+              {%- if selected_product.available -%}
                 <button
                   type="button"
                   class="collection-links__add-to-cart"
@@ -84,12 +82,8 @@
                 >
                   Add to Cart
                 </button>
-              {%- elsif is_product and selected_product.available == false -%}
-                <span class="collection-links__sold-out">Sold Out</span>
               {%- else -%}
-                <button type="button" class="collection-links__add-to-cart">
-                  Add to Cart
-                </button>
+                <span class="collection-links__sold-out">Sold Out</span>
               {%- endif -%}
             {%- endif -%}
           </div>
@@ -295,22 +289,19 @@
           "default": "custom"
         },
         {
+          "type": "header",
+          "content": "Product settings"
+        },
+        {
           "type": "product",
           "id": "product",
           "label": "Product"
         },
         {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Image",
-          "info": "Optional. If not set and a product is selected, the product image will be used."
-        },
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Collection name",
-          "info": "Optional. If not set and a product is selected, the product title will be used."
+          "type": "checkbox",
+          "id": "show_add_to_cart",
+          "label": "Show add to cart button",
+          "default": true
         },
         {
           "type": "header",
@@ -319,7 +310,7 @@
         {
           "type": "url",
           "id": "link",
-          "label": "Link"
+          "label": "Link URL"
         },
         {
           "type": "checkbox",
@@ -329,32 +320,19 @@
         },
         {
           "type": "header",
-          "content": "Product overlay"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_product",
-          "label": "Show product info",
-          "default": false,
-          "info": "For custom links. Product links always show product info."
+          "content": "Appearance"
         },
         {
           "type": "text",
-          "id": "product_title",
-          "label": "Product title",
-          "info": "For custom links only"
+          "id": "title",
+          "label": "Title",
+          "info": "Overrides product title when using product link type"
         },
         {
-          "type": "text",
-          "id": "product_price",
-          "label": "Product price",
-          "info": "For custom links only"
-        },
-        {
-          "type": "checkbox",
-          "id": "show_add_to_cart",
-          "label": "Show add to cart button",
-          "default": true
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Overrides product image when using product link type"
         }
       ]
     }
