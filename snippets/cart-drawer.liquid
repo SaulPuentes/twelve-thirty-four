@@ -90,7 +90,7 @@
       {%- else -%}
         <div class="cart-drawer__empty">
           <p>{{ 'cart.general.empty_message' | t }}</p>
-          <a href="{{ routes.all_products_collection_url }}" class="button button--primary">
+          <a href="{{ routes.all_products_collection_url }}" class="button">
             {{ 'cart.general.continue_shopping' | t }}
           </a>
         </div>
@@ -121,10 +121,10 @@
         </p>
 
         <div class="cart-drawer__actions">
-          <a href="{{ routes.cart_url }}" class="button button--secondary">
+          <a href="{{ routes.cart_url }}" class="button button-secondary">
             {{ 'cart.general.view_cart' | t }}
           </a>
-          <button type="submit" name="checkout" form="cart-drawer-form" class="button button--primary">
+          <button type="submit" name="checkout" form="cart-drawer-form" class="button">
             {{ 'cart.general.checkout' | t }}
           </button>
         </div>
@@ -286,13 +286,20 @@
     justify-content: center;
     background: none;
     border: none;
-    padding: 0;
+    padding: 0.25rem;
     cursor: pointer;
     opacity: 0.5;
+    color: var(--color-foreground, #111);
+    flex-shrink: 0;
   }
 
   .cart-drawer__item-remove:hover {
     opacity: 1;
+  }
+
+  .cart-drawer__item-remove .icon {
+    width: 16px;
+    height: 16px;
   }
 
   .cart-drawer__item-total {
@@ -340,12 +347,45 @@
   .cart-drawer__actions {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
   }
 
-  .cart-drawer__actions .button {
-    width: 100%;
+  .cart-drawer__actions .button,
+  .cart-drawer__actions .button-secondary {
+    display: flex;
+    align-items: center;
     justify-content: center;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .cart-drawer__actions .button:not(.button-secondary) {
+    background-color: var(--color-foreground, #111);
+    color: var(--color-background, #fff);
+    border: 1px solid var(--color-foreground, #111);
+  }
+
+  .cart-drawer__actions .button:not(.button-secondary):hover {
+    background-color: transparent;
+    color: var(--color-foreground, #111);
+  }
+
+  .cart-drawer__actions .button-secondary {
+    background-color: transparent;
+    color: var(--color-foreground, #111);
+    border: 1px solid var(--color-border, #ddd);
+  }
+
+  .cart-drawer__actions .button-secondary:hover {
+    border-color: var(--color-foreground, #111);
   }
 </style>
 
