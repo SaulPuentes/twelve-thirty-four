@@ -355,16 +355,15 @@
     position: absolute;
     left: 0;
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 0;
+    bottom: 0;
     display: none;
     pointer-events: none;
   }
 
   @media screen and (min-width: 1024px) {
     .hero-slideshow__side-links {
-      display: flex;
-      justify-content: space-between;
+      display: block;
     }
   }
 
@@ -403,12 +402,16 @@
 
   .hero-slideshow__side-link--left {
     position: absolute;
-    left: -4rem;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   .hero-slideshow__side-link--right {
     position: absolute;
-    right: -4rem;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   /* Navigation Dots */
