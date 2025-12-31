@@ -74,7 +74,7 @@
 
       {%- comment -%} Side Links (like prototype) {%- endcomment -%}
       {%- if section.settings.left_link_label != blank or section.settings.right_link_label != blank -%}
-        <div class="hero-slideshow__side-links hero-slideshow--text-{{ first_slide.settings.text_color }}">
+        <div class="hero-slideshow__side-links" data-side-links>
           {%- if section.settings.left_link_label != blank -%}
             <a href="{{ section.settings.left_link_url }}" class="hero-slideshow__side-link hero-slideshow__side-link--left">
               <span>{{ section.settings.left_link_label }}</span>
@@ -95,7 +95,7 @@
 
   {%- comment -%} Navigation Dots {%- endcomment -%}
   {%- if has_multiple_slides and section.settings.show_navigation -%}
-    <div class="hero-slideshow__nav hero-slideshow--text-{{ first_slide.settings.text_color }}">
+    <div class="hero-slideshow__nav" data-nav>
       {%- for block in section.blocks -%}
         <button
           type="button"
@@ -116,6 +116,38 @@
     const slides = heroSection.querySelectorAll('[data-slide]');
     const texts = heroSection.querySelectorAll('[data-text]');
     const navDots = heroSection.querySelectorAll('[data-slide-nav]');
+    const sideLinks = heroSection.querySelector('[data-side-links]');
+    const navContainer = heroSection.querySelector('[data-nav]');
+
+    // Store text colors for each slide
+    const slideTextColors = [
+      {%- for block in section.blocks -%}
+        '{{ block.settings.text_color }}'{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ];
+
+    // Function to update text color classes
+    function updateTextColor(index) {
+      const textColor = slideTextColors[index] || 'white';
+
+      // Update side links
+      if (sideLinks) {
+        sideLinks.classList.remove('hero-slideshow--text-white', 'hero-slideshow--text-black');
+        sideLinks.classList.add('hero-slideshow--text-' + textColor);
+      }
+
+      // Update nav dots
+      if (navContainer) {
+        navContainer.classList.remove('hero-slideshow--text-white', 'hero-slideshow--text-black');
+        navContainer.classList.add('hero-slideshow--text-' + textColor);
+      }
+
+      // Set data attribute on body for header to use
+      document.body.setAttribute('data-hero-text-color', textColor);
+    }
+
+    // Set initial text color
+    updateTextColor(0);
 
     if (slides.length <= 1) return;
 
@@ -136,6 +168,9 @@
       slides[index].classList.add('hero-slideshow__slide--active');
       texts[index].classList.add('hero-slideshow__text--active');
       if (navDots.length) navDots[index].classList.add('hero-slideshow__nav-dot--active');
+
+      // Update text color for new slide
+      updateTextColor(index);
 
       currentIndex = index;
 
@@ -247,7 +282,6 @@
 
   .hero-slideshow__content-inner {
     width: 100%;
-    max-width: var(--hero-content-max-width, 800px);
     position: relative;
   }
 

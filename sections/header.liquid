@@ -226,6 +226,15 @@
   .header--transparent:not(.header--scrolled) .header__menu-toggle,
   .header--transparent:not(.header--scrolled) .header__logo-text {
     color: #fff;
+    transition: color 0.6s ease-in-out;
+  }
+
+  /* Header text color based on hero slide */
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__nav-link,
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__action,
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__menu-toggle,
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__logo-text {
+    color: #000;
   }
 
   .header--transparent:not(.header--scrolled) .header__logo-image--default {
@@ -237,6 +246,15 @@
   }
 
   .header__logo-image--inverse {
+    display: none;
+  }
+
+  /* Show default logo when hero has black text */
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__logo-image--default {
+    display: block;
+  }
+
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__logo-image--inverse {
     display: none;
   }
 
@@ -398,6 +416,11 @@
   .header--transparent:not(.header--scrolled) .header__cart-count {
     background-color: #fff;
     color: #111;
+  }
+
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__cart-count {
+    background-color: #000;
+    color: #fff;
   }
 
   .header__menu-toggle {
