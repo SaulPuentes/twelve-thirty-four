@@ -1,6 +1,6 @@
 <section
   id="Newsletter-{{ section.id }}"
-  class="newsletter color-{{ section.settings.color_scheme }}"
+  class="newsletter"
 >
   <div class="newsletter__container">
     <div class="newsletter__content">
@@ -47,11 +47,6 @@
             <p class="newsletter__success">
               {{ 'newsletter.success' | t }}
             </p>
-          {%- endif -%}
-        {% endform %}
-
-          {%- if section.settings.disclaimer != blank -%}
-            <p class="newsletter__disclaimer">{{ section.settings.disclaimer }}</p>
           {%- endif -%}
         {% endform %}
       </div>
@@ -209,13 +204,6 @@
     margin: 1rem 0 0;
   }
 
-  .newsletter__disclaimer {
-    font-family: var(--font-body-family);
-    font-size: 0.75rem;
-    color: var(--color-foreground);
-    opacity: 0.5;
-    margin: 0.5rem 0 0;
-  }
 {% endstylesheet %}
 
 {% schema %}
@@ -247,17 +235,6 @@
       "id": "button_label",
       "label": "Button label",
       "default": "Subscribe"
-    },
-    {
-      "type": "text",
-      "id": "disclaimer",
-      "label": "Disclaimer text"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
     }
   ],
   "enabled_on": {
