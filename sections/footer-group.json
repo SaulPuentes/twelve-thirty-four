@@ -1,16 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer group",
   "sections": {
     "newsletter": {
       "type": "newsletter",
-      "settings": {}
+      "settings": {
+        "heading": "Stay Connected",
+        "description": "Subscribe to receive updates on new collections, workshops, and community events.",
+        "placeholder": "Enter your email",
+        "button_label": "Subscribe",
+        "disclaimer": "",
+        "color_scheme": ""
+      }
     },
     "footer": {
       "type": "footer",
-      "settings": {}
+      "settings": {
+        "email": "contact@example.com",
+        "address": "123 Floral Street\nNew York, NY 10001\nUnited States",
+        "show_say_hello": true,
+        "copyright_text": "All rights reserved.",
+        "color_scheme": ""
+      }
     }
   },
-  "order": ["newsletter", "footer"]
+  "order": [
+    "newsletter",
+    "footer"
+  ]
 }
-
