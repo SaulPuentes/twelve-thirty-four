@@ -23,7 +23,7 @@
 
       {%- if section.settings.show_view_all and section.settings.view_all_link != blank -%}
         <a href="{{ section.settings.view_all_link }}" class="featured-products__view-all">
-          <span class="featured-products__arrow">→</span>
+          {% render 'animated-arrow' %}
           <span>{{ section.settings.view_all_label | default: 'Explore the shop' }}</span>
         </a>
       {%- endif -%}
@@ -147,22 +147,6 @@
 
   .featured-products__view-all:hover {
     opacity: 0.7;
-  }
-
-  .featured-products__arrow {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--color-border);
-    border-radius: 50%;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-  }
-
-  .featured-products__view-all:hover .featured-products__arrow {
-    transform: translateX(4px);
-    border-color: var(--color-foreground);
   }
 
   .featured-products__grid {

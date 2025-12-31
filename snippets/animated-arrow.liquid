@@ -1,0 +1,59 @@
+{%- comment -%}
+  Animated Arrow
+  A minimalist horizontal arrow with animated tail on hover
+  
+  Features:
+  - Thin horizontal line that extends on hover
+  - Chevron ">" arrow head
+  - Smooth 300ms transition
+  - Works with parent's hover state
+
+  Usage:
+  {% render 'animated-arrow' %}
+{%- endcomment -%}
+
+<span class="animated-arrow">
+  <span class="animated-arrow__line"></span>
+  <svg
+    viewBox="0 0 8 12"
+    class="animated-arrow__chevron"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path d="M1 1 L7 6 L1 11" />
+  </svg>
+</span>
+
+<style>
+  .animated-arrow {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .animated-arrow__line {
+    position: relative;
+    display: block;
+    height: 1px;
+    width: 1rem;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+  }
+
+  .animated-arrow__chevron {
+    width: 0.5rem;
+    height: 0.75rem;
+    margin-left: -6px;
+    flex-shrink: 0;
+  }
+
+  a:hover .animated-arrow__line,
+  button:hover .animated-arrow__line {
+    width: 2rem;
+  }
+</style>
+
