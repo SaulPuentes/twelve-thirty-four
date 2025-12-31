@@ -183,48 +183,12 @@
         "autoplay_speed": 5,
         "color_scheme": "scheme-1"
       }
-    },
-    "community": {
-      "type": "image-with-text",
-      "blocks": {
-        "logo-1": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo-2": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo-3": {
-          "type": "logo",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "logo-1",
-        "logo-2",
-        "logo-3"
-      ],
-      "settings": {
-        "caption": "Your support helps us bring beauty, healing, and hope to those who need it most.",
-        "image_width": 50,
-        "layout": "image-left",
-        "subheading": "",
-        "heading": "Back to the Roots",
-        "text": "<p><strong>Back to the Roots</strong> is a floral arrangement workshop born from a micro grant awarded to Patricio Rivera by the <strong>City of Dallas Office of Culture and Arts</strong>, benefiting <strong>Vogel Alcove</strong>.</p><p>This experience will be offered to ten <strong>parents experiencing homelessness</strong>, creating a safe space to reconnect with nature, creativity, and community.</p><p>To expand this initiative and reach more families, we've received <strong>fiscal sponsorship</strong> from Fractured Atlas to collect fully tax-deductible donations.</p>",
-        "button_label": "Get directions",
-        "button_link": "",
-        "button_style": "link",
-        "show_logos": true,
-        "color_scheme": "scheme-3"
-      }
     }
   },
   "order": [
     "hero",
     "featured-products",
     "collection-links",
-    "workshops",
-    "community"
+    "workshops"
   ]
 }
