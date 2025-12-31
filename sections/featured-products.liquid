@@ -4,7 +4,7 @@
 
 <section
   id="FeaturedProducts-{{ section.id }}"
-  class="featured-products section-spacing color-{{ section.settings.color_scheme }}"
+  class="featured-products"
   style="
     --featured-products-columns: {{ columns }};
     --featured-products-gap: {{ section.settings.gap }}px;
@@ -12,20 +12,14 @@
 >
   <div class="page-width">
     {%- comment -%} Header {%- endcomment -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="featured-products__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
     <div class="featured-products__header">
-      <div class="featured-products__header-text">
-        {%- if section.settings.subheading != blank -%}
-          <p class="featured-products__subheading">{{ section.settings.subheading }}</p>
-        {%- endif -%}
-
-        {%- if section.settings.heading != blank -%}
-          <h2 class="featured-products__heading h2">{{ section.settings.heading }}</h2>
-        {%- endif -%}
-
-        {%- if section.settings.description != blank -%}
-          <p class="featured-products__description">{{ section.settings.description }}</p>
-        {%- endif -%}
-      </div>
+      {%- if section.settings.description != blank -%}
+        <p class="featured-products__description">{{ section.settings.description }}</p>
+      {%- endif -%}
 
       {%- if section.settings.show_view_all and section.settings.view_all_link != blank -%}
         <a href="{{ section.settings.view_all_link }}" class="featured-products__view-all">
@@ -74,36 +68,47 @@
 
 {% stylesheet %}
   .featured-products {
-    padding: var(--section-spacing, 4rem) 0;
+    padding: 5rem 2rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    .featured-products {
+      padding: 7rem 4rem;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .featured-products {
+      padding: 8rem 4rem;
+    }
+  }
+
+  .featured-products__heading {
+    font-family: var(--font-heading-family);
+    font-size: 2.25rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .featured-products__heading {
+      font-size: 3rem;
+    }
   }
 
   .featured-products__header {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
+    gap: 1rem;
+    margin-bottom: 4rem;
+    align-items: end;
   }
 
-  @media screen and (min-width: 990px) {
+  @media screen and (min-width: 1024px) {
     .featured-products__header {
       grid-template-columns: 2fr 1fr;
-      align-items: end;
     }
-  }
-
-  .featured-products__subheading {
-    font-family: var(--font-body-family);
-    font-size: 0.75rem;
-    font-weight: 400;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-foreground);
-    opacity: 0.6;
-    margin: 0 0 0.5rem;
-  }
-
-  .featured-products__heading {
-    margin: 0 0 1rem;
   }
 
   .featured-products__description {
@@ -116,6 +121,12 @@
     max-width: 630px;
   }
 
+  @media screen and (min-width: 1024px) {
+    .featured-products__description {
+      grid-column: 1 / 2;
+    }
+  }
+
   .featured-products__view-all {
     display: inline-flex;
     align-items: center;
@@ -124,7 +135,14 @@
     font-size: 0.875rem;
     color: var(--color-foreground);
     text-decoration: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    justify-self: start;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .featured-products__view-all {
+      margin-left: -3.5rem;
+    }
   }
 
   .featured-products__view-all:hover {
@@ -223,11 +241,6 @@
   "settings": [
     {
       "type": "text",
-      "id": "subheading",
-      "label": "Subheading"
-    },
-    {
-      "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Thoughtful Gifts & Floral Creations"
@@ -283,12 +296,6 @@
       "type": "url",
       "id": "view_all_link",
       "label": "Link URL"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
     }
   ],
   "blocks": [
