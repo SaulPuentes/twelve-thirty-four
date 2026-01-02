@@ -13,12 +13,17 @@ class FlyToCart extends HTMLElement {
   destination;
 
   connectedCallback() {
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      /** @type {DOMRectReadOnly | null} */
-      let sourceRect = null;
-      /** @type {DOMRectReadOnly | null} */
-      let destinationRect = null;
+    if (!this.source || !this.destination) {
+      this.remove();
+      return;
+    }
 
+    // Store rects as we observe
+    let sourceRect = null;
+    let destinationRect = null;
+    let hasAnimated = false;
+
+    const intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.target === this.source) {
           sourceRect = entry.boundingClientRect;
@@ -27,12 +32,36 @@ class FlyToCart extends HTMLElement {
         }
       });
 
-      if (sourceRect && destinationRect) {
+      if (sourceRect && destinationRect && !hasAnimated) {
+        hasAnimated = true;
+        intersectionObserver.disconnect();
         this.#animate(sourceRect, destinationRect);
       }
-
-      intersectionObserver.disconnect();
+    }, {
+      threshold: 0,
+      rootMargin: '0px'
     });
+
+    // Also check immediately in case both elements are already visible
+    requestAnimationFrame(() => {
+      if (!hasAnimated && this.source && this.destination) {
+        const sourceRectImmediate = this.source.getBoundingClientRect();
+        const destRectImmediate = this.destination.getBoundingClientRect();
+        
+        // Only use immediate if both have valid dimensions
+        if (sourceRectImmediate.width > 0 && sourceRectImmediate.height > 0 &&
+            destRectImmediate.width > 0 && destRectImmediate.height > 0) {
+          sourceRect = sourceRectImmediate;
+          destinationRect = destRectImmediate;
+          if (!hasAnimated) {
+            hasAnimated = true;
+            intersectionObserver.disconnect();
+            this.#animate(sourceRect, destinationRect);
+          }
+        }
+      }
+    });
+
     intersectionObserver.observe(this.source);
     intersectionObserver.observe(this.destination);
   }
