@@ -267,6 +267,13 @@
         "id": "show_cart_note",
         "label": "Enable cart note",
         "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "add_to_cart_animation",
+        "label": "Enable add to cart animation",
+        "info": "Shows a fly-to-cart animation when adding products to cart",
+        "default": true
       }
     ]
   },

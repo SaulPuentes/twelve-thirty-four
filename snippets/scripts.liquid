@@ -6,6 +6,11 @@
 {%- comment -%} Global JavaScript {%- endcomment -%}
 <script src="{{ 'global.js' | asset_url }}" defer></script>
 
+{%- comment -%} Fly to Cart Animation {%- endcomment -%}
+{%- if settings.add_to_cart_animation -%}
+  <script src="{{ 'fly-to-cart.js' | asset_url }}" defer></script>
+{%- endif -%}
+
 {%- comment -%} Hero Slideshow (only on pages with hero) {%- endcomment -%}
 {%- if template == 'index' -%}
   <script src="{{ 'hero-slideshow.js' | asset_url }}" defer></script>
