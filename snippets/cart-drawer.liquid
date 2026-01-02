@@ -325,6 +325,11 @@
     transform: translateY(1px);
   }
 
+  .cart-drawer__item.removing {
+    overflow: hidden;
+    animation: removeItemAnimation 0.4s ease forwards;
+  }
+
   .cart-drawer__item.removing .remove-icon-bottom {
     transform: translateY(0);
   }
@@ -339,6 +344,22 @@
     }
     100% {
       transform: translate(0, 0);
+    }
+  }
+
+  @keyframes removeItemAnimation {
+    0% {
+      opacity: 1;
+      height: auto;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+    100% {
+      opacity: 0;
+      height: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
     }
   }
 
