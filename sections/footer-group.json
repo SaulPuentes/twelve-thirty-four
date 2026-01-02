@@ -17,19 +17,39 @@
         "heading": "Stay Connected",
         "description": "Subscribe to receive updates on new collections, workshops, and community events.",
         "placeholder": "Enter your email",
-        "button_label": "Subscribe",
-        "disclaimer": "",
-        "color_scheme": ""
+        "button_label": "Subscribe"
       }
     },
     "footer": {
       "type": "footer",
+      "blocks": {
+        "link_column_cUXLDm": {
+          "type": "link_column",
+          "settings": {
+            "heading": "",
+            "link_1_text": "Shop",
+            "link_1_url": "shopify://collections",
+            "link_2_text": "About Us",
+            "link_2_url": "shopify://pages/portfolio",
+            "link_3_text": "",
+            "link_3_url": "",
+            "link_4_text": "",
+            "link_4_url": "",
+            "link_5_text": "",
+            "link_5_url": "",
+            "link_6_text": "",
+            "link_6_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "link_column_cUXLDm"
+      ],
       "settings": {
         "email": "contact@example.com",
         "address": "123 Floral Street\nNew York, NY 10001\nUnited States",
         "show_say_hello": true,
-        "copyright_text": "All rights reserved.",
-        "color_scheme": ""
+        "copyright_text": "All rights reserved."
       }
     }
   },
