@@ -91,7 +91,7 @@
         "product-4"
       ],
       "settings": {
-        "heading": "Thoughtful Gifts & Floral Creations",
+        "heading": "Thoughtful Gifts\n& Floral Creations",
         "description": "Discover our curated selection of blooms and hand-made objects, from locally crafted ceramics to candles and keepsakes sourced from artists around the world.",
         "columns": 4,
         "gap": 24,
@@ -178,8 +178,7 @@
       "settings": {
         "heading": "Workshops",
         "autoplay": true,
-        "autoplay_speed": 5,
-        "color_scheme": "scheme-1"
+        "autoplay_speed": 5
       }
     }
   },
