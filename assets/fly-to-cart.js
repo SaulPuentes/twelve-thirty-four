@@ -4,53 +4,37 @@
  */
 class FlyToCart extends HTMLElement {
   /** @type {Element} */
-  source;
+  source = null;
 
   /** @type {boolean} */
   useSourceSize = false;
 
   /** @type {Element} */
-  destination;
+  destination = null;
 
   connectedCallback() {
-    if (!this.source || !this.destination) {
-      this.remove();
-      return;
-    }
-
-    // Store rects across callback invocations
-    let sourceRect = null;
-    let destinationRect = null;
-
-    const intersectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.target === this.source) {
-          sourceRect = entry.boundingClientRect;
-        } else if (entry.target === this.destination) {
-          destinationRect = entry.boundingClientRect;
-        }
-      });
-
-      // Animate once we have both rects
-      if (sourceRect && destinationRect) {
-        intersectionObserver.disconnect();
-        this.#animate(sourceRect, destinationRect);
-      }
-    }, {
-      threshold: 0,
-      rootMargin: '0px'
+    // Use requestAnimationFrame to ensure DOM is ready and elements are positioned
+    requestAnimationFrame(() => {
+      this.runAnimation();
     });
-
-    intersectionObserver.observe(this.source);
-    intersectionObserver.observe(this.destination);
   }
 
   /**
    * Animates the flying element along the bezier curve.
-   * @param {DOMRectReadOnly} sourceRect - The bounding client rect of the source.
-   * @param {DOMRectReadOnly} destinationRect - The bounding client rect of the destination.
    */
-  #animate = async (sourceRect, destinationRect) => {
+  async runAnimation() {
+    if (!this.source || !this.destination) {
+      console.warn('FlyToCart: Missing source or destination', { 
+        source: this.source, 
+        destination: this.destination 
+      });
+      this.remove();
+      return;
+    }
+
+    const sourceRect = this.source.getBoundingClientRect();
+    const destinationRect = this.destination.getBoundingClientRect();
+
     // Define bezier curve points
     const startPoint = {
       x: sourceRect.left + sourceRect.width / 2,
@@ -72,12 +56,25 @@ class FlyToCart extends HTMLElement {
     this.style.setProperty('--travel-x', `${endPoint.x - startPoint.x}px`);
     this.style.setProperty('--travel-y', `${endPoint.y - startPoint.y}px`);
 
-    // Yield to main thread to ensure styles are applied
+    // Wait for next frame to ensure styles are applied
     await new Promise((resolve) => requestAnimationFrame(resolve));
 
-    await Promise.allSettled(this.getAnimations().map((a) => a.finished));
+    // Wait for animations to complete
+    try {
+      const animations = this.getAnimations();
+      if (animations.length > 0) {
+        await Promise.allSettled(animations.map((a) => a.finished));
+      } else {
+        // Fallback: wait for animation duration if no animations detected
+        await new Promise((resolve) => setTimeout(resolve, 600));
+      }
+    } catch (e) {
+      // Animation was cancelled or errored
+      console.warn('FlyToCart: Animation error', e);
+    }
+    
     this.remove();
-  };
+  }
 }
 
 if (!customElements.get('fly-to-cart')) {

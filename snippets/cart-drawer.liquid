@@ -679,7 +679,7 @@
         if (countElement) {
           countElement.textContent = cart.item_count > 0 ? `(${cart.item_count})` : '';
         }
-        
+
         // Update header cart count
         document.querySelectorAll('[data-cart-count]').forEach(el => {
           el.textContent = cart.item_count;
