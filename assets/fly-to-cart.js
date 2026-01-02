@@ -18,10 +18,9 @@ class FlyToCart extends HTMLElement {
       return;
     }
 
-    // Store rects as we observe
+    // Store rects across callback invocations
     let sourceRect = null;
     let destinationRect = null;
-    let hasAnimated = false;
 
     const intersectionObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -32,34 +31,14 @@ class FlyToCart extends HTMLElement {
         }
       });
 
-      if (sourceRect && destinationRect && !hasAnimated) {
-        hasAnimated = true;
+      // Animate once we have both rects
+      if (sourceRect && destinationRect) {
         intersectionObserver.disconnect();
         this.#animate(sourceRect, destinationRect);
       }
     }, {
       threshold: 0,
       rootMargin: '0px'
-    });
-
-    // Also check immediately in case both elements are already visible
-    requestAnimationFrame(() => {
-      if (!hasAnimated && this.source && this.destination) {
-        const sourceRectImmediate = this.source.getBoundingClientRect();
-        const destRectImmediate = this.destination.getBoundingClientRect();
-        
-        // Only use immediate if both have valid dimensions
-        if (sourceRectImmediate.width > 0 && sourceRectImmediate.height > 0 &&
-            destRectImmediate.width > 0 && destRectImmediate.height > 0) {
-          sourceRect = sourceRectImmediate;
-          destinationRect = destRectImmediate;
-          if (!hasAnimated) {
-            hasAnimated = true;
-            intersectionObserver.disconnect();
-            this.#animate(sourceRect, destinationRect);
-          }
-        }
-      }
     });
 
     intersectionObserver.observe(this.source);
