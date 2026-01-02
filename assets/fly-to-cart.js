@@ -4,30 +4,26 @@
  */
 class FlyToCart extends HTMLElement {
   /** @type {Element} */
-  source = null;
+  source;
 
   /** @type {boolean} */
   useSourceSize = false;
 
   /** @type {Element} */
-  destination = null;
+  destination;
 
   connectedCallback() {
     // Use requestAnimationFrame to ensure DOM is ready and elements are positioned
     requestAnimationFrame(() => {
-      this.runAnimation();
+      this.animate();
     });
   }
 
   /**
    * Animates the flying element along the bezier curve.
    */
-  async runAnimation() {
+  async animate() {
     if (!this.source || !this.destination) {
-      console.warn('FlyToCart: Missing source or destination', { 
-        source: this.source, 
-        destination: this.destination 
-      });
       this.remove();
       return;
     }
@@ -61,18 +57,10 @@ class FlyToCart extends HTMLElement {
 
     // Wait for animations to complete
     try {
-      const animations = this.getAnimations();
-      if (animations.length > 0) {
-        await Promise.allSettled(animations.map((a) => a.finished));
-      } else {
-        // Fallback: wait for animation duration if no animations detected
-        await new Promise((resolve) => setTimeout(resolve, 600));
-      }
+      await Promise.allSettled(this.getAnimations().map((a) => a.finished));
     } catch (e) {
       // Animation was cancelled or errored
-      console.warn('FlyToCart: Animation error', e);
     }
-    
     this.remove();
   }
 }

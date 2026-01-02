@@ -320,20 +320,23 @@
     white-space: nowrap;
     border: 0;
   }
-
 {% endstylesheet %}
 
-<script>
-(function() {
-  function initCollectionLinksAddToCart() {
-    document.querySelectorAll('.collection-links__add-to-cart').forEach(function(button) {
+{% javascript %}
+class CollectionLinksAddToCart {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    document.querySelectorAll('.collection-links__add-to-cart').forEach(button => {
       if (button.dataset.initialized) return;
       button.dataset.initialized = 'true';
-      button.addEventListener('click', handleClick);
+      button.addEventListener('click', this.handleClick.bind(this));
     });
   }
 
-  async function handleClick(event) {
+  async handleClick(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -349,17 +352,17 @@
 
     try {
       // Trigger fly-to-cart animation
-      animateFlyToCart(button);
+      this.animateFlyToCart(button);
 
-      await addToCart(variantId);
-      await updateCartCount();
+      await this.addToCart(variantId);
+      await this.updateCartCount();
 
       // Show success state
       button.removeAttribute('data-loading');
       button.setAttribute('data-added', 'true');
 
       // Reset after 2 seconds
-      setTimeout(function() {
+      setTimeout(() => {
         button.removeAttribute('data-added');
         button.disabled = false;
       }, 2000);
@@ -371,43 +374,51 @@
     }
   }
 
-  function animateFlyToCart(button) {
-    // Find cart icon - try multiple selectors for compatibility
-    const cartIcon = document.querySelector('.header-actions__cart-icon') || 
-                     document.querySelector('.header__cart') ||
-                     document.querySelector('[data-cart-toggle]');
+  animateFlyToCart(button) {
+    const cartIcon = document.querySelector('.header-actions__cart-icon');
     const productImage = button.dataset.productImage;
 
-    if (!cartIcon || !productImage) {
-      console.warn('Fly-to-cart: Missing cart icon or product image', { cartIcon: !!cartIcon, productImage: !!productImage });
+    if (!cartIcon) {
+      console.warn('Fly-to-cart: Cart icon not found');
       return;
     }
 
-    // Check if fly-to-cart custom element is defined
+    if (!productImage) {
+      console.warn('Fly-to-cart: Product image not found');
+      return;
+    }
+
+    // Check if FlyToCart custom element is defined
     if (!customElements.get('fly-to-cart')) {
-      console.warn('Fly-to-cart: Custom element not defined');
+      console.warn('Fly-to-cart: Custom element not defined yet');
       return;
     }
 
     const flyToCartElement = document.createElement('fly-to-cart');
-    flyToCartElement.classList.add('fly-to-cart--main');
-    flyToCartElement.style.setProperty('background-image', 'url(' + productImage + ')');
+    flyToCartElement.classList.add('fly-to-cart--quick');
+    flyToCartElement.style.setProperty('background-image', `url(${productImage})`);
     flyToCartElement.style.setProperty('--start-opacity', '0');
+    
+    // Set timing functions inline as fallback
+    flyToCartElement.style.setProperty('--x-timing', 'cubic-bezier(0, -0.1, 1, 0.32)');
+    flyToCartElement.style.setProperty('--y-timing', 'cubic-bezier(0, 0.92, 0.92, 1.04)');
+    flyToCartElement.style.setProperty('--scale-timing', 'cubic-bezier(0.86, 0.08, 0.98, 0.98)');
+    
     flyToCartElement.source = button;
     flyToCartElement.destination = cartIcon;
 
     document.body.appendChild(flyToCartElement);
   }
 
-  async function addToCart(variantId) {
+  async addToCart(variantId) {
     // Use the global cart handler if available
     if (window.cart && typeof window.cart.addItem === 'function') {
       return window.cart.addItem(parseInt(variantId, 10), 1);
     }
 
     // Fallback: Direct API call to Shopify Cart API
-    const rootUrl = window.Shopify && window.Shopify.routes ? window.Shopify.routes.root : '/';
-    const response = await fetch(rootUrl + 'cart/add.js', {
+    const rootUrl = window.Shopify?.routes?.root || '/';
+    const response = await fetch(`${rootUrl}cart/add.js`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -426,25 +437,25 @@
     return response.json();
   }
 
-  async function updateCartCount() {
-    const rootUrl = window.Shopify && window.Shopify.routes ? window.Shopify.routes.root : '/';
-    const response = await fetch(rootUrl + 'cart.js');
+  async updateCartCount() {
+    const rootUrl = window.Shopify?.routes?.root || '/';
+    const response = await fetch(`${rootUrl}cart.js`);
     const cart = await response.json();
 
-    document.querySelectorAll('[data-cart-count]').forEach(function(el) {
+    document.querySelectorAll('[data-cart-count]').forEach(el => {
       el.textContent = cart.item_count;
       el.classList.toggle('hidden', cart.item_count === 0);
     });
   }
+}
 
-  // Initialize when DOM is ready
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCollectionLinksAddToCart);
-  } else {
-    initCollectionLinksAddToCart();
-  }
-})();
-</script>
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => new CollectionLinksAddToCart());
+} else {
+  new CollectionLinksAddToCart();
+}
+{% endjavascript %}
 
 {% schema %}
 {
