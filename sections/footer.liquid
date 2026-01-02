@@ -36,25 +36,58 @@
           {%- endif -%}
         </div>
 
-        {%- comment -%} Navigation Columns {%- endcomment -%}
+        {%- comment -%} Link Columns {%- endcomment -%}
         {%- for block in section.blocks -%}
-          {%- if block.type == 'menu' -%}
-            <div class="footer__column footer__column--nav" {{ block.shopify_attributes }}>
+          {%- if block.type == 'link_column' -%}
+            <div class="footer__column footer__column--links" {{ block.shopify_attributes }}>
               {%- if block.settings.heading != blank -%}
                 <h3 class="footer__column-heading">{{ block.settings.heading }}</h3>
               {%- endif -%}
               
-              {%- if block.settings.menu != blank -%}
-                <ul class="footer__nav-list">
-                  {%- for link in linklists[block.settings.menu].links -%}
-                    <li class="footer__nav-item">
-                      <a href="{{ link.url }}" class="footer__nav-link">
-                        {{ link.title }}
-                      </a>
-                    </li>
-                  {%- endfor -%}
-                </ul>
-              {%- endif -%}
+              <ul class="footer__nav-list">
+                {%- if block.settings.link_1_text != blank and block.settings.link_1_url != blank -%}
+                  <li class="footer__nav-item">
+                    <a href="{{ block.settings.link_1_url }}" class="footer__nav-link">
+                      {{ block.settings.link_1_text }}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if block.settings.link_2_text != blank and block.settings.link_2_url != blank -%}
+                  <li class="footer__nav-item">
+                    <a href="{{ block.settings.link_2_url }}" class="footer__nav-link">
+                      {{ block.settings.link_2_text }}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if block.settings.link_3_text != blank and block.settings.link_3_url != blank -%}
+                  <li class="footer__nav-item">
+                    <a href="{{ block.settings.link_3_url }}" class="footer__nav-link">
+                      {{ block.settings.link_3_text }}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if block.settings.link_4_text != blank and block.settings.link_4_url != blank -%}
+                  <li class="footer__nav-item">
+                    <a href="{{ block.settings.link_4_url }}" class="footer__nav-link">
+                      {{ block.settings.link_4_text }}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if block.settings.link_5_text != blank and block.settings.link_5_url != blank -%}
+                  <li class="footer__nav-item">
+                    <a href="{{ block.settings.link_5_url }}" class="footer__nav-link">
+                      {{ block.settings.link_5_text }}
+                    </a>
+                  </li>
+                {%- endif -%}
+                {%- if block.settings.link_6_text != blank and block.settings.link_6_url != blank -%}
+                  <li class="footer__nav-item">
+                    <a href="{{ block.settings.link_6_url }}" class="footer__nav-link">
+                      {{ block.settings.link_6_text }}
+                    </a>
+                  </li>
+                {%- endif -%}
+              </ul>
             </div>
           {%- endif -%}
         {%- endfor -%}
@@ -131,7 +164,7 @@
 
   .footer__title {
     font-family: var(--font-heading-family);
-    font-size: 1.5rem;
+    font-size: 2rem;
     line-height: 1.1;
     text-transform: uppercase;
     margin: 0;
@@ -182,7 +215,7 @@
       grid-column: span 3;
     }
 
-    .footer__column--nav {
+    .footer__column--links {
       grid-column: span 3;
     }
   }
@@ -363,8 +396,8 @@
   ],
   "blocks": [
     {
-      "type": "menu",
-      "name": "Menu column",
+      "type": "link_column",
+      "name": "Link column",
       "settings": [
         {
           "type": "text",
@@ -372,9 +405,88 @@
           "label": "Heading"
         },
         {
-          "type": "link_list",
-          "id": "menu",
-          "label": "Menu"
+          "type": "header",
+          "content": "Link 1"
+        },
+        {
+          "type": "text",
+          "id": "link_1_text",
+          "label": "Link text"
+        },
+        {
+          "type": "url",
+          "id": "link_1_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "header",
+          "content": "Link 2"
+        },
+        {
+          "type": "text",
+          "id": "link_2_text",
+          "label": "Link text"
+        },
+        {
+          "type": "url",
+          "id": "link_2_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "header",
+          "content": "Link 3"
+        },
+        {
+          "type": "text",
+          "id": "link_3_text",
+          "label": "Link text"
+        },
+        {
+          "type": "url",
+          "id": "link_3_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "header",
+          "content": "Link 4"
+        },
+        {
+          "type": "text",
+          "id": "link_4_text",
+          "label": "Link text"
+        },
+        {
+          "type": "url",
+          "id": "link_4_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "header",
+          "content": "Link 5"
+        },
+        {
+          "type": "text",
+          "id": "link_5_text",
+          "label": "Link text"
+        },
+        {
+          "type": "url",
+          "id": "link_5_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "header",
+          "content": "Link 6"
+        },
+        {
+          "type": "text",
+          "id": "link_6_text",
+          "label": "Link text"
+        },
+        {
+          "type": "url",
+          "id": "link_6_url",
+          "label": "Link URL"
         }
       ]
     }
@@ -387,17 +499,15 @@
       "name": "Footer",
       "blocks": [
         {
-          "type": "menu",
+          "type": "link_column",
           "settings": {
-            "heading": "Shop",
-            "menu": "main-menu"
+            "heading": "Shop"
           }
         },
         {
-          "type": "menu",
+          "type": "link_column",
           "settings": {
-            "heading": "About",
-            "menu": "footer"
+            "heading": "About"
           }
         }
       ]
