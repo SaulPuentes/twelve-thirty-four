@@ -381,14 +381,27 @@ class CollectionLinksAddToCart {
     }
   }
 
-  animateFlyToCart(button) {
+  async animateFlyToCart(button) {
     const cartIcon = document.querySelector('.header-actions__cart-icon');
     const productImage = button.dataset.productImage;
 
-    if (!cartIcon || !productImage) return;
+    if (!cartIcon || !productImage) {
+      console.warn('Fly-to-cart: Missing cart icon or product image');
+      return;
+    }
 
-    // Check if FlyToCart custom element is defined
-    if (!customElements.get('fly-to-cart')) return;
+    // Wait for FlyToCart custom element to be defined (with timeout)
+    if (!customElements.get('fly-to-cart')) {
+      try {
+        await Promise.race([
+          customElements.whenDefined('fly-to-cart'),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout')), 2000))
+        ]);
+      } catch (e) {
+        console.warn('Fly-to-cart: Custom element not defined');
+        return;
+      }
+    }
 
     const flyToCartElement = document.createElement('fly-to-cart');
     flyToCartElement.classList.add('fly-to-cart--collection');

@@ -649,8 +649,18 @@
         });
 
         if (response.ok) {
-          this.refresh();
+          // Wait for animation to complete before removing from DOM
+          await new Promise(resolve => setTimeout(resolve, 400));
+          
+          // Remove item from DOM
+          item?.remove();
+          
+          // Update cart data
+          await this.updateCartData();
+          
           document.dispatchEvent(new CustomEvent('cart:updated'));
+        } else {
+          item?.classList.remove('removing');
         }
       } catch (error) {
         console.error('Error removing item:', error);
@@ -658,42 +668,73 @@
       }
     }
 
-    async refresh() {
+    async updateCartData() {
       try {
-        const response = await fetch('/?section_id=cart-drawer-content');
-        const html = await response.text();
+        const cart = await fetch('/cart.js').then(r => r.json());
+        const cartItems = this.querySelector('.cart-drawer__items');
+        const cartBody = this.querySelector('#cart-drawer-body');
+        const footer = this.querySelector('.cart-drawer__footer');
         
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const newBody = doc.querySelector('#cart-drawer-body');
-        const newFooter = doc.querySelector('.cart-drawer__footer');
-        const newCount = doc.querySelector('[data-cart-count-drawer]');
+        // Update cart count in header
+        const countElement = this.querySelector('[data-cart-count-drawer]');
+        if (countElement) {
+          countElement.textContent = cart.item_count > 0 ? `(${cart.item_count})` : '';
+        }
         
-        const currentBody = this.querySelector('#cart-drawer-body');
-        const currentFooter = this.querySelector('.cart-drawer__footer');
-        const currentCount = this.querySelector('[data-cart-count-drawer]');
-        
-        if (newBody && currentBody) {
-          currentBody.innerHTML = newBody.innerHTML;
-        }
-        if (newFooter && currentFooter) {
-          currentFooter.outerHTML = newFooter.outerHTML;
-        } else if (!newFooter && currentFooter) {
-          currentFooter.remove();
-        }
-        if (newCount && currentCount) {
-          currentCount.innerHTML = newCount.innerHTML;
-        }
-
-        // Re-bind events for new elements
-        this.bindEvents();
-
         // Update header cart count
-        const cartCount = await fetch('/cart.js').then(r => r.json()).then(cart => cart.item_count);
         document.querySelectorAll('[data-cart-count]').forEach(el => {
-          el.textContent = cartCount;
-          el.classList.toggle('hidden', cartCount === 0);
+          el.textContent = cart.item_count;
+          el.classList.toggle('hidden', cart.item_count === 0);
         });
+
+        // If cart is empty, show empty state
+        if (cart.item_count === 0) {
+          if (cartBody) {
+            cartBody.innerHTML = `
+              <div class="cart-drawer__empty">
+                <p>${this.getAttribute('data-empty-message') || 'Your cart is empty'}</p>
+                <a href="${this.getAttribute('data-continue-shopping-url') || '/collections/all'}" class="button">
+                  ${this.getAttribute('data-continue-shopping-text') || 'Continue shopping'}
+                </a>
+              </div>
+            `;
+          }
+          if (footer) {
+            footer.remove();
+          }
+        } else {
+          // Update subtotal
+          const subtotalElement = this.querySelector('[data-cart-subtotal]');
+          if (subtotalElement) {
+            const formatter = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: cart.currency || 'USD'
+            });
+            subtotalElement.textContent = formatter.format(cart.total_price / 100);
+          }
+          
+          // Re-bind events for remaining elements
+          this.bindEvents();
+        }
+      } catch (error) {
+        console.error('Error updating cart data:', error);
+      }
+    }
+
+    async refresh() {
+      // For quantity changes, refresh the entire drawer content
+      try {
+        const response = await fetch(`${window.Shopify?.routes?.root || ''}/cart.js`);
+        const cart = await response.json();
+        
+        // If cart is empty, reload the page to get fresh HTML
+        if (cart.item_count === 0) {
+          window.location.reload();
+          return;
+        }
+        
+        // Otherwise update cart data
+        await this.updateCartData();
       } catch (error) {
         console.error('Error refreshing cart:', error);
       }
