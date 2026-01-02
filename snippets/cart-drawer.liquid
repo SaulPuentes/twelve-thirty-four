@@ -558,6 +558,12 @@
 
       // Listen for cart updates
       document.addEventListener('cart:updated', () => this.refresh());
+
+      // Listen for cart item added - refresh and open drawer
+      document.addEventListener('cart:item-added', async () => {
+        await this.refresh();
+        this.open();
+      });
     }
 
     bindEvents() {
@@ -671,10 +677,8 @@
     async updateCartData() {
       try {
         const cart = await fetch('/cart.js').then(r => r.json());
-        const cartBody = this.querySelector('#cart-drawer-body');
-        const footer = this.querySelector('.cart-drawer__footer');
         
-        // Update cart count in header
+        // Update cart count in drawer header
         const countElement = this.querySelector('[data-cart-count-drawer]');
         if (countElement) {
           countElement.textContent = cart.item_count > 0 ? `(${cart.item_count})` : '';
@@ -686,16 +690,9 @@
           el.classList.toggle('hidden', cart.item_count === 0);
         });
 
-        // If cart is empty, reload to get proper empty state with translations
-        if (cart.item_count === 0) {
-          window.location.reload();
-          return;
-        }
-
         // Update subtotal - format money
         const subtotalElement = this.querySelector('[data-cart-subtotal]');
-        if (subtotalElement) {
-          // Format money: cart.total_price is in cents
+        if (subtotalElement && cart.total_price !== undefined) {
           const amount = cart.total_price / 100;
           const currency = cart.currency || 'USD';
           try {
@@ -705,21 +702,70 @@
             });
             subtotalElement.textContent = formatter.format(amount);
           } catch (e) {
-            // Fallback formatting
             subtotalElement.textContent = `${currency} ${amount.toFixed(2)}`;
           }
         }
-        
-        // Re-bind events for remaining elements
-        this.bindEvents();
       } catch (error) {
         console.error('Error updating cart data:', error);
       }
     }
 
     async refresh() {
-      // For quantity changes, update cart data
-      await this.updateCartData();
+      try {
+        // Fetch fresh cart drawer HTML by requesting the current page
+        const response = await fetch(window.location.pathname);
+        const html = await response.text();
+        
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        
+        // Get new cart drawer content
+        const newDrawer = doc.querySelector('#cart-drawer');
+        const newBody = newDrawer?.querySelector('#cart-drawer-body');
+        const newFooter = newDrawer?.querySelector('.cart-drawer__footer');
+        const newCount = newDrawer?.querySelector('[data-cart-count-drawer]');
+        
+        // Get current elements
+        const currentBody = this.querySelector('#cart-drawer-body');
+        const currentFooter = this.querySelector('.cart-drawer__footer');
+        const currentCount = this.querySelector('[data-cart-count-drawer]');
+        
+        // Update body (item list)
+        if (newBody && currentBody) {
+          currentBody.innerHTML = newBody.innerHTML;
+        }
+        
+        // Update footer (subtotal, buttons)
+        if (newFooter && currentFooter) {
+          currentFooter.innerHTML = newFooter.innerHTML;
+        } else if (newFooter && !currentFooter) {
+          // Footer was added (cart went from empty to having items)
+          this.querySelector('.cart-drawer__content')?.appendChild(newFooter.cloneNode(true));
+        } else if (!newFooter && currentFooter) {
+          // Footer should be removed (cart is now empty)
+          currentFooter.remove();
+        }
+        
+        // Update count in header
+        if (newCount && currentCount) {
+          currentCount.textContent = newCount.textContent;
+        }
+        
+        // Update header cart count badge
+        const cart = await fetch('/cart.js').then(r => r.json());
+        document.querySelectorAll('[data-cart-count]').forEach(el => {
+          el.textContent = cart.item_count;
+          el.classList.toggle('hidden', cart.item_count === 0);
+        });
+        
+        // Re-bind events for new elements
+        this.bindEvents();
+        
+      } catch (error) {
+        console.error('Error refreshing cart drawer:', error);
+        // Fallback: just update the counts
+        await this.updateCartData();
+      }
     }
   }
 

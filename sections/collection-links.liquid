@@ -357,6 +357,9 @@ class CollectionLinksAddToCart {
       await this.addToCart(variantId);
       await this.updateCartCount();
 
+      // Dispatch event to update and open cart drawer
+      document.dispatchEvent(new CustomEvent('cart:item-added'));
+
       // Show success state
       button.removeAttribute('data-loading');
       button.setAttribute('data-added', 'true');
