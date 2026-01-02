@@ -709,16 +709,8 @@
 
     async refresh() {
       try {
-        // Add cache-busting parameter to ensure fresh content
-        const cacheBuster = `_=${Date.now()}`;
-        const url = window.location.pathname + (window.location.pathname.includes('?') ? '&' : '?') + cacheBuster;
-        
         // Fetch fresh cart drawer HTML by requesting the current page
-        const response = await fetch(url, {
-          headers: {
-            'Cache-Control': 'no-cache'
-          }
-        });
+        const response = await fetch(window.location.pathname);
         const html = await response.text();
         
         const parser = new DOMParser();
