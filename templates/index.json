@@ -16,6 +16,8 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/hero-banner.jpg",
+            "overlay_color": "#ffffff",
+            "overlay_opacity": 30,
             "text_color": "black",
             "subheading": "",
             "heading": "All things floral",
@@ -28,6 +30,8 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/hero-banner-2.jpg",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20,
             "text_color": "white",
             "subheading": "",
             "heading": "All things floral",
@@ -45,7 +49,6 @@
         "height": "100",
         "content_position": "center",
         "content_max_width": 800,
-        "overlay_opacity": 60,
         "enable_parallax": true,
         "autoplay": true,
         "autoplay_speed": 5,

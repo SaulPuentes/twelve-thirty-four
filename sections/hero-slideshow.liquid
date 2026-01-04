@@ -12,7 +12,6 @@
   data-hero-slideshow
   style="
     --hero-height: {{ section.settings.height }}vh;
-    --hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
     --hero-content-max-width: {{ section.settings.content_max_width }}px;
   "
 >
@@ -23,6 +22,10 @@
         class="hero-slideshow__slide{% if forloop.first %} hero-slideshow__slide--active{% endif %}"
         data-slide="{{ forloop.index0 }}"
         data-text-color="{{ block.settings.text_color }}"
+        style="
+          --slide-overlay-color: {{ block.settings.overlay_color }};
+          --slide-overlay-opacity: {{ block.settings.overlay_opacity | divided_by: 100.0 }};
+        "
         {{ block.shopify_attributes }}
       >
         {%- if block.settings.image != blank -%}
@@ -39,7 +42,7 @@
           {{ 'hero-apparel-1' | placeholder_svg_tag: 'hero-slideshow__placeholder' }}
         {%- endif -%}
 
-        <div class="hero-slideshow__overlay hero-slideshow__overlay--{{ block.settings.text_color }}"></div>
+        <div class="hero-slideshow__overlay"></div>
       </div>
     {%- endfor -%}
   </div>
@@ -270,17 +273,9 @@
     inset: 0;
     z-index: 5;
     pointer-events: none;
-    transition: background-color 1s ease-in-out;
-  }
-
-  /* White overlay for black text (like prototype) */
-  .hero-slideshow__overlay--black {
-    background-color: rgba(255, 255, 255, 0.3);
-  }
-
-  /* Dark overlay for white text */
-  .hero-slideshow__overlay--white {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: var(--slide-overlay-color, transparent);
+    opacity: var(--slide-overlay-opacity, 0);
+    transition: opacity 1s ease-in-out;
   }
 
   .hero-slideshow__content {
@@ -572,16 +567,6 @@
       "default": 800
     },
     {
-      "type": "range",
-      "id": "overlay_opacity",
-      "label": "Overlay opacity",
-      "min": 0,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 30
-    },
-    {
       "type": "checkbox",
       "id": "enable_parallax",
       "label": "Enable parallax effect",
@@ -651,6 +636,30 @@
           "label": "Image"
         },
         {
+          "type": "header",
+          "content": "Overlay"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 20
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
           "type": "select",
           "id": "text_color",
           "label": "Text and link color",
@@ -702,14 +711,18 @@
           "type": "slide",
           "settings": {
             "heading": "All things floral",
-            "text_color": "white"
+            "text_color": "white",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20
           }
         },
         {
           "type": "slide",
           "settings": {
             "heading": "Elegant arrangements",
-            "text_color": "white"
+            "text_color": "white",
+            "overlay_color": "#000000",
+            "overlay_opacity": 20
           }
         }
       ]
