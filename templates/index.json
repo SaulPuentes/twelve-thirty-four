@@ -148,11 +148,59 @@
         "link_label": "Get directions",
         "link_url": "https://maps.app.goo.gl/NHjcipu28UJxoBRx5"
       }
+    },
+    "shop_showcase_jndnAQ": {
+      "type": "shop-showcase",
+      "blocks": {
+        "custom_link_jDgdwk": {
+          "type": "custom_link",
+          "settings": {
+            "label": "Shop All",
+            "url": "",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        },
+        "custom_link_yMtwgN": {
+          "type": "custom_link",
+          "settings": {
+            "label": "New Arrivals",
+            "url": "",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        },
+        "custom_link_3bcWyx": {
+          "type": "custom_link",
+          "settings": {
+            "label": "Best Sellers",
+            "url": "",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        }
+      },
+      "block_order": [
+        "custom_link_jDgdwk",
+        "custom_link_yMtwgN",
+        "custom_link_3bcWyx"
+      ],
+      "name": "Shop showcase",
+      "settings": {
+        "columns_desktop": 4
+      }
     }
   },
   "order": [
     "hero",
     "featured-products",
+    "shop_showcase_jndnAQ",
     "workshops",
     "visit-boutique"
   ]
