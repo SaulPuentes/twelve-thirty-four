@@ -3,12 +3,15 @@
     "main": {
       "type": "contact-form",
       "settings": {
-        "heading": "Contact us",
-        "description": "We'd love to hear from you. Send us a message and we'll respond as soon as possible.",
+        "heading": "Get in Touch",
+        "description": "Have a question about our arrangements, workshops, or community programs? We'd love to hear from you.",
+        "email": "contact@bypatriciorivera.com",
+        "address": "4034 Swiss Ave\nDallas, TX 75204\nUnited States",
+        "hours": "Monday - Friday: 9:00 AM - 6:00 PM\nSaturday: 10:00 AM - 4:00 PM\nSunday: Closed",
+        "show_subject": true,
         "color_scheme": "scheme-1"
       }
     }
   },
   "order": ["main"]
 }
-

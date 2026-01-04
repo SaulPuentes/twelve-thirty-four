@@ -356,6 +356,19 @@
       "total": "Total"
     }
   },
+  "contact": {
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "subject": "Subject",
+      "message": "Message",
+      "submit": "Send Message",
+      "address": "Location",
+      "hours": "Hours",
+      "success_message": "Thanks for contacting us. We'll get back to you as soon as possible."
+    }
+  },
   "customer": {
     "account": {
       "title": "Account"
