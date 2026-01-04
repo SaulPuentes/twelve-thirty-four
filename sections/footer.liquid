@@ -150,7 +150,18 @@
   }
 
   .footer {
+    position: relative;
     padding: 4rem 2rem;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
     border-top: 1px solid var(--color-border);
   }
 
