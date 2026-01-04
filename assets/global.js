@@ -69,19 +69,59 @@ class QuantitySelector extends CustomHTMLElement {
 customElements.define('quantity-selector', QuantitySelector);
 
 /**
- * Cart Functionality
+ * Cart Functionality with Fly-to-Cart Animation
  */
 class CartHandler {
   constructor() {
     this.cartDrawer = document.querySelector('#cart-drawer');
     this.cartCount = document.querySelectorAll('[data-cart-count]');
     this.cartBody = document.querySelector('#cart-drawer-body');
+    this.cartIcon = document.querySelector('.header-actions__cart-icon');
   }
 
-  async addItem(variantId, quantity = 1) {
+  /**
+   * Triggers the fly-to-cart animation
+   * @param {HTMLElement} sourceElement - The element to animate from (button or image)
+   * @param {string} [imageUrl] - Optional image URL to display during animation
+   */
+  animateFlyToCart(sourceElement, imageUrl = null) {
+    if (!this.cartIcon || !sourceElement) return;
+
+    const flyToCartElement = document.createElement('fly-to-cart');
+    flyToCartElement.classList.add('fly-to-cart--main');
+    
+    if (imageUrl) {
+      flyToCartElement.style.setProperty('background-image', `url(${imageUrl})`);
+      flyToCartElement.style.setProperty('--start-opacity', '0');
+    }
+    
+    flyToCartElement.source = sourceElement;
+    flyToCartElement.destination = this.cartIcon;
+    
+    document.body.appendChild(flyToCartElement);
+  }
+
+  /**
+   * Add item to cart with optional fly-to-cart animation
+   * @param {number|string} variantId - The variant ID to add
+   * @param {number} quantity - Quantity to add
+   * @param {Object} options - Optional configuration
+   * @param {HTMLElement} options.sourceElement - Element to animate from
+   * @param {string} options.imageUrl - Product image URL for animation
+   * @param {Function} options.onSuccess - Callback on successful add
+   * @param {Function} options.onError - Callback on error
+   */
+  async addItem(variantId, quantity = 1, options = {}) {
+    const { sourceElement, imageUrl, onSuccess, onError } = options;
+    
     const formData = {
       items: [{ id: variantId, quantity: quantity }]
     };
+
+    // Trigger fly-to-cart animation immediately
+    if (sourceElement && this.cartIcon) {
+      this.animateFlyToCart(sourceElement, imageUrl);
+    }
 
     try {
       const response = await fetch('/cart/add.js', {
@@ -96,9 +136,12 @@ class CartHandler {
 
       const data = await response.json();
       this.updateCart();
+      
+      if (onSuccess) onSuccess(data);
       return data;
     } catch (error) {
       console.error('Error adding to cart:', error);
+      if (onError) onError(error);
       throw error;
     }
   }
