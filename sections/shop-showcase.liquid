@@ -1,0 +1,467 @@
+{%- comment -%}
+  Shop Showcase Section
+  A full-width grid of product or custom link cards with background images.
+  Features image hover effects, overlay, and product info slide-up animation.
+{%- endcomment -%}
+
+{%- liquid
+  assign block_count = section.blocks.size
+  assign columns_mobile = 1
+  
+  case block_count
+    when 1
+      assign columns_tablet = 1
+      assign columns_desktop = 1
+    when 2
+      assign columns_tablet = 2
+      assign columns_desktop = 2
+    when 3
+      assign columns_tablet = 3
+      assign columns_desktop = 3
+    else
+      assign columns_tablet = 2
+      assign columns_desktop = section.settings.columns_desktop
+  endcase
+-%}
+
+<div
+  class="shop-showcase"
+  style="
+    --columns-mobile: {{ columns_mobile }};
+    --columns-tablet: {{ columns_tablet }};
+    --columns-desktop: {{ columns_desktop }};
+  "
+>
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign delay_index = forloop.index0 | times: 150 | plus: 800
+      
+      case block.type
+        when 'product'
+          assign card_product = block.settings.product
+          assign card_image = card_product.featured_media | default: block.settings.image
+          assign card_url = card_product.url | default: '#'
+          assign card_label = block.settings.label | default: card_product.type
+          assign show_product_info = true
+          assign card_title = card_product.title
+          assign card_price = card_product.price | money
+        when 'custom_link'
+          assign card_image = block.settings.image
+          assign card_url = block.settings.url | default: '#'
+          assign card_label = block.settings.label
+          assign show_product_info = block.settings.show_product_info
+          assign card_title = block.settings.title
+          assign card_price = block.settings.price
+      endcase
+    -%}
+
+    <a
+      href="{{ card_url }}"
+      class="shop-showcase__card"
+      {{ block.shopify_attributes }}
+      {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+    >
+      {%- comment -%} Background Image {%- endcomment -%}
+      <div class="shop-showcase__media">
+        {%- if card_image != blank -%}
+          <img
+            src="{{ card_image | image_url: width: 800 }}"
+            srcset="
+              {{ card_image | image_url: width: 400 }} 400w,
+              {{ card_image | image_url: width: 600 }} 600w,
+              {{ card_image | image_url: width: 800 }} 800w,
+              {{ card_image | image_url: width: 1200 }} 1200w
+            "
+            sizes="(max-width: 749px) 100vw, (max-width: 989px) 50vw, 33vw"
+            alt="{{ card_image.alt | default: card_label | escape }}"
+            width="{{ card_image.width }}"
+            height="{{ card_image.height }}"
+            loading="lazy"
+            class="shop-showcase__image"
+          >
+        {%- else -%}
+          {{ 'collection-1' | placeholder_svg_tag: 'shop-showcase__placeholder' }}
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Overlay {%- endcomment -%}
+      <div class="shop-showcase__overlay"></div>
+
+      {%- comment -%} Top Label {%- endcomment -%}
+      {%- if card_label != blank -%}
+        <div class="shop-showcase__label-wrapper">
+          <span class="shop-showcase__label">{{ card_label }}</span>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Bottom Product Info {%- endcomment -%}
+      {%- if show_product_info and card_title != blank -%}
+        <div class="shop-showcase__info">
+          <div class="shop-showcase__info-content">
+            <div class="shop-showcase__info-text">
+              <h3 class="shop-showcase__title">{{ card_title }}</h3>
+              {%- if card_price != blank -%}
+                <p class="shop-showcase__price">{{ card_price }}</p>
+              {%- endif -%}
+            </div>
+            {%- if block.type == 'product' and block.settings.show_add_to_cart and card_product.available -%}
+              <product-form class="shop-showcase__add-to-cart-form">
+                {%- form 'product', card_product, class: 'shop-showcase__form', novalidate: 'novalidate' -%}
+                  <input type="hidden" name="id" value="{{ card_product.selected_or_first_available_variant.id }}">
+                  <button
+                    type="submit"
+                    class="shop-showcase__add-to-cart"
+                    onclick="event.stopPropagation();"
+                  >
+                    {{ 'products.product.add_to_cart' | t }}
+                  </button>
+                {%- endform -%}
+              </product-form>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </a>
+  {%- else -%}
+    {%- comment -%} Placeholder cards when no blocks exist {%- endcomment -%}
+    {%- for i in (1..3) -%}
+      <div class="shop-showcase__card shop-showcase__card--placeholder">
+        <div class="shop-showcase__media">
+          {{ 'collection-1' | placeholder_svg_tag: 'shop-showcase__placeholder' }}
+        </div>
+        <div class="shop-showcase__overlay"></div>
+        <div class="shop-showcase__label-wrapper">
+          <span class="shop-showcase__label">{{ 'sections.shop_showcase.placeholder_label' | t }}</span>
+        </div>
+      </div>
+    {%- endfor -%}
+  {%- endfor -%}
+</div>
+
+{% stylesheet %}
+  .shop-showcase {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(var(--columns-mobile, 1), 1fr);
+    gap: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .shop-showcase {
+      grid-template-columns: repeat(var(--columns-tablet, 2), 1fr);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .shop-showcase {
+      grid-template-columns: repeat(var(--columns-desktop, 3), 1fr);
+    }
+  }
+
+  .shop-showcase__card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .shop-showcase__card--placeholder {
+    cursor: default;
+  }
+
+  .shop-showcase__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .shop-showcase__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .shop-showcase__card:hover .shop-showcase__image {
+    transform: scale(1.05);
+  }
+
+  .shop-showcase__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: #e8e8e8;
+  }
+
+  .shop-showcase__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+    pointer-events: none;
+  }
+
+  .shop-showcase__card:hover .shop-showcase__overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+
+  .shop-showcase__label-wrapper {
+    position: relative;
+    z-index: 10;
+    padding: 2rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .shop-showcase__label-wrapper {
+      padding: 2.5rem;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .shop-showcase__label-wrapper {
+      padding: 3rem;
+    }
+  }
+
+  .shop-showcase__label {
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: #fff;
+    transition: opacity 0.3s ease;
+    display: inline-block;
+  }
+
+  @media screen and (min-width: 750px) {
+    .shop-showcase__label {
+      font-size: 0.875rem;
+    }
+  }
+
+  .shop-showcase__card:hover .shop-showcase__label {
+    opacity: 0.8;
+  }
+
+  .shop-showcase__info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 2rem;
+    /* Mobile: always visible */
+    transform: translateY(0);
+    opacity: 1;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  @media screen and (min-width: 750px) {
+    .shop-showcase__info {
+      padding: 2.5rem;
+      /* Desktop: hidden by default, slides up on hover */
+      transform: translateY(100%);
+      opacity: 0;
+    }
+
+    .shop-showcase__card:hover .shop-showcase__info {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .shop-showcase__info {
+      padding: 3rem;
+    }
+  }
+
+  .shop-showcase__info-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .shop-showcase__info-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .shop-showcase__title {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin: 0;
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  .shop-showcase__price {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .shop-showcase__add-to-cart-form {
+    flex-shrink: 0;
+  }
+
+  .shop-showcase__form {
+    margin: 0;
+  }
+
+  .shop-showcase__add-to-cart {
+    padding: 0.5rem 1rem;
+    border: 1px solid #fff;
+    background-color: transparent;
+    color: #fff;
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .shop-showcase__add-to-cart:hover {
+    background-color: #fff;
+    color: #000;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Shop showcase",
+  "tag": "section",
+  "class": "section-shop-showcase",
+  "settings": [
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 4,
+      "label": "Desktop columns (4+ items)"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom image",
+          "info": "Override product image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "info": "Leave blank to use product type"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_add_to_cart",
+          "label": "Show add to cart button",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "custom_link",
+      "name": "Custom link",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open in new tab",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Product info (optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_product_info",
+          "label": "Show product info",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop showcase",
+      "blocks": [
+        {
+          "type": "custom_link",
+          "settings": {
+            "label": "Shop All"
+          }
+        },
+        {
+          "type": "custom_link",
+          "settings": {
+            "label": "New Arrivals"
+          }
+        },
+        {
+          "type": "custom_link",
+          "settings": {
+            "label": "Best Sellers"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
