@@ -1,3 +1,10 @@
+<style>
+  :root {
+    --header-padding: {{ section.settings.padding }}px;
+    --header-height: calc({{ section.settings.padding }}px * 2 + 40px);
+  }
+</style>
+
 <header
   id="header"
   class="header{% if section.settings.enable_sticky %} header--sticky{% endif %}{% if section.settings.enable_transparent and template.name == 'index' %} header--transparent{% endif %}"
@@ -201,6 +208,11 @@
 </script>
 
 {% stylesheet %}
+  /* Add top padding to main content on all pages except index */
+  body:not(.template-index) .main-content {
+    padding-top: var(--header-height);
+  }
+
   .header {
     position: fixed;
     top: 0;
