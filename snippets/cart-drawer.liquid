@@ -747,7 +747,7 @@
         if (newCount && currentCount) {
           currentCount.textContent = newCount.textContent;
         }
-        
+
         // Update header cart count badge
         const cart = await fetch('/cart.js').then(r => r.json());
         document.querySelectorAll('[data-cart-count]').forEach(el => {

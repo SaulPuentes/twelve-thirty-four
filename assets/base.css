@@ -21,6 +21,15 @@ body {
   --hover-transition-timing: ease-out;
   --surface-transition-duration: 0.3s;
   --surface-transition-timing: var(--ease-out-quad);
+
+  /* Section heading sizes */
+  --section-heading-lg: 2.25rem;
+  --section-heading-lg-desktop: 3rem;
+  --section-heading-md: 1.875rem;
+  --section-heading-md-tablet: 2.25rem;
+  --section-heading-md-desktop: 3rem;
+  --section-heading-sm: 1.5rem;
+  --section-heading-sm-desktop: 1.875rem;
 }
 
 html {
@@ -951,6 +960,43 @@ h6,
 
 :last-child:is(.h1, .h2, .h3, .h4, .h5, .h6) {
   margin-block-end: 0;
+}
+
+/* Section heading size utilities */
+.section-heading-lg {
+  font-size: var(--section-heading-lg);
+}
+
+@media screen and (min-width: 1024px) {
+  .section-heading-lg {
+    font-size: var(--section-heading-lg-desktop);
+  }
+}
+
+.section-heading-md {
+  font-size: var(--section-heading-md);
+}
+
+@media screen and (min-width: 768px) {
+  .section-heading-md {
+    font-size: var(--section-heading-md-tablet);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .section-heading-md {
+    font-size: var(--section-heading-md-desktop);
+  }
+}
+
+.section-heading-sm {
+  font-size: var(--section-heading-sm);
+}
+
+@media screen and (min-width: 1024px) {
+  .section-heading-sm {
+    font-size: var(--section-heading-sm-desktop);
+  }
 }
 
 /* Links */

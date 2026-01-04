@@ -43,7 +43,7 @@
         <a
           href="{{ item_link }}"
           class="collection-links__link"
-          {% if block.settings.open_new_tab %}target="_blank" rel="noopener"{% endif %}
+        {% if block.settings.open_new_tab %}target="_blank" rel="noopener"{% endif %}
           aria-label="{{ item_title | escape }}"
         >
           <span class="visually-hidden">{{ item_title }}</span>
@@ -93,7 +93,7 @@
                   <span class="collection-links__add-to-cart-text">Add to Cart</span>
                   <span class="collection-links__add-to-cart-loading" aria-hidden="true">Adding...</span>
                   <span class="collection-links__add-to-cart-added" aria-hidden="true">Added!</span>
-                </button>
+              </button>
               {%- else -%}
                 <span class="collection-links__sold-out">Sold Out</span>
               {%- endif -%}
