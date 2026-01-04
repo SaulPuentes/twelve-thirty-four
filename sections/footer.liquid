@@ -105,16 +105,16 @@
         {%- endif -%}
 
         <div class="footer__social">
-          {%- if settings.social_instagram != blank -%}
-            <a href="{{ settings.social_instagram }}" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">
-              {% render 'icon', icon: 'instagram', size: 20 %}
-            </a>
-          {%- endif -%}
-          {%- if settings.social_facebook != blank -%}
-            <a href="{{ settings.social_facebook }}" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">
-              {% render 'icon', icon: 'facebook', size: 20 %}
-            </a>
-          {%- endif -%}
+          {%- liquid
+            assign instagram_url = settings.social_instagram | default: 'https://www.instagram.com/twelvethirtyfourflowers/'
+            assign facebook_url = settings.social_facebook | default: 'https://www.facebook.com/Twelvethirtyfourflowers/'
+          -%}
+          <a href="{{ instagram_url }}" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">
+            {% render 'icon', icon: 'instagram', size: 20 %}
+          </a>
+          <a href="{{ facebook_url }}" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">
+            {% render 'icon', icon: 'facebook', size: 20 %}
+          </a>
           {%- if settings.social_pinterest != blank -%}
             <a href="{{ settings.social_pinterest }}" class="footer__social-link" aria-label="Pinterest" target="_blank" rel="noopener">
               {% render 'icon', icon: 'pinterest', size: 20 %}
