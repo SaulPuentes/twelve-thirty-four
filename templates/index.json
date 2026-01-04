@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
@@ -104,50 +95,41 @@
     "collection-links": {
       "type": "collection-links",
       "blocks": {
-        "link-1": {
-          "type": "collection_link",
-          "settings": {
-            "link_type": "product",
-            "product": "bury-me-west-12-one-of-a-kind-stoneware-vase",
-            "title": "Bury Me West",
-            "product_title": "One of a kind stoneware planter",
-            "link": "",
-            "open_new_tab": false,
-            "show_add_to_cart": true
-          }
-        },
-        "link-2": {
-          "type": "collection_link",
-          "settings": {
-            "link_type": "custom",
-            "product": "",
-            "image": "shopify://shop_images/elizabeth-hooper.webp",
-            "title": "Elizabeth Hooper Studio",
-            "product_title": "",
-            "link": "",
-            "open_new_tab": false,
-            "show_add_to_cart": true
-          }
-        },
-        "link-3": {
-          "type": "collection_link",
-          "settings": {
-            "link_type": "product",
-            "product": "chase-gamblin-multicolored-vase",
-            "title": "Chase Gamblin",
-            "product_title": "Multicolored Lamp",
-            "link": "",
-            "open_new_tab": false,
-            "show_add_to_cart": true
+        "link": {
+          "type": "_collection-link",
+          "static": true,
+          "blocks": {
+            "title": {
+              "type": "_inline-collection-title",
+              "name": "Title",
+              "static": true,
+              "settings": {
+                "font": "var(--font-subheading--family)"
+              }
+            },
+            "image": {
+              "type": "_image",
+              "static": true,
+              "settings": {
+                "height": "large",
+                "ratio": "square"
+              }
+            }
           }
         }
       },
       "block_order": [
-        "link-1",
-        "link-2",
-        "link-3"
+        "link"
       ],
-      "settings": {}
+      "settings": {
+        "layout": "spotlight",
+        "section_width": "page-width",
+        "alignment": "left",
+        "image_position": "right",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 40,
+        "padding-block-end": 40
+      }
     },
     "workshops": {
       "type": "slideshow-with-text",
