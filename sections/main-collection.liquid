@@ -1,4 +1,7 @@
-
+{%- comment -%}
+  Main Collection Section
+  Three-column layout: Designers (collections) | Product Grid | Categories
+{%- endcomment -%}
 
 <script
   src="{{ 'results-list.js' | asset_url }}"
@@ -6,328 +9,428 @@
   fetchpriority="low"
 ></script>
 
-{% javascript %}
-  const url = new URL(window.location.href);
-  if (url.hash) {
-    document.addEventListener(
-      'DOMContentLoaded',
-      () => {
-        const card = document.getElementById(url.hash.slice(1));
-        if (card) {
-          card.scrollIntoView({ behavior: 'instant' });
-        }
-      },
-      { once: true }
-    );
-  }
-{% endjavascript %}
-
-{% comment %} We always render this full-width, as the child blocks have width: page/full settings {% endcomment %}
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<results-list
-  class="section product-grid-container color-{{ section.settings.color_scheme }}"
-  style="--padding-block-start: {{ section.settings.padding-block-start }}px; --padding-block-end: {{ section.settings.padding-block-end }}px;"
-  section-id="{{ section.id }}"
-  infinite-scroll="{{ section.settings.enable_infinite_scroll }}"
+<section
+  id="MainCollection-{{ section.id }}"
+  class="main-collection"
+  style="
+    --padding-block-start: {{ section.settings.padding_top }}px;
+    --padding-block-end: {{ section.settings.padding_bottom }}px;
+    --product-columns: {{ section.settings.products_per_row }};
+    --product-gap: {{ section.settings.product_gap }}px;
+  "
 >
-  {% render 'skip-to-content-link', href: '#ResultsList', text: 'accessibility.skip_to_results_list' %}
+  <div class="main-collection__container">
+    {%- comment -%} Left Sidebar - Designers (Collections) {%- endcomment -%}
+    <aside class="main-collection__sidebar main-collection__sidebar--left">
+      <h3 class="main-collection__sidebar-title">{{ section.settings.designers_title | default: 'Designers' }}</h3>
+      <nav class="main-collection__nav">
+        <ul class="main-collection__nav-list">
+          {%- for collection_item in collections -%}
+            {%- if collection_item.products.size > 0 -%}
+              <li class="main-collection__nav-item">
+                <a
+                  href="{{ collection_item.url }}"
+                  class="main-collection__nav-link{% if collection_item.handle == collection.handle %} main-collection__nav-link--active{% endif %}"
+                >
+                  {{ collection_item.title }}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </aside>
 
-  <div
-    class="collection-wrapper grid gap-style{% if section.settings.product_grid_width == 'full-width' %} collection-wrapper--grid-full-width{% endif %}"
-  >
-    {% content_for 'block',
-      type: 'filters',
-      id: 'filters',
-      results: collection,
-      results_size: collection.products_count
-    %}
+    {%- comment -%} Main Content - Product Grid {%- endcomment -%}
+    <div class="main-collection__content">
+      {%- if collection.description != blank and section.settings.show_description -%}
+        <div class="main-collection__description">
+          {{ collection.description }}
+        </div>
+      {%- endif -%}
 
-    {% assign products_per_page = 24 %}
+      {%- assign products_per_page = section.settings.products_per_page | default: 24 -%}
 
-    {% if section.settings.enable_infinite_scroll == false %}
-      {% assign products_per_page = section.settings.products_per_page %}
-    {% endif %}
+      {%- paginate collection.products by products_per_page -%}
+        {%- if collection.products.size > 0 -%}
+          <ul class="main-collection__grid" id="ProductGrid">
+            {%- for product in collection.products -%}
+              <li class="main-collection__grid-item">
+                <a href="{{ product.url }}" class="main-collection__product">
+                  <div class="main-collection__product-image">
+                    {%- if product.featured_image != blank -%}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 600 }}"
+                        srcset="
+                          {{ product.featured_image | image_url: width: 300 }} 300w,
+                          {{ product.featured_image | image_url: width: 450 }} 450w,
+                          {{ product.featured_image | image_url: width: 600 }} 600w
+                        "
+                        sizes="(max-width: 749px) 50vw, 25vw"
+                        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                        loading="lazy"
+                        width="{{ product.featured_image.width }}"
+                        height="{{ product.featured_image.height }}"
+                      >
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'main-collection__placeholder' }}
+                    {%- endif -%}
+                  </div>
+                  <div class="main-collection__product-info">
+                    <h4 class="main-collection__product-title">{{ product.title }}</h4>
+                    <p class="main-collection__product-price">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
 
-    {% paginate collection.products by products_per_page %}
-      {% capture children %}
-        {% for product in collection.products %}
-          <li
-            id="{{ section.id }}-{{ product.id }}"
-            class="product-grid__item product-grid__item--{{ forloop.index0 }}"
-            data-page="{{ paginate.current_page }}"
-            data-product-id="{{ product.id }}"
-            ref="cards[]"
-          >
-            {% # theme-check-disable %}
-            {% content_for 'block', type: '_product-card', id: 'product-card', closest.product: product %}
-            {% # theme-check-enable %}
-          </li>
-        {% endfor %}
-      {% endcapture %}
+          {%- if paginate.pages > 1 -%}
+            <div class="main-collection__pagination">
+              {{ paginate | default_pagination }}
+            </div>
+          {%- endif -%}
+        {%- else -%}
+          <div class="main-collection__empty">
+            <p>{{ 'collections.general.no_matches' | t }}</p>
+          </div>
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
 
-      {% render 'product-grid',
-        section: section,
-        children: children,
-        products: collection.products,
-        paginate: paginate,
-        enable_infinite_scroll: section.settings.enable_infinite_scroll
-      %}
-    {% endpaginate %}
+    {%- comment -%} Right Sidebar - Categories (Product Types) {%- endcomment -%}
+    <aside class="main-collection__sidebar main-collection__sidebar--right">
+      <h3 class="main-collection__sidebar-title">{{ section.settings.categories_title | default: 'Categories' }}</h3>
+      <nav class="main-collection__nav">
+        <ul class="main-collection__nav-list">
+          {%- for product_type in shop.types -%}
+            {%- if product_type != blank -%}
+              <li class="main-collection__nav-item">
+                <a
+                  href="{{ collection.url }}?filter.p.product_type={{ product_type | url_encode }}"
+                  class="main-collection__nav-link"
+                >
+                  {{ product_type }}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </nav>
+    </aside>
   </div>
-</results-list>
+</section>
 
 {% stylesheet %}
-  .main-collection-grid {
-    grid-column: var(--grid-column--mobile);
+  .main-collection {
+    padding: var(--padding-block-start, 2rem) 2rem var(--padding-block-end, 2rem);
+    background-color: var(--color-background, #fff);
+  }
 
-    @media screen and (min-width: 750px) {
-      grid-column: var(--grid-column--desktop);
+  @media screen and (min-width: 990px) {
+    .main-collection {
+      padding: var(--padding-block-start, 3rem) 4rem var(--padding-block-end, 3rem);
     }
   }
 
-  .collection-wrapper {
-    @media screen and (min-width: 750px) {
-      grid-template-columns:
-        1fr repeat(
-          var(--centered-column-number),
-          minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
-        )
-        1fr;
+  .main-collection__container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  @media screen and (min-width: 990px) {
+    .main-collection__container {
+      grid-template-columns: 180px 1fr 180px;
+      gap: 3rem;
     }
   }
 
-  .collection-wrapper:has(.facets-block-wrapper--full-width),
-  .collection-wrapper:has(.collection-wrapper--full-width) {
-    @media screen and (min-width: 750px) {
-      grid-column: 1 / -1;
-      grid-template-columns:
-        minmax(var(--page-margin), 1fr) repeat(
-          var(--centered-column-number),
-          minmax(0, calc((var(--page-width) - var(--page-margin) * 2) / var(--centered-column-number)))
-        )
-        minmax(var(--page-margin), 1fr);
+  /* Sidebars */
+  .main-collection__sidebar {
+    display: none;
+  }
+
+  @media screen and (min-width: 990px) {
+    .main-collection__sidebar {
+      display: block;
+      position: sticky;
+      top: calc(var(--header-height, 80px) + 2rem);
+      height: fit-content;
+      max-height: calc(100vh - var(--header-height, 80px) - 4rem);
+      overflow-y: auto;
     }
   }
 
-  .collection-wrapper:has(.facets--vertical) .facets-block-wrapper--vertical:not(.hidden) ~ .main-collection-grid {
-    @media screen and (min-width: 750px) {
-      grid-column: var(--facets-vertical-col-width) / var(--full-width-column-number);
+  .main-collection__sidebar-title {
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem 0;
+    color: var(--color-foreground);
+    opacity: 0.6;
+  }
+
+  .main-collection__nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .main-collection__nav-item {
+    margin-bottom: 0.75rem;
+  }
+
+  .main-collection__nav-link {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  .main-collection__nav-link:hover,
+  .main-collection__nav-link--active {
+    opacity: 1;
+  }
+
+  .main-collection__nav-link--active {
+    font-weight: 500;
+  }
+
+  /* Main Content */
+  .main-collection__content {
+    min-width: 0;
+  }
+
+  .main-collection__description {
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 600px;
+  }
+
+  /* Product Grid */
+  .main-collection__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--product-gap, 1.5rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .main-collection__grid {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  .collection-wrapper:has(.facets-block-wrapper--vertical:not(#filters-drawer)):has(.collection-wrapper--full-width) {
-    @media screen and (min-width: 750px) {
-      grid-column: 1 / -1;
-      grid-template-columns: 0fr repeat(var(--centered-column-number), minmax(0, 1fr)) 0fr;
+  @media screen and (min-width: 990px) {
+    .main-collection__grid {
+      grid-template-columns: repeat(var(--product-columns, 3), 1fr);
     }
   }
 
-  :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
-    [product-grid-view='default']
-    .product-grid__card {
-    @media screen and (max-width: 749px) {
-      padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
-      padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
-    }
+  .main-collection__grid-item {
+    position: relative;
   }
 
-  :is(.collection-wrapper--full-width, .collection-wrapper--full-width-on-mobile)
-    [product-grid-view='mobile-single']
-    .product-grid__card {
-    @media screen and (max-width: 749px) {
-      padding-inline-start: max(var(--padding-xs), var(--padding-inline-start));
-      padding-inline-end: max(var(--padding-xs), var(--padding-inline-end));
-    }
+  .main-collection__product {
+    display: block;
+    text-decoration: none;
+    color: var(--color-foreground);
   }
 
-  /* Make product media go edge-to-edge by using negative margins */
-  :is(.collection-wrapper--full-width) .card-gallery,
-  :is(.collection-wrapper--full-width-on-mobile) .card-gallery {
-    @media screen and (max-width: 749px) {
-      margin-inline-start: calc(-1 * max(var(--padding-xs), var(--padding-inline-start)));
-      margin-inline-end: calc(-1 * max(var(--padding-xs), var(--padding-inline-end)));
+  .main-collection__product-image {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background-color: #f5f5f5;
+  }
+
+  .main-collection__product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .main-collection__product:hover .main-collection__product-image img {
+    transform: scale(1.05);
+  }
+
+  .main-collection__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    fill: #ccc;
+    background-color: #f0f0f0;
+  }
+
+  .main-collection__product-info {
+    text-align: left;
+  }
+
+  .main-collection__product-title {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin: 0 0 0.25rem 0;
+    line-height: 1.4;
+  }
+
+  .main-collection__product-price {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    font-weight: 400;
+    margin: 0;
+    opacity: 0.7;
+  }
+
+  /* Empty State */
+  .main-collection__empty {
+    padding: 4rem 2rem;
+    text-align: center;
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    color: var(--color-foreground);
+    opacity: 0.7;
+  }
+
+  /* Pagination */
+  .main-collection__pagination {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .main-collection__pagination a,
+  .main-collection__pagination span {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: var(--color-foreground);
+    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .main-collection__pagination a:hover {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .main-collection__pagination span.current {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  /* Mobile sidebar toggle - for future enhancement */
+  @media screen and (max-width: 989px) {
+    .main-collection__sidebar--left,
+    .main-collection__sidebar--right {
+      display: none;
     }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:names.collection_container",
+  "name": "Collection products",
+  "tag": "section",
+  "class": "section-main-collection",
   "enabled_on": {
     "templates": ["collection"]
   },
   "settings": [
     {
-      "type": "select",
-      "id": "layout_type",
-      "label": "t:settings.type",
-      "options": [
-        {
-          "value": "grid",
-          "label": "t:options.grid"
-        },
-        {
-          "value": "organic",
-          "label": "t:options.editorial"
-        }
-      ],
-      "default": "grid"
+      "type": "header",
+      "content": "Product grid"
     },
     {
-      "type": "select",
-      "id": "product_card_size",
-      "label": "t:settings.card_size",
-      "options": [
-        {
-          "value": "small",
-          "label": "t:options.small"
-        },
-        {
-          "value": "medium",
-          "label": "t:options.medium"
-        },
-        {
-          "value": "large",
-          "label": "t:options.large"
-        },
-        {
-          "value": "extra-large",
-          "label": "t:options.extra_large"
-        }
-      ],
-      "default": "medium",
-      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
-    },
-    {
-      "type": "select",
-      "id": "mobile_product_card_size",
-      "label": "t:settings.mobile_card_size",
-      "options": [
-        {
-          "value": "small",
-          "label": "t:options.small"
-        },
-        {
-          "value": "large",
-          "label": "t:options.large"
-        }
-      ],
-      "default": "small"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_infinite_scroll",
-      "label": "t:settings.auto_load_products",
-      "default": true
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
     },
     {
       "type": "range",
       "id": "products_per_page",
-      "label": "t:settings.products_per_page",
+      "label": "Products per page",
       "min": 8,
-      "max": 36,
+      "max": 48,
       "step": 4,
-      "default": 24,
-      "visible_if": "{{ section.settings.enable_infinite_scroll == false }}"
+      "default": 24
     },
     {
-      "type": "header",
-      "content": "t:content.layout"
-    },
-    {
-      "type": "select",
-      "id": "product_grid_width",
-      "label": "t:settings.width",
-      "options": [
-        {
-          "value": "centered",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
-      ],
-      "default": "centered"
+      "type": "range",
+      "id": "product_gap",
+      "label": "Product gap",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
     },
     {
       "type": "checkbox",
-      "id": "full_width_on_mobile",
-      "label": "t:settings.full_width_on_mobile",
-      "default": true,
-      "visible_if": "{{ section.settings.product_grid_width != 'full-width' }}"
-    },
-    {
-      "type": "range",
-      "id": "columns_gap_horizontal",
-      "label": "t:settings.horizontal_gap",
-      "min": 0,
-      "max": 50,
-      "step": 1,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "columns_gap_vertical",
-      "label": "t:settings.vertical_gap",
-      "min": 0,
-      "max": 50,
-      "step": 1,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-start",
-      "label": "t:settings.left_padding",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "padding-inline-end",
-      "label": "t:settings.right_padding",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "px",
-      "default": 0
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": false
     },
     {
       "type": "header",
-      "content": "t:content.section_layout"
+      "content": "Sidebars"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:settings.color_scheme",
-      "default": "scheme-1"
+      "type": "text",
+      "id": "designers_title",
+      "label": "Designers sidebar title",
+      "default": "Designers"
+    },
+    {
+      "type": "text",
+      "id": "categories_title",
+      "label": "Categories sidebar title",
+      "default": "Categories"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
     },
     {
       "type": "range",
-      "id": "padding-block-start",
-      "label": "t:settings.top_padding",
+      "id": "padding_top",
+      "label": "Top padding",
       "min": 0,
       "max": 100,
-      "step": 1,
+      "step": 4,
       "unit": "px",
-      "default": 8
+      "default": 48
     },
     {
       "type": "range",
-      "id": "padding-block-end",
-      "label": "t:settings.bottom_padding",
+      "id": "padding_bottom",
+      "label": "Bottom padding",
       "min": 0,
       "max": 100,
-      "step": 1,
+      "step": 4,
       "unit": "px",
-      "default": 8
+      "default": 48
     }
-  ],
-  "presets": []
+  ]
 }
 {% endschema %}
