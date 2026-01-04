@@ -107,15 +107,13 @@
     "shop_showcase_jndnAQ": {
       "type": "shop-showcase",
       "blocks": {
-        "custom_link_jDgdwk": {
-          "type": "custom_link",
+        "product_P6HAeJ": {
+          "type": "product",
           "settings": {
-            "label": "Shop All",
-            "url": "shopify://products/1",
-            "open_in_new_tab": false,
-            "show_product_info": true,
-            "title": "",
-            "price": ""
+            "product": "bury-me-west-12-one-of-a-kind-stoneware-vase",
+            "label": "Bury me west",
+            "show_add_to_cart": true,
+            "open_in_new_tab": false
           }
         },
         "custom_link_yMtwgN": {
@@ -130,22 +128,20 @@
             "price": ""
           }
         },
-        "custom_link_3bcWyx": {
-          "type": "custom_link",
+        "product_apBmTJ": {
+          "type": "product",
           "settings": {
-            "label": "Best Sellers",
-            "url": "",
-            "open_in_new_tab": false,
-            "show_product_info": false,
-            "title": "",
-            "price": ""
+            "product": "chase-gamblin-multicolored-vase",
+            "label": "Chase Gamblin",
+            "show_add_to_cart": true,
+            "open_in_new_tab": false
           }
         }
       },
       "block_order": [
-        "custom_link_jDgdwk",
+        "product_P6HAeJ",
         "custom_link_yMtwgN",
-        "custom_link_3bcWyx"
+        "product_apBmTJ"
       ],
       "name": "Shop showcase",
       "settings": {
