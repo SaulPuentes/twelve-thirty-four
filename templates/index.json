@@ -145,12 +145,21 @@
         "link_label": "Get directions",
         "link_url": "https://maps.app.goo.gl/NHjcipu28UJxoBRx5"
       }
+    },
+    "quote-banner": {
+      "type": "quote-banner",
+      "settings": {
+        "overlay_opacity": 50,
+        "quote": "\"Go outside... amidst the simple beauty of nature... and know that as long as places like this exist, there will be a comfort for every sorrow, whatever the circumstances may be.\"",
+        "attribution": "-Anne Frank"
+      }
     }
   },
   "order": [
     "hero",
     "featured-products",
     "workshops",
-    "visit-boutique"
+    "visit-boutique",
+    "quote-banner"
   ]
 }

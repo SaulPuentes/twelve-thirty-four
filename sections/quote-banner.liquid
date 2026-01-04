@@ -1,0 +1,167 @@
+{%- comment -%}
+  Quote Banner Section
+  Full-width background image with dark overlay and centered quote text
+{%- endcomment -%}
+
+<section
+  id="QuoteBanner-{{ section.id }}"
+  class="quote-banner"
+>
+  <div class="quote-banner__background">
+    {%- if section.settings.image != blank -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 2000 }}"
+        srcset="
+          {{ section.settings.image | image_url: width: 800 }} 800w,
+          {{ section.settings.image | image_url: width: 1200 }} 1200w,
+          {{ section.settings.image | image_url: width: 1600 }} 1600w,
+          {{ section.settings.image | image_url: width: 2000 }} 2000w
+        "
+        sizes="100vw"
+        alt="{{ section.settings.image.alt | default: 'Background image' | escape }}"
+        class="quote-banner__image"
+        loading="lazy"
+      >
+    {%- endif -%}
+    <div class="quote-banner__overlay" style="--overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+  </div>
+
+  <div class="quote-banner__content">
+    {%- if section.settings.quote != blank -%}
+      <blockquote class="quote-banner__quote">
+        {{ section.settings.quote }}
+      </blockquote>
+    {%- endif -%}
+
+    {%- if section.settings.attribution != blank -%}
+      <cite class="quote-banner__attribution">{{ section.settings.attribution }}</cite>
+    {%- endif -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  .quote-banner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+
+  @media screen and (min-width: 750px) {
+    .quote-banner {
+      min-height: 70vh;
+      padding: 6rem 4rem;
+    }
+  }
+
+  .quote-banner__background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .quote-banner__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .quote-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, var(--overlay-opacity, 0.5));
+  }
+
+  .quote-banner__content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .quote-banner__quote {
+    font-family: var(--font-heading-family);
+    font-size: 1.25rem;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.6;
+    margin: 0 0 1.5rem 0;
+    padding: 0;
+    border: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .quote-banner__quote {
+      font-size: 1.5rem;
+      line-height: 1.7;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .quote-banner__quote {
+      font-size: 1.75rem;
+    }
+  }
+
+  .quote-banner__attribution {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    font-style: normal;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    opacity: 0.9;
+  }
+
+  @media screen and (min-width: 750px) {
+    .quote-banner__attribution {
+      font-size: 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Quote banner",
+  "tag": "section",
+  "class": "section-quote-banner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 50
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "\"Go outside... amidst the simple beauty of nature... and know that as long as places like this exist, there will be a comfort for every sorrow, whatever the circumstances may be.\""
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Attribution",
+      "default": "-Anne Frank"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quote banner"
+    }
+  ]
+}
+{% endschema %}
+

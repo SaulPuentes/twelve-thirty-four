@@ -1,0 +1,242 @@
+{%- comment -%}
+  About Content Section
+  Two-column layout with founder image and biography text
+{%- endcomment -%}
+
+<section
+  id="AboutContent-{{ section.id }}"
+  class="about-content"
+>
+  <div class="about-content__container">
+    {%- comment -%} Introduction {%- endcomment -%}
+    {%- if section.settings.intro_heading != blank or section.settings.intro_text != blank -%}
+      <div class="about-content__intro">
+        {%- if section.settings.intro_heading != blank -%}
+          <h1 class="about-content__intro-heading">{{ section.settings.intro_heading }}</h1>
+        {%- endif -%}
+        {%- if section.settings.intro_text != blank -%}
+          <div class="about-content__intro-text">{{ section.settings.intro_text }}</div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- comment -%} Founder Section {%- endcomment -%}
+    <div class="about-content__founder">
+      <div class="about-content__founder-grid">
+        {%- comment -%} Image Column {%- endcomment -%}
+        <div class="about-content__founder-image-wrapper">
+          {%- if section.settings.founder_image != blank -%}
+            <img
+              src="{{ section.settings.founder_image | image_url: width: 800 }}"
+              srcset="
+                {{ section.settings.founder_image | image_url: width: 400 }} 400w,
+                {{ section.settings.founder_image | image_url: width: 600 }} 600w,
+                {{ section.settings.founder_image | image_url: width: 800 }} 800w
+              "
+              sizes="(max-width: 749px) 100vw, 45vw"
+              alt="{{ section.settings.founder_image.alt | default: section.settings.founder_name | escape }}"
+              class="about-content__founder-image"
+              loading="lazy"
+            >
+          {%- else -%}
+            {{ 'image' | placeholder_svg_tag: 'about-content__founder-placeholder' }}
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Bio Column {%- endcomment -%}
+        <div class="about-content__founder-bio">
+          {%- if section.settings.founder_name != blank -%}
+            <h2 class="about-content__founder-name">{{ section.settings.founder_name }}</h2>
+          {%- endif -%}
+          {%- if section.settings.founder_bio != blank -%}
+            <div class="about-content__founder-text">{{ section.settings.founder_bio }}</div>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .about-content {
+    padding: 4rem 2rem;
+    background-color: var(--color-background, #fff);
+  }
+
+  @media screen and (min-width: 990px) {
+    .about-content {
+      padding: 6rem 4rem;
+    }
+  }
+
+  .about-content__container {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* Introduction */
+  .about-content__intro {
+    max-width: 900px;
+    margin: 0 auto 4rem;
+    text-align: center;
+  }
+
+  @media screen and (min-width: 990px) {
+    .about-content__intro {
+      margin-bottom: 6rem;
+    }
+  }
+
+  .about-content__intro-heading {
+    font-family: var(--font-heading-family);
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .about-content__intro-heading {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .about-content__intro-heading {
+      font-size: 3rem;
+    }
+  }
+
+  .about-content__intro-text {
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-foreground);
+  }
+
+  @media screen and (min-width: 750px) {
+    .about-content__intro-text {
+      font-size: 1.125rem;
+    }
+  }
+
+  /* Founder Section */
+  .about-content__founder-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media screen and (min-width: 990px) {
+    .about-content__founder-grid {
+      grid-template-columns: 45% 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+  }
+
+  .about-content__founder-image-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-content__founder-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .about-content__founder-placeholder {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background-color: #f0f0f0;
+  }
+
+  .about-content__founder-bio {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .about-content__founder-name {
+    font-family: var(--font-heading-family);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .about-content__founder-name {
+      font-size: 1.875rem;
+    }
+  }
+
+  .about-content__founder-text {
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-foreground);
+  }
+
+  .about-content__founder-text p {
+    margin: 0 0 1.5rem 0;
+  }
+
+  .about-content__founder-text p:last-child {
+    margin-bottom: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "About content",
+  "tag": "section",
+  "class": "section-about-content",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Introduction"
+    },
+    {
+      "type": "text",
+      "id": "intro_heading",
+      "label": "Heading",
+      "default": "About Twelve Thirty Four"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Introduction text",
+      "default": "<p>Twelve Thirty Four brings the beautiful, mysterious, and calming elements of nature to each client.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Founder"
+    },
+    {
+      "type": "image_picker",
+      "id": "founder_image",
+      "label": "Founder image"
+    },
+    {
+      "type": "text",
+      "id": "founder_name",
+      "label": "Founder name",
+      "default": "Patricio Rivera"
+    },
+    {
+      "type": "richtext",
+      "id": "founder_bio",
+      "label": "Founder biography",
+      "default": "<p>A deep connection to nature guides all aspects of Patricio Rivera's life.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About content"
+    }
+  ]
+}
+{% endschema %}
+
