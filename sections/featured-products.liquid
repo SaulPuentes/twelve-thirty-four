@@ -35,7 +35,42 @@
         {%- case block.type -%}
           {%- when 'product' -%}
             {%- if block.settings.product != blank -%}
-              {% render 'product-card', product: block.settings.product, show_vendor: section.settings.show_vendor, block: block %}
+              {%- assign product = block.settings.product -%}
+              {%- assign first_variant = product.selected_or_first_available_variant -%}
+              <div class="product-card" {{ block.shopify_attributes }}>
+                <a href="{{ product.url }}" class="product-card__link" aria-label="{{ product.title }}">
+                  <div class="product-card__media">
+                    {%- if product.featured_media -%}
+                      <img
+                        src="{{ product.featured_media | image_url: width: 600 }}"
+                        alt="{{ product.featured_media.alt | default: product.title | escape }}"
+                        width="300"
+                        height="{{ 300 | divided_by: product.featured_media.aspect_ratio | round }}"
+                        class="product-card__image"
+                        loading="lazy"
+                      >
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
+                    {%- endif -%}
+                  </div>
+                  <div class="product-card__info">
+                    <h3 class="product-card__title">{{ product.title }}</h3>
+                    <p class="product-card__price">{{ product.price | money }}</p>
+                  </div>
+                </a>
+                <button
+                  type="button"
+                  class="product-card__add-to-cart"
+                  data-variant-id="{{ first_variant.id }}"
+                  {% unless first_variant.available %}disabled{% endunless %}
+                >
+                  {%- if first_variant.available -%}
+                    {{ 'products.product.add_to_cart' | t | upcase }}
+                  {%- else -%}
+                    {{ 'products.product.sold_out' | t | upcase }}
+                  {%- endif -%}
+                </button>
+              </div>
             {%- else -%}
               <div class="product-card product-card--placeholder" {{ block.shopify_attributes }}>
                 <div class="product-card__media">
@@ -45,6 +80,9 @@
                   <h3 class="product-card__title">{{ 'onboarding.product_title' | t }}</h3>
                   <p class="product-card__price">{{ 9900 | money }}</p>
                 </div>
+                <button type="button" class="product-card__add-to-cart" disabled>
+                  {{ 'products.product.add_to_cart' | t | upcase }}
+                </button>
               </div>
             {%- endif -%}
         {%- endcase -%}
@@ -59,6 +97,9 @@
               <h3 class="product-card__title">{{ 'onboarding.product_title' | t }}</h3>
               <p class="product-card__price">{{ 100 | times: i | money }}</p>
             </div>
+            <button type="button" class="product-card__add-to-cart" disabled>
+              {{ 'products.product.add_to_cart' | t | upcase }}
+            </button>
           </div>
         {%- endfor -%}
       {%- endfor -%}
@@ -219,9 +260,83 @@
     font-family: var(--font-body-family);
     font-size: 0.875rem;
     color: var(--color-foreground);
-    margin: 0;
+    margin: 0 0 1rem;
+  }
+
+  .featured-products .product-card__add-to-cart {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #000;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .featured-products .product-card__add-to-cart:hover:not(:disabled) {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .featured-products .product-card__add-to-cart:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 {% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.featured-products .product-card__add-to-cart[data-variant-id]');
+    addToCartButtons.forEach(function(button) {
+      button.addEventListener('click', function(e) {
+        e.preventDefault();
+        const variantId = this.dataset.variantId;
+        const originalText = this.textContent;
+        this.disabled = true;
+        this.textContent = '{{ "products.product.adding" | t | default: "ADDING..." }}';
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: variantId,
+            quantity: 1
+          })
+        })
+        .then(response => response.json())
+        .then(data => {
+          this.textContent = '{{ "products.product.added" | t | default: "ADDED!" }}';
+          // Update cart count if element exists
+          const cartCount = document.querySelector('[data-cart-count]');
+          if (cartCount) {
+            fetch('/cart.js')
+              .then(res => res.json())
+              .then(cart => {
+                cartCount.textContent = cart.item_count;
+                cartCount.classList.remove('hidden');
+              });
+          }
+          setTimeout(() => {
+            this.textContent = originalText;
+            this.disabled = false;
+          }, 2000);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          this.textContent = originalText;
+          this.disabled = false;
+        });
+      });
+    });
+  });
+{% endjavascript %}
 
 {% schema %}
 {
