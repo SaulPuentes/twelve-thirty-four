@@ -329,28 +329,27 @@
     margin-top: 3rem;
     display: flex;
     justify-content: center;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .main-collection__pagination a,
   .main-collection__pagination span {
     font-family: var(--font-body-family);
     font-size: 0.875rem;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.75rem;
     text-decoration: none;
     color: var(--color-foreground);
-    border: 1px solid var(--color-border, rgba(0, 0, 0, 0.1));
-    transition: background-color 0.3s ease, color 0.3s ease;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
   }
 
   .main-collection__pagination a:hover {
-    background-color: var(--color-foreground);
-    color: var(--color-background);
+    opacity: 1;
   }
 
   .main-collection__pagination span.current {
-    background-color: var(--color-foreground);
-    color: var(--color-background);
+    opacity: 1;
+    font-weight: 500;
   }
 
   /* Mobile sidebar toggle - for future enhancement */
