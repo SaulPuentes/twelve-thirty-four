@@ -1,0 +1,75 @@
+{%- comment -%}
+  Slideshow Navigation Dots
+  Reusable navigation component for slideshows
+
+  Usage:
+  {% render 'slideshow-nav',
+    count: section.blocks.size,
+    prefix: 'hero',
+    data_attribute: 'slide-nav'
+  %}
+
+  Parameters:
+  - count: Number of slides (required)
+  - prefix: CSS class prefix for styling (default: 'slideshow')
+  - data_attribute: Data attribute name for JavaScript targeting (default: 'slide-nav')
+  - position: 'bottom' or 'inline' (default: 'bottom')
+{%- endcomment -%}
+
+{%- liquid
+  assign nav_prefix = prefix | default: 'slideshow'
+  assign nav_data_attr = data_attribute | default: 'slide-nav'
+  assign nav_position = position | default: 'bottom'
+-%}
+
+{%- if count > 1 -%}
+  <div class="slideshow-nav slideshow-nav--{{ nav_position }} {{ nav_prefix }}__nav" data-slideshow-nav>
+    {%- for i in (1..count) -%}
+      <button
+        type="button"
+        class="slideshow-nav__dot {{ nav_prefix }}__nav-dot{% if forloop.first %} slideshow-nav__dot--active {{ nav_prefix }}__nav-dot--active{% endif %}"
+        data-{{ nav_data_attr }}="{{ forloop.index0 }}"
+        aria-label="{{ 'accessibility.slide_number' | t: number: forloop.index }}"
+      ></button>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+
+<style>
+  .slideshow-nav {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .slideshow-nav--bottom {
+    justify-content: center;
+    margin-top: 2rem;
+  }
+
+  .slideshow-nav--inline {
+    justify-content: flex-start;
+  }
+
+  .slideshow-nav__dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: var(--nav-dot-color, currentColor);
+    opacity: 0.3;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: width 0.3s ease, opacity 0.3s ease, border-radius 0.3s ease;
+  }
+
+  .slideshow-nav__dot:hover {
+    opacity: 0.6;
+  }
+
+  .slideshow-nav__dot--active {
+    width: 2rem;
+    border-radius: 0.25rem;
+    opacity: 1;
+  }
+</style>
+
