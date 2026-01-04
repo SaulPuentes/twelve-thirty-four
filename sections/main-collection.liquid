@@ -25,6 +25,15 @@
       <h3 class="main-collection__sidebar-title">{{ section.settings.designers_title | default: 'Designers' }}</h3>
       <nav class="main-collection__nav">
         <ul class="main-collection__nav-list">
+          {%- comment -%} ALL option {%- endcomment -%}
+          <li class="main-collection__nav-item">
+            <a
+              href="/collections/all"
+              class="main-collection__nav-link{% if collection.handle == 'all' %} main-collection__nav-link--active{% endif %}"
+            >
+              ALL
+            </a>
+          </li>
           {%- for collection_item in collections -%}
             {%- if collection_item.products.size > 0 -%}
               <li class="main-collection__nav-item">
@@ -103,6 +112,15 @@
       <h3 class="main-collection__sidebar-title">{{ section.settings.categories_title | default: 'Categories' }}</h3>
       <nav class="main-collection__nav">
         <ul class="main-collection__nav-list">
+          {%- comment -%} ALL option {%- endcomment -%}
+          <li class="main-collection__nav-item">
+            <a
+              href="{{ collection.url }}"
+              class="main-collection__nav-link main-collection__nav-link--active"
+            >
+              ALL
+            </a>
+          </li>
           {%- for product_type in shop.types -%}
             {%- if product_type != blank -%}
               <li class="main-collection__nav-item">
