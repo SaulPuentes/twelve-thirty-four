@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -98,30 +107,64 @@
         "link": {
           "type": "_collection-link",
           "static": true,
+          "settings": {
+            "show_count": true
+          },
           "blocks": {
             "title": {
               "type": "_inline-collection-title",
               "name": "Title",
               "static": true,
               "settings": {
-                "font": "var(--font-subheading--family)"
-              }
+                "font": "var(--font-subheading--family)",
+                "weight": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none"
+              },
+              "blocks": {}
             },
             "image": {
               "type": "_image",
               "static": true,
               "settings": {
                 "height": "large",
-                "ratio": "square"
-              }
+                "ratio": "square",
+                "border_radius": 0
+              },
+              "blocks": {}
             }
-          }
+          },
+          "block_order": []
         }
       },
-      "block_order": [
-        "link"
-      ],
       "settings": {
+        "collection_list": [
+          "art",
+          "books",
+          "brooks-oliver-ceramics",
+          "bury-me-west-collection",
+          "candle-collaborations",
+          "chase-gamblin",
+          "crystals",
+          "custom-floral-arrangements",
+          "elizabeth-hooper-studio",
+          "floral-classes",
+          "florals",
+          "giselle-hicks",
+          "jewelry",
+          "nuuna-notebooks",
+          "plants",
+          "simon-waranch",
+          "simonett",
+          "some-ceramic-studio-by-sofia-mesa",
+          "sonya-edwards",
+          "super-premium-quality-goods",
+          "vada-sunglasses-1-of-1-collection",
+          "vases",
+          "vintage",
+          "you-are-beautiful"
+        ],
         "layout": "spotlight",
         "section_width": "page-width",
         "alignment": "left",
