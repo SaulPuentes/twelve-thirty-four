@@ -163,11 +163,10 @@
 {% stylesheet %}
   /* Section heading size variables */
   .slideshow-text {
-    --section-heading-xl: 2.5rem;
-    --section-heading-xl-tablet: 3.5rem;
-    --section-heading-xl-desktop: 4.5rem;
-    --section-heading-sm: 1.25rem;
-    --section-heading-sm-desktop: 1.5rem;
+    --section-heading-lg: 2.25rem;
+    --section-heading-lg-desktop: 3rem;
+    --section-heading-sm: 1.5rem;
+    --section-heading-sm-desktop: 1.875rem;
   }
 
   .slideshow-text {
@@ -215,24 +214,15 @@
 
   .slideshow-text__heading {
     font-family: var(--font-heading-family);
-    font-size: var(--section-heading-xl);
-    font-weight: var(--font-heading-weight, 400);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    font-size: var(--section-heading-lg);
+    line-height: 1.1;
     text-transform: uppercase;
     margin: 0;
-    color: var(--color-foreground);
-  }
-
-  @media screen and (min-width: 768px) {
-    .slideshow-text__heading {
-      font-size: var(--section-heading-xl-tablet);
-    }
   }
 
   @media screen and (min-width: 1024px) {
     .slideshow-text__heading {
-      font-size: var(--section-heading-xl-desktop);
+      font-size: var(--section-heading-lg-desktop);
     }
   }
 
