@@ -182,12 +182,23 @@
         "autoplay": true,
         "autoplay_speed": 5
       }
+    },
+    "visit-boutique": {
+      "type": "visit-boutique",
+      "settings": {
+        "title": "Visit Our Boutique in East Dallas",
+        "address": "4034 Swiss Ave, Dallas, TX 75204",
+        "description": "Everyone is always welcome, stop by, say hello, and discover something beautiful.",
+        "link_label": "Get directions",
+        "link_url": "https://maps.app.goo.gl/NHjcipu28UJxoBRx5"
+      }
     }
   },
   "order": [
     "hero",
     "featured-products",
     "collection-links",
-    "workshops"
+    "workshops",
+    "visit-boutique"
   ]
 }

@@ -95,7 +95,7 @@ body {
 
   /* Fallback font families */
   --font-body-family: var(--font-paragraph--family);
-  --font-heading-family: system-ui, -apple-system, sans-serif;
+  --font-heading-family: 'Literata', 'Georgia', 'Times New Roman', serif;
 }
 
 html {

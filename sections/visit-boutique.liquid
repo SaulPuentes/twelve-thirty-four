@@ -1,0 +1,245 @@
+{%- comment -%}
+  Visit Our Boutique Section
+  Two-column layout with shop image and location details
+{%- endcomment -%}
+
+<section
+  id="VisitBoutique-{{ section.id }}"
+  class="visit-boutique"
+>
+  <div class="visit-boutique__container">
+    <div class="visit-boutique__grid">
+      {%- comment -%} Left Column - Image {%- endcomment -%}
+      <div class="visit-boutique__image-wrapper">
+        {%- if section.settings.image != blank -%}
+          <img
+            src="{{ section.settings.image | image_url: width: 1200 }}"
+            srcset="
+              {{ section.settings.image | image_url: width: 600 }} 600w,
+              {{ section.settings.image | image_url: width: 900 }} 900w,
+              {{ section.settings.image | image_url: width: 1200 }} 1200w
+            "
+            sizes="(max-width: 749px) 100vw, 55vw"
+            alt="{{ section.settings.image.alt | default: section.settings.title | escape }}"
+            class="visit-boutique__image"
+            loading="lazy"
+          >
+        {%- else -%}
+          {{ 'lifestyle-2' | placeholder_svg_tag: 'visit-boutique__placeholder' }}
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right Column - Text Content {%- endcomment -%}
+      <div class="visit-boutique__content">
+        <div class="visit-boutique__text">
+          {%- if section.settings.title != blank -%}
+            <h2 class="visit-boutique__title">{{ section.settings.title }}</h2>
+          {%- endif -%}
+
+          {%- if section.settings.address != blank -%}
+            <p class="visit-boutique__address">{{ section.settings.address }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.description != blank -%}
+            <p class="visit-boutique__description">{{ section.settings.description }}</p>
+          {%- endif -%}
+
+          {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
+            <a href="{{ section.settings.link_url }}" class="visit-boutique__link" target="_blank" rel="noopener">
+              {% render 'icon', icon: 'arrow-right', size: 16 %}
+              <span>{{ section.settings.link_label }}</span>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  /* Import section heading size variables */
+  .visit-boutique {
+    --section-heading-sm: 1.5rem;
+    --section-heading-sm-desktop: 1.875rem;
+  }
+
+  .visit-boutique {
+    padding: 0;
+  }
+
+  .visit-boutique__container {
+    width: 100%;
+  }
+
+  .visit-boutique__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 500px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .visit-boutique__grid {
+      grid-template-columns: 55% 45%;
+      min-height: 600px;
+    }
+  }
+
+  .visit-boutique__image-wrapper {
+    position: relative;
+    overflow: hidden;
+    min-height: 300px;
+  }
+
+  @media screen and (min-width: 990px) {
+    .visit-boutique__image-wrapper {
+      min-height: auto;
+    }
+  }
+
+  .visit-boutique__image,
+  .visit-boutique__placeholder {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .visit-boutique__placeholder {
+    fill: #ccc;
+    background-color: #f0f0f0;
+  }
+
+  .visit-boutique__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3rem 2rem;
+    background-color: var(--color-background);
+  }
+
+  @media screen and (min-width: 990px) {
+    .visit-boutique__content {
+      padding: 4rem 3rem;
+    }
+  }
+
+  .visit-boutique__text {
+    text-align: left;
+  }
+
+  .visit-boutique__title {
+    font-family: var(--font-heading-family);
+    font-size: var(--section-heading-sm);
+    line-height: 1.2;
+    text-transform: uppercase;
+    margin: 0 0 1.5rem;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .visit-boutique__title {
+      font-size: var(--section-heading-sm-desktop);
+    }
+  }
+
+  .visit-boutique__address {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--color-foreground);
+    margin: 0 0 1rem;
+  }
+
+  .visit-boutique__description {
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    margin: 0 0 2rem;
+    max-width: 400px;
+  }
+
+  .visit-boutique__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: opacity 0.3s ease, gap 0.3s ease;
+  }
+
+  .visit-boutique__link:hover {
+    opacity: 0.7;
+    gap: 0.75rem;
+  }
+
+  .visit-boutique__link svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  .visit-boutique__link:hover svg {
+    transform: translateX(4px);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Visit boutique",
+  "tag": "section",
+  "class": "section-visit-boutique",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Shop image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Visit Our Boutique in East Dallas"
+    },
+    {
+      "type": "text",
+      "id": "address",
+      "label": "Address",
+      "default": "4034 Swiss Ave, Dallas, TX 75204"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Everyone is always welcome, stop by, say hello, and discover something beautiful."
+    },
+    {
+      "type": "header",
+      "content": "Link"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Get directions"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Visit boutique"
+    }
+  ]
+}
+{% endschema %}
+
