@@ -101,79 +101,6 @@
         "view_all_link": "shopify://collections"
       }
     },
-    "collection-links": {
-      "type": "collection-links",
-      "blocks": {
-        "link": {
-          "type": "_collection-link",
-          "static": true,
-          "settings": {
-            "show_count": true
-          },
-          "blocks": {
-            "title": {
-              "type": "_inline-collection-title",
-              "name": "Title",
-              "static": true,
-              "settings": {
-                "font": "var(--font-subheading--family)",
-                "weight": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none"
-              },
-              "blocks": {}
-            },
-            "image": {
-              "type": "_image",
-              "static": true,
-              "settings": {
-                "height": "large",
-                "ratio": "square",
-                "border_radius": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
-        }
-      },
-      "settings": {
-        "collection_list": [
-          "art",
-          "books",
-          "brooks-oliver-ceramics",
-          "bury-me-west-collection",
-          "candle-collaborations",
-          "chase-gamblin",
-          "crystals",
-          "custom-floral-arrangements",
-          "elizabeth-hooper-studio",
-          "floral-classes",
-          "florals",
-          "giselle-hicks",
-          "jewelry",
-          "nuuna-notebooks",
-          "plants",
-          "simon-waranch",
-          "simonett",
-          "some-ceramic-studio-by-sofia-mesa",
-          "sonya-edwards",
-          "super-premium-quality-goods",
-          "vada-sunglasses-1-of-1-collection",
-          "vases",
-          "vintage",
-          "you-are-beautiful"
-        ],
-        "layout": "spotlight",
-        "section_width": "page-width",
-        "alignment": "left",
-        "image_position": "right",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 40,
-        "padding-block-end": 40
-      }
-    },
     "workshops": {
       "type": "slideshow-with-text",
       "blocks": {
@@ -223,7 +150,6 @@
   "order": [
     "hero",
     "featured-products",
-    "collection-links",
     "workshops",
     "visit-boutique"
   ]
