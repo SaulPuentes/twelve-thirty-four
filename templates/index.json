@@ -45,7 +45,7 @@
         "height": "100",
         "content_position": "center",
         "content_max_width": 800,
-        "overlay_opacity": 30,
+        "overlay_opacity": 60,
         "enable_parallax": true,
         "autoplay": true,
         "autoplay_speed": 5,
