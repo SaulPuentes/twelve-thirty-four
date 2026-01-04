@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "about-content": {
@@ -12,7 +21,8 @@
     "quote-banner": {
       "type": "quote-banner",
       "settings": {
-        "overlay_opacity": 50,
+        "image": "shopify://shop_images/quote-bg.png",
+        "overlay_opacity": 0,
         "quote": "\"Go outside... amidst the simple beauty of nature... and know that as long as places like this exist, there will be a comfort for every sorrow, whatever the circumstances may be.\"",
         "attribution": "-Anne Frank"
       }
@@ -23,4 +33,3 @@
     "quote-banner"
   ]
 }
-
