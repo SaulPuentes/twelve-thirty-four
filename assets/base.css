@@ -2797,27 +2797,25 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 /* Quantity selector */
 .quantity-selector {
   --quantity-selector-width: 124px;
-  --minimum-touch-target: 44px;
-  --icon-size-xs: 16px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--color-input-text, var(--color-foreground));
-  background-color: var(--color-input-background, var(--color-background));
-  border: var(--style-border-width-inputs, 1px) solid var(--color-input-border, var(--color-border));
-  border-radius: var(--style-border-radius-inputs, 4px);
+  color: var(--color-input-text);
+  background-color: var(--color-input-background);
+  border: var(--style-border-width-inputs) solid var(--color-input-border);
+  border-radius: var(--style-border-radius-inputs);
   flex: 1 1 var(--quantity-selector-width);
   align-self: stretch;
-  transition: background-color var(--animation-speed, 0.3s) var(--animation-easing, ease);
+  transition: background-color var(--animation-speed) var(--animation-easing);
 
   &:hover {
-    background-color: var(--color-input-hover-background, rgb(var(--color-foreground-rgb) / 0.05));
+    background-color: var(--color-input-hover-background);
   }
 }
 
 .product-form-buttons:has(.add-to-cart-button.button-secondary) .quantity-selector {
-  border-radius: var(--style-border-radius-buttons-secondary, 4px);
+  border-radius: var(--style-border-radius-buttons-secondary);
 }
 
 .quantity-selector :is(.quantity-minus, .quantity-plus) {
@@ -2825,7 +2823,6 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   padding: 0;
   background: transparent;
   box-shadow: none;
-  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2833,35 +2830,35 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   width: var(--minimum-touch-target);
   height: var(--minimum-touch-target);
   flex-shrink: 0;
-  color: var(--color-input-text, var(--color-foreground));
+  color: var(--color-input-text);
 }
 
 .quantity-selector .quantity-minus {
-  border-start-start-radius: var(--style-border-radius-inputs, 4px);
-  border-end-start-radius: var(--style-border-radius-inputs, 4px);
+  border-start-start-radius: var(--style-border-radius-inputs);
+  border-end-start-radius: var(--style-border-radius-inputs);
 }
 
 .quantity-selector .quantity-plus {
-  border-start-end-radius: var(--style-border-radius-inputs, 4px);
-  border-end-end-radius: var(--style-border-radius-inputs, 4px);
+  border-start-end-radius: var(--style-border-radius-inputs);
+  border-end-end-radius: var(--style-border-radius-inputs);
 }
 
 .product-details .quantity-selector {
-  border-radius: var(--style-border-radius-buttons-primary, 4px);
+  border-radius: var(--style-border-radius-buttons-primary);
 }
 
 .product-details .quantity-selector .quantity-minus {
-  border-start-start-radius: var(--style-border-radius-buttons-primary, 4px);
-  border-end-start-radius: var(--style-border-radius-buttons-primary, 4px);
+  border-start-start-radius: var(--style-border-radius-buttons-primary);
+  border-end-start-radius: var(--style-border-radius-buttons-primary);
 }
 
 .product-details .quantity-selector .quantity-plus {
-  border-start-end-radius: var(--style-border-radius-buttons-primary, 4px);
-  border-end-end-radius: var(--style-border-radius-buttons-primary, 4px);
+  border-start-end-radius: var(--style-border-radius-buttons-primary);
+  border-end-end-radius: var(--style-border-radius-buttons-primary);
 }
 
 .quantity-selector .svg-wrapper {
-  transition: transform var(--animation-speed, 0.3s) var(--animation-easing, ease);
+  transition: transform var(--animation-speed) var(--animation-easing);
 }
 
 .quantity-selector svg {
@@ -2879,8 +2876,8 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
   border: none;
   appearance: none;
   max-width: calc(var(--quantity-selector-width) - var(--minimum-touch-target) * 2);
-  border-radius: var(--style-border-radius-buttons, 4px);
-  color: var(--color-input-text, var(--color-foreground));
+  border-radius: var(--style-border-radius-buttons);
+  color: var(--color-input-text);
   background-color: transparent;
 }
 

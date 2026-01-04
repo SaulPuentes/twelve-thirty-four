@@ -44,7 +44,7 @@
                 <h3 class="footer__column-heading">{{ block.settings.heading }}</h3>
               {%- endif -%}
               
-              <ul class="footer__nav-list">
+                <ul class="footer__nav-list">
                 {%- if block.settings.link_1_text != blank and block.settings.link_1_url != blank -%}
                   <li class="footer__nav-item">
                     <a href="{{ block.settings.link_1_url }}" class="footer__nav-link">
@@ -81,13 +81,13 @@
                   </li>
                 {%- endif -%}
                 {%- if block.settings.link_6_text != blank and block.settings.link_6_url != blank -%}
-                  <li class="footer__nav-item">
+                    <li class="footer__nav-item">
                     <a href="{{ block.settings.link_6_url }}" class="footer__nav-link">
                       {{ block.settings.link_6_text }}
-                    </a>
-                  </li>
+                      </a>
+                    </li>
                 {%- endif -%}
-              </ul>
+                </ul>
             </div>
           {%- endif -%}
         {%- endfor -%}
@@ -110,11 +110,11 @@
             assign facebook_url = settings.social_facebook | default: 'https://www.facebook.com/Twelvethirtyfourflowers/'
           -%}
           <a href="{{ instagram_url }}" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">
-            {% render 'icon', icon: 'instagram', size: 20 %}
-          </a>
+              {% render 'icon', icon: 'instagram', size: 20 %}
+            </a>
           <a href="{{ facebook_url }}" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">
-            {% render 'icon', icon: 'facebook', size: 20 %}
-          </a>
+              {% render 'icon', icon: 'facebook', size: 20 %}
+            </a>
           {%- if settings.social_pinterest != blank -%}
             <a href="{{ settings.social_pinterest }}" class="footer__social-link" aria-label="Pinterest" target="_blank" rel="noopener">
               {% render 'icon', icon: 'pinterest', size: 20 %}
@@ -308,7 +308,7 @@
   }
 
   @media screen and (min-width: 1024px) {
-    .footer__bottom-left {
+  .footer__bottom-left {
       grid-column: span 9;
     }
   }

@@ -58,7 +58,7 @@
               loading="lazy"
               width="{{ collection.products.first.featured_image.width }}"
               height="{{ collection.products.first.featured_image.height }}"
-            >
+>
           {%- else -%}
             {{ 'collection-1' | placeholder_svg_tag: 'collection-list__placeholder' }}
           {%- endif -%}

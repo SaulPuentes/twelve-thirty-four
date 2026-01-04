@@ -3,14 +3,14 @@
   class="newsletter"
 >
   <div class="newsletter__container">
-    <div class="newsletter__content">
-      {%- if section.settings.heading != blank -%}
+      <div class="newsletter__content">
+        {%- if section.settings.heading != blank -%}
         <h2 class="newsletter__heading">{{ section.settings.heading }}</h2>
-      {%- endif -%}
+        {%- endif -%}
 
-      {%- if section.settings.description != blank -%}
-        <p class="newsletter__description">{{ section.settings.description }}</p>
-      {%- endif -%}
+        {%- if section.settings.description != blank -%}
+          <p class="newsletter__description">{{ section.settings.description }}</p>
+        {%- endif -%}
 
       <div class="newsletter__form-wrapper">
         {% form 'customer', id: 'NewsletterForm', class: 'newsletter__form' %}

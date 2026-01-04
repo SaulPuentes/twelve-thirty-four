@@ -1,4 +1,20 @@
-import { yieldToMainThread } from '@theme/utilities';
+/**
+ * Yields to the main thread to allow the browser to process pending work.
+ * Uses scheduler.yield() if available, otherwise falls back to requestAnimationFrame + setTimeout.
+ * @returns {Promise<void>}
+ */
+const yieldToMainThread = () => {
+  if ('scheduler' in window && 'yield' in scheduler) {
+    // @ts-ignore - TypeScript doesn't recognize the yield method yet.
+    return scheduler.yield();
+  }
+
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => {
+      setTimeout(resolve, 0);
+    });
+  });
+};
 
 /**
  * FlyToCart custom element for animating product images to cart

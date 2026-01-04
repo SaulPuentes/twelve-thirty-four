@@ -30,7 +30,7 @@
             <a
               href="/collections/all"
               class="main-collection__nav-link{% if collection.handle == 'all' %} main-collection__nav-link--active{% endif %}"
-            >
+>
               ALL
             </a>
           </li>
@@ -40,7 +40,7 @@
                 <a
                   href="{{ collection_item.url }}"
                   class="main-collection__nav-link{% if collection_item.handle == collection.handle %} main-collection__nav-link--active{% endif %}"
-                >
+  >
                   {{ collection_item.title }}
                 </a>
               </li>
@@ -80,7 +80,7 @@
                         loading="lazy"
                         width="{{ product.featured_image.width }}"
                         height="{{ product.featured_image.height }}"
-                      >
+          >
                     {%- else -%}
                       {{ 'product-1' | placeholder_svg_tag: 'main-collection__placeholder' }}
                     {%- endif -%}
@@ -245,7 +245,7 @@
     padding: 0;
   }
 
-  @media screen and (min-width: 750px) {
+    @media screen and (min-width: 750px) {
     .main-collection__grid {
       grid-template-columns: repeat(3, 1fr);
     }
@@ -284,7 +284,7 @@
 
   .main-collection__product:hover .main-collection__product-image img {
     transform: scale(1.05);
-  }
+    }
 
   .main-collection__placeholder {
     width: 100%;

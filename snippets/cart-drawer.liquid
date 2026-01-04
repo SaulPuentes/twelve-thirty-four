@@ -58,7 +58,7 @@
 
                   <div class="cart-drawer__item-actions">
                     <div class="quantity-selector">
-                      <button type="button" name="minus" class="quantity-minus" aria-label="{{ 'products.product.quantity.decrease' | t }}">
+                      <button type="button" name="minus" class="quantity-selector__button quantity-minus" aria-label="{{ 'products.product.quantity.decrease' | t }}">
                         <span class="svg-wrapper">{% render 'icon', icon: 'minus', size: 16 %}</span>
                       </button>
                       <input
@@ -70,7 +70,7 @@
                         data-key="{{ item.key }}"
                         aria-label="{{ 'products.product.quantity.input_label' | t }}"
                       >
-                      <button type="button" name="plus" class="quantity-plus" aria-label="{{ 'products.product.quantity.increase' | t }}">
+                      <button type="button" name="plus" class="quantity-selector__button quantity-plus" aria-label="{{ 'products.product.quantity.increase' | t }}">
                         <span class="svg-wrapper">{% render 'icon', icon: 'plus', size: 16 %}</span>
                       </button>
                     </div>
@@ -369,10 +369,92 @@
     text-align: right;
   }
 
-  /* Cart drawer quantity selector customization via CSS variables */
-  .cart-drawer .quantity-selector {
+  /* Quantity selector */
+  .quantity-selector {
     --quantity-selector-width: 90px;
     --icon-stroke-width: 1.5;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--color-foreground, #111);
+    background-color: var(--color-background, #fff);
+    border: 1px solid var(--color-border, #ddd);
+    border-radius: 4px;
+    flex: 0 0 var(--quantity-selector-width);
+    height: 36px;
+    transition: background-color 0.2s ease;
+  }
+
+  .quantity-selector:hover {
+    background-color: var(--color-background-secondary, #f5f5f5);
+  }
+
+  .quantity-selector__button {
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 44px;
+    height: 36px;
+    flex-shrink: 0;
+    color: var(--color-foreground, #111);
+  }
+
+  .quantity-minus {
+    border-start-start-radius: 4px;
+    border-end-start-radius: 4px;
+  }
+
+  .quantity-plus {
+    border-start-end-radius: 4px;
+    border-end-end-radius: 4px;
+  }
+
+  .quantity-selector .svg-wrapper {
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .quantity-selector svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .quantity-selector__button:active .svg-wrapper {
+    transform: scale(0.9);
+  }
+
+  .quantity-selector__input {
+    margin: 0;
+    text-align: center;
+    border: none;
+    appearance: none;
+    max-width: calc(var(--quantity-selector-width) - 88px);
+    border-radius: 4px;
+    color: var(--color-foreground, #111);
+    background-color: transparent;
+    font-size: 0.875rem;
+    width: 100%;
+    padding: 0;
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  .quantity-selector__input::-webkit-inner-spin-button,
+  .quantity-selector__input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  .quantity-selector__input {
+    -moz-appearance: textfield;
   }
 
   .cart-drawer__footer {
@@ -412,12 +494,42 @@
     gap: 0.75rem;
   }
 
-  /* Cart drawer button overrides */
   .cart-drawer__actions .button,
   .cart-drawer__actions .button-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     padding: 0.875rem 1.5rem;
+    font-family: var(--font-body-family);
     font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .cart-drawer__actions .button:not(.button-secondary) {
+    background-color: var(--color-foreground, #111);
+    color: var(--color-background, #fff);
+    border: 1px solid var(--color-foreground, #111);
+  }
+
+  .cart-drawer__actions .button:not(.button-secondary):hover {
+    background-color: transparent;
+    color: var(--color-foreground, #111);
+  }
+
+  .cart-drawer__actions .button-secondary {
+    background-color: transparent;
+    color: var(--color-foreground, #111);
+    border: 1px solid var(--color-border, #ddd);
+  }
+
+  .cart-drawer__actions .button-secondary:hover {
+    border-color: var(--color-foreground, #111);
   }
 </style>
 
