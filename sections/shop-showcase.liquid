@@ -47,7 +47,7 @@
           assign card_url = card_product.url | default: '#'
           assign card_label = block.settings.label | default: card_product.type
           assign show_product_info = true
-          assign card_title = card_product.title
+          assign card_title = block.settings.custom_title | default: card_product.title
           assign card_price = card_product.price | money
           if block.settings.show_add_to_cart and card_product.available
             assign has_add_to_cart = true
@@ -507,6 +507,12 @@
           "id": "label",
           "label": "Label",
           "info": "Leave blank to use product type"
+        },
+        {
+          "type": "text",
+          "id": "custom_title",
+          "label": "Custom title",
+          "info": "Override product title"
         },
         {
           "type": "checkbox",
