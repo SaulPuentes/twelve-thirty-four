@@ -143,6 +143,12 @@
 </footer>
 
 {% stylesheet %}
+  /* Import section heading size variables */
+  .footer {
+    --section-heading-sm: 1.5rem;
+    --section-heading-sm-desktop: 1.875rem;
+  }
+
   .footer {
     padding: 4rem 2rem;
     border-top: 1px solid var(--color-border);
@@ -164,7 +170,7 @@
 
   .footer__title {
     font-family: var(--font-heading-family);
-    font-size: 1.5em;
+    font-size: var(--section-heading-sm);
     line-height: 1.1;
     text-transform: uppercase;
     margin: 0;
@@ -172,7 +178,7 @@
 
   @media screen and (min-width: 1024px) {
     .footer__title {
-      font-size: 1.875rem;
+      font-size: var(--section-heading-sm-desktop);
     }
   }
 
