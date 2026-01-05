@@ -24,31 +24,10 @@
       {% render 'icon', icon: 'menu', size: 24 %}
     </button>
 
-    {%- comment -%} Logo {%- endcomment -%}
+    {%- comment -%} Shop Name {%- endcomment -%}
     <div class="header__logo">
       <a href="{{ routes.root_url }}" class="header__logo-link" aria-label="{{ shop.name }}">
-        {%- if settings.logo != blank -%}
-          <img
-            src="{{ settings.logo | image_url: width: 400 }}"
-            alt="{{ shop.name }}"
-            width="{{ settings.logo_height | times: settings.logo.aspect_ratio | round }}"
-            height="{{ settings.logo_height }}"
-            class="header__logo-image header__logo-image--default"
-            loading="eager"
-          >
-          {%- if settings.logo_inverse != blank -%}
-            <img
-              src="{{ settings.logo_inverse | image_url: width: 400 }}"
-              alt="{{ shop.name }}"
-              width="{{ settings.logo_height | times: settings.logo_inverse.aspect_ratio | round }}"
-              height="{{ settings.logo_height }}"
-              class="header__logo-image header__logo-image--inverse"
-              loading="eager"
-            >
-          {%- endif -%}
-        {%- else -%}
-          <span class="header__logo-text">{{ shop.name }}</span>
-        {%- endif -%}
+        <span class="header__logo-text">{{ shop.name }}</span>
       </a>
     </div>
 
