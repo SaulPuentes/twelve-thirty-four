@@ -12,48 +12,58 @@
     "main": {
       "type": "masonry-grid",
       "blocks": {
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "card_width": "half",
-            "show_product_count": false
-          }
-        },
-        "collection-2": {
-          "type": "collection",
-          "settings": {
-            "card_width": "half",
-            "show_product_count": false
-          }
-        },
-        "collection-3": {
-          "type": "collection",
-          "settings": {
-            "card_width": "full",
-            "show_product_count": false
-          }
-        },
         "collection-4": {
           "type": "collection",
           "settings": {
-            "card_width": "half",
-            "show_product_count": false
+            "collection": "plants",
+            "custom_title": "",
+            "show_product_count": false,
+            "card_width": "half"
           }
         },
         "collection-5": {
           "type": "collection",
           "settings": {
-            "card_width": "half",
-            "show_product_count": false
+            "collection": "florals",
+            "custom_title": "",
+            "show_product_count": false,
+            "card_width": "half"
+          }
+        },
+        "collection-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "custom-floral-arrangements",
+            "custom_title": "",
+            "show_product_count": false,
+            "card_width": "full"
+          }
+        },
+        "collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "giselle-hicks",
+            "custom_title": "",
+            "show_product_count": false,
+            "card_width": "half"
+          }
+        },
+        "collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "bury-me-west-collection",
+            "custom_title": "",
+            "show_product_count": false,
+            "card_width": "half"
           }
         }
       },
       "block_order": [
-        "collection-1",
-        "collection-2",
-        "collection-3",
         "collection-4",
-        "collection-5"
+        "collection-5",
+        "collection-3",
+        "collection-1",
+        "collection-2"
       ],
       "settings": {
         "heading": "",
