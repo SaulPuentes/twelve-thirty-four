@@ -2822,6 +2822,7 @@ product-price.text-block:is(.h1, .h2, .h3, .h4, .h5, .h6) > *:not(.tax-note) {
 .quantity-selector :is(.quantity-minus, .quantity-plus) {
   /* Unset button styles */
   padding: 0.5rem;
+  border: none;
   background: transparent;
   box-shadow: none;
   display: flex;

@@ -116,21 +116,34 @@
       if (isAnimating || index === currentIndex) return;
       isAnimating = true;
 
-      // Fade out current
-      contents[currentIndex].classList.remove('slideshow-text__slide-content--active');
-      images[currentIndex].classList.remove('slideshow-text__slide-image--active');
-      if (navDots.length) navDots[currentIndex].classList.remove('slideshow-text__nav-dot--active');
+      // Add exiting class to current slide (moves left)
+      contents[currentIndex].classList.add('slideshow-text__slide-content--exiting');
+      images[currentIndex].classList.add('slideshow-text__slide-image--exiting');
 
-      // Fade in new
-      contents[index].classList.add('slideshow-text__slide-content--active');
-      images[index].classList.add('slideshow-text__slide-image--active');
-      if (navDots.length) navDots[index].classList.add('slideshow-text__nav-dot--active');
-
-      currentIndex = index;
-
+      // After a brief delay, remove active and exiting classes, then show new slide
       setTimeout(function() {
-        isAnimating = false;
-      }, 600);
+        // Remove current slide
+        contents[currentIndex].classList.remove('slideshow-text__slide-content--active', 'slideshow-text__slide-content--exiting');
+        images[currentIndex].classList.remove('slideshow-text__slide-image--active', 'slideshow-text__slide-image--exiting');
+        
+        // Update navigation dots
+        if (navDots.length) {
+          navDots[currentIndex].classList.remove('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
+          navDots[index].classList.add('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
+        }
+
+        // Update current index
+        currentIndex = index;
+
+        // Show new slide (enters from right)
+        contents[index].classList.add('slideshow-text__slide-content--active');
+        images[index].classList.add('slideshow-text__slide-image--active');
+
+        // Reset animation lock
+        setTimeout(function() {
+          isAnimating = false;
+        }, 100);
+      }, 300);
     }
 
     function nextSlide() {
@@ -237,7 +250,7 @@
 
   .slideshow-text__slide-content {
     opacity: 0;
-    transform: translateY(1rem);
+    transform: translateX(2rem);
     transition: opacity 0.6s ease, transform 0.6s ease;
     position: absolute;
     bottom: 0;
@@ -247,8 +260,12 @@
 
   .slideshow-text__slide-content--active {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
     position: relative;
+  }
+
+  .slideshow-text__slide-content--exiting {
+    transform: translateX(-2rem);
   }
 
   .slideshow-text__slide-title {
@@ -332,13 +349,17 @@
     position: absolute;
     inset: 0;
     opacity: 0;
-    transform: scale(1.05);
-    transition: opacity 1s ease, transform 1s ease;
+    transform: translateX(2rem) scale(1.05);
+    transition: opacity 0.8s ease, transform 0.8s ease;
   }
 
   .slideshow-text__slide-image--active {
     opacity: 1;
-    transform: scale(1);
+    transform: translateX(0) scale(1);
+  }
+
+  .slideshow-text__slide-image--exiting {
+    transform: translateX(-2rem) scale(1.05);
   }
 
   .slideshow-text__image,

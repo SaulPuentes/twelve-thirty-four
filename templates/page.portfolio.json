@@ -77,6 +77,7 @@
       "settings": {
         "heading": "Portfolio",
         "description": "A curated selection of our floral artistry, from intimate arrangements to grand installations.",
+        "enable_modal": true,
         "gap": 16,
         "card_height": 500,
         "card_height_mobile": 300,
