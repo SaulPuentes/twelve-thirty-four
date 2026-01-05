@@ -1,5 +1,6 @@
 {%- liquid
   assign columns = section.settings.columns
+  assign gap_value = section.settings.gap | default: 16
 -%}
 
 <section
@@ -7,7 +8,7 @@
   class="featured-products"
   style="
     --featured-products-columns: {{ columns }};
-    --featured-products-gap: {{ section.settings.gap }}px;
+    --featured-products-gap: {{ gap_value }}px;
   "
 >
   <div class="page-width">

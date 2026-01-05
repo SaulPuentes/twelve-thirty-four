@@ -74,12 +74,15 @@
     when 'content-full-width'
       assign content_width = 'full-width'
   endcase
+
+  # Set gap with fallback
+  assign gap_value = settings.gap | default: 16
 %}
 
 <div class="section-background color-{{ settings.color_scheme }}"></div>
 <div
   class="product-information section section--{{ content_width }} spacing-style color-{{ settings.color_scheme }} relative"
-  style="{% render 'spacing-style', settings: settings %} --gap: {{ settings.gap }}px;"
+  style="{% render 'spacing-style', settings: settings %} --gap: {{ gap_value }}px;"
   data-testid="product-information"
 >
   {% if settings.desktop_media_position == 'left' and product_has_media and request.page_type == 'product' %}
@@ -114,7 +117,7 @@
 
 {% stylesheet %}
   .product-information {
-    gap: var(--gap) 0;
+    gap: var(--gap, 16px) 0;
   }
 
   /* Base grid layout */

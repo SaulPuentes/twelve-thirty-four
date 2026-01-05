@@ -17,7 +17,7 @@
     --grid-columns: {{ section.settings.columns_desktop }};
     --grid-columns-tablet: {{ section.settings.columns_tablet }};
     --grid-columns-mobile: {{ section.settings.columns_mobile }};
-    --grid-gap: {{ section.settings.gap }}px;
+    --grid-gap: {{ section.settings.gap | default: 16 }}px;
     --card-height: {{ section.settings.card_height }}px;
   "
 >
