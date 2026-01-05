@@ -54,7 +54,7 @@
                   {%- if item.product.has_only_default_variant == false -%}
                     <p class="cart-drawer__item-variant">{{ item.variant.title }}</p>
                   {%- endif -%}
-                  <p class="cart-drawer__item-price">{{ item.final_price | money }}</p>
+                  <p class="cart-drawer__item-price">{{ item.final_price | money_with_currency }}</p>
 
                   <div class="cart-drawer__item-actions">
                     <div class="quantity-selector">
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="cart-drawer__item-total">
-                  {{ item.final_line_price | money }}
+                  {{ item.final_line_price | money_with_currency }}
                 </div>
               </div>
             {%- endfor -%}
@@ -110,7 +110,7 @@
             {%- for discount in cart.cart_level_discount_applications -%}
               <div class="cart-drawer__discount">
                 <span>{{ discount.title }}</span>
-                <span>-{{ discount.total_allocated_amount | money }}</span>
+                <span>-{{ discount.total_allocated_amount | money_with_currency }}</span>
               </div>
             {%- endfor -%}
           </div>
@@ -118,7 +118,7 @@
 
         <div class="cart-drawer__subtotal">
           <span>{{ 'cart.general.subtotal' | t }}</span>
-          <span data-cart-subtotal>{{ cart.total_price | money }}</span>
+          <span data-cart-subtotal>{{ cart.total_price | money_with_currency }}</span>
         </div>
 
         <p class="cart-drawer__taxes">
@@ -126,9 +126,6 @@
         </p>
 
         <div class="cart-drawer__actions">
-          <a href="{{ routes.cart_url }}" class="button button-secondary">
-            {{ 'cart.general.view_cart' | t }}
-          </a>
           <button type="submit" name="checkout" form="cart-drawer-form" class="button">
             {{ 'cart.general.checkout' | t }}
           </button>
@@ -468,11 +465,9 @@
   .cart-drawer__actions {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
   }
 
-  .cart-drawer__actions .button,
-  .cart-drawer__actions .button-secondary {
+  .cart-drawer__actions .button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -486,27 +481,14 @@
     text-decoration: none;
     cursor: pointer;
     transition: all 0.2s ease;
-  }
-
-  .cart-drawer__actions .button:not(.button-secondary) {
     background-color: var(--color-foreground, #111);
     color: var(--color-background, #fff);
     border: 1px solid var(--color-foreground, #111);
   }
 
-  .cart-drawer__actions .button:not(.button-secondary):hover {
+  .cart-drawer__actions .button:hover {
     background-color: transparent;
     color: var(--color-foreground, #111);
-  }
-
-  .cart-drawer__actions .button-secondary {
-    background-color: transparent;
-    color: var(--color-foreground, #111);
-    border: 1px solid var(--color-border, #ddd);
-  }
-
-  .cart-drawer__actions .button-secondary:hover {
-    border-color: var(--color-foreground, #111);
   }
 </style>
 
@@ -664,7 +646,7 @@
           el.classList.toggle('hidden', cart.item_count === 0);
         });
 
-        // Update subtotal - format money
+        // Update subtotal - format money with currency
         const subtotalElement = this.querySelector('[data-cart-subtotal]');
         if (subtotalElement && cart.total_price !== undefined) {
           const amount = cart.total_price / 100;
@@ -672,11 +654,13 @@
           try {
             const formatter = new Intl.NumberFormat(document.documentElement.lang || 'en', {
               style: 'currency',
-              currency: currency
+              currency: currency,
+              currencyDisplay: 'code'
             });
+            // Format as "100.00 USD" style
             subtotalElement.textContent = formatter.format(amount);
           } catch (e) {
-            subtotalElement.textContent = `${currency} ${amount.toFixed(2)}`;
+            subtotalElement.textContent = `${amount.toFixed(2)} ${currency}`;
           }
         }
       } catch (error) {
