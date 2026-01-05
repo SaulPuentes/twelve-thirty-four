@@ -10,60 +10,61 @@
 {
   "sections": {
     "main": {
-      "type": "main-collection-list",
+      "type": "masonry-grid",
       "blocks": {
-        "static-collection-card": {
-          "type": "_collection-card",
-          "static": true,
+        "collection-1": {
+          "type": "collection",
           "settings": {
-            "placement": "on_image",
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "collection_card_gap": 8,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0
-          },
-          "blocks": {
-            "collection-card-image": {
-              "type": "_collection-card-image",
-              "static": true,
-              "settings": {
-                "image_ratio": "portrait",
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
+            "card_width": "half",
+            "show_product_count": false
+          }
+        },
+        "collection-2": {
+          "type": "collection",
+          "settings": {
+            "card_width": "half",
+            "show_product_count": false
+          }
+        },
+        "collection-3": {
+          "type": "collection",
+          "settings": {
+            "card_width": "full",
+            "show_product_count": false
+          }
+        },
+        "collection-4": {
+          "type": "collection",
+          "settings": {
+            "card_width": "half",
+            "show_product_count": false
+          }
+        },
+        "collection-5": {
+          "type": "collection",
+          "settings": {
+            "card_width": "half",
+            "show_product_count": false
+          }
         }
       },
+      "block_order": [
+        "collection-1",
+        "collection-2",
+        "collection-3",
+        "collection-4",
+        "collection-5"
+      ],
       "settings": {
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "columns": 3,
-        "mobile_columns": "2",
-        "columns_gap": 8,
-        "bento_gap": 8,
-        "rows_gap": 8,
-        "max_collections": 6,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
+        "heading": "",
+        "description": "",
         "gap": 16,
-        "color_scheme": "",
-        "padding-block-start": 0,
-        "padding-block-end": 0
+        "card_height": 450,
+        "card_height_mobile": 300,
+        "title_position_horizontal": "left",
+        "title_position_vertical": "bottom",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     }
   },
