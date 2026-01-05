@@ -10,6 +10,7 @@ body {
   margin: 0;
   min-height: 100svh;
   font-variation-settings: 'slnt' 0;
+  overflow-x: hidden;
 }
 
 :root {
@@ -2969,7 +2970,7 @@ fly-to-cart {
 }
 
 fly-to-cart.fly-to-cart--main {
-  --x-timing: cubic-bezier(0.7, -5, 0.98, 0.5);
+  --x-timing: cubic-bezier(0.7, -2, 0.98, 0.5);
   --y-timing: cubic-bezier(0.15, 0.57, 0.9, 1.05);
   --scale-timing: cubic-bezier(0.85, 0.05, 0.96, 1);
 }
