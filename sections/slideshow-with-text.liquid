@@ -116,34 +116,38 @@
       if (isAnimating || index === currentIndex) return;
       isAnimating = true;
 
-      // Add exiting class to current slide (moves left)
-      contents[currentIndex].classList.add('slideshow-text__slide-content--exiting');
-      images[currentIndex].classList.add('slideshow-text__slide-image--exiting');
+      const oldIndex = currentIndex;
 
-      // After a brief delay, remove active and exiting classes, then show new slide
+      // Update navigation dots immediately
+      if (navDots.length) {
+        navDots[oldIndex].classList.remove('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
+        navDots[index].classList.add('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
+      }
+
+      // Start exit animation on old slide
+      contents[oldIndex].classList.add('slideshow-text__slide-content--exiting');
+      contents[oldIndex].classList.remove('slideshow-text__slide-content--active');
+      images[oldIndex].classList.add('slideshow-text__slide-image--exiting');
+      images[oldIndex].classList.remove('slideshow-text__slide-image--active');
+
+      // Update current index
+      currentIndex = index;
+
+      // Wait for exit animation to complete, then show new slide
       setTimeout(function() {
-        // Remove current slide
-        contents[currentIndex].classList.remove('slideshow-text__slide-content--active', 'slideshow-text__slide-content--exiting');
-        images[currentIndex].classList.remove('slideshow-text__slide-image--active', 'slideshow-text__slide-image--exiting');
-        
-        // Update navigation dots
-        if (navDots.length) {
-          navDots[currentIndex].classList.remove('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
-          navDots[index].classList.add('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
-        }
-
-        // Update current index
-        currentIndex = index;
+        // Clean up old slide
+        contents[oldIndex].classList.remove('slideshow-text__slide-content--exiting');
+        images[oldIndex].classList.remove('slideshow-text__slide-image--exiting');
 
         // Show new slide (enters from right)
         contents[index].classList.add('slideshow-text__slide-content--active');
         images[index].classList.add('slideshow-text__slide-image--active');
 
-        // Reset animation lock
+        // Reset animation lock after entry animation completes
         setTimeout(function() {
           isAnimating = false;
-        }, 100);
-      }, 300);
+        }, 500);
+      }, 500);
     }
 
     function nextSlide() {
@@ -251,21 +255,25 @@
   .slideshow-text__slide-content {
     opacity: 0;
     transform: translateX(2rem);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease;
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
+    pointer-events: none;
   }
 
   .slideshow-text__slide-content--active {
     opacity: 1;
     transform: translateX(0);
     position: relative;
+    pointer-events: auto;
   }
 
   .slideshow-text__slide-content--exiting {
+    opacity: 0;
     transform: translateX(-2rem);
+    position: absolute;
   }
 
   .slideshow-text__slide-title {
