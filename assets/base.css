@@ -32,6 +32,21 @@ body {
   --color-border: rgba(0, 0, 0, 0.1);
   --color-border-rgb: 0 0 0;
 
+  /* Padding defaults */
+  --padding-xs: 0.5rem;
+  --padding-sm: 0.7rem;
+  --padding-md: 0.8rem;
+  --padding-lg: 1rem;
+  --padding-xl: 1.25rem;
+  --padding-2xl: 1.5rem;
+
+  /* Gap defaults */
+  --gap-xs: 8px;
+  --gap-sm: 12px;
+  --gap-md: 16px;
+  --gap-lg: 20px;
+  --gap-xl: 24px;
+
   /* Section heading sizes */
   --section-heading-lg: 2.25rem;
   --section-heading-lg-desktop: 3rem;

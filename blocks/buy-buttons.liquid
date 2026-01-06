@@ -379,10 +379,10 @@
   .product-form-buttons {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-md, 16px);
+    gap: var(--gap-lg, 20px);
   }
 
-  /* Quantity row - full width */
+  /* Row 1: Quantity Selector */
   .buy-buttons__quantity-row {
     display: flex;
     flex-direction: column;
@@ -399,30 +399,28 @@
     justify-content: space-between;
   }
 
-  /* Actions row - Add to Cart & Accelerated Checkout */
+  /* Row 2: Add to Cart | Accelerated Checkout */
   .buy-buttons__actions-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: calc(var(--gap-sm) / 2);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-sm, 12px);
     width: 100%;
+  }
 
-    @media screen and (min-width: 750px) {
-      gap: var(--gap-sm);
+  /* Make buttons stack on mobile */
+  @media screen and (max-width: 749px) {
+    .buy-buttons__actions-row {
+      grid-template-columns: 1fr;
     }
   }
 
   .buy-buttons__actions-row > *:not(.product-form-text__error) {
-    flex: 1 1 var(--buy-button-preferred-width, 0);
-    min-width: fit-content;
-  }
-
-  .product-form-buttons--stacked .buy-buttons__actions-row > *:not(.product-form-text__error) {
-    flex-basis: 51%;
+    width: 100%;
   }
 
   .product-form-buttons button {
     width: 100%;
-    padding-block: var(--padding-lg);
+    padding-block: var(--padding-lg, 1rem);
   }
 
   .quantity-selector {
