@@ -162,7 +162,9 @@
                 "add-to-cart": {
                   "type": "add-to-cart",
                   "static": true,
-                  "settings": {},
+                  "settings": {
+                    "style_class": "button"
+                  },
                   "blocks": {}
                 },
                 "accelerated-checkout": {
@@ -172,7 +174,7 @@
                   "blocks": {}
                 }
               },
-              "block_order": ["quantity", "add-to-cart", "accelerated-checkout"]
+              "block_order": []
             },
             "accordion_NKWPiW": {
               "type": "accordion",
