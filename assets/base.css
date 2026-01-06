@@ -23,6 +23,11 @@ body {
   --surface-transition-duration: 0.3s;
   --surface-transition-timing: var(--ease-out-quad);
 
+  /* Spacing scale variables */
+  --spacing-scale-sm: 0.6;
+  --spacing-scale-md: 0.7;
+  --spacing-scale-default: 1.0;
+
   /* Section heading sizes */
   --section-heading-lg: 2.25rem;
   --section-heading-lg-desktop: 3rem;
