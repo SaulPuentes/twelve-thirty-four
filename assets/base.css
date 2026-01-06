@@ -1480,6 +1480,7 @@ results-list[initialized] {
 /* Buttons */
 .button,
 .button-secondary,
+.button-outline,
 button.shopify-payment-button__button--unbranded {
   --text-align: center;
 
@@ -1589,6 +1590,9 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   --button-background-color: transparent;
   --button-border-color: var(--color-foreground, #000);
   --button-border-width: 1px;
+  font-family: var(--button-font-family-primary, inherit);
+  text-transform: var(--button-text-case-primary, uppercase);
+  border-radius: var(--style-border-radius-buttons-primary, 0);
   position: relative;
   overflow: hidden;
   transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
@@ -1602,7 +1606,13 @@ button.shopify-payment-button__button--unbranded:hover:not([disabled]) {
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.button-outline > * {
+  position: relative;
+  z-index: 1;
 }
 
 .button-outline:hover {

@@ -25,7 +25,7 @@
   }
 
   .accordion--dividers accordion-custom:not(:first-child) .details {
-    border-block-start: var(--style-border-width) solid var(--color-border);
+    border-block-start: var(--style-border-width, 1px) solid var(--color-border, rgba(0, 0, 0, 0.1));
   }
 
   /* When accordion borders are not set, show fallback borders */
@@ -40,15 +40,15 @@
   }
 
   .accordion--dividers accordion-custom:first-child .details {
-    border-block-start: calc(var(--style-border-width) * var(--show-fallback-borders)) solid var(--color-border);
+    border-block-start: calc(var(--style-border-width, 1px) * var(--show-fallback-borders, 0)) solid var(--color-border, rgba(0, 0, 0, 0.1));
   }
 
   .accordion--dividers accordion-custom:last-child .details {
-    border-block-end: calc(var(--style-border-width) * var(--show-fallback-borders)) solid var(--color-border);
+    border-block-end: calc(var(--style-border-width, 1px) * var(--show-fallback-borders, 0)) solid var(--color-border, rgba(0, 0, 0, 0.1));
   }
 
   .accordion--dividers .details-content {
-    padding-block-end: var(--padding-sm);
+    padding-block-end: var(--padding-sm, 12px);
   }
 
   .accordion--caret .icon-plus,
@@ -58,13 +58,13 @@
 
   /* because we can't pass apply a specific class on a block based on its parent block setting */
   .accordion .details__header {
-    font-family: var(--summary-font-family);
-    font-style: var(--summary-font-style);
-    font-weight: var(--summary-font-weight);
-    font-size: var(--summary-font-size);
-    line-height: var(--summary-font-line-height);
-    text-transform: var(--summary-font-case);
-    min-height: var(--minimum-touch-target);
+    font-family: var(--summary-font-family, inherit);
+    font-style: var(--summary-font-style, normal);
+    font-weight: var(--summary-font-weight, 500);
+    font-size: var(--summary-font-size, 1rem);
+    line-height: var(--summary-font-line-height, 1.4);
+    text-transform: var(--summary-font-case, none);
+    min-height: var(--minimum-touch-target, 44px);
   }
 {% endstylesheet %}
 

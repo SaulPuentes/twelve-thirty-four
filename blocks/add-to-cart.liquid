@@ -1,17 +1,18 @@
 
-
 {%- doc -%}
   This block is used to display the add to cart button.
   Intended for product-form.liquid block.
+  Style is hardcoded to outline - not customizable.
 
   @param {string} can_add_to_cart - Whether the product can be added to the cart
   @param {string} add_to_cart_text - The text of the add to cart button
 {%- enddoc -%}
 
-{% liquid
-  assign class = 'add-to-cart-button ' | append: block.settings.style_class
+{%- liquid
+  # Hardcoded outline style - not customizable
+  assign class = 'add-to-cart-button button-outline'
   assign id = 'BuyButtons-ProductSubmitButton-' | append: block.id
-%}
+-%}
 
 <span
   {{ block.shopify_attributes }}
@@ -31,27 +32,6 @@
 {
   "name": "t:names.add_to_cart",
   "tag": null,
-  "settings": [
-    {
-      "type": "select",
-      "id": "style_class",
-      "label": "t:settings.style",
-      "options": [
-        {
-          "value": "button",
-          "label": "t:options.primary"
-        },
-        {
-          "value": "button-secondary",
-          "label": "t:options.secondary"
-        },
-        {
-          "value": "button-outline",
-          "label": "t:options.outline"
-        }
-      ],
-      "default": "button-outline"
-    }
-  ]
+  "settings": []
 }
 {% endschema %}
