@@ -144,8 +144,8 @@
             "buy_buttons_eYQEYi": {
               "type": "buy-buttons",
               "settings": {
-                "stacking": false,
-                "show_pickup_availability": true,
+                "stacking": true,
+                "show_pickup_availability": false,
                 "gift_card_form": true,
                 "padding-block-start": 0,
                 "padding-block-end": 24,
@@ -172,7 +172,7 @@
                   "blocks": {}
                 }
               },
-              "block_order": ["quantity", "add-to-cart", "accelerated-checkout"]
+              "block_order": []
             },
             "accordion_NKWPiW": {
               "type": "accordion",
