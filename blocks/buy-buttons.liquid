@@ -78,7 +78,8 @@
             endif
           -%}
 
-          {%- if has_quantity_rules -%}
+          {%- comment -%} Quantity row {%- endcomment -%}
+          <div class="buy-buttons__quantity-row">
             {%- assign cart_quantity = cart | item_count_for_variant: variant.id -%}
             <div
               class="quantity-label"
@@ -92,32 +93,32 @@
                 {{ 'products.product.in_cart' | t }})</span
               >
             </div>
-          {%- endif -%}
 
-          {% content_for 'block', type: 'quantity', id: 'quantity' %}
+            {% content_for 'block', type: 'quantity', id: 'quantity' %}
 
-          {%- if has_quantity_rules -%}
-            <div
-              class="quantity-rules"
-              ref="quantityRules"
-            >
-              {%- if variant.quantity_rule.increment > 1 -%}
-                <span class="quantity-rules__item">
-                  {{ 'products.product.quantity_increments' | t: increment: variant.quantity_rule.increment }}
-                </span>
-              {%- endif -%}
-              {%- if variant.quantity_rule.min > 1 -%}
-                <span class="quantity-rules__item">
-                  {{ 'products.product.quantity_minimum' | t: minimum: variant.quantity_rule.min }}
-                </span>
-              {%- endif -%}
-              {%- if variant.quantity_rule.max != null -%}
-                <span class="quantity-rules__item">
-                  {{ 'products.product.quantity_maximum' | t: maximum: variant.quantity_rule.max }}
-                </span>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
+            {%- if has_quantity_rules -%}
+              <div
+                class="quantity-rules"
+                ref="quantityRules"
+              >
+                {%- if variant.quantity_rule.increment > 1 -%}
+                  <span class="quantity-rules__item">
+                    {{ 'products.product.quantity_increments' | t: increment: variant.quantity_rule.increment }}
+                  </span>
+                {%- endif -%}
+                {%- if variant.quantity_rule.min > 1 -%}
+                  <span class="quantity-rules__item">
+                    {{ 'products.product.quantity_minimum' | t: minimum: variant.quantity_rule.min }}
+                  </span>
+                {%- endif -%}
+                {%- if variant.quantity_rule.max != null -%}
+                  <span class="quantity-rules__item">
+                    {{ 'products.product.quantity_maximum' | t: maximum: variant.quantity_rule.max }}
+                  </span>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          </div>
 
           {%- if product.quantity_price_breaks_configured? and variant.quantity_price_breaks.size > 0 -%}
             {%- liquid
@@ -205,30 +206,41 @@
               </div>
             </volume-pricing>
           {%- endif -%}
-          {%- unless block_settings.gift_card_form and product.gift_card? -%}
-            <span
-              class="product-form-text__error hidden"
-              ref="addToCartTextError"
-            >
-              <span class="svg-wrapper product-form-icon--error">
-                {{- 'icon-error.svg' | inline_asset_content -}}
+
+          {%- comment -%} Buttons row - Add to Cart & Accelerated Checkout {%- endcomment -%}
+          <div class="buy-buttons__actions-row">
+            {%- unless block_settings.gift_card_form and product.gift_card? -%}
+              <span
+                class="product-form-text__error hidden"
+                ref="addToCartTextError"
+              >
+                <span class="svg-wrapper product-form-icon--error">
+                  {{- 'icon-error.svg' | inline_asset_content -}}
+                </span>
               </span>
+            {%- endunless -%}
+
+            {%- comment -%} Add to Cart - Hardcoded outline style {%- endcomment -%}
+            {%- assign add_to_cart_class = 'add-to-cart-button button-outline' -%}
+            {%- assign add_to_cart_id = 'BuyButtons-ProductSubmitButton-' | append: block.id -%}
+            <span {{ block.shopify_attributes }}>
+              {% render 'add-to-cart-button',
+                id: add_to_cart_id,
+                class: add_to_cart_class,
+                can_add_to_cart: can_add_to_cart,
+                product: product,
+                add_to_cart_text: add_to_cart_text,
+                data_testid: 'standalone-add-to-cart'
+              %}
             </span>
-          {%- endunless -%}
 
-          {% content_for 'block',
-            type: 'add-to-cart',
-            id: 'add-to-cart',
-            can_add_to_cart: can_add_to_cart,
-            add_to_cart_text: add_to_cart_text
-          %}
-
-          {% content_for 'block',
-            type: 'accelerated-checkout',
-            id: 'accelerated-checkout',
-            can_add_to_cart: can_add_to_cart,
-            form_obj: form
-          %}
+            {% content_for 'block',
+              type: 'accelerated-checkout',
+              id: 'accelerated-checkout',
+              can_add_to_cart: can_add_to_cart,
+              form_obj: form
+            %}
+          </div>
         </div>
       {%- endform -%}
     </product-form-component>
@@ -366,24 +378,45 @@
 
   .product-form-buttons {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: var(--gap-md, 16px);
   }
 
-  .product-form-buttons:not(:has(.quantity-rules)) {
+  /* Quantity row - full width */
+  .buy-buttons__quantity-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs, 8px);
+    width: 100%;
+  }
+
+  .buy-buttons__quantity-row .quantity-selector-wrapper {
+    width: 100%;
+  }
+
+  .buy-buttons__quantity-row .quantity-selector {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  /* Actions row - Add to Cart & Accelerated Checkout */
+  .buy-buttons__actions-row {
+    display: flex;
+    flex-wrap: wrap;
     gap: calc(var(--gap-sm) / 2);
+    width: 100%;
 
     @media screen and (min-width: 750px) {
       gap: var(--gap-sm);
     }
   }
 
-  .product-form-buttons > *:not(.quantity-selector-wrapper, .quantity-rules, .quantity-label, .volume-pricing) {
+  .buy-buttons__actions-row > *:not(.product-form-text__error) {
     flex: 1 1 var(--buy-button-preferred-width, 0);
     min-width: fit-content;
   }
 
-  .product-form-buttons--stacked
-    > *:not(.quantity-selector-wrapper, .quantity-rules, .quantity-label, .volume-pricing) {
+  .product-form-buttons--stacked .buy-buttons__actions-row > *:not(.product-form-text__error) {
     flex-basis: 51%;
   }
 
@@ -399,10 +432,9 @@
   }
 
   .quantity-label {
-    flex: 1 0 100%;
     width: 100%;
     font-size: var(--font-size--sm);
-    margin-block-end: var(--gap-xs);
+    margin-block-end: var(--gap-2xs, 4px);
   }
 
   .quantity-label__cart-count {
@@ -414,16 +446,10 @@
     flex-wrap: wrap;
     gap: 0;
     row-gap: calc(var(--gap-xs) / 2);
-    flex: 1 0 100%;
     width: 100%;
     font-size: var(--font-size--xs);
     color: var(--color-foreground-secondary);
-    margin-block-start: var(--gap-xs);
-    margin-block-end: var(--gap);
-  }
-
-  .product-form-buttons:has(~ .volume-pricing .volume-pricing__title) .quantity-rules {
-    margin-block-end: var(--gap-md);
+    margin-block-start: var(--gap-2xs, 4px);
   }
 
   .quantity-rules__item {
@@ -454,6 +480,10 @@
 
   .add-to-cart-button.button-secondary {
     text-transform: var(--button-text-case-secondary);
+  }
+
+  .add-to-cart-button.button-outline {
+    text-transform: var(--button-text-case-primary);
   }
 
   .product-form-text__error {

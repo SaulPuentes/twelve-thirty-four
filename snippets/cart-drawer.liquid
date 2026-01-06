@@ -515,11 +515,14 @@
         }
       });
 
-      // Listen for cart updates
-      document.addEventListener('cart:updated', () => this.refresh());
-
-      // Listen for cart item added - refresh drawer (without auto-opening)
-      document.addEventListener('cart:item-added', () => this.refresh());
+      // Listen for cart updates (matches ThemeEvents.cartUpdate from the theme)
+      document.addEventListener('cart:update', (e) => {
+        this.refresh();
+        // Open drawer when item is added from product form
+        if (e.detail?.data?.source === 'product-form-component' && !e.detail?.data?.didError) {
+          this.open();
+        }
+      });
     }
 
     bindEvents() {
@@ -578,7 +581,7 @@
 
         if (response.ok) {
           this.refresh();
-          document.dispatchEvent(new CustomEvent('cart:updated'));
+          document.dispatchEvent(new CustomEvent('cart:update'));
         }
       } catch (error) {
         console.error('Error updating quantity:', error);
@@ -620,7 +623,7 @@
           // Update cart data
           await this.updateCartData();
           
-          document.dispatchEvent(new CustomEvent('cart:updated'));
+          document.dispatchEvent(new CustomEvent('cart:update'));
         } else {
           item?.classList.remove('removing');
         }
