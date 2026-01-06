@@ -28,6 +28,10 @@ body {
   --spacing-scale-md: 0.7;
   --spacing-scale-default: 1.0;
 
+  /* Border defaults (can be overridden by color schemes) */
+  --color-border: rgba(0, 0, 0, 0.1);
+  --color-border-rgb: 0 0 0;
+
   /* Section heading sizes */
   --section-heading-lg: 2.25rem;
   --section-heading-lg-desktop: 3rem;
