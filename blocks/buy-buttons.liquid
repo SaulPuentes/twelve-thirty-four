@@ -67,7 +67,7 @@
           {%- render 'gift-card-recipient-form', product: product, form: form, section: section, block: block -%}
         {%- endif -%}
         <div
-          class="product-form-buttons spacing-style{% if block_settings.stacking %} product-form-buttons--stacked{% endif %}"
+          class="product-form-buttons spacing-style"
           style="{% render 'spacing-style', settings: block_settings %}"
           ref="productFormButtons"
         >
@@ -399,19 +399,12 @@
     justify-content: space-between;
   }
 
-  /* Row 2: Add to Cart | Accelerated Checkout */
+  /* Row 2: Add to Cart | Accelerated Checkout - Always stacked */
   .buy-buttons__actions-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: var(--gap-sm, 12px);
     width: 100%;
-  }
-
-  /* Make buttons stack on mobile */
-  @media screen and (max-width: 749px) {
-    .buy-buttons__actions-row {
-      grid-template-columns: 1fr;
-    }
   }
 
   .buy-buttons__actions-row > *:not(.product-form-text__error) {
@@ -708,12 +701,6 @@
     {
       "type": "paragraph",
       "content": "t:content.resource_reference_product"
-    },
-    {
-      "type": "checkbox",
-      "id": "stacking",
-      "label": "t:settings.always_stack_buttons",
-      "default": false
     },
     {
       "type": "checkbox",
