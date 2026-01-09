@@ -26,31 +26,39 @@
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/atmos-energy.png",
-            "logo_height": 50
+            "link": "",
+            "open_in_new_tab": false
           }
         },
         "logo-2": {
           "type": "logo",
           "settings": {
-            "logo_height": 60
+            "image": "shopify://shop_images/his-and-her.webp",
+            "link": "",
+            "open_in_new_tab": false
           }
         },
         "logo-3": {
           "type": "logo",
           "settings": {
-            "logo_height": 60
+            "image": "shopify://shop_images/kaltblut.png",
+            "link": "",
+            "open_in_new_tab": false
           }
         },
         "logo-4": {
           "type": "logo",
           "settings": {
-            "logo_height": 60
+            "image": "shopify://shop_images/breda.png",
+            "link": "",
+            "open_in_new_tab": false
           }
         },
         "logo-5": {
           "type": "logo",
           "settings": {
-            "logo_height": 60
+            "link": "",
+            "open_in_new_tab": false
           }
         }
       },
@@ -64,6 +72,7 @@
       "settings": {
         "movement_direction": "normal",
         "color_scheme": "scheme-1",
+        "logo_height": 120,
         "gap_between_elements": 48
       }
     },
