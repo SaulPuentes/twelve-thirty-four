@@ -81,6 +81,16 @@
             "open_in_new_tab": false,
             "logo_height": 60
           }
+        },
+        "logo_wxa7j6": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/neiman-marcus.png",
+            "title": "Neiman Marcus",
+            "link": "",
+            "open_in_new_tab": true,
+            "logo_height": 0
+          }
         }
       },
       "block_order": [
@@ -89,7 +99,8 @@
         "logo-5",
         "logo-3",
         "logo-2",
-        "logo-4"
+        "logo-4",
+        "logo_wxa7j6"
       ],
       "settings": {
         "movement_direction": "normal",
