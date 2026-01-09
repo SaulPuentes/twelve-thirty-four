@@ -12,14 +12,15 @@
 ></script>
 
 {% assign gap_between_elements = section.settings.gap_between_elements %}
+{% assign logo_height = section.settings.logo_height %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <marquee-component
-  class="section logo-slider spacing-style gap-style color-{{ section.settings.color_scheme }}"
+  class="section logo-slider gap-style color-{{ section.settings.color_scheme }}"
   style="
-    {%- render 'spacing-style', settings: section.settings %};
     {% render 'gap-style', value: gap_between_elements, name: 'marquee-gap' %}
     --marquee-direction: {{ section.settings.movement_direction }};
+    --logo-height: {{ logo_height }}px;
   "
   data-speed-factor="25"
   data-movement-direction="{{ section.settings.movement_direction }}"
@@ -42,20 +43,29 @@
             {%- when 'logo' -%}
               <div class="logo-slider__item" {{ block.shopify_attributes }}>
                 {%- if block.settings.image != blank -%}
-                  {%- assign logo_height = block.settings.logo_height -%}
-                  {%- assign logo_width = block.settings.image.width | times: 1.0 | divided_by: block.settings.image.height | times: logo_height -%}
+                  {%- assign logo_alt = block.settings.image.alt | default: 'Partner logo' -%}
+                  
+                  {%- if block.settings.link != blank -%}
+                    <a 
+                      href="{{ block.settings.link }}"
+                      class="logo-slider__link"
+                      aria-label="{{ logo_alt }}"
+                      {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
+                    >
+                  {%- endif -%}
                   
                   {{-
                     block.settings.image
                     | image_url: width: 600
                     | image_tag:
-                      width: logo_width,
-                      height: logo_height,
                       loading: 'lazy',
                       class: 'logo-slider__image',
-                      alt: block.settings.image.alt | default: 'Partner logo',
-                      style: 'height: ' | append: logo_height | append: 'px; width: auto;'
+                      alt: logo_alt
                   -}}
+                  
+                  {%- if block.settings.link != blank -%}
+                    </a>
+                  {%- endif -%}
                 {%- else -%}
                   <div class="logo-slider__placeholder">
                     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
@@ -70,6 +80,11 @@
 </marquee-component>
 
 {% stylesheet %}
+  .logo-slider {
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
   marquee-component {
     display: block;
     width: 100%;
@@ -108,22 +123,44 @@
     flex-shrink: 0;
   }
 
+  .logo-slider__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .logo-slider__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+    border-radius: 4px;
+  }
+
   .logo-slider__image {
     object-fit: contain;
+    height: var(--logo-height, 120px);
+    width: auto;
     max-width: 100%;
     filter: grayscale(100%);
     opacity: 0.7;
     transition: all 0.3s ease;
   }
 
-  .logo-slider__image:hover {
+  .logo-slider__image:hover,
+  .logo-slider__link:hover .logo-slider__image {
+    filter: grayscale(0%);
+    opacity: 1;
+  }
+
+  .logo-slider__link:focus-visible .logo-slider__image {
     filter: grayscale(0%);
     opacity: 1;
   }
 
   .logo-slider__placeholder {
-    width: 120px;
-    height: 60px;
+    width: calc(var(--logo-height, 120px) * 2);
+    height: var(--logo-height, 120px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -186,28 +223,14 @@
       "default": "scheme-1"
     },
     {
-      "type": "header",
-      "content": "Layout"
-    },
-    {
       "type": "range",
-      "id": "padding-block-start",
-      "label": "Top padding",
-      "min": 0,
-      "max": 100,
-      "step": 4,
+      "id": "logo_height",
+      "label": "Logo height",
+      "min": 40,
+      "max": 200,
+      "step": 10,
       "unit": "px",
-      "default": 36
-    },
-    {
-      "type": "range",
-      "id": "padding-block-end",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 100,
-      "step": 4,
-      "unit": "px",
-      "default": 36
+      "default": 120
     },
     {
       "type": "range",
@@ -231,14 +254,16 @@
           "label": "Logo image"
         },
         {
-          "type": "range",
-          "id": "logo_height",
-          "label": "Logo height",
-          "min": 30,
-          "max": 150,
-          "step": 5,
-          "unit": "px",
-          "default": 60
+          "type": "url",
+          "id": "link",
+          "label": "Link URL",
+          "info": "Optional link when clicking the logo"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open link in new tab",
+          "default": false
         }
       ]
     }

@@ -151,7 +151,6 @@
   @media screen and (min-width: 990px) {
     .main-collection__container {
       grid-template-columns: 180px 1fr 180px;
-      gap: 3rem;
     }
   }
 
@@ -168,6 +167,10 @@
       height: fit-content;
       max-height: calc(100vh - var(--header-height, 80px) - 4rem);
       overflow-y: auto;
+      /* Make invisible but keep functionality */
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
     }
   }
 
