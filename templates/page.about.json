@@ -42,6 +42,16 @@
             "logo_height": 0
           }
         },
+        "logo-5": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/paper-city.png",
+            "title": "Paper City",
+            "link": "https://www.instagram.com/p/B71DbL1HcmK/",
+            "open_in_new_tab": false,
+            "logo_height": 80
+          }
+        },
         "logo-4": {
           "type": "logo",
           "settings": {
@@ -49,7 +59,7 @@
             "title": "BREDA",
             "link": "",
             "open_in_new_tab": false,
-            "logo_height": 70
+            "logo_height": 60
           }
         },
         "logo-3": {
@@ -61,24 +71,14 @@
             "open_in_new_tab": false,
             "logo_height": 90
           }
-        },
-        "logo-5": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/paper-city.png",
-            "title": "Paper City",
-            "link": "https://www.instagram.com/p/B71DbL1HcmK/",
-            "open_in_new_tab": false,
-            "logo_height": 0
-          }
         }
       },
       "block_order": [
         "logo-1",
         "logo-2",
+        "logo-5",
         "logo-4",
-        "logo-3",
-        "logo-5"
+        "logo-3"
       ],
       "settings": {
         "movement_direction": "normal",
