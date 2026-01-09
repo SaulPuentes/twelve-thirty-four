@@ -32,14 +32,14 @@
             "logo_height": 80
           }
         },
-        "logo-2": {
+        "logo_WkcWjJ": {
           "type": "logo",
           "settings": {
-            "image": "shopify://shop_images/his-and-her.webp",
-            "title": "His & Hers",
+            "image": "shopify://shop_images/highland-park-village.png",
+            "title": "Highland Park VIllage",
             "link": "",
-            "open_in_new_tab": false,
-            "logo_height": 0
+            "open_in_new_tab": true,
+            "logo_height": 140
           }
         },
         "logo-5": {
@@ -52,16 +52,6 @@
             "logo_height": 80
           }
         },
-        "logo-4": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/breda.png",
-            "title": "BREDA",
-            "link": "",
-            "open_in_new_tab": false,
-            "logo_height": 60
-          }
-        },
         "logo-3": {
           "type": "logo",
           "settings": {
@@ -71,14 +61,35 @@
             "open_in_new_tab": false,
             "logo_height": 90
           }
+        },
+        "logo-2": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/his-and-her.webp",
+            "title": "His & Hers",
+            "link": "",
+            "open_in_new_tab": false,
+            "logo_height": 0
+          }
+        },
+        "logo-4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/breda.png",
+            "title": "BREDA",
+            "link": "",
+            "open_in_new_tab": false,
+            "logo_height": 60
+          }
         }
       },
       "block_order": [
         "logo-1",
-        "logo-2",
+        "logo_WkcWjJ",
         "logo-5",
-        "logo-4",
-        "logo-3"
+        "logo-3",
+        "logo-2",
+        "logo-4"
       ],
       "settings": {
         "movement_direction": "normal",
