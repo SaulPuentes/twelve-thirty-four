@@ -1,4 +1,4 @@
-{%- doc -%}
+{%- comment -%}
   Renders CSS variables for spacing (padding and margin) styles with responsive scaling.
   Intended for blocks and sections that provide values for all the referenced settings.
 
@@ -6,7 +6,7 @@
 
   @example
   <div class="spacing-style" style="{% render 'spacing-style', settings: section.settings %}">
-{%- enddoc -%}
+{%- endcomment -%}
 {%- liquid
   assign scale_min = 20
   assign keys = 'padding-block-start,padding-block-end,padding-inline-start,padding-inline-end' | split: ','
