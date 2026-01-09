@@ -2,6 +2,16 @@
   :root {
     --header-padding: {{ section.settings.padding }}px;
     --header-height: calc({{ section.settings.padding }}px * 2 + 40px);
+
+    /* Required for header-actions */
+    --minimum-touch-target: 44px;
+    --button-size: var(--minimum-touch-target);
+    --button-size-sm: 30px;
+    --button-size-md: 36px;
+    --icon-size-sm: 1.25rem;
+    --icon-size-md: 1.375rem;
+    --icon-stroke-width: 1.5px;
+    --sidebar-width: 420px;
   }
 </style>
 
@@ -320,13 +330,15 @@
     opacity: 0.7;
   }
 
-  .header__actions {
+  .header__actions,
+  header-actions {
     display: flex;
     align-items: center;
     gap: 1rem;
   }
 
-  .header__action {
+  .header__action,
+  .header-actions__action {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -335,11 +347,62 @@
                 color var(--animation-speed) var(--animation-easing);
   }
 
-  .header__action:hover {
+  .header__action:hover,
+  .header-actions__action:hover {
     opacity: 0.7;
   }
 
-  /* Cart icon styles are now handled by header-actions snippet */
+  /* Transparent header styles for header-actions */
+  .header--transparent:not(.header--scrolled) .header-actions__action,
+  .header--transparent:not(.header--scrolled) .account-button {
+    color: #fff;
+    transition: color 0.6s ease-in-out;
+  }
+
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header-actions__action,
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .account-button {
+    color: #000;
+  }
+
+  /* Cart bubble styles for header */
+  .cart-bubble {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+  }
+
+  .cart-bubble__background {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background-color: var(--color-foreground, #000);
+  }
+
+  .cart-bubble__text {
+    position: relative;
+    z-index: 1;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--color-background, #fff);
+  }
+
+  .header--transparent:not(.header--scrolled) .cart-bubble__background {
+    background-color: #fff;
+  }
+
+  .header--transparent:not(.header--scrolled) .cart-bubble__text {
+    color: #111;
+  }
+
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .cart-bubble__background {
+    background-color: #000;
+  }
+
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .cart-bubble__text {
+    color: #fff;
+  }
 
   .header__menu-toggle {
     display: flex;
@@ -452,6 +515,30 @@
 
   .overflow-hidden {
     overflow: hidden;
+  }
+
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  /* SVG wrapper for icons */
+  .svg-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .svg-wrapper svg {
+    width: 100%;
+    height: 100%;
   }
 
   @media screen and (min-width: 768px) {
