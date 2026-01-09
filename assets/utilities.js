@@ -232,6 +232,18 @@ export function prefersReducedMotion() {
 }
 
 /**
+ * Normalize a string
+ * @param {string} str The string to normalize
+ * @returns {string} The normalized string
+ */
+export function normalizeString(str) {
+  return str
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase();
+}
+
+/**
  * Format a money value
  * @param {string} value The value to format
  * @returns {string} The formatted value
@@ -248,6 +260,18 @@ export function formatMoney(value) {
 }
 
 /**
+ * Check if the document is ready/loaded and call the callback when it is.
+ * @param {() => void} callback The function to call when the document is ready.
+ */
+export function onDocumentLoaded(callback) {
+  if (document.readyState === 'complete') {
+    callback();
+  } else {
+    window.addEventListener('load', callback);
+  }
+}
+
+/**
  * Check if the DOM is ready and call the callback when it is.
  * This fires when the DOM is fully parsed but before all resources are loaded.
  * @param {() => void} callback The function to call when the DOM is ready.
@@ -257,6 +281,19 @@ export function onDocumentReady(callback) {
     document.addEventListener('DOMContentLoaded', callback);
   } else {
     callback();
+  }
+}
+
+/**
+ * Removes will-change from an element after an animation ends.
+ * Intended to be used as an animationend event listener.
+ * @param {AnimationEvent} event The animation event.
+ */
+export function removeWillChangeOnAnimationEnd(event) {
+  const target = event.target;
+  if (target && target instanceof HTMLElement) {
+    target.style.setProperty('will-change', 'unset');
+    target.removeEventListener('animationend', removeWillChangeOnAnimationEnd);
   }
 }
 
@@ -357,6 +394,21 @@ export function center(element, axis) {
     x: left + width / 2,
     y: top + height / 2,
   };
+
+  if (axis) return /**  @type {any} */ (point[axis]);
+
+  return /**  @type {any} */ (point);
+}
+
+/**
+ * Calculates the start point of an element along the specified axis.
+ * @param {Element} element - The DOM element to find the start of.
+ * @param {'x' | 'y'} [axis] - The axis ('x' or 'y') to get the start for. If not provided, returns both axes.
+ * @returns {number | {x: number, y: number}} The start point along the axis or an object with x and y coordinates.
+ */
+export function start(element, axis) {
+  const { left, top } = element.getBoundingClientRect();
+  const point = { x: left, y: top };
 
   if (axis) return /**  @type {any} */ (point[axis]);
 
@@ -521,6 +573,36 @@ export function preloadImage(src) {
   image.src = src;
 }
 
+export class TextComponent extends HTMLElement {
+  shimmer() {
+    this.setAttribute('shimmer', '');
+  }
+}
+
+if (!customElements.get('text-component')) {
+  customElements.define('text-component', TextComponent);
+}
+
+/**
+ * Resets the shimmer attribute on all elements in the container.
+ * @param {Element} [container] - The container to reset the shimmer attribute on.
+ */
+export function resetShimmer(container = document.body) {
+  const shimmer = container.querySelectorAll('[shimmer]');
+  shimmer.forEach((item) => item.removeAttribute('shimmer'));
+}
+
+/**
+ * Change the meta theme color of the browser.
+ * @param {string} color - The color value (e.g., 'rgb(255, 255, 255)')
+ */
+export function changeMetaThemeColor(color) {
+  const metaThemeColor = document.head.querySelector('meta[name="theme-color"]');
+  if (metaThemeColor && color) {
+    metaThemeColor.setAttribute('content', color);
+  }
+}
+
 /**
  * Gets the `view` URL search parameter value, if it exists.
  * Useful for Section Rendering API calls to get HTML markup for the correct template view.
@@ -623,6 +705,70 @@ export class ResizeNotifier extends ResizeObserver {
     this.#initialized = false;
     super.disconnect();
   }
+}
+
+// Header calculation functions for maintaining CSS variables
+export function calculateHeaderGroupHeight(
+  header = document.querySelector('#header-component'),
+  headerGroup = document.querySelector('#header-group')
+) {
+  if (!headerGroup) return 0;
+
+  let totalHeight = 0;
+  const children = headerGroup.children;
+  for (let i = 0; i < children.length; i++) {
+    const element = children[i];
+    if (element === header || !(element instanceof HTMLElement)) continue;
+    totalHeight += element.offsetHeight;
+  }
+
+  // If the header is transparent and has a sibling section, add the height of the header to the total height
+  if (header instanceof HTMLElement && header.hasAttribute('transparent') && header.parentElement?.nextElementSibling) {
+    return totalHeight + header.offsetHeight;
+  }
+
+  return totalHeight;
+}
+
+/**
+ * Updates CSS custom properties for transparent header offset calculation
+ * Avoids expensive :has() selectors
+ */
+function updateTransparentHeaderOffset() {
+  const header = document.querySelector('#header-component');
+  const headerGroup = document.querySelector('#header-group');
+  const hasHeaderSection = headerGroup?.querySelector('.header-section');
+  if (!hasHeaderSection || !header?.hasAttribute('transparent')) {
+    document.body.style.setProperty('--transparent-header-offset-boolean', '0');
+    return;
+  }
+
+  const hasImmediateSection = hasHeaderSection.nextElementSibling?.classList.contains('shopify-section');
+
+  const shouldApplyOffset = !hasImmediateSection ? '1' : '0';
+  document.body.style.setProperty('--transparent-header-offset-boolean', shouldApplyOffset);
+}
+
+/**
+ * Initialize and maintain header height CSS variables.
+ */
+function updateHeaderHeights() {
+  const header = document.querySelector('header-component');
+
+  // Early exit if no header - nothing to do
+  if (!(header instanceof HTMLElement)) return;
+
+  // Calculate initial heights
+  const headerHeight = header.offsetHeight;
+  const headerGroupHeight = calculateHeaderGroupHeight(header);
+
+  document.body.style.setProperty('--header-height', `${headerHeight}px`);
+  document.body.style.setProperty('--header-group-height', `${headerGroupHeight}px`);
+}
+
+export function updateAllHeaderCustomProperties() {
+  updateHeaderHeights();
+  updateTransparentHeaderOffset();
 }
 
 // Theme is not defined in some layouts, like the gift card page

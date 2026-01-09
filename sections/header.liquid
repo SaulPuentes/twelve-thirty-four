@@ -65,31 +65,7 @@
     </nav>
 
     {%- comment -%} Actions {%- endcomment -%}
-    <div class="header__actions">
-      {%- if section.settings.show_search -%}
-        <a href="{{ routes.search_url }}" class="header__action hidden md:flex" aria-label="{{ 'accessibility.search' | t }}">
-          {% render 'icon', icon: 'search', size: 20 %}
-        </a>
-      {%- endif -%}
-
-      {%- if shop.customer_accounts_enabled -%}
-        <a href="{{ routes.account_url }}" class="header__action hidden md:flex" aria-label="{{ 'accessibility.account' | t }}">
-          {% render 'icon', icon: 'account', size: 20 %}
-        </a>
-      {%- endif -%}
-
-      <button
-        type="button"
-        class="header__action header__cart header-actions__cart-icon"
-        aria-label="{{ 'accessibility.cart' | t }}"
-        data-cart-toggle
-      >
-        {% render 'icon', icon: 'cart', size: 20 %}
-        <span class="header__cart-count{% if cart.item_count == 0 %} hidden{% endif %}" data-cart-count>
-          {{ cart.item_count }}
-        </span>
-      </button>
-    </div>
+    {% render 'header-actions' %}
   </div>
 </header>
 
@@ -136,8 +112,6 @@
     const menuToggle = document.querySelector('[data-menu-toggle]');
     const mobileMenu = document.querySelector('[data-mobile-menu]');
     const menuClose = document.querySelectorAll('[data-menu-close]');
-    const cartToggle = document.querySelector('[data-cart-toggle]');
-    const cartDrawer = document.querySelector('#cart-drawer');
 
     // Sticky header scroll behavior
     if (header.classList.contains('header--sticky')) {
@@ -171,18 +145,6 @@
       });
     }
 
-    // Cart drawer toggle
-    if (cartToggle) {
-      cartToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        const drawer = document.querySelector('cart-drawer');
-        if (drawer) {
-          drawer.open();
-        } else {
-          window.location.href = '{{ routes.cart_url }}';
-        }
-      });
-    }
   });
 </script>
 
@@ -377,47 +339,7 @@
     opacity: 0.7;
   }
 
-  .header__cart {
-    position: relative;
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-  }
-
-  .header__cart-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 4px;
-    font-size: 10px;
-    font-weight: 500;
-    background-color: #000;
-    color: #fff;
-    border-radius: 50%;
-    transition: background-color var(--animation-speed) var(--animation-easing),
-                color var(--animation-speed) var(--animation-easing);
-  }
-
-  .header--transparent:not(.header--scrolled) .header__cart-count {
-    background-color: #fff;
-    color: #111;
-  }
-
-  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__cart-count {
-    background-color: #000;
-    color: #fff;
-  }
-
-  .header--sticky.header--scrolled .header__cart-count {
-    background-color: #000;
-    color: #fff;
-  }
+  /* Cart icon styles are now handled by header-actions snippet */
 
   .header__menu-toggle {
     display: flex;

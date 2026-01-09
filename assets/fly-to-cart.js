@@ -1,20 +1,4 @@
-/**
- * Yields to the main thread to allow the browser to process pending work.
- * Uses scheduler.yield() if available, otherwise falls back to requestAnimationFrame + setTimeout.
- * @returns {Promise<void>}
- */
-const yieldToMainThread = () => {
-  if ('scheduler' in window && 'yield' in scheduler) {
-    // @ts-ignore - TypeScript doesn't recognize the yield method yet.
-    return scheduler.yield();
-  }
-
-  return new Promise((resolve) => {
-    requestAnimationFrame(() => {
-      setTimeout(resolve, 0);
-    });
-  });
-};
+import { yieldToMainThread } from '@theme/utilities';
 
 /**
  * FlyToCart custom element for animating product images to cart
@@ -31,7 +15,6 @@ class FlyToCart extends HTMLElement {
   destination;
 
   connectedCallback() {
-    // Use IntersectionObserver to get accurate bounding rects when elements are visible
     const intersectionObserver = new IntersectionObserver((entries) => {
       /** @type {DOMRectReadOnly | null} */
       let sourceRect = null;
@@ -52,23 +35,17 @@ class FlyToCart extends HTMLElement {
 
       intersectionObserver.disconnect();
     });
-
-    if (this.source && this.destination) {
-      intersectionObserver.observe(this.source);
-      intersectionObserver.observe(this.destination);
-    } else {
-      // Fallback if source/destination not set
-      this.remove();
-    }
+    intersectionObserver.observe(this.source);
+    intersectionObserver.observe(this.destination);
   }
 
   /**
-   * Animates the flying element along the bezier curve.
+   * Animates the flying thingy along the bezier curve.
    * @param {DOMRectReadOnly} sourceRect - The bounding client rect of the source.
    * @param {DOMRectReadOnly} destinationRect - The bounding client rect of the destination.
    */
   #animate = async (sourceRect, destinationRect) => {
-    // Define bezier curve points
+    //Define bezier curve points
     const startPoint = {
       x: sourceRect.left + sourceRect.width / 2,
       y: sourceRect.top + sourceRect.height / 2,
@@ -79,7 +56,7 @@ class FlyToCart extends HTMLElement {
       y: destinationRect.top + destinationRect.height / 2,
     };
 
-    // Position the flying element at the start point
+    // Position the flying thingy back to the start point
     if (this.useSourceSize) {
       this.style.setProperty('--width', `${sourceRect.width}px`);
       this.style.setProperty('--height', `${sourceRect.height}px`);
@@ -89,15 +66,9 @@ class FlyToCart extends HTMLElement {
     this.style.setProperty('--travel-x', `${endPoint.x - startPoint.x}px`);
     this.style.setProperty('--travel-y', `${endPoint.y - startPoint.y}px`);
 
-    // Wait for the browser to commit styles before starting animation
     await yieldToMainThread();
 
-    // Wait for all animations to complete
-    try {
-      await Promise.allSettled(this.getAnimations().map((a) => a.finished));
-    } catch (e) {
-      // Animation was cancelled or errored
-    }
+    await Promise.allSettled(this.getAnimations().map((a) => a.finished));
     this.remove();
   };
 }

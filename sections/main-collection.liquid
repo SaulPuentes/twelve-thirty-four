@@ -110,49 +110,35 @@
     {%- comment -%} Right Sidebar - Categories (Product Types) {%- endcomment -%}
     <aside class="main-collection__sidebar main-collection__sidebar--right">
       <h3 class="main-collection__sidebar-title">{{ section.settings.categories_title | default: 'Categories' }}</h3>
-      <nav class="main-collection__nav">
-        <ul class="main-collection__nav-list">
-          
-          {%- comment -%} ALL option {%- endcomment -%}
-          <li class="main-collection__nav-item">
-            <a
-              href="{{ collection.url }}"
-              class="main-collection__nav-link {% unless current_tags or collection.filters.size > 0 %} main-collection__nav-link--active{% endunless %}"
-            >
-              ALL
-            </a>
-          </li>
-
-          {%- comment -%} 
-            SOLUCIÓN: Usamos collection.all_types para mostrar solo categorías relevantes 
-            para esta colección en particular.
-          {%- endcomment -%}
-          {%- for product_type in collection.all_types -%}
-            {%- if product_type != blank -%}
-              
-              {%- comment -%} Lógica para detectar si está activo buscando en la URL actual {%- endcomment -%}
-              {%- assign is_active = false -%}
-              {%- capture filter_param -%}filter.p.product_type={{ product_type | url_encode }}{%- endcapture -%}
-              
-              {%- comment -%} 
-                Nota: La detección de activo por URL pura en Liquid es limitada. 
-                Si necesitas detección robusta, se recomienda iterar sobre 'collection.filters'.
-                Sin embargo, para mantener tu estructura simple:
-              {%- endcomment -%}
-
-              <li class="main-collection__nav-item">
-                <a
-                  href="{{ collection.url }}?filter.p.product_type={{ product_type | url_encode }}"
-                  class="main-collection__nav-link"
-                  title="Filter by {{ product_type }}"
-                >
-                  {{ product_type }}
-                </a>
-              </li>
-            {%- endif -%}
-          {%- endfor -%}
-        </ul>
-      </nav>
+      
+      {%- comment -%} Buscamos el filtro de Tipo de Producto específicamente {%- endcomment -%}
+      {%- assign type_filter = collection.filters | where: "param_name", "filter.p.product_type" | first -%}
+      
+      {% if type_filter %}
+        <nav class="main-collection__nav">
+          <ul class="main-collection__nav-list">
+             <li class="main-collection__nav-item">
+                <a href="{{ collection.url }}" class="main-collection__nav-link {% if type_filter.active_values.size == 0 %}main-collection__nav-link--active{% endif %}">ALL</a>
+             </li>
+             
+             {%- for value in type_filter.values -%}
+                <li class="main-collection__nav-item">
+                  <a
+                    href="{{ value.url_to_add }}"
+                    class="main-collection__nav-link {% if value.active %}main-collection__nav-link--active{% endif %}"
+                    {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                  >
+                    {{ value.label }} ({{ value.count }})
+                  </a>
+                </li>
+             {%- endfor -%}
+          </ul>
+        </nav>
+      {% else %}
+        <p style="font-size: 12px; opacity: 0.6;">
+          Admin setup required: Add "Product Type" filter in Search & Discovery app.
+        </p>
+      {% endif %}
     </aside>
   </div>
 </section>
