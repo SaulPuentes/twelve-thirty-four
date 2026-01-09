@@ -65,31 +65,39 @@
           <ul class="main-collection__grid" id="ProductGrid">
             {%- for product in collection.products -%}
               <li class="main-collection__grid-item">
-                <a href="{{ product.url }}" class="main-collection__product">
-                  <div class="main-collection__product-image">
-                    {%- if product.featured_image != blank -%}
-                      <img
-                        src="{{ product.featured_image | image_url: width: 600 }}"
-                        srcset="
-                          {{ product.featured_image | image_url: width: 300 }} 300w,
-                          {{ product.featured_image | image_url: width: 450 }} 450w,
-                          {{ product.featured_image | image_url: width: 600 }} 600w
-                        "
-                        sizes="(max-width: 749px) 50vw, 25vw"
-                        alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                        loading="lazy"
-                        width="{{ product.featured_image.width }}"
-                        height="{{ product.featured_image.height }}"
-          >
-                    {%- else -%}
-                      {{ 'product-1' | placeholder_svg_tag: 'main-collection__placeholder' }}
-                    {%- endif -%}
-                  </div>
-                  <div class="main-collection__product-info">
-                    <h4 class="main-collection__product-title">{{ product.title }}</h4>
-                    <p class="main-collection__product-price">{{ product.price | money }}</p>
-                  </div>
-                </a>
+                <div class="main-collection__product-card">
+                  <a href="{{ product.url }}" class="main-collection__product">
+                    <div class="main-collection__product-image">
+                      {%- if product.featured_image != blank -%}
+                        <img
+                          src="{{ product.featured_image | image_url: width: 600 }}"
+                          srcset="
+                            {{ product.featured_image | image_url: width: 300 }} 300w,
+                            {{ product.featured_image | image_url: width: 450 }} 450w,
+                            {{ product.featured_image | image_url: width: 600 }} 600w
+                          "
+                          sizes="(max-width: 749px) 50vw, 25vw"
+                          alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                          loading="lazy"
+                          width="{{ product.featured_image.width }}"
+                          height="{{ product.featured_image.height }}"
+                        >
+                      {%- else -%}
+                        {{ 'product-1' | placeholder_svg_tag: 'main-collection__placeholder' }}
+                      {%- endif -%}
+                    </div>
+                  </a>
+                  {%- comment -%} Quick Add Button {%- endcomment -%}
+                  {%- if section.settings.show_quick_add -%}
+                    {%- render 'quick-add', product: product, section_id: section.id -%}
+                  {%- endif -%}
+                  <a href="{{ product.url }}" class="main-collection__product-info-link">
+                    <div class="main-collection__product-info">
+                      <h4 class="main-collection__product-title">{{ product.title }}</h4>
+                      <p class="main-collection__product-price">{{ product.price | money }}</p>
+                    </div>
+                  </a>
+                </div>
               </li>
             {%- endfor -%}
           </ul>
@@ -265,7 +273,27 @@
     position: relative;
   }
 
+  .main-collection__product-card {
+    position: relative;
+  }
+
+  .main-collection__product-card:hover .main-collection__product-image img,
+  .main-collection__product-card:focus-within .main-collection__product-image img {
+    transform: scale(1.05);
+  }
+
+  .main-collection__product-card:hover .quick-add__button,
+  .main-collection__product-card:focus-within .quick-add__button {
+    opacity: 1;
+  }
+
   .main-collection__product {
+    display: block;
+    text-decoration: none;
+    color: var(--color-foreground);
+  }
+
+  .main-collection__product-info-link {
     display: block;
     text-decoration: none;
     color: var(--color-foreground);
@@ -285,10 +313,6 @@
     object-fit: cover;
     transition: transform 0.5s ease;
   }
-
-  .main-collection__product:hover .main-collection__product-image img {
-    transform: scale(1.05);
-    }
 
   .main-collection__placeholder {
     width: 100%;
@@ -363,6 +387,34 @@
       display: none;
     }
   }
+
+  /* Quick Add Button Positioning */
+  .main-collection__product-card .quick-add {
+    --quick-add-offset: 0.5rem;
+    --quick-add-right: var(--quick-add-offset);
+    --quick-add-bottom: var(--quick-add-offset);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: auto;
+    height: calc(100% - 3rem); /* Height of image container, excluding product info */
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .main-collection__product-card .quick-add__button {
+    pointer-events: all;
+    position: absolute;
+    right: var(--quick-add-right);
+    bottom: var(--quick-add-bottom);
+  }
+
+  @media screen and (min-width: 750px) {
+    .main-collection__product-card .quick-add {
+      --quick-add-offset: 0.75rem;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -411,6 +463,12 @@
       "id": "show_description",
       "label": "Show collection description",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_add",
+      "label": "Show quick add button",
+      "default": true
     },
     {
       "type": "header",
