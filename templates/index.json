@@ -194,70 +194,6 @@
         "link_label": "Get directions",
         "link_url": "https://maps.app.goo.gl/NHjcipu28UJxoBRx5"
       }
-    },
-    "logo_slider_YVVbJk": {
-      "type": "logo-slider",
-      "blocks": {
-        "logo_HHLYzV": {
-          "type": "logo",
-          "settings": {
-            "title": "",
-            "link": "",
-            "open_in_new_tab": true,
-            "logo_height": 0
-          }
-        },
-        "logo_EAA4dD": {
-          "type": "logo",
-          "settings": {
-            "title": "",
-            "link": "",
-            "open_in_new_tab": true,
-            "logo_height": 0
-          }
-        },
-        "logo_XGfFP8": {
-          "type": "logo",
-          "settings": {
-            "title": "",
-            "link": "",
-            "open_in_new_tab": true,
-            "logo_height": 0
-          }
-        },
-        "logo_4YLmeV": {
-          "type": "logo",
-          "settings": {
-            "title": "",
-            "link": "",
-            "open_in_new_tab": true,
-            "logo_height": 0
-          }
-        },
-        "logo_eRP6Ej": {
-          "type": "logo",
-          "settings": {
-            "title": "",
-            "link": "",
-            "open_in_new_tab": true,
-            "logo_height": 0
-          }
-        }
-      },
-      "block_order": [
-        "logo_HHLYzV",
-        "logo_EAA4dD",
-        "logo_XGfFP8",
-        "logo_4YLmeV",
-        "logo_eRP6Ej"
-      ],
-      "name": "Logo Slider",
-      "settings": {
-        "movement_direction": "normal",
-        "color_scheme": "",
-        "logo_height": 120,
-        "gap_between_elements": 48
-      }
     }
   },
   "order": [
@@ -265,7 +201,6 @@
     "featured-products",
     "shop_showcase_jndnAQ",
     "workshops",
-    "visit-boutique",
-    "logo_slider_YVVbJk"
+    "visit-boutique"
   ]
 }
