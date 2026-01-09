@@ -440,3 +440,153 @@ fly-to-cart.fly-to-cart--sticky {
   border: none;
   background-color: transparent;
 }
+
+/* ============================================
+   Quick Add & Product Card Styles
+   ============================================ */
+
+/* CSS Variables for quick-add */
+:root {
+  --button-size-md: 40px;
+  --padding-sm: 0.75rem;
+  --padding-md: 1rem;
+  --layer-raised: 2;
+  --ease-out-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-out-quad: cubic-bezier(0.5, 1, 0.89, 1);
+  --animation-speed-slow: 0.4s;
+  --style-border-radius-card: 0;
+}
+
+/* Add to cart button base styles */
+add-to-cart-component {
+  display: contents;
+}
+
+.add-to-cart-button {
+  --text-speed: 0.26;
+  --base-delay: calc(var(--text-speed) * 0.25);
+  user-select: none;
+  transition-property: color, box-shadow, background-color, scale, translate;
+  transition-duration: var(--animation-speed, 0.3s);
+  transition-timing-function: var(--ease-out-cubic);
+  position: relative;
+  overflow: hidden;
+}
+
+.add-to-cart-button:active {
+  scale: 0.99;
+  translate: 0 1px;
+}
+
+.add-to-cart-text {
+  display: flex;
+  gap: var(--gap-2xs, 0.3rem);
+  align-items: center;
+  justify-content: center;
+  animation-duration: var(--animation-speed, 0.3s);
+  animation-timing-function: var(--animation-easing);
+  animation-fill-mode: forwards;
+  transition: opacity var(--animation-speed, 0.3s) var(--animation-easing),
+    clip-path var(--animation-speed, 0.3s) var(--animation-easing),
+    translate var(--animation-speed, 0.3s) var(--animation-easing);
+  clip-path: circle(100% at 50% 50%);
+}
+
+.add-to-cart__added {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  opacity: 0;
+  transition: opacity var(--animation-speed, 0.3s) var(--animation-easing);
+}
+
+.add-to-cart__added-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/* Added state animation */
+[data-added='true'] .add-to-cart-text {
+  clip-path: circle(0% at 50% 50%);
+  opacity: 0;
+  translate: 0 4px;
+}
+
+[data-added='true'] .add-to-cart__added {
+  opacity: 1;
+}
+
+.add-to-cart-icon {
+  width: var(--icon-size-sm, 1.25rem);
+  height: var(--icon-size-sm, 1.25rem);
+}
+
+@keyframes atc-slide {
+  to {
+    opacity: var(--atc-opacity, 1);
+    translate: 0px var(--atc-destination, 0px);
+  }
+}
+
+@keyframes atc-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes atc-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Quick Add Modal animations */
+@keyframes modalSlideInTop {
+  from {
+    margin-top: var(--padding-sm, 0.75rem);
+    opacity: 0;
+  }
+  to {
+    margin-top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes modalSlideOutTop {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(var(--padding-sm, 0.75rem));
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

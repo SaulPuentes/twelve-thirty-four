@@ -66,29 +66,31 @@
             {%- for product in collection.products -%}
               <li class="main-collection__grid-item">
                 <div class="main-collection__product">
-                  <a href="{{ product.url }}" class="main-collection__product-link">
-                    <div class="main-collection__product-image">
-                      {%- if product.featured_image != blank -%}
-                        <img
-                          src="{{ product.featured_image | image_url: width: 600 }}"
-                          srcset="
-                            {{ product.featured_image | image_url: width: 300 }} 300w,
-                            {{ product.featured_image | image_url: width: 450 }} 450w,
-                            {{ product.featured_image | image_url: width: 600 }} 600w
-                          "
-                          sizes="(max-width: 749px) 50vw, 25vw"
-                          alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                          loading="lazy"
-                          width="{{ product.featured_image.width }}"
-                          height="{{ product.featured_image.height }}"
-                        >
-                      {%- else -%}
-                        {{ 'product-1' | placeholder_svg_tag: 'main-collection__placeholder' }}
-                      {%- endif -%}
-                    </div>
-                  </a>
-                  {%- comment -%} Quick Add Button {%- endcomment -%}
-                  {%- render 'quick-add', product: product, section_id: section.id -%}
+                  <div class="main-collection__product-media">
+                    <a href="{{ product.url }}" class="main-collection__product-link">
+                      <div class="main-collection__product-image">
+                        {%- if product.featured_image != blank -%}
+                          <img
+                            src="{{ product.featured_image | image_url: width: 600 }}"
+                            srcset="
+                              {{ product.featured_image | image_url: width: 300 }} 300w,
+                              {{ product.featured_image | image_url: width: 450 }} 450w,
+                              {{ product.featured_image | image_url: width: 600 }} 600w
+                            "
+                            sizes="(max-width: 749px) 50vw, 25vw"
+                            alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                            loading="lazy"
+                            width="{{ product.featured_image.width }}"
+                            height="{{ product.featured_image.height }}"
+                          >
+                        {%- else -%}
+                          {{ 'product-1' | placeholder_svg_tag: 'main-collection__placeholder' }}
+                        {%- endif -%}
+                      </div>
+                    </a>
+                    {%- comment -%} Quick Add Button - positioned over the image {%- endcomment -%}
+                    {%- render 'quick-add', product: product, section_id: section.id -%}
+                  </div>
                   
                   <div class="main-collection__product-info">
                     <div class="main-collection__product-details">
@@ -283,6 +285,12 @@
     color: var(--color-foreground);
   }
 
+  /* Product media wrapper - contains image and quick-add overlay */
+  .main-collection__product-media {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+
   .main-collection__product-link {
     display: block;
     text-decoration: none;
@@ -293,8 +301,8 @@
     position: relative;
     aspect-ratio: 3/4;
     overflow: hidden;
-    margin-bottom: 1rem;
     background-color: #f5f5f5;
+    border-radius: var(--style-border-radius-card, 0);
   }
 
   .main-collection__product-image img {
@@ -315,6 +323,7 @@
     fill: #ccc;
     background-color: #f0f0f0;
   }
+
 
   .main-collection__product-info {
     display: flex;

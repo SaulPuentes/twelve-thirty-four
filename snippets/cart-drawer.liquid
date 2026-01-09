@@ -234,18 +234,20 @@
         el.classList.toggle('hidden', count === 0);
       });
       
-      // Update header cart counts (without parentheses)
-      const headerCounts = document.querySelectorAll('[data-cart-count]');
-      headerCounts.forEach(el => {
-        el.textContent = count;
-        el.classList.toggle('hidden', count === 0);
+      // Dispatch CartUpdate event for cart-icon component to handle
+      // This prevents conflicts with the component's internal ref management
+      const cartUpdateEvent = new CustomEvent('cart:update', {
+        bubbles: true,
+        detail: {
+          resource: null,
+          sourceId: 'cart-drawer',
+          data: {
+            itemCount: count,
+            source: 'cart-drawer'
+          }
+        }
       });
-      
-      // Update bubble text
-      const bubbleTexts = document.querySelectorAll('.cart-bubble__text');
-      bubbleTexts.forEach(el => {
-        el.textContent = count;
-      });
+      document.dispatchEvent(cartUpdateEvent);
     };
 
     // Initialize cart event listeners
