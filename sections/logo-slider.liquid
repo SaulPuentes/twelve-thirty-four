@@ -41,7 +41,17 @@
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'logo' -%}
-              <div class="logo-slider__item" {{ block.shopify_attributes }}>
+              {%- liquid
+                assign block_logo_height = block.settings.logo_height
+                if block_logo_height == blank or block_logo_height == 0
+                  assign block_logo_height = logo_height
+                endif
+              -%}
+              <div 
+                class="logo-slider__item" 
+                style="--item-logo-height: {{ block_logo_height }}px;"
+                {{ block.shopify_attributes }}
+              >
                 {%- if block.settings.image != blank -%}
                   {%- assign logo_title = block.settings.title | default: block.settings.image.alt | default: 'Partner logo' -%}
                   
@@ -139,7 +149,7 @@
 
   .logo-slider__image {
     object-fit: contain;
-    height: var(--logo-height, 120px);
+    height: var(--item-logo-height, var(--logo-height, 120px));
     width: auto;
     max-width: 100%;
     filter: grayscale(100%);
@@ -159,8 +169,8 @@
   }
 
   .logo-slider__placeholder {
-    width: calc(var(--logo-height, 120px) * 2);
-    height: var(--logo-height, 120px);
+    width: calc(var(--item-logo-height, var(--logo-height, 120px)) * 2);
+    height: var(--item-logo-height, var(--logo-height, 120px));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -269,7 +279,18 @@
           "type": "checkbox",
           "id": "open_in_new_tab",
           "label": "Open link in new tab",
-          "default": false
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "logo_height",
+          "label": "Custom logo height",
+          "min": 0,
+          "max": 200,
+          "step": 10,
+          "unit": "px",
+          "default": 0,
+          "info": "Override default height for this logo. Set to 0 to use section default."
         }
       ]
     }
