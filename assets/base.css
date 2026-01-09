@@ -435,6 +435,12 @@ fly-to-cart.fly-to-cart--sticky {
   }
 }
 
+/* Quantity Selector Styles */
+
+.quantity-selector__input {
+  text-align: center;
+}
+
 .quantity-selector__input,
 .quantity-selector__button {
   border: none;
