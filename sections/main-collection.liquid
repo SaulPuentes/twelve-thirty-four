@@ -58,60 +58,39 @@
         </div>
       {%- endif -%}
 
-      {%- comment -%} Get selected product type from URL parameter {%- endcomment -%}
-      {%- assign selected_type = blank -%}
-      {%- if request.params.product_type -%}
-        {%- assign selected_type = request.params.product_type -%}
-      {%- endif -%}
-
       {%- assign products_per_page = section.settings.products_per_page | default: 24 -%}
 
       {%- paginate collection.products by products_per_page -%}
-        {%- comment -%} Count matching products for empty state {%- endcomment -%}
-        {%- assign matching_products_count = 0 -%}
-        {%- if selected_type != blank -%}
-          {%- for product in collection.products -%}
-            {%- if product.type == selected_type -%}
-              {%- assign matching_products_count = matching_products_count | plus: 1 -%}
-            {%- endif -%}
-          {%- endfor -%}
-        {%- else -%}
-          {%- assign matching_products_count = collection.products.size -%}
-        {%- endif -%}
-
-        {%- if matching_products_count > 0 -%}
+        {%- if collection.products.size > 0 -%}
           <ul class="main-collection__grid" id="ProductGrid">
             {%- for product in collection.products -%}
-              {%- comment -%} Only show product if it matches the selected type (or if no type is selected) {%- endcomment -%}
-              {%- if selected_type == blank or product.type == selected_type -%}
-                <li class="main-collection__grid-item">
-                  <a href="{{ product.url }}" class="main-collection__product">
-                    <div class="main-collection__product-image">
-                      {%- if product.featured_image != blank -%}
-                        <img
-                          src="{{ product.featured_image | image_url: width: 600 }}"
-                          srcset="
-                            {{ product.featured_image | image_url: width: 300 }} 300w,
-                            {{ product.featured_image | image_url: width: 450 }} 450w,
-                            {{ product.featured_image | image_url: width: 600 }} 600w
-                          "
-                          sizes="(max-width: 749px) 50vw, 25vw"
-                          alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                          loading="lazy"
-                          width="{{ product.featured_image.width }}"
-                          height="{{ product.featured_image.height }}"
-            >
-                      {%- else -%}
-                        {{ 'product-1' | placeholder_svg_tag: 'main-collection__placeholder' }}
-                      {%- endif -%}
-                    </div>
-                    <div class="main-collection__product-info">
-                      <h4 class="main-collection__product-title">{{ product.title }}</h4>
-                      <p class="main-collection__product-price">{{ product.price | money }}</p>
-                    </div>
-                  </a>
-                </li>
-              {%- endif -%}
+              <li class="main-collection__grid-item">
+                <a href="{{ product.url }}" class="main-collection__product">
+                  <div class="main-collection__product-image">
+                    {%- if product.featured_image != blank -%}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 600 }}"
+                        srcset="
+                          {{ product.featured_image | image_url: width: 300 }} 300w,
+                          {{ product.featured_image | image_url: width: 450 }} 450w,
+                          {{ product.featured_image | image_url: width: 600 }} 600w
+                        "
+                        sizes="(max-width: 749px) 50vw, 25vw"
+                        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                        loading="lazy"
+                        width="{{ product.featured_image.width }}"
+                        height="{{ product.featured_image.height }}"
+          >
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'main-collection__placeholder' }}
+                    {%- endif -%}
+                  </div>
+                  <div class="main-collection__product-info">
+                    <h4 class="main-collection__product-title">{{ product.title }}</h4>
+                    <p class="main-collection__product-price">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              </li>
             {%- endfor -%}
           </ul>
 
@@ -133,21 +112,39 @@
       <h3 class="main-collection__sidebar-title">{{ section.settings.categories_title | default: 'Categories' }}</h3>
       <nav class="main-collection__nav">
         <ul class="main-collection__nav-list">
+          
           {%- comment -%} ALL option {%- endcomment -%}
           <li class="main-collection__nav-item">
             <a
               href="{{ collection.url }}"
-              class="main-collection__nav-link{% if selected_type == blank %} main-collection__nav-link--active{% endif %}"
+              class="main-collection__nav-link {% unless current_tags or collection.filters.size > 0 %} main-collection__nav-link--active{% endunless %}"
             >
               ALL
             </a>
           </li>
-          {%- for product_type in shop.types -%}
+
+          {%- comment -%} 
+            SOLUCIÓN: Usamos collection.all_types para mostrar solo categorías relevantes 
+            para esta colección en particular.
+          {%- endcomment -%}
+          {%- for product_type in collection.all_types -%}
             {%- if product_type != blank -%}
+              
+              {%- comment -%} Lógica para detectar si está activo buscando en la URL actual {%- endcomment -%}
+              {%- assign is_active = false -%}
+              {%- capture filter_param -%}filter.p.product_type={{ product_type | url_encode }}{%- endcapture -%}
+              
+              {%- comment -%} 
+                Nota: La detección de activo por URL pura en Liquid es limitada. 
+                Si necesitas detección robusta, se recomienda iterar sobre 'collection.filters'.
+                Sin embargo, para mantener tu estructura simple:
+              {%- endcomment -%}
+
               <li class="main-collection__nav-item">
                 <a
-                  href="{{ collection.url }}?product_type={{ product_type | url_encode }}"
-                  class="main-collection__nav-link{% if selected_type == product_type %} main-collection__nav-link--active{% endif %}"
+                  href="{{ collection.url }}?filter.p.product_type={{ product_type | url_encode }}"
+                  class="main-collection__nav-link"
+                  title="Filter by {{ product_type }}"
                 >
                   {{ product_type }}
                 </a>
