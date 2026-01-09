@@ -3,7 +3,7 @@
   Slide-out cart drawer for quick cart access
 {%- endcomment -%}
 
-<cart-drawer id="cart-drawer" class="cart-drawer" aria-hidden="true">
+<div id="cart-drawer" class="cart-drawer" aria-hidden="true">
   <div class="cart-drawer__overlay" data-cart-drawer-close></div>
   <div class="cart-drawer__content" role="dialog" aria-modal="true" aria-label="{{ 'cart.general.title' | t }}">
     {%- comment -%} Header {%- endcomment -%}
@@ -133,7 +133,63 @@
       </div>
     {%- endif -%}
   </div>
-</cart-drawer>
+</div>
+
+<script>
+  (function() {
+    const cartDrawer = document.getElementById('cart-drawer');
+    if (!cartDrawer) return;
+
+    // Close handlers
+    const closeDrawer = () => {
+      cartDrawer.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('overflow-hidden');
+    };
+
+    // Close on overlay click
+    const overlay = cartDrawer.querySelector('[data-cart-drawer-close]');
+    if (overlay) {
+      overlay.addEventListener('click', closeDrawer);
+    }
+
+    // Close on close button click
+    const closeButtons = cartDrawer.querySelectorAll('.cart-drawer__close');
+    closeButtons.forEach(btn => btn.addEventListener('click', closeDrawer));
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && cartDrawer.getAttribute('aria-hidden') === 'false') {
+        closeDrawer();
+      }
+    });
+
+    // Quantity selector functionality
+    const quantitySelectors = cartDrawer.querySelectorAll('.quantity-selector');
+    quantitySelectors.forEach(selector => {
+      const minusBtn = selector.querySelector('.quantity-minus');
+      const plusBtn = selector.querySelector('.quantity-plus');
+      const input = selector.querySelector('.quantity-selector__input');
+
+      if (minusBtn && input) {
+        minusBtn.addEventListener('click', () => {
+          const currentValue = parseInt(input.value) || 1;
+          if (currentValue > 0) {
+            input.value = currentValue - 1;
+            input.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+      }
+
+      if (plusBtn && input) {
+        plusBtn.addEventListener('click', () => {
+          const currentValue = parseInt(input.value) || 0;
+          input.value = currentValue + 1;
+          input.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+      }
+    });
+  })();
+</script>
 
 <style>
   .cart-drawer {

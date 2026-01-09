@@ -67,7 +67,10 @@
 
     {% sections 'footer-group' %}
 
-    {% render 'cart-drawer' %}
+    {%- comment -%} Cart Drawer - Rendered separately from header-actions {%- endcomment -%}
+    {% if settings.cart_type == 'drawer' %}
+      {% render 'cart-drawer' %}
+    {% endif %}
 
     {% render 'scripts' %}
   </body>

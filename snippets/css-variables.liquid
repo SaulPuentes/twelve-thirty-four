@@ -11,6 +11,10 @@
 
     --font-size-base: {{ settings.body_font_size }}px;
 
+    /* Font family aliases for components */
+    --font-paragraph--family: var(--font-body-family);
+    --font-paragraph--weight: var(--font-body-weight);
+
     /* Heading Scale */
     {%- case settings.heading_scale -%}
       {%- when 'small' -%}
@@ -36,18 +40,109 @@
         --font-size-h6: 1.25rem;
     {%- endcase -%}
 
+    /* Hardcoded font sizes */
+    --font-size--3xs: 0.625rem;
+    --font-size--2xs: 0.75rem;
+    --font-size--xs: 0.8125rem;
+    --font-size--sm: 0.875rem;
+    --font-size--md: 1rem;
+    --font-size--lg: 1.125rem;
+    --font-size--xl: 1.25rem;
+    --font-size--2xl: 1.5rem;
+
     /* Layout */
     --page-width: {{ settings.page_width }}px;
     --section-spacing: {{ settings.section_spacing }}px;
     --page-margin: 2rem;
     --page-margin-mobile: 1.5rem;
+    --sidebar-width: 25rem;
+
+    /* Spacing - Margins */
+    --margin-3xs: 0.125rem;
+    --margin-2xs: 0.3rem;
+    --margin-xs: 0.5rem;
+    --margin-sm: 0.7rem;
+    --margin-md: 0.8rem;
+    --margin-lg: 1rem;
+    --margin-xl: 1.25rem;
+    --margin-2xl: 1.5rem;
+    --margin-3xl: 1.75rem;
+    --margin-4xl: 2rem;
+
+    /* Spacing - Padding */
+    --padding-3xs: 0.125rem;
+    --padding-2xs: 0.25rem;
+    --padding-xs: 0.5rem;
+    --padding-sm: 0.7rem;
+    --padding-md: 0.8rem;
+    --padding-lg: 1rem;
+    --padding-xl: 1.25rem;
+    --padding-2xl: 1.5rem;
+    --padding-3xl: 1.75rem;
+    --padding-4xl: 2rem;
+
+    /* Spacing - Gap */
+    --gap-3xs: 0.125rem;
+    --gap-2xs: 0.3rem;
+    --gap-xs: 0.5rem;
+    --gap-sm: 0.7rem;
+    --gap-md: 0.9rem;
+    --gap-lg: 1rem;
+    --gap-xl: 1.25rem;
+    --gap-2xl: 2rem;
+
+    /* Icons */
+    --icon-size-2xs: 0.6rem;
+    --icon-size-xs: 0.85rem;
+    --icon-size-sm: 1.25rem;
+    --icon-size-md: 1.375rem;
+    --icon-size-lg: 1.5rem;
+    --icon-stroke-width: 1.5px;
 
     /* Buttons */
     --button-border-radius: {{ settings.button_border_radius }}px;
+    --button-size: var(--minimum-touch-target);
+    --button-padding-inline: 24px;
+    --button-padding-block: 16px;
+    --minimum-touch-target: 44px;
+
+    /* Border styles */
+    --style-border-width: 1px;
+    --style-border-radius-buttons-primary: {{ settings.button_border_radius }}px;
+    --style-border-radius-buttons-secondary: {{ settings.button_border_radius }}px;
+    --style-border-radius-popover: 8px;
+    --style-border-radius-lg: 1rem;
+    --style-border-radius-pills: 20px;
+    --style-border-popover: 1px solid var(--color-border);
+    --style-border-drawer: 1px solid var(--color-border);
+
+    /* Shadows */
+    --shadow-popover: 0 4px 20px rgb(0 0 0 / 0.1);
+    --shadow-drawer: -4px 0 20px rgb(0 0 0 / 0.1);
 
     /* Animation */
-    --animation-speed: 300ms;
+    --animation-speed: 0.2s;
+    --animation-speed-fast: 0.0625s;
+    --animation-speed-slow: 0.3s;
     --animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out-quad: cubic-bezier(0.32, 0.72, 0, 1);
+
+    /* Opacity */
+    --opacity-5: 0.05;
+    --opacity-10: 0.1;
+    --opacity-10-25: 0.15;
+    --opacity-25: 0.25;
+    --opacity-35-55: 0.45;
+    --opacity-40: 0.4;
+    --opacity-50: 0.5;
+    --opacity-60: 0.6;
+    --opacity-80: 0.8;
+
+    /* Z-Index / Layering */
+    --layer-flat: 1;
+    --layer-raised: 2;
+    --layer-sticky: 8;
+    --layer-temporary: 20;
   }
 
   @media screen and (max-width: 749px) {
@@ -60,20 +155,53 @@
 
   /* Color Scheme Variables */
   {% for scheme in settings.color_schemes %}
+    {%- liquid
+      assign bg = scheme.last.settings.background
+      assign fg = scheme.last.settings.foreground
+      assign border = scheme.last.settings.border
+      assign shadow = scheme.last.settings.shadow
+      assign primary_btn_bg = scheme.last.settings.primary_button_background
+      assign primary_btn_text = scheme.last.settings.primary_button_text
+    -%}
     .color-{{ scheme.first }} {
-      --color-background: {{ scheme.last.settings.background }};
-      --color-foreground: {{ scheme.last.settings.foreground }};
+      --color-background: {{ bg }};
+      --color-foreground: {{ fg }};
+      --color-foreground-rgb: {{ fg.red }} {{ fg.green }} {{ fg.blue }};
       --color-foreground-heading: {{ scheme.last.settings.foreground_heading }};
       --color-primary: {{ scheme.last.settings.primary }};
+      --color-primary-hover: {{ scheme.last.settings.primary | color_darken: 10 }};
       --color-accent: {{ scheme.last.settings.primary }};
-      --color-border: {{ scheme.last.settings.border }};
-      --color-shadow: {{ scheme.last.settings.shadow }};
-      --color-button-background: {{ scheme.last.settings.primary_button_background }};
-      --color-button-text: {{ scheme.last.settings.primary_button_text }};
-      --color-button-border: {{ scheme.last.settings.primary_button_border }};
-      --color-button-secondary-background: {{ scheme.last.settings.secondary_button_background }};
-      --color-button-secondary-text: {{ scheme.last.settings.secondary_button_text }};
-      --color-button-secondary-border: {{ scheme.last.settings.secondary_button_border }};
+      --color-border: {{ border }};
+      --color-border-rgb: {{ border.red }} {{ border.green }} {{ border.blue }};
+      --color-shadow: {{ shadow }};
+      --color-shadow-rgb: {{ shadow.red }} {{ shadow.green }} {{ shadow.blue }};
+
+      /* Primary button colors */
+      --color-primary-button-background: {{ primary_btn_bg }};
+      --color-primary-button-text: {{ primary_btn_text }};
+      --color-primary-button-border: {{ scheme.last.settings.primary_button_border }};
+      --color-primary-button-hover-background: {{ primary_btn_bg | color_darken: 10 }};
+      --color-primary-button-hover-text: {{ primary_btn_text }};
+      --color-primary-button-hover-border: {{ scheme.last.settings.primary_button_border | color_darken: 10 }};
+
+      /* Secondary button colors */
+      --color-secondary-button-background: {{ scheme.last.settings.secondary_button_background }};
+      --color-secondary-button-text: {{ scheme.last.settings.secondary_button_text }};
+      --color-secondary-button-border: {{ scheme.last.settings.secondary_button_border }};
+      --color-secondary-button-hover-background: {{ scheme.last.settings.secondary_button_background | color_darken: 5 }};
+      --color-secondary-button-hover-text: {{ scheme.last.settings.secondary_button_text }};
+      --color-secondary-button-hover-border: {{ scheme.last.settings.secondary_button_border | color_darken: 10 }};
+
+      /* Input colors */
+      --color-input-background: {{ bg }};
+      --color-input-text: {{ fg }};
+      --color-input-text-rgb: {{ fg.red }} {{ fg.green }} {{ fg.blue }};
+      --color-input-border: {{ border }};
+      --color-input-hover-background: {{ bg | color_darken: 2 }};
+
+      /* Backdrop */
+      --backdrop-opacity: 0.15;
+      --backdrop-color-rgb: {{ shadow.red }} {{ shadow.green }} {{ shadow.blue }};
 
       background-color: var(--color-background);
       color: var(--color-foreground);
@@ -88,5 +216,20 @@
       color: var(--color-foreground-heading);
     }
   {% endfor %}
+
+  /* Default body colors (fallback) */
+  body {
+    --color-background: #ffffff;
+    --color-foreground: #121212;
+    --color-foreground-rgb: 18 18 18;
+    --color-border: #e5e5e5;
+    --color-border-rgb: 229 229 229;
+    --color-shadow: #000000;
+    --color-shadow-rgb: 0 0 0;
+    --color-primary-button-background: #121212;
+    --color-primary-button-text: #ffffff;
+    --backdrop-opacity: 0.15;
+    --backdrop-color-rgb: 0 0 0;
+  }
 </style>
 

@@ -161,6 +161,18 @@
       },
       {
         "type": "checkbox",
+        "id": "auto_open_cart_drawer",
+        "label": "Automatically open cart drawer when items are added",
+        "default": true
+      },
+      {
+        "type": "color_scheme",
+        "id": "drawer_color_scheme",
+        "label": "Drawer color scheme",
+        "default": "scheme-1"
+      },
+      {
+        "type": "checkbox",
         "id": "show_cart_note",
         "label": "Enable cart note",
         "default": true
