@@ -42,6 +42,16 @@
             "logo_height": 0
           }
         },
+        "logo-4": {
+          "type": "logo",
+          "settings": {
+            "image": "shopify://shop_images/breda.png",
+            "title": "BREDA",
+            "link": "",
+            "open_in_new_tab": false,
+            "logo_height": 70
+          }
+        },
         "logo-3": {
           "type": "logo",
           "settings": {
@@ -50,16 +60,6 @@
             "link": "",
             "open_in_new_tab": false,
             "logo_height": 90
-          }
-        },
-        "logo-4": {
-          "type": "logo",
-          "settings": {
-            "image": "shopify://shop_images/breda.png",
-            "title": "",
-            "link": "",
-            "open_in_new_tab": false,
-            "logo_height": 70
           }
         },
         "logo-5": {
@@ -76,8 +76,8 @@
       "block_order": [
         "logo-1",
         "logo-2",
-        "logo-3",
         "logo-4",
+        "logo-3",
         "logo-5"
       ],
       "settings": {
