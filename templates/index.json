@@ -62,36 +62,36 @@
     "featured-products": {
       "type": "featured-products",
       "blocks": {
-        "product-1": {
+        "product-4": {
           "type": "product",
           "settings": {
-            "product": "10in-anthurium-big-red"
+            "product": "custom-floral-arrangement-extra-large"
           }
         },
         "product-2": {
           "type": "product",
           "settings": {
-            "product": "11"
+            "product": "custom-floral-arrangement-large"
+          }
+        },
+        "product-1": {
+          "type": "product",
+          "settings": {
+            "product": "custom-floral-arrangement-medium"
           }
         },
         "product-3": {
           "type": "product",
           "settings": {
-            "product": "14"
-          }
-        },
-        "product-4": {
-          "type": "product",
-          "settings": {
-            "product": "10in-red-emerald-philodendron"
+            "product": "custom-twelve-thirty-four-floral-arrangement-medium"
           }
         }
       },
       "block_order": [
-        "product-1",
+        "product-4",
         "product-2",
-        "product-3",
-        "product-4"
+        "product-1",
+        "product-3"
       ],
       "settings": {
         "heading": "Thoughtful Gifts\n& Floral Creations",
@@ -112,6 +112,7 @@
           "settings": {
             "product": "bury-me-west-12-one-of-a-kind-stoneware-vase",
             "label": "Bury me west",
+            "custom_title": "",
             "show_add_to_cart": true,
             "open_in_new_tab": false
           }
@@ -133,6 +134,7 @@
           "settings": {
             "product": "chase-gamblin-multicolored-vase",
             "label": "Chase Gamblin",
+            "custom_title": "",
             "show_add_to_cart": true,
             "open_in_new_tab": false
           }
