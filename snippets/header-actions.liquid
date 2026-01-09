@@ -47,8 +47,14 @@
     const cartDrawer = document.querySelector('#cart-drawer');
     
     if (cartToggle && cartDrawer) {
-      cartToggle.addEventListener('click', function(e) {
+      cartToggle.addEventListener('click', async function(e) {
         e.preventDefault();
+        
+        // Refresh the cart drawer content before opening
+        if (typeof window.refreshCartDrawer === 'function') {
+          await window.refreshCartDrawer();
+        }
+        
         cartDrawer.setAttribute('aria-hidden', 'false');
         document.body.classList.add('overflow-hidden');
       });

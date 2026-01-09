@@ -194,9 +194,16 @@
       }
     };
 
-    // Refresh cart drawer content
+    // Refresh cart drawer content - exposed globally
     const refreshCartDrawer = async () => {
       try {
+        // Add loading state
+        const drawerBody = cartDrawer.querySelector('#cart-drawer-body');
+        if (drawerBody) {
+          drawerBody.style.opacity = '0.5';
+          drawerBody.style.pointerEvents = 'none';
+        }
+
         // Fetch the current page to get fresh cart drawer HTML
         const response = await fetch(window.location.href);
         const html = await response.text();
@@ -209,12 +216,31 @@
         const newTitle = doc.querySelector('.cart-drawer__count');
         const oldTitle = cartDrawer.querySelector('.cart-drawer__count');
         
+        const newFooter = doc.querySelector('.cart-drawer__footer');
+        const oldFooter = cartDrawer.querySelector('.cart-drawer__footer');
+        
         if (newBody && oldBody) {
           oldBody.innerHTML = newBody.innerHTML;
+          oldBody.style.opacity = '1';
+          oldBody.style.pointerEvents = '';
           
           // Update title count too
           if (newTitle && oldTitle) {
             oldTitle.textContent = newTitle.textContent;
+          }
+          
+          // Update footer (subtotal, checkout button, etc.)
+          if (newFooter && oldFooter) {
+            oldFooter.innerHTML = newFooter.innerHTML;
+          } else if (newFooter && !oldFooter) {
+            // If footer didn't exist before but does now, add it
+            const content = cartDrawer.querySelector('.cart-drawer__content');
+            if (content) {
+              content.appendChild(newFooter.cloneNode(true));
+            }
+          } else if (!newFooter && oldFooter) {
+            // If footer no longer needed (empty cart), remove it
+            oldFooter.remove();
           }
           
           // Reinitialize event listeners
@@ -222,8 +248,17 @@
         }
       } catch (error) {
         console.error('Error refreshing cart drawer:', error);
+        // Remove loading state on error
+        const drawerBody = cartDrawer.querySelector('#cart-drawer-body');
+        if (drawerBody) {
+          drawerBody.style.opacity = '1';
+          drawerBody.style.pointerEvents = '';
+        }
       }
     };
+    
+    // Expose refreshCartDrawer globally so it can be called from header-actions
+    window.refreshCartDrawer = refreshCartDrawer;
 
     // Update cart count badges
     const updateCartCount = (count) => {
@@ -325,370 +360,3 @@
     initCartEventListeners();
   })();
 </script>
-
-<style>
-  .cart-drawer {
-    position: fixed;
-    inset: 0;
-    z-index: 300;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity var(--animation-speed, 0.3s) ease,
-                visibility var(--animation-speed, 0.3s) ease;
-  }
-
-  .cart-drawer[aria-hidden="false"] {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .cart-drawer__overlay {
-    position: absolute;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    cursor: pointer;
-  }
-
-  .cart-drawer__content {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    max-width: 420px;
-    background-color: var(--color-background, #fff);
-    transform: translateX(100%);
-    transition: transform var(--animation-speed, 0.3s) ease;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .cart-drawer[aria-hidden="false"] .cart-drawer__content {
-    transform: translateX(0);
-  }
-
-  .cart-drawer__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.5rem;
-    border-bottom: 1px solid var(--color-border, #ddd);
-  }
-
-  .cart-drawer__title {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .cart-drawer__count {
-    font-weight: 400;
-    opacity: 0.7;
-  }
-
-  .cart-drawer__close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    color: var(--color-foreground);
-  }
-
-  .cart-drawer__body {
-    flex: 1;
-    overflow-y: auto;
-    padding: 1.5rem;
-  }
-
-  .cart-drawer__empty {
-    text-align: center;
-    padding: 3rem 0;
-  }
-
-  .cart-drawer__empty p {
-    margin-bottom: 1.5rem;
-    opacity: 0.7;
-  }
-
-  .cart-drawer__items {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .cart-drawer__item {
-    display: grid;
-    grid-template-columns: 75px 1fr auto;
-    gap: 1rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--color-border, #ddd);
-    transition: opacity 0.3s ease, max-height 0.3s ease, margin-bottom 0.3s ease;
-    overflow: hidden;
-  }
-
-  .cart-drawer__item.removing {
-    opacity: 0;
-    max-height: 0 !important;
-    padding-bottom: 0;
-    margin-bottom: 0;
-    border-color: transparent;
-  }
-
-  .cart-drawer__item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .cart-drawer__item-media img {
-    width: 100%;
-    height: auto;
-  }
-
-  .cart-drawer__item-details {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-
-  .cart-drawer__item-name {
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-
-  .cart-drawer__item-name:hover {
-    text-decoration: underline;
-  }
-
-  .cart-drawer__item-variant {
-    font-size: 0.75rem;
-    opacity: 0.7;
-    margin: 0;
-  }
-
-  .cart-drawer__item-price {
-    font-size: 0.875rem;
-    margin: 0;
-  }
-
-  .cart-drawer__item-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-  }
-
-  .cart-drawer__item-remove {
-    --icon-stroke-width: 1.5;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: none;
-    padding: 0.25rem;
-    cursor: pointer;
-    opacity: 0.6;
-    color: var(--color-foreground, #111);
-    flex-shrink: 0;
-    transition: opacity 0.2s ease;
-  }
-
-  .cart-drawer__item-remove:hover {
-    opacity: 1;
-  }
-
-  .cart-drawer__item-remove .icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Remove button animation */
-  .cart-drawer__item-remove .remove-icon-bottom,
-  .cart-drawer__item-remove .remove-icon-top {
-    transition: transform 0.2s ease;
-  }
-
-  .cart-drawer__item-remove:hover .remove-icon-top {
-    transform: translate(-1px, 1px) rotate(-15deg);
-  }
-
-  .cart-drawer__item-remove:hover .remove-icon-bottom,
-  .cart-drawer__item-remove:active .remove-icon-bottom {
-    transform: translateY(1px);
-  }
-
-  .cart-drawer__item.removing {
-    overflow: hidden;
-    animation: removeItemAnimation 0.4s ease forwards;
-  }
-
-  .cart-drawer__item.removing .remove-icon-bottom {
-    transform: translateY(0);
-  }
-
-  .cart-drawer__item.removing .remove-icon-top {
-    animation: removeButtonClickedIconTop 0.2s ease forwards;
-  }
-
-  @keyframes removeButtonClickedIconTop {
-    50% {
-      transform: translate(0, -1px);
-    }
-    100% {
-      transform: translate(0, 0);
-    }
-  }
-
-  @keyframes removeItemAnimation {
-    0% {
-      opacity: 1;
-      height: auto;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.5rem;
-    }
-    100% {
-      opacity: 0;
-      height: 0;
-      margin-bottom: 0;
-      padding-bottom: 0;
-      border-bottom: none;
-    }
-  }
-
-  .cart-drawer__item-total {
-    font-size: 0.875rem;
-    font-weight: 500;
-    text-align: right;
-  }
-
-  /* Quantity selector */
-  .quantity-selector {
-    --quantity-selector-width: 90px;
-    --icon-stroke-width: 1.5;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--color-foreground, #111);
-    background-color: var(--color-background, #fff);
-    border: 1px solid var(--color-border, #ddd);
-    border-radius: 4px;
-    flex: 0 0 var(--quantity-selector-width);
-    height: 36px;
-    transition: background-color 0.2s ease;
-  }
-
-  .quantity-selector:hover {
-    background-color: var(--color-background-secondary, #f5f5f5);
-  }
-
-  .quantity-minus {
-    border-start-start-radius: 4px;
-    border-end-start-radius: 4px;
-  }
-
-  .quantity-plus {
-    border-start-end-radius: 4px;
-    border-end-end-radius: 4px;
-  }
-
-  .quantity-selector .svg-wrapper {
-    transition: transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .quantity-selector svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  .quantity-selector__button:active .svg-wrapper {
-    transform: scale(0.9);
-  }
-
-  .quantity-selector__input {
-    font-size: 0.875rem;
-    width: 100%;
-    padding: 0;
-  }
-
-  /* Chrome, Safari, Edge, Opera */
-  .quantity-selector__input::-webkit-inner-spin-button,
-  .quantity-selector__input::-webkit-outer-spin-button {
-    appearance: none;
-    margin: 0;
-  }
-
-  /* Firefox */
-  .quantity-selector__input {
-    -moz-appearance: textfield;
-  }
-
-  .cart-drawer__footer {
-    padding: 1.5rem;
-    border-top: 1px solid var(--color-border, #ddd);
-    background-color: var(--color-background, #fff);
-  }
-
-  .cart-drawer__discounts {
-    margin-bottom: 0.75rem;
-  }
-
-  .cart-drawer__discount {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.875rem;
-    color: var(--color-success, #2e7d32);
-  }
-
-  .cart-drawer__subtotal {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  }
-
-  .cart-drawer__taxes {
-    font-size: 0.75rem;
-    opacity: 0.7;
-    margin-bottom: 1rem;
-  }
-
-  .cart-drawer__actions {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .cart-drawer__actions .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    padding: 0.875rem 1.5rem;
-    font-family: var(--font-body-family);
-    font-size: 0.875rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: var(--color-foreground, #111);
-    color: var(--color-background, #fff);
-    border: 1px solid var(--color-foreground, #111);
-  }
-
-  .cart-drawer__actions .button:hover {
-    background-color: transparent;
-    color: var(--color-foreground, #111);
-  }
-</style>

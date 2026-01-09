@@ -3,6 +3,8 @@
   assign gap_value = section.settings.gap | default: 16
 -%}
 
+<script src="{{ 'product-card.js' | asset_url }}" defer></script>
+
 <section
   id="FeaturedProducts-{{ section.id }}"
   class="featured-products"
@@ -31,63 +33,31 @@
     </div>
 
     {%- comment -%} Products Grid {%- endcomment -%}
-    <div 
-      class="featured-products__grid"
-      data-adding-text="{{ 'products.product.adding_to_cart' | t | default: 'ADDING...' | upcase }}"
-      data-added-text="{{ 'products.product.added_to_cart' | t | default: 'ADDED!' | upcase }}"
-    >
+    <div class="featured-products__grid">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'product' -%}
             {%- if block.settings.product != blank -%}
-              {%- assign product = block.settings.product -%}
-              {%- assign first_variant = product.selected_or_first_available_variant -%}
-              <div class="product-card" {{ block.shopify_attributes }}>
-                <a href="{{ product.url }}" class="product-card__link" aria-label="{{ product.title }}">
+              {%- render 'product-card',
+                product: block.settings.product,
+                show_add_to_cart: true,
+                lazy_load: true,
+                block: block
+              -%}
+            {%- else -%}
+              {%- comment -%} Placeholder card when no product selected {%- endcomment -%}
+              <div class="product-card product-card--placeholder" {{ block.shopify_attributes }}>
+                <div class="product-card__link">
                   <div class="product-card__media">
-                    {%- if product.featured_media -%}
-                      <img
-                        src="{{ product.featured_media | image_url: width: 600 }}"
-                        alt="{{ product.featured_media.alt | default: product.title | escape }}"
-                        width="300"
-                        height="{{ 300 | divided_by: product.featured_media.aspect_ratio | round }}"
-                        class="product-card__image"
-                        loading="lazy"
-                      >
-                    {%- else -%}
-                      {{ 'product-1' | placeholder_svg_tag: 'product-card__placeholder' }}
-                    {%- endif -%}
+                    {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'product-card__placeholder' }}
                   </div>
                   <div class="product-card__info">
-                    <h3 class="product-card__title">{{ product.title }}</h3>
-                    <p class="product-card__price">{{ product.price | money }}</p>
+                    <h3 class="product-card__title">{{ 'onboarding.product_title' | t }}</h3>
+                    <p class="product-card__price">{{ 9900 | money }}</p>
                   </div>
-                </a>
-                <button
-                  type="button"
-                  class="product-card__add-to-cart"
-                  data-variant-id="{{ first_variant.id }}"
-                  data-product-image="{{ product.featured_media | image_url: width: 100 }}"
-                  {% unless first_variant.available %}disabled{% endunless %}
-                >
-                  {%- if first_variant.available -%}
-                    {{ 'products.product.add_to_cart' | t | upcase }}
-                  {%- else -%}
-                    {{ 'products.product.sold_out' | t | upcase }}
-                  {%- endif -%}
-                </button>
-              </div>
-            {%- else -%}
-              <div class="product-card product-card--placeholder" {{ block.shopify_attributes }}>
-                <div class="product-card__media">
-                  {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'product-card__placeholder' }}
-                </div>
-                <div class="product-card__info">
-                  <h3 class="product-card__title">{{ 'onboarding.product_title' | t }}</h3>
-                  <p class="product-card__price">{{ 9900 | money }}</p>
                 </div>
                 <button type="button" class="product-card__add-to-cart" disabled>
-                  {{ 'products.product.add_to_cart' | t | upcase }}
+                  {{ 'products.product.add_to_cart' | t | default: 'ADD TO CART' | upcase }}
                 </button>
               </div>
             {%- endif -%}
@@ -96,15 +66,17 @@
         {%- comment -%} Show placeholders if no blocks {%- endcomment -%}
         {%- for i in (1..4) -%}
           <div class="product-card product-card--placeholder">
-            <div class="product-card__media">
-              {{ 'product-' | append: i | placeholder_svg_tag: 'product-card__placeholder' }}
-            </div>
-            <div class="product-card__info">
-              <h3 class="product-card__title">{{ 'onboarding.product_title' | t }}</h3>
-              <p class="product-card__price">{{ 100 | times: i | money }}</p>
+            <div class="product-card__link">
+              <div class="product-card__media">
+                {{ 'product-' | append: i | placeholder_svg_tag: 'product-card__placeholder' }}
+              </div>
+              <div class="product-card__info">
+                <h3 class="product-card__title">{{ 'onboarding.product_title' | t }}</h3>
+                <p class="product-card__price">{{ 100 | times: i | money }}</p>
+              </div>
             </div>
             <button type="button" class="product-card__add-to-cart" disabled>
-              {{ 'products.product.add_to_cart' | t | upcase }}
+              {{ 'products.product.add_to_cart' | t | default: 'ADD TO CART' | upcase }}
             </button>
           </div>
         {%- endfor -%}
@@ -114,13 +86,10 @@
 </section>
 
 {% stylesheet %}
-  /* Import section heading size variables */
+  /* Section heading size variables */
   .featured-products {
     --section-heading-lg: 2.25rem;
     --section-heading-lg-desktop: 3rem;
-  }
-
-  .featured-products {
     padding: 5rem 2rem;
   }
 
@@ -213,159 +182,11 @@
     }
   }
 
-  /* Product card styles for this section - override base.css absolute positioning */
-  .featured-products .product-card {
-    position: relative;
-    display: block;
-    height: auto;
-  }
-
-  .featured-products .product-card__link {
-    /* Override base.css position: absolute; inset: 0; */
-    position: static;
-    display: block;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .featured-products .product-card__media {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    background-color: #f5f5f5;
-  }
-
-  .featured-products .product-card__image,
-  .featured-products .product-card__placeholder {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .featured-products .product-card__placeholder {
-    fill: #ccc;
-    background-color: #f0f0f0;
-  }
-
+  /* Section-specific product card adjustments */
   .featured-products .product-card__info {
-    padding: 1rem 0 0;
-  }
-
-  .featured-products .product-card__title {
-    font-family: var(--font-body-family);
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: 1.4;
-    margin: 0 0 0.5rem;
-    color: var(--color-foreground);
-  }
-
-  .featured-products .product-card__price {
-    font-family: var(--font-body-family);
-    font-size: 0.875rem;
-    color: #111;
-    margin: 0 0 0.5rem;
-  }
-
-  .featured-products .product-card__add-to-cart {
-    display: inline-block;
-    width: auto;
-    padding: 0.5rem 1rem;
-    font-family: var(--font-body-family);
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: #111;
-    background-color: #fff;
-    border: 1px solid lightgray;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  }
-
-  .featured-products .product-card__add-to-cart:hover:not(:disabled) {
-    background-color: #111;
-    color: #fff;
-    border-color: #111;
-  }
-
-  .featured-products .product-card__add-to-cart:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+    padding-top: 1rem;
   }
 {% endstylesheet %}
-
-{% javascript %}
-  document.addEventListener('DOMContentLoaded', function() {
-    const grids = document.querySelectorAll('.featured-products__grid');
-    grids.forEach(function(grid) {
-      const addingText = grid.dataset.addingText || 'ADDING...';
-      const addedText = grid.dataset.addedText || 'ADDED!';
-      const addToCartButtons = grid.querySelectorAll('.product-card__add-to-cart[data-variant-id]');
-      
-      addToCartButtons.forEach(function(button) {
-        button.addEventListener('click', function(e) {
-          e.preventDefault();
-          
-          const variantId = this.dataset.variantId;
-          const productImage = this.dataset.productImage;
-          const originalText = this.textContent;
-          
-          this.disabled = true;
-          this.textContent = addingText;
-          
-          // Use global cart handler with fly-to-cart animation
-          if (window.cart) {
-            window.cart.addItem(variantId, 1, {
-              sourceElement: this,
-              imageUrl: productImage,
-              onSuccess: () => {
-                this.textContent = addedText;
-                setTimeout(() => {
-                  this.textContent = originalText;
-                  this.disabled = false;
-                }, 2000);
-              },
-              onError: () => {
-                this.textContent = originalText;
-                this.disabled = false;
-              }
-            });
-          } else {
-            // Fallback if global cart handler not available
-            fetch('/cart/add.js', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ id: variantId, quantity: 1 })
-            })
-            .then(response => response.json())
-            .then(() => {
-              this.textContent = addedText;
-              const cartCount = document.querySelector('[data-cart-count]');
-              if (cartCount) {
-                fetch('/cart.js')
-                  .then(res => res.json())
-                  .then(cart => {
-                    cartCount.textContent = cart.item_count;
-                    cartCount.classList.remove('hidden');
-                  });
-              }
-              setTimeout(() => {
-                this.textContent = originalText;
-                this.disabled = false;
-              }, 2000);
-            })
-            .catch(() => {
-              this.textContent = originalText;
-              this.disabled = false;
-            });
-          }
-        });
-      });
-    });
-  });
-{% endjavascript %}
 
 {% schema %}
 {

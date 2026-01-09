@@ -8,6 +8,10 @@
   type="module"
   fetchpriority="low"
 ></script>
+<script
+  src="{{ 'product-card.js' | asset_url }}"
+  defer
+></script>
 
 <section
   id="MainCollection-{{ section.id }}"
@@ -65,44 +69,12 @@
           <ul class="main-collection__grid" id="ProductGrid">
             {%- for product in collection.products -%}
               <li class="main-collection__grid-item">
-                <div class="main-collection__product">
-                  <div class="main-collection__product-media">
-                    <a href="{{ product.url }}" class="main-collection__product-link">
-                      <div class="main-collection__product-image">
-                        {%- if product.featured_image != blank -%}
-                          <img
-                            src="{{ product.featured_image | image_url: width: 600 }}"
-                            srcset="
-                              {{ product.featured_image | image_url: width: 300 }} 300w,
-                              {{ product.featured_image | image_url: width: 450 }} 450w,
-                              {{ product.featured_image | image_url: width: 600 }} 600w
-                            "
-                            sizes="(max-width: 749px) 50vw, 25vw"
-                            alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                            loading="lazy"
-                            width="{{ product.featured_image.width }}"
-                            height="{{ product.featured_image.height }}"
-                          >
-                        {%- else -%}
-                          {{ 'product-1' | placeholder_svg_tag: 'main-collection__placeholder' }}
-                        {%- endif -%}
-                      </div>
-                    </a>
-                    {%- comment -%} Quick Add Button - positioned over the image {%- endcomment -%}
-                    {%- render 'quick-add', product: product, section_id: section.id -%}
-                  </div>
-                  
-                  <div class="main-collection__product-info">
-                    <div class="main-collection__product-details">
-                      <a href="{{ product.url }}" class="main-collection__product-title-link">
-                        <h4 class="main-collection__product-title">{{ product.title }}</h4>
-                      </a>
-                      <p class="main-collection__product-price">{{ product.price | money }}</p>
-                    </div>
-                    {%- comment -%} Account Button next to title and price {%- endcomment -%}
-                    {%- render 'account-button', tag: 'a', attributes: 'href="/account"' -%}
-                  </div>
-                </div>
+                {%- render 'product-card',
+                  product: product,
+                  show_add_to_cart: true,
+                  image_sizes: '(max-width: 749px) 50vw, 25vw',
+                  lazy_load: true
+                -%}
               </li>
             {%- endfor -%}
           </ul>
@@ -276,111 +248,6 @@
 
   .main-collection__grid-item {
     position: relative;
-  }
-
-  .main-collection__product {
-    display: block;
-    position: relative;
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-
-  /* Product media wrapper - contains image and quick-add overlay */
-  .main-collection__product-media {
-    position: relative;
-    margin-bottom: 1rem;
-  }
-
-  .main-collection__product-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .main-collection__product-image {
-    position: relative;
-    aspect-ratio: 3/4;
-    overflow: hidden;
-    background-color: #f5f5f5;
-    border-radius: var(--style-border-radius-card, 0);
-  }
-
-  .main-collection__product-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-  }
-
-  .main-collection__product:hover .main-collection__product-image img {
-    transform: scale(1.05);
-  }
-
-  .main-collection__placeholder {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    fill: #ccc;
-    background-color: #f0f0f0;
-  }
-
-
-  .main-collection__product-info {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 0.75rem;
-    text-align: left;
-  }
-
-  .main-collection__product-details {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .main-collection__product-title-link {
-    text-decoration: none;
-    color: inherit;
-  }
-
-  .main-collection__product-title-link:hover .main-collection__product-title {
-    opacity: 0.7;
-  }
-
-  .main-collection__product-title {
-    font-family: var(--font-body-family);
-    font-size: 0.875rem;
-    font-weight: 400;
-    margin: 0 0 0.25rem 0;
-    line-height: 1.4;
-    transition: opacity 0.3s ease;
-  }
-
-  .main-collection__product-price {
-    font-family: var(--font-body-family);
-    font-size: 0.875rem;
-    font-weight: 400;
-    margin: 0;
-    opacity: 0.7;
-  }
-
-  /* Account button styling within product cards */
-  .main-collection__product-info .account-button {
-    --button-size: 32px;
-    flex-shrink: 0;
-    width: var(--button-size);
-    height: var(--button-size);
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-  }
-
-  .main-collection__product-info .account-button:hover {
-    opacity: 1;
-  }
-
-  .main-collection__product-info .account-button__icon {
-    width: 18px;
-    height: 18px;
   }
 
   /* Empty State */
