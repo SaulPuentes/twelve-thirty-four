@@ -167,10 +167,13 @@
       height: fit-content;
       max-height: calc(100vh - var(--header-height, 80px) - 4rem);
       overflow-y: auto;
-      /* Make invisible but keep functionality */
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+      /* Hide scrollbar while maintaining scroll functionality */
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    .main-collection__sidebar::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
     }
   }
 

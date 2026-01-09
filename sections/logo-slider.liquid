@@ -43,13 +43,13 @@
             {%- when 'logo' -%}
               <div class="logo-slider__item" {{ block.shopify_attributes }}>
                 {%- if block.settings.image != blank -%}
-                  {%- assign logo_alt = block.settings.image.alt | default: 'Partner logo' -%}
+                  {%- assign logo_title = block.settings.title | default: block.settings.image.alt | default: 'Partner logo' -%}
                   
                   {%- if block.settings.link != blank -%}
                     <a 
                       href="{{ block.settings.link }}"
                       class="logo-slider__link"
-                      aria-label="{{ logo_alt }}"
+                      aria-label="{{ logo_title }}"
                       {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener noreferrer"{% endif %}
                     >
                   {%- endif -%}
@@ -60,7 +60,7 @@
                     | image_tag:
                       loading: 'lazy',
                       class: 'logo-slider__image',
-                      alt: logo_alt
+                      alt: logo_title
                   -}}
                   
                   {%- if block.settings.link != blank -%}
@@ -252,6 +252,12 @@
           "type": "image_picker",
           "id": "image",
           "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Logo title (alt text)",
+          "info": "Describe the logo for accessibility. Falls back to image alt text if empty."
         },
         {
           "type": "url",
