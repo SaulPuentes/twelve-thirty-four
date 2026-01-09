@@ -113,11 +113,12 @@ class CartIcon extends Component {
    * @param {CartUpdateEvent} event - The cart update event.
    */
   onCartUpdate = async (event) => {
-    const itemCount = event.detail?.data?.itemCount ?? 0;
+    const itemCount = event.detail?.data?.itemCount;
     const comingFromProductForm = event.detail?.data?.source === 'product-form-component';
 
-    // If itemCount is 0 or undefined, fetch the actual count
-    if (!itemCount) {
+    // If itemCount is undefined or null (not provided), fetch the actual count
+    // Note: We want to allow 0 (empty cart) as a valid value
+    if (itemCount === undefined || itemCount === null) {
       this.#fetchCartCount();
       return;
     }
