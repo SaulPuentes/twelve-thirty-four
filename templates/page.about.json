@@ -26,39 +26,50 @@
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/atmos-energy.png",
-            "link": "",
-            "open_in_new_tab": false
+            "title": "ATMOS",
+            "link": "https://www.instagram.com/p/B71DbL1HcmK/",
+            "open_in_new_tab": false,
+            "logo_height": 80
           }
         },
         "logo-2": {
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/his-and-her.webp",
+            "title": "His & Hers",
             "link": "",
-            "open_in_new_tab": false
+            "open_in_new_tab": false,
+            "logo_height": 0
           }
         },
         "logo-3": {
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/kaltblut.png",
+            "title": "Kaltblut",
             "link": "",
-            "open_in_new_tab": false
+            "open_in_new_tab": false,
+            "logo_height": 90
           }
         },
         "logo-4": {
           "type": "logo",
           "settings": {
             "image": "shopify://shop_images/breda.png",
+            "title": "",
             "link": "",
-            "open_in_new_tab": false
+            "open_in_new_tab": false,
+            "logo_height": 70
           }
         },
         "logo-5": {
           "type": "logo",
           "settings": {
-            "link": "",
-            "open_in_new_tab": false
+            "image": "shopify://shop_images/paper-city.png",
+            "title": "Paper City",
+            "link": "https://www.instagram.com/p/B71DbL1HcmK/",
+            "open_in_new_tab": false,
+            "logo_height": 0
           }
         }
       },
