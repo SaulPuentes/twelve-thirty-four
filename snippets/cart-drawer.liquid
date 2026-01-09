@@ -197,15 +197,26 @@
     // Refresh cart drawer content
     const refreshCartDrawer = async () => {
       try {
-        const response = await fetch(window.location.pathname + '?section_id=cart-drawer');
+        // Fetch the current page to get fresh cart drawer HTML
+        const response = await fetch(window.location.href);
         const html = await response.text();
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
+        
         const newBody = doc.querySelector('#cart-drawer-body');
         const oldBody = cartDrawer.querySelector('#cart-drawer-body');
         
+        const newTitle = doc.querySelector('.cart-drawer__count');
+        const oldTitle = cartDrawer.querySelector('.cart-drawer__count');
+        
         if (newBody && oldBody) {
           oldBody.innerHTML = newBody.innerHTML;
+          
+          // Update title count too
+          if (newTitle && oldTitle) {
+            oldTitle.textContent = newTitle.textContent;
+          }
+          
           // Reinitialize event listeners
           initCartEventListeners();
         }
@@ -216,8 +227,16 @@
 
     // Update cart count badges
     const updateCartCount = (count) => {
-      const cartCounts = document.querySelectorAll('[data-cart-count], [data-cart-count-drawer]');
-      cartCounts.forEach(el => {
+      // Update drawer count (with parentheses)
+      const drawerCounts = document.querySelectorAll('[data-cart-count-drawer]');
+      drawerCounts.forEach(el => {
+        el.textContent = `(${count})`;
+        el.classList.toggle('hidden', count === 0);
+      });
+      
+      // Update header cart counts (without parentheses)
+      const headerCounts = document.querySelectorAll('[data-cart-count]');
+      headerCounts.forEach(el => {
         el.textContent = count;
         el.classList.toggle('hidden', count === 0);
       });

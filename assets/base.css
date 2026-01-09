@@ -435,6 +435,8 @@ fly-to-cart.fly-to-cart--sticky {
   }
 }
 
+.quantity-selector__input,
 .quantity-selector__button {
   border: none;
+  background-color: transparent;
 }
