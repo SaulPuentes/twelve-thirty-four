@@ -434,3 +434,7 @@ fly-to-cart.fly-to-cart--sticky {
     translate: 0 var(--travel-y, 0);
   }
 }
+
+.quantity-selector__button {
+  border: none;
+}
