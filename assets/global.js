@@ -114,8 +114,19 @@ class CartHandler {
   async addItem(variantId, quantity = 1, options = {}) {
     const { sourceElement, imageUrl, onSuccess, onError } = options;
     
+    // Ensure variantId is a valid number or string
+    if (!variantId) {
+      const error = new Error('Variant ID is required');
+      console.error('Error adding to cart:', error);
+      if (onError) onError(error);
+      throw error;
+    }
+
     const formData = {
-      items: [{ id: variantId, quantity: quantity }]
+      items: [{
+        id: parseInt(variantId, 10),
+        quantity: parseInt(quantity, 10) || 1
+      }]
     };
 
     // Trigger fly-to-cart animation immediately
@@ -127,14 +138,20 @@ class CartHandler {
       const response = await fetch('/cart/add.js', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify(formData)
       });
 
-      if (!response.ok) throw new Error('Failed to add item');
-
       const data = await response.json();
+
+      // Check if the response indicates an error (Shopify returns 200 but with an error status)
+      if (data.status || data.message || !response.ok) {
+        const errorMessage = data.message || data.description || 'Failed to add item to cart';
+        throw new Error(errorMessage);
+      }
+
       this.updateCart();
       
       if (onSuccess) onSuccess(data);
