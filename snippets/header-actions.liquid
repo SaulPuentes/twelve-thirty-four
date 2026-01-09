@@ -338,7 +338,11 @@
     }
   }
 
+  /* Cart drawer component - must have display to show the trigger button */
+  cart-drawer-component,
   .cart-drawer {
+    display: flex;
+    align-items: center;
     --cart-drawer-padding: var(--padding-lg) var(--padding-xl);
     --cart-drawer-padding-desktop: var(--padding-xl) var(--padding-2xl);
     --cart-font-size--2xs: var(--font-size--2xs);
@@ -580,16 +584,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
-    color: var(--color-foreground, currentColor);
-    background: none;
-    border: none;
-    padding: 0;
   }
 
-  /* Ensure links inherit cart-icon color properly */
-  a.header-actions__action {
-    color: inherit;
+  /* Override .button grid display for cart drawer trigger */
+  button.header-actions__action.button-unstyled,
+  .cart-drawer button.header-actions__action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    padding: 0;
   }
 
   .header-actions__action .svg-wrapper {
