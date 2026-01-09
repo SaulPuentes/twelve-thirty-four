@@ -16,12 +16,15 @@
   if product.selected_or_first_available_variant.featured_media.preview_image == blank
     assign product_variant_media = product.featured_media.preview_image | image_url: width: 100
   endif
+  
+  # Default to true if setting doesn't exist
+  assign animation_enabled = settings.add_to_cart_animation | default: true
 -%}
 
 <add-to-cart-component
   ref="addToCartButtonContainer"
   data-product-variant-media="{{ product_variant_media }}"
-  data-add-to-cart-animation="true"
+  data-add-to-cart-animation="{{ animation_enabled }}"
 >
   <button
     {% if id != blank %}
@@ -39,15 +42,13 @@
       disabled
     {% endunless %}
   >
-    <span
-      class="add-to-cart-text"
-    >
+    <span class="add-to-cart-text">
       {% if can_add_to_cart %}
         <span
           aria-hidden="true"
           class="svg-wrapper add-to-cart-icon"
         >
-          {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
+          {% render 'icon', icon: 'cart', size: 20 %}
         </span>
       {% endif %}
       <span class="add-to-cart-text__content{% if icon_only_on_mobile %} is-visually-hidden-mobile{% endif %}">
@@ -58,29 +59,49 @@
         </span>
       </span>
     </span>
-    {% comment %} checkmark burst markup {% endcomment %}
+    {%- comment -%} checkmark burst markup {%- endcomment -%}
     <span class="add-to-cart__added">
       <span class="svg-wrapper add-to-cart__added-icon">
-        {{- 'icon-checkmark-burst.svg' | inline_asset_content -}}
+        {% render 'icon', icon: 'checkmark', size: 24 %}
       </span>
     </span>
   </button>
 </add-to-cart-component>
 
 {% stylesheet %}
+  add-to-cart-component {
+    display: contents;
+  }
+
   .add-to-cart-button {
+    --text-speed: 0.26;
+    --base-delay: calc(var(--text-speed) * 0.25);
+
     user-select: none;
-    transition-property: color, box-shadow, background-color;
+    transition-property: color, box-shadow, background-color, scale, translate;
     transition-duration: var(--animation-speed);
-    transition-timing-function: var(--ease-out-cubic);
+    transition-timing-function: var(--ease-out-cubic, cubic-bezier(0.33, 1, 0.68, 1));
+    position: relative;
+    overflow: hidden;
+  }
+
+  .add-to-cart-button:active {
+    scale: 0.99;
+    translate: 0 1px;
   }
 
   .add-to-cart-text {
     display: flex;
-    gap: var(--gap-2xs);
+    gap: var(--gap-2xs, 0.3rem);
     align-items: center;
     justify-content: center;
-    transition: opacity var(--animation-speed) var(--animation-easing);
+    animation-duration: var(--animation-speed);
+    animation-timing-function: var(--animation-easing);
+    animation-fill-mode: forwards;
+    transition: opacity var(--animation-speed) var(--animation-easing),
+      clip-path var(--animation-speed) var(--animation-easing),
+      translate var(--animation-speed) var(--animation-easing);
+    clip-path: circle(100% at 50% 50%);
   }
 
   .add-to-cart__added {
@@ -91,20 +112,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.3rem;
     opacity: 0;
     transition: opacity var(--animation-speed) var(--animation-easing);
   }
 
   .add-to-cart__added-icon {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
   }
 
-  .add-to-cart-button[data-added='true'] .add-to-cart-text {
+  /* Added state animation */
+  [data-added='true'] .add-to-cart-text {
+    clip-path: circle(0% at 50% 50%);
     opacity: 0;
+    translate: 0 4px;
   }
 
-  .add-to-cart-button[data-added='true'] .add-to-cart__added {
+  [data-added='true'] .add-to-cart__added {
     opacity: 1;
+  }
+
+  .add-to-cart-icon {
+    width: var(--icon-size-sm, 1.25rem);
+    height: var(--icon-size-sm, 1.25rem);
+  }
+
+  @keyframes atc-slide {
+    to {
+      opacity: var(--atc-opacity, 1);
+      translate: 0px var(--atc-destination, 0px);
+    }
   }
 {% endstylesheet %}

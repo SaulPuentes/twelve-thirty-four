@@ -166,6 +166,13 @@
         "default": true
       },
       {
+        "type": "checkbox",
+        "id": "add_to_cart_animation",
+        "label": "Enable fly-to-cart animation",
+        "default": true,
+        "info": "Shows an animation of the product flying to the cart icon when added"
+      },
+      {
         "type": "color_scheme",
         "id": "drawer_color_scheme",
         "label": "Drawer color scheme",
