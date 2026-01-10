@@ -1,0 +1,260 @@
+{%- comment -%}
+  Slideshow Product Card Snippet
+  
+  Renders product information for use in slideshow sections
+  
+  @param product {Product} - The product object to display
+  @param show_vendor {Boolean} - Whether to show vendor name
+{%- endcomment -%}
+
+{%- liquid
+  assign product = product
+  assign show_vendor = show_vendor | default: false
+  
+  if product == blank
+    assign product_available = false
+  else
+    assign product_available = true
+    assign has_variants = false
+    if product.variants.size > 1
+      assign has_variants = true
+    endif
+  endif
+-%}
+
+{%- if product_available -%}
+  <div class="slideshow-product">
+    <h3 class="slideshow-product__title">{{ product.title }}</h3>
+    
+    {%- if show_vendor and product.vendor != blank -%}
+      <p class="slideshow-product__vendor">{{ product.vendor }}</p>
+    {%- endif -%}
+    
+    {%- if product.description != blank -%}
+      <div class="slideshow-product__description">
+        {{ product.description | strip_html | truncatewords: 30 }}
+      </div>
+    {%- endif -%}
+    
+    {%- comment -%} Price and variant information {%- endcomment -%}
+    <div class="slideshow-product__price-info">
+      {%- if has_variants -%}
+        {%- comment -%} Show price range if multiple variants {%- endcomment -%}
+        {%- assign min_price = product.price_min -%}
+        {%- assign max_price = product.price_max -%}
+        
+        {%- if min_price != max_price -%}
+          <p class="slideshow-product__price slideshow-product__price--range">
+            <span class="slideshow-product__price-label">From</span>
+            <span class="slideshow-product__price-amount">{{ min_price | money }}</span>
+            <span class="slideshow-product__price-separator">-</span>
+            <span class="slideshow-product__price-amount">{{ max_price | money }}</span>
+          </p>
+        {%- else -%}
+          <p class="slideshow-product__price">
+            <span class="slideshow-product__price-amount">{{ product.price | money }}</span>
+          </p>
+        {%- endif -%}
+        
+        {%- comment -%} Show variant options {%- endcomment -%}
+        <div class="slideshow-product__variants">
+          <p class="slideshow-product__variants-label">Available options:</p>
+          <ul class="slideshow-product__variants-list">
+            {%- for option in product.options_with_values limit: 2 -%}
+              <li class="slideshow-product__variant-option">
+                <span class="slideshow-product__option-name">{{ option.name }}:</span>
+                <span class="slideshow-product__option-values">
+                  {%- for value in option.values limit: 4 -%}
+                    {{ value }}{% unless forloop.last %}, {% endunless %}
+                  {%- endfor -%}
+                  {%- if option.values.size > 4 -%}
+                    <span class="slideshow-product__option-more">+{{ option.values.size | minus: 4 }} more</span>
+                  {%- endif -%}
+                </span>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- else -%}
+        {%- comment -%} Single variant - show simple price {%- endcomment -%}
+        <p class="slideshow-product__price">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="slideshow-product__price-compare">{{ product.compare_at_price | money }}</span>
+          {%- endif -%}
+          <span class="slideshow-product__price-amount">{{ product.price | money }}</span>
+        </p>
+      {%- endif -%}
+    </div>
+    
+    {%- comment -%} Call to action {%- endcomment -%}
+    <div class="slideshow-product__actions">
+      <a href="{{ product.url }}" class="slideshow-product__link">
+        View Product
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 3L11 8L6 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+{%- else -%}
+  <div class="slideshow-product slideshow-product--empty">
+    <p class="slideshow-product__empty-message">Select a product to display</p>
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .slideshow-product {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .slideshow-product__title {
+    font-family: var(--font-heading-family);
+    font-size: var(--section-heading-sm, 1.5rem);
+    font-weight: var(--font-heading-weight, 400);
+    line-height: 1.2;
+    margin: 0;
+    color: var(--color-foreground);
+  }
+  
+  @media screen and (min-width: 1024px) {
+    .slideshow-product__title {
+      font-size: var(--section-heading-sm-desktop, 1.875rem);
+    }
+  }
+  
+  .slideshow-product__vendor {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-foreground);
+    opacity: 0.6;
+    margin: 0;
+  }
+  
+  .slideshow-product__description {
+    font-family: var(--font-body-family);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    max-width: 450px;
+  }
+  
+  .slideshow-product__price-info {
+    margin-top: 0.5rem;
+  }
+  
+  .slideshow-product__price {
+    font-family: var(--font-heading-family);
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0 0 1rem;
+    color: var(--color-foreground);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .slideshow-product__price-label {
+    font-size: 0.875rem;
+    font-weight: 400;
+    opacity: 0.7;
+  }
+  
+  .slideshow-product__price-separator {
+    opacity: 0.5;
+    margin: 0 0.25rem;
+  }
+  
+  .slideshow-product__price-compare {
+    font-size: 1rem;
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+  
+  .slideshow-product__variants-label {
+    font-family: var(--font-body-family);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    opacity: 0.9;
+    margin: 0 0 0.5rem;
+  }
+  
+  .slideshow-product__variants-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  
+  .slideshow-product__variant-option {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    color: var(--color-foreground);
+    opacity: 0.7;
+  }
+  
+  .slideshow-product__option-name {
+    font-weight: 500;
+    opacity: 0.9;
+  }
+  
+  .slideshow-product__option-values {
+    opacity: 0.7;
+  }
+  
+  .slideshow-product__option-more {
+    opacity: 0.5;
+    font-style: italic;
+  }
+  
+  .slideshow-product__actions {
+    margin-top: 1rem;
+  }
+  
+  .slideshow-product__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body-family);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+    transition: opacity 0.3s ease;
+  }
+  
+  .slideshow-product__link:hover {
+    opacity: 0.7;
+  }
+  
+  .slideshow-product__link svg {
+    transition: transform 0.3s ease;
+  }
+  
+  .slideshow-product__link:hover svg {
+    transform: translateX(4px);
+  }
+  
+  .slideshow-product--empty {
+    padding: 2rem;
+    text-align: center;
+    opacity: 0.5;
+  }
+  
+  .slideshow-product__empty-message {
+    font-family: var(--font-body-family);
+    font-size: 0.9375rem;
+    margin: 0;
+  }
+{% endstylesheet %}

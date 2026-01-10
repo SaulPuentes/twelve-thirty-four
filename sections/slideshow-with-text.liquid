@@ -31,36 +31,46 @@
               data-slide-content="{{ forloop.index0 }}"
               {{ block.shopify_attributes }}
             >
-              {%- if block.settings.title != blank -%}
-                  <h3 class="slideshow-text__slide-title">{{ block.settings.title }}</h3>
-              {%- endif -%}
-
-              {%- if block.settings.description != blank -%}
-                <div class="slideshow-text__slide-description">
-                  {{ block.settings.description }}
-                </div>
-              {%- endif -%}
-
-              {%- if block.settings.date != blank or block.settings.contact != blank -%}
-                <div class="slideshow-text__slide-meta">
-                  {%- if block.settings.date != blank -%}
-                    <p class="slideshow-text__meta-item">
-                      <span class="slideshow-text__meta-label">Date:</span>
-                      {{ block.settings.date }}
-                    </p>
+              {%- case block.type -%}
+                {%- when 'slide' -%}
+                  {%- comment -%} Custom slide content {%- endcomment -%}
+                  {%- if block.settings.title != blank -%}
+                      <h3 class="slideshow-text__slide-title">{{ block.settings.title }}</h3>
                   {%- endif -%}
-                  {%- if block.settings.contact != blank -%}
-                    <p class="slideshow-text__meta-item">
-                      <span class="slideshow-text__meta-label">Contact:</span>
-                      <a href="mailto:{{ block.settings.contact }}">{{ block.settings.contact }}</a>
-                    </p>
+
+                  {%- if block.settings.description != blank -%}
+                    <div class="slideshow-text__slide-description">
+                      {{ block.settings.description }}
+                    </div>
                   {%- endif -%}
-                </div>
-              {%- endif -%}
+
+                  {%- if block.settings.date != blank or block.settings.contact != blank -%}
+                    <div class="slideshow-text__slide-meta">
+                      {%- if block.settings.date != blank -%}
+                        <p class="slideshow-text__meta-item">
+                          <span class="slideshow-text__meta-label">Date:</span>
+                          {{ block.settings.date }}
+                        </p>
+                      {%- endif -%}
+                      {%- if block.settings.contact != blank -%}
+                        <p class="slideshow-text__meta-item">
+                          <span class="slideshow-text__meta-label">Contact:</span>
+                          <a href="mailto:{{ block.settings.contact }}">{{ block.settings.contact }}</a>
+                        </p>
+                      {%- endif -%}
+                    </div>
+                  {%- endif -%}
+
+                {%- when 'product' -%}
+                  {%- comment -%} Product slide content {%- endcomment -%}
+                  {%- render 'slideshow-product-card',
+                    product: block.settings.product,
+                    show_vendor: block.settings.show_vendor
+                  -%}
+              {%- endcase -%}
             </div>
           {%- endfor -%}
         </div>
-
           {%- comment -%} Navigation dots {%- endcomment -%}
           {%- render 'slideshow-nav',
             count: section.blocks.size,
@@ -78,18 +88,36 @@
             class="slideshow-text__slide-image{% if forloop.first %} slideshow-text__slide-image--active{% endif %}"
             data-slide-image="{{ forloop.index0 }}"
           >
-            {%- if block.settings.image != blank -%}
-              <img
-                src="{{ block.settings.image | image_url: width: 1200 }}"
-                alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
-                width="600"
-                height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
-                class="slideshow-text__image"
-                loading="lazy"
-              >
-            {%- else -%}
-              {{ 'lifestyle-1' | placeholder_svg_tag: 'slideshow-text__placeholder' }}
-            {%- endif -%}
+            {%- case block.type -%}
+              {%- when 'slide' -%}
+                {%- if block.settings.image != blank -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 1200 }}"
+                    alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                    width="600"
+                    height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
+                    class="slideshow-text__image"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {{ 'lifestyle-1' | placeholder_svg_tag: 'slideshow-text__placeholder' }}
+                {%- endif -%}
+
+              {%- when 'product' -%}
+                {%- assign product = block.settings.product -%}
+                {%- if product != blank and product.featured_image -%}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 1200 }}"
+                    alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                    width="600"
+                    height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
+                    class="slideshow-text__image"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'slideshow-text__placeholder' }}
+                {%- endif -%}
+            {%- endcase -%}
           </div>
         {%- endfor -%}
       </div>
@@ -410,7 +438,7 @@
   "blocks": [
     {
       "type": "slide",
-      "name": "Slide",
+      "name": "Custom Slide",
       "settings": [
         {
           "type": "image_picker",
@@ -439,6 +467,23 @@
           "type": "text",
           "id": "contact",
           "label": "Contact email"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Product Slide",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_vendor",
+          "label": "Show vendor name",
+          "default": false
         }
       ]
     }
