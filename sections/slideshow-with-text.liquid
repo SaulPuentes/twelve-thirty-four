@@ -159,8 +159,18 @@
       }
 
       // Start exit animation on old slide
-      contents[oldIndex].classList.add('slideshow-text__slide-content--exiting');
-      contents[oldIndex].classList.remove('slideshow-text__slide-content--active');
+      const oldContent = contents[oldIndex];
+      const oldImage = images[oldIndex];
+      
+      // Capture position before changing to absolute
+      const rect = oldContent.getBoundingClientRect();
+      const parentRect = oldContent.parentElement.getBoundingClientRect();
+      const topOffset = rect.top - parentRect.top;
+      
+      // Set position explicitly before changing classes to prevent jump
+      oldContent.style.top = topOffset + 'px';
+      oldContent.classList.add('slideshow-text__slide-content--exiting');
+      oldContent.classList.remove('slideshow-text__slide-content--active');
       images[oldIndex].classList.add('slideshow-text__slide-image--exiting');
       images[oldIndex].classList.remove('slideshow-text__slide-image--active');
 
@@ -170,7 +180,9 @@
       // Wait for exit animation to complete, then show new slide
       setTimeout(function() {
         // Clean up old slide
-        contents[oldIndex].classList.remove('slideshow-text__slide-content--exiting');
+        const oldContent = contents[oldIndex];
+        oldContent.classList.remove('slideshow-text__slide-content--exiting');
+        oldContent.style.top = '';
         images[oldIndex].classList.remove('slideshow-text__slide-image--exiting');
 
         // Show new slide (enters from right)
@@ -294,13 +306,16 @@
     top: 0;
     left: 0;
     right: 0;
+    width: 100%;
     pointer-events: none;
+    will-change: transform, opacity;
   }
 
   .slideshow-text__slide-content--active {
     opacity: 1;
     transform: translateX(0);
     position: relative;
+    width: 100%;
     pointer-events: auto;
   }
 
@@ -308,6 +323,12 @@
     opacity: 0;
     transform: translateX(-2rem);
     position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    margin: 0;
   }
 
   .slideshow-text__slide-title {
