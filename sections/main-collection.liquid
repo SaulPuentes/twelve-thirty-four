@@ -92,21 +92,21 @@
       {%- endpaginate -%}
     </div>
 
-    {%- comment -%} Right Sidebar - Categories (Product Types) {%- endcomment -%}
+    {%- comment -%} Right Sidebar - Categories {%- endcomment -%}
     <aside class="main-collection__sidebar main-collection__sidebar--right">
       <h3 class="main-collection__sidebar-title">{{ section.settings.categories_title | default: 'Categories' }}</h3>
       
-      {%- comment -%} Buscamos el filtro de Tipo de Producto específicamente {%- endcomment -%}
-      {%- assign type_filter = collection.filters | where: "param_name", "filter.p.product_type" | first -%}
+      {%- comment -%} Fetch the Category filter {%- endcomment -%}
+      {%- assign category_filter = collection.filters | where: "label", "Category" | first -%}
       
-      {% if type_filter %}
+      {% if category_filter %}
         <nav class="main-collection__nav">
           <ul class="main-collection__nav-list">
              <li class="main-collection__nav-item">
-                <a href="{{ collection.url }}" class="main-collection__nav-link {% if type_filter.active_values.size == 0 %}main-collection__nav-link--active{% endif %}">ALL</a>
+                <a href="{{ collection.url }}" class="main-collection__nav-link {% if category_filter.active_values.size == 0 %}main-collection__nav-link--active{% endif %}">ALL</a>
              </li>
              
-             {%- for value in type_filter.values -%}
+             {%- for value in category_filter.values -%}
                 <li class="main-collection__nav-item">
                   <a
                     href="{{ value.url_to_add }}"
@@ -121,7 +121,7 @@
         </nav>
       {% else %}
         <p style="font-size: 12px; opacity: 0.6;">
-          Admin setup required: Add "Product Type" filter in Search & Discovery app.
+          Admin setup required: Add "Category" filter in Search & Discovery app.
         </p>
       {% endif %}
     </aside>
