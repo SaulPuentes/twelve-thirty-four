@@ -159,18 +159,8 @@
       }
 
       // Start exit animation on old slide
-      const oldContent = contents[oldIndex];
-      const oldImage = images[oldIndex];
-      
-      // Capture position before changing to absolute
-      const rect = oldContent.getBoundingClientRect();
-      const parentRect = oldContent.parentElement.getBoundingClientRect();
-      const topOffset = rect.top - parentRect.top;
-      
-      // Set position explicitly before changing classes to prevent jump
-      oldContent.style.top = topOffset + 'px';
-      oldContent.classList.add('slideshow-text__slide-content--exiting');
-      oldContent.classList.remove('slideshow-text__slide-content--active');
+      contents[oldIndex].classList.add('slideshow-text__slide-content--exiting');
+      contents[oldIndex].classList.remove('slideshow-text__slide-content--active');
       images[oldIndex].classList.add('slideshow-text__slide-image--exiting');
       images[oldIndex].classList.remove('slideshow-text__slide-image--active');
 
@@ -180,12 +170,10 @@
       // Wait for exit animation to complete, then show new slide
       setTimeout(function() {
         // Clean up old slide
-        const oldContent = contents[oldIndex];
-        oldContent.classList.remove('slideshow-text__slide-content--exiting');
-        oldContent.style.top = '';
+        contents[oldIndex].classList.remove('slideshow-text__slide-content--exiting');
         images[oldIndex].classList.remove('slideshow-text__slide-image--exiting');
 
-        // Show new slide (enters from right)
+        // Show new slide (enters from left)
         contents[index].classList.add('slideshow-text__slide-content--active');
         images[index].classList.add('slideshow-text__slide-image--active');
 
@@ -300,35 +288,27 @@
 
   .slideshow-text__slide-content {
     opacity: 0;
-    transform: translateX(2rem);
+    transform: translateX(-2rem);
     transition: opacity 0.5s ease, transform 0.5s ease;
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    width: 100%;
     pointer-events: none;
-    will-change: transform, opacity;
   }
 
   .slideshow-text__slide-content--active {
     opacity: 1;
     transform: translateX(0);
-    position: relative;
-    width: 100%;
+    position: absolute;
     pointer-events: auto;
   }
 
   .slideshow-text__slide-content--exiting {
     opacity: 0;
-    transform: translateX(-2rem);
+    transform: translateX(2rem);
     position: absolute;
-    left: 0;
-    right: 0;
-    width: 100%;
-    transition: opacity 0.5s ease, transform 0.5s ease;
     pointer-events: none;
-    margin: 0;
   }
 
   .slideshow-text__slide-title {
@@ -412,7 +392,7 @@
     position: absolute;
     inset: 0;
     opacity: 0;
-    transform: translateX(2rem) scale(1.05);
+    transform: translateX(-2rem) scale(1.05);
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
 
@@ -422,7 +402,8 @@
   }
 
   .slideshow-text__slide-image--exiting {
-    transform: translateX(-2rem) scale(1.05);
+    opacity: 0;
+    transform: translateX(2rem) scale(1.05);
   }
 
   .slideshow-text__image,
