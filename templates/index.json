@@ -54,9 +54,9 @@
         "autoplay_speed": 5,
         "show_navigation": true,
         "left_link_label": "Artwork",
-        "left_link_url": "",
+        "left_link_url": "shopify://collections/art",
         "right_link_label": "Shop",
-        "right_link_url": ""
+        "right_link_url": "shopify://collections"
       }
     },
     "featured-products": {
