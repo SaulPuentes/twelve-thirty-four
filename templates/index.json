@@ -62,16 +62,10 @@
     "featured-products": {
       "type": "featured-products",
       "blocks": {
-        "product-4": {
+        "product-3": {
           "type": "product",
           "settings": {
-            "product": "custom-floral-arrangement-extra-large"
-          }
-        },
-        "product-2": {
-          "type": "product",
-          "settings": {
-            "product": "custom-floral-arrangement-large"
+            "product": "custom-twelve-thirty-four-floral-arrangement-medium"
           }
         },
         "product-1": {
@@ -80,18 +74,24 @@
             "product": "custom-floral-arrangement-medium"
           }
         },
-        "product-3": {
+        "product-2": {
           "type": "product",
           "settings": {
-            "product": "custom-twelve-thirty-four-floral-arrangement-medium"
+            "product": "custom-floral-arrangement-large"
+          }
+        },
+        "product-4": {
+          "type": "product",
+          "settings": {
+            "product": "custom-floral-arrangement-extra-large"
           }
         }
       },
       "block_order": [
-        "product-4",
-        "product-2",
+        "product-3",
         "product-1",
-        "product-3"
+        "product-2",
+        "product-4"
       ],
       "settings": {
         "heading": "Thoughtful Gifts\n& Floral Creations",
