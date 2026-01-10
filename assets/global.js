@@ -275,9 +275,139 @@ function initScrollAnimations() {
   animatedElements.forEach(el => observer.observe(el));
 }
 
+/**
+ * Global Product Form Handler
+ * Handles add-to-cart for all product forms with [data-product-form] attribute
+ */
+function initGlobalProductFormHandler() {
+  // Prevent duplicate initialization
+  if (window.__globalProductFormHandlerInitialized) {
+    return;
+  }
+  window.__globalProductFormHandlerInitialized = true;
+  
+  // Use event delegation to handle all product forms
+  document.addEventListener('submit', function(e) {
+    const form = e.target.closest('[data-product-form]');
+    if (!form) return;
+    
+    e.preventDefault();
+    
+    const button = form.querySelector('[data-add-to-cart]');
+    if (!button || button.disabled) return;
+    
+    // Get variant ID from select or hidden input
+    const variantInput = form.querySelector('[name="id"]');
+    const variantId = variantInput?.value;
+    
+    if (!variantId) {
+      console.warn('No variant ID found in form');
+      return;
+    }
+    
+    // Get product image and title from form data attributes
+    const productImage = form.dataset.productImage || '';
+    const productTitle = form.dataset.productTitle || '';
+    
+    // Store original button text
+    const originalText = button.textContent;
+    
+    // Update button state
+    button.disabled = true;
+    button.textContent = 'Adding...';
+    if (button.dataset) {
+      button.dataset.state = 'adding';
+    }
+    
+    // Use global cart handler
+    if (window.cart && typeof window.cart.addItem === 'function') {
+      window.cart.addItem(variantId, 1, {
+        sourceElement: button,
+        imageUrl: productImage,
+        onSuccess: function(data) {
+          // Success feedback
+          button.textContent = 'Added!';
+          if (button.dataset) {
+            button.dataset.state = 'added';
+          }
+          
+          // Reset button after delay
+          setTimeout(function() {
+            button.disabled = false;
+            button.textContent = originalText;
+            if (button.dataset) {
+              button.dataset.state = 'default';
+            }
+          }, 2000);
+        },
+        onError: function(error) {
+          console.error('Error adding to cart:', error);
+          button.disabled = false;
+          button.textContent = 'Error - Try Again';
+          if (button.dataset) {
+            button.dataset.state = 'error';
+          }
+          
+          setTimeout(function() {
+            button.textContent = originalText;
+            if (button.dataset) {
+              button.dataset.state = 'default';
+            }
+          }, 3000);
+        }
+      });
+    } else {
+      // Fallback: Direct fetch if global cart handler not available
+      fetch('/cart/add.js', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: variantId,
+          quantity: 1
+        })
+      })
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(data) {
+        button.textContent = 'Added!';
+        if (button.dataset) {
+          button.dataset.state = 'added';
+        }
+        
+        setTimeout(function() {
+          button.disabled = false;
+          button.textContent = originalText;
+          if (button.dataset) {
+            button.dataset.state = 'default';
+          }
+        }, 2000);
+      })
+      .catch(function(error) {
+        console.error('Error:', error);
+        button.disabled = false;
+        button.textContent = 'Error - Try Again';
+        if (button.dataset) {
+          button.dataset.state = 'error';
+        }
+        
+        setTimeout(function() {
+          button.textContent = originalText;
+          if (button.dataset) {
+            button.dataset.state = 'default';
+          }
+        }, 3000);
+      });
+    }
+  }, true); // Use capture phase to catch early
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
+  initGlobalProductFormHandler();
 });
 
 // Expose utilities globally
