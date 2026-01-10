@@ -165,7 +165,7 @@
   
   .slideshow-product__price {
     font-family: var(--font-heading-family);
-    font-size: 1.25rem;
+    font-size: 1rem;
     font-weight: 500;
     margin: 0 0 1rem;
     color: var(--color-foreground);
@@ -228,16 +228,17 @@
     font-family: var(--font-body-family);
     font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--color-button-text, #fff);
-    background-color: var(--color-button, #000);
-    border: none;
+    color: var(--color-button, #000);
+    background-color: transparent;
+    border: 1px solid var(--color-button, #000);
     border-radius: 4px;
     cursor: pointer;
-    transition: opacity 0.3s ease, transform 0.2s ease;
+    transition: color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
   }
   
   .slideshow-product__add-to-cart:hover:not(:disabled) {
-    opacity: 0.9;
+    color: var(--color-button-text, #fff);
+    background-color: var(--color-button, #000);
     transform: translateY(-1px);
   }
   
@@ -256,11 +257,10 @@
     gap: 0.5rem;
     margin-top: 0.75rem;
     font-family: var(--font-body-family);
-    font-size: 0.9375rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--color-foreground);
     text-decoration: none;
-    border-bottom: 1px solid currentColor;
     padding-bottom: 2px;
     transition: opacity 0.3s ease;
   }
