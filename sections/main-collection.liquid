@@ -107,49 +107,16 @@
              </li>
              
              {%- for value in category_filter.values -%}
-                <li class="main-collection__nav-item">
-                  <a
-                    href="{{ value.url_to_add }}"
-                    class="main-collection__nav-link {% if value.active %}main-collection__nav-link--active{% endif %}"
-                    {% if value.count == 0 and value.active == false %}disabled{% endif %}
-                  >
-                    {{ value.label }} ({{ value.count }})
-                  </a>
-                  
-                  {%- comment -%} Render subcategories if available {%- endcomment -%}
-                  {%- if value.values.size > 0 -%}
-                    <ul class="main-collection__nav-sublist">
-                      {%- for subvalue in value.values -%}
-                        <li class="main-collection__nav-item main-collection__nav-item--sub">
-                          <a
-                            href="{{ subvalue.url_to_add }}"
-                            class="main-collection__nav-link main-collection__nav-link--sub {% if subvalue.active %}main-collection__nav-link--active{% endif %}"
-                            {% if subvalue.count == 0 and subvalue.active == false %}disabled{% endif %}
-                          >
-                            {{ subvalue.label }} ({{ subvalue.count }})
-                          </a>
-                          
-                          {%- comment -%} Render third level subcategories if available {%- endcomment -%}
-                          {%- if subvalue.values.size > 0 -%}
-                            <ul class="main-collection__nav-sublist main-collection__nav-sublist--level-3">
-                              {%- for sub2value in subvalue.values -%}
-                                <li class="main-collection__nav-item main-collection__nav-item--sub">
-                                  <a
-                                    href="{{ sub2value.url_to_add }}"
-                                    class="main-collection__nav-link main-collection__nav-link--sub {% if sub2value.active %}main-collection__nav-link--active{% endif %}"
-                                    {% if sub2value.count == 0 and sub2value.active == false %}disabled{% endif %}
-                                  >
-                                    {{ sub2value.label }} ({{ sub2value.count }})
-                                  </a>
-                                </li>
-                              {%- endfor -%}
-                            </ul>
-                          {%- endif -%}
-                        </li>
-                      {%- endfor -%}
-                    </ul>
-                  {%- endif -%}
-                </li>
+                {%- if value.count > 0 or value.active -%}
+                  <li class="main-collection__nav-item">
+                    <a
+                      href="{{ value.url_to_add }}"
+                      class="main-collection__nav-link {% if value.active %}main-collection__nav-link--active{% endif %}"
+                    >
+                      {{ value.label }}
+                    </a>
+                  </li>
+                {%- endif -%}
              {%- endfor -%}
           </ul>
         </nav>
@@ -249,25 +216,6 @@
 
   .main-collection__nav-link--active {
     font-weight: 500;
-  }
-
-  .main-collection__nav-sublist {
-    list-style: none;
-    margin: 0.5rem 0 0 0;
-    padding-left: 1rem;
-    border-left: 1px solid rgba(var(--color-foreground-rgb, 0, 0, 0), 0.1);
-  }
-
-  .main-collection__nav-sublist--level-3 {
-    margin-top: 0.25rem;
-  }
-
-  .main-collection__nav-item--sub {
-    margin-bottom: 0.5rem;
-  }
-
-  .main-collection__nav-link--sub {
-    font-size: 0.8125rem;
   }
 
   /* Main Content */
