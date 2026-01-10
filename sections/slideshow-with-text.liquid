@@ -105,15 +105,21 @@
 
               {%- when 'product' -%}
                 {%- assign product = block.settings.product -%}
-                {%- if product != blank and product.featured_image -%}
-                  <img
-                    src="{{ product.featured_image | image_url: width: 1200 }}"
-                    alt="{{ product.featured_image.alt | default: product.title | escape }}"
-                    width="600"
-                    height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
-                    class="slideshow-text__image"
-                    loading="lazy"
-                  >
+                {%- if product != blank -%}
+                  <a href="{{ product.url }}" class="slideshow-text__product-link">
+                    {%- if product.featured_image -%}
+                      <img
+                        src="{{ product.featured_image | image_url: width: 1200 }}"
+                        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                        width="600"
+                        height="{{ 600 | divided_by: product.featured_image.aspect_ratio | round }}"
+                        class="slideshow-text__image slideshow-text__image--product"
+                        loading="lazy"
+                      >
+                    {%- else -%}
+                      {{ 'product-1' | placeholder_svg_tag: 'slideshow-text__placeholder' }}
+                    {%- endif -%}
+                  </a>
                 {%- else -%}
                   {{ 'product-1' | placeholder_svg_tag: 'slideshow-text__placeholder' }}
                 {%- endif -%}
@@ -403,6 +409,22 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  
+  .slideshow-text__product-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  
+  .slideshow-text__image--product {
+    transition: transform 0.6s ease, opacity 0.3s ease;
+  }
+  
+  .slideshow-text__product-link:hover .slideshow-text__image--product {
+    transform: scale(1.05);
+    opacity: 0.9;
   }
 {% endstylesheet %}
 
