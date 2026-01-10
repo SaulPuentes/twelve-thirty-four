@@ -32,15 +32,9 @@
     
     {%- if product.description != blank -%}
       <div class="slideshow-product__description">
-        {{ product.description | strip_html }}
+        {{ product.description | strip_html }} <a href="{{ product.url }}" class="slideshow-product__read-more">Read more</a>
       </div>
     {%- endif -%}
-    
-    {%- comment -%} View product link - positioned after description {%- endcomment -%}
-    <a href="{{ product.url }}" class="slideshow-product__link">
-      {% render 'animated-arrow' %}
-      <span>View Details</span>
-    </a>
     
     {%- comment -%} Variant selector OR Price based on product variants {%- endcomment -%}
     {%- if has_variants -%}
@@ -157,6 +151,24 @@
     overflow: hidden;
   }
   
+  .slideshow-product__read-more {
+    display: inline;
+    margin-left: 0.25rem;
+    font-family: var(--font-body-family);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+  
+  .slideshow-product__read-more:hover {
+    opacity: 0.7;
+  }
+  
   .slideshow-product__price-info {
     margin-top: 0.5rem;
   }
@@ -247,33 +259,7 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
-  
-  .slideshow-product__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-    font-family: var(--font-body-family);
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--color-foreground);
-    text-decoration: none;
-    padding-bottom: 2px;
-    transition: opacity 0.3s ease;
-  }
-  
-  .slideshow-product__link:hover {
-    opacity: 0.7;
-  }
-  
-  .slideshow-product__link svg {
-    transition: transform 0.3s ease;
-  }
-  
-  .slideshow-product__link:hover svg {
-    transform: translateX(4px);
-  }
-  
+
   .slideshow-product--empty {
     padding: 2rem;
     text-align: center;
