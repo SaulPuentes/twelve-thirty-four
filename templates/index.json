@@ -153,24 +153,24 @@
     "workshops": {
       "type": "slideshow-with-text",
       "blocks": {
-        "product_MdYFbk": {
-          "type": "product",
-          "settings": {
-            "product": "private-floral-design-class",
-            "show_vendor": false
-          }
-        },
         "product_cJbi6e": {
           "type": "product",
           "settings": {
             "product": "group-private-floral-design-class-2-8-people",
             "show_vendor": false
           }
+        },
+        "product_MdYFbk": {
+          "type": "product",
+          "settings": {
+            "product": "private-floral-design-class",
+            "show_vendor": false
+          }
         }
       },
       "block_order": [
-        "product_MdYFbk",
-        "product_cJbi6e"
+        "product_cJbi6e",
+        "product_MdYFbk"
       ],
       "settings": {
         "heading": "Workshops",
