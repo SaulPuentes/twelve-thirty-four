@@ -59,7 +59,12 @@
     
     {%- comment -%} Variant selector and Add to Cart {%- endcomment -%}
     {%- if has_variants -%}
-      <form class="slideshow-product__form" data-product-form>
+      <form 
+        class="slideshow-product__form" 
+        data-product-form
+        data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+        data-product-title="{{ product.title | escape }}"
+      >
         <div class="slideshow-product__variant-selector">
           <select 
             name="id" 
@@ -87,7 +92,12 @@
         </button>
       </form>
     {%- else -%}
-      <form class="slideshow-product__form" data-product-form>
+      <form 
+        class="slideshow-product__form" 
+        data-product-form
+        data-product-image="{{ product.featured_image | image_url: width: 300 }}"
+        data-product-title="{{ product.title | escape }}"
+      >
         <input type="hidden" name="id" value="{{ product.variants.first.id }}">
         <button 
           type="submit" 
@@ -297,7 +307,7 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    const forms = document.querySelectorAll('[data-product-form]');
+    const forms = document.querySelectorAll('.slideshow-product__form[data-product-form]');
     
     forms.forEach(function(form) {
       form.addEventListener('submit', function(e) {
@@ -305,6 +315,8 @@
         
         const button = form.querySelector('[data-add-to-cart]');
         const variantId = form.querySelector('[name="id"]').value;
+        const productImage = form.dataset.productImage;
+        const productTitle = form.dataset.productTitle;
         
         if (!variantId) return;
         
@@ -313,44 +325,66 @@
         button.disabled = true;
         button.textContent = 'Adding...';
         
-        // Add to cart
-        fetch('/cart/add.js', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            id: variantId,
-            quantity: 1
+        // Use global cart handler if available (includes fly-to-cart animation)
+        if (window.cart && typeof window.cart.addItem === 'function') {
+          window.cart.addItem(variantId, 1, {
+            sourceElement: button,
+            imageUrl: productImage,
+            onSuccess: function(data) {
+              // Success feedback
+              button.textContent = 'Added!';
+              
+              // Reset button after delay
+              setTimeout(function() {
+                button.disabled = false;
+                button.textContent = originalText;
+              }, 2000);
+            },
+            onError: function(error) {
+              console.error('Error adding to cart:', error);
+              button.disabled = false;
+              button.textContent = 'Error - Try Again';
+              
+              setTimeout(function() {
+                button.textContent = originalText;
+              }, 3000);
+            }
+          });
+        } else {
+          // Fallback: Direct fetch if global cart handler not available
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              id: variantId,
+              quantity: 1
+            })
           })
-        })
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(data) {
-          // Success feedback
-          button.textContent = 'Added!';
-          
-          // Trigger cart refresh (if cart drawer exists)
-          if (typeof window.dispatchEvent === 'function') {
-            window.dispatchEvent(new CustomEvent('cart:refresh'));
-          }
-          
-          // Reset button after delay
-          setTimeout(function() {
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(data) {
+            // Success feedback
+            button.textContent = 'Added!';
+            
+            // Reset button after delay
+            setTimeout(function() {
+              button.disabled = false;
+              button.textContent = originalText;
+            }, 2000);
+          })
+          .catch(function(error) {
+            console.error('Error:', error);
             button.disabled = false;
-            button.textContent = originalText;
-          }, 2000);
-        })
-        .catch(function(error) {
-          console.error('Error:', error);
-          button.disabled = false;
-          button.textContent = 'Error - Try Again';
-          
-          setTimeout(function() {
-            button.textContent = originalText;
-          }, 3000);
-        });
+            button.textContent = 'Error - Try Again';
+            
+            setTimeout(function() {
+              button.textContent = originalText;
+            }, 3000);
+          });
+        }
       });
     });
   });
