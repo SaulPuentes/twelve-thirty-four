@@ -65,7 +65,7 @@
                 {% unless variant.available %}disabled{% endunless %}
                 data-price="{{ variant.price }}"
               >
-                {{ variant.title }} - {{ variant.price | money }}{% unless variant.available %} (Sold out){% endunless %}
+                {{ variant.title }} - {{ variant.price | money }} {{ shop.currency }}{% unless variant.available %} (Sold out){% endunless %}
               </option>
             {%- endfor -%}
           </select>
@@ -84,9 +84,9 @@
       <div class="slideshow-product__price-info">
         <p class="slideshow-product__price">
           {%- if product.compare_at_price > product.price -%}
-            <span class="slideshow-product__price-compare">{{ product.compare_at_price | money }}</span>
+            <span class="slideshow-product__price-compare">{{ product.compare_at_price | money }} {{ shop.currency }}</span>
           {%- endif -%}
-          <span class="slideshow-product__price-amount">{{ product.price | money }}</span>
+          <span class="slideshow-product__price-amount">{{ product.price | money }} {{ shop.currency }}</span>
         </p>
       </div>
       
@@ -228,17 +228,16 @@
     font-family: var(--font-body-family);
     font-size: 0.9375rem;
     font-weight: 500;
-    color: var(--color-button, #000);
-    background-color: transparent;
-    border: 1px solid var(--color-button, #000);
+    color: var(--color-button-text, #fff);
+    background-color: var(--color-button, #000);
+    border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+    transition: opacity 0.3s ease, transform 0.2s ease;
   }
   
   .slideshow-product__add-to-cart:hover:not(:disabled) {
-    color: var(--color-button-text, #fff);
-    background-color: var(--color-button, #000);
+    opacity: 0.9;
     transform: translateY(-1px);
   }
   
