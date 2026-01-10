@@ -153,30 +153,24 @@
     "workshops": {
       "type": "slideshow-with-text",
       "blocks": {
-        "slide_3qM4GE": {
-          "type": "slide",
+        "product_MdYFbk": {
+          "type": "product",
           "settings": {
-            "image": "shopify://shop_images/workshop-1.jpg",
-            "title": "Floral Design Fundamentals",
-            "description": "<p>Learn the art of minimalist floral arrangement in our intimate workshop. Discover how to create stunning compositions that celebrate the natural beauty of each stem.</p>",
-            "date": "Every Saturday, 2:00 PM - 5:00 PM",
-            "contact": ""
+            "product": "private-floral-design-class",
+            "show_vendor": false
           }
         },
-        "workshop-2": {
-          "type": "slide",
+        "product_cJbi6e": {
+          "type": "product",
           "settings": {
-            "image": "shopify://shop_images/workshop-2.jpg",
-            "title": "Advanced Seasonal Arrangements",
-            "description": "<p>Elevate your floral artistry with advanced techniques using seasonal blooms. Master the balance between structure and organic flow while working with nature's changing palette.</p>",
-            "date": "Every Sunday, 10:00 AM - 1:00 PM",
-            "contact": "contact@bypatriciorivera.com"
+            "product": "group-private-floral-design-class-2-8-people",
+            "show_vendor": false
           }
         }
       },
       "block_order": [
-        "slide_3qM4GE",
-        "workshop-2"
+        "product_MdYFbk",
+        "product_cJbi6e"
       ],
       "settings": {
         "heading": "Workshops",
