@@ -121,8 +121,8 @@
           "type": "custom_link",
           "settings": {
             "image": "shopify://shop_images/elizabeth-hooper.webp",
-            "label": "New Arrivals",
-            "url": "",
+            "label": "Elizabeth Hooper",
+            "url": "shopify://collections/elizabeth-hooper-studio",
             "open_in_new_tab": false,
             "show_product_info": false,
             "title": "",
