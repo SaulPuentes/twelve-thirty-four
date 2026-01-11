@@ -73,11 +73,6 @@
                     product: block.settings.product,
                     show_vendor: block.settings.show_vendor
                   -%}
-                  {%- if block.settings.product != blank -%}
-                    <a href="{{ block.settings.product.url }}" class="slideshow-text__slide-link">
-                      {%- render 'animated-arrow' -%}
-                    </a>
-                  {%- endif -%}
               {%- endcase -%}
             </div>
           {%- endfor -%}
