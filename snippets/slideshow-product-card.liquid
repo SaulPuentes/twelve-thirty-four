@@ -147,7 +147,6 @@
     display: flex;
     align-items: flex-end;
     gap: 0.5rem;
-    max-width: 450px;
   }
 
   .slideshow-product__description {
@@ -161,21 +160,23 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex: 1;
-    min-width: 0;
+    max-width: 450px;
+    flex-grow: 0;
+    flex-shrink: 0;
   }
   
   .slideshow-product__read-more {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     font-family: var(--font-body-family);
     font-size: 0.9375rem;
     font-weight: 500;
     color: var(--color-foreground);
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 2px;
+    text-decoration: none;
     transition: opacity 0.3s ease;
     white-space: nowrap;
+    flex-grow: 0;
+    flex-shrink: 0;
   }
   
   .slideshow-product__read-more:hover {
