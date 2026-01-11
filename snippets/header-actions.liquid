@@ -173,6 +173,22 @@
     .hidden {
       display: none !important;
     }
+
+    /* Mobile: Hide cart icon, show only bubble */
+    .header-actions__cart-icon .svg-wrapper {
+      display: none;
+    }
+
+    .header-actions__cart-icon .cart-bubble {
+      position: static;
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Remove mask on mobile since no icon */
+    .header-actions__cart-icon.header-actions__cart-icon--has-cart .svg-wrapper svg {
+      mask: none;
+    }
   }
 
   @media screen and (min-width: 768px) {
