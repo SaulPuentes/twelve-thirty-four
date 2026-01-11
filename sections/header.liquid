@@ -107,6 +107,12 @@
         {%- endfor -%}
       </ul>
     </nav>
+
+    {%- comment -%} Social Media Links {%- endcomment -%}
+    <div class="mobile-menu__social">
+      {% render 'social-media', class: 'mobile-menu__social', link_class: 'mobile-menu__social-link', icon_size: 20 %}
+    </div>
+
     <div class="mobile-menu__footer">
       {%- if shop.customer_accounts_enabled -%}
         <a href="{{ routes.account_url }}" class="mobile-menu__footer-link">
@@ -120,35 +126,6 @@
           <span>{{ 'general.search.title' | t }}</span>
         </a>
       {%- endif -%}
-
-      {%- comment -%} Social Media Links {%- endcomment -%}
-      <div class="mobile-menu__social">
-        {%- liquid
-          assign instagram_url = settings.social_instagram | default: 'https://www.instagram.com/twelvethirtyfourflowers/'
-          assign facebook_url = settings.social_facebook | default: 'https://www.facebook.com/Twelvethirtyfourflowers/'
-        -%}
-        <a href="{{ instagram_url }}" class="mobile-menu__social-link" aria-label="Instagram" target="_blank" rel="noopener">
-          {% render 'icon', icon: 'instagram', size: 20 %}
-        </a>
-        <a href="{{ facebook_url }}" class="mobile-menu__social-link" aria-label="Facebook" target="_blank" rel="noopener">
-          {% render 'icon', icon: 'facebook', size: 20 %}
-        </a>
-        {%- if settings.social_pinterest != blank -%}
-          <a href="{{ settings.social_pinterest }}" class="mobile-menu__social-link" aria-label="Pinterest" target="_blank" rel="noopener">
-            {% render 'icon', icon: 'pinterest', size: 20 %}
-          </a>
-        {%- endif -%}
-        {%- if settings.social_tiktok != blank -%}
-          <a href="{{ settings.social_tiktok }}" class="mobile-menu__social-link" aria-label="TikTok" target="_blank" rel="noopener">
-            {% render 'icon', icon: 'tiktok', size: 20 %}
-          </a>
-        {%- endif -%}
-        {%- if settings.social_twitter != blank -%}
-          <a href="{{ settings.social_twitter }}" class="mobile-menu__social-link" aria-label="Twitter" target="_blank" rel="noopener">
-            {% render 'icon', icon: 'twitter', size: 20 %}
-          </a>
-        {%- endif -%}
-      </div>
     </div>
   </div>
 </div>
@@ -470,7 +447,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4rem 2rem;
+    padding: 4rem 2rem 2rem;
   }
 
   .mobile-menu__list {
@@ -573,7 +550,8 @@
     align-items: center;
     justify-content: center;
     gap: 1.5rem;
-    margin-top: 0.5rem;
+    padding: 2rem;
+    border-top: 1px solid var(--color-border, #ddd);
   }
 
   .mobile-menu__social-link {

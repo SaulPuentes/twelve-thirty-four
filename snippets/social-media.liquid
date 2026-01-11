@@ -1,0 +1,59 @@
+{%- comment -%}
+  Social Media Links Snippet
+  Renders social media icons based on theme settings
+  Accepts:
+    - class: Optional CSS class for the container (default: 'social-media')
+    - link_class: Optional CSS class for individual links (default: 'social-media__link')
+    - icon_size: Optional icon size (default: 20)
+{%- endcomment -%}
+
+{%- liquid
+  assign container_class = class | default: 'social-media'
+  assign link_class = link_class | default: 'social-media__link'
+  assign icon_size = icon_size | default: 20
+  assign instagram_url = settings.social_instagram | default: 'https://www.instagram.com/twelvethirtyfourflowers/'
+  assign facebook_url = settings.social_facebook | default: 'https://www.facebook.com/Twelvethirtyfourflowers/'
+-%}
+
+<div class="{{ container_class }}">
+  <a href="{{ instagram_url }}" class="{{ link_class }}" aria-label="Instagram" target="_blank" rel="noopener">
+    {% render 'icon', icon: 'instagram', size: icon_size %}
+  </a>
+  <a href="{{ facebook_url }}" class="{{ link_class }}" aria-label="Facebook" target="_blank" rel="noopener">
+    {% render 'icon', icon: 'facebook', size: icon_size %}
+  </a>
+  {%- if settings.social_pinterest != blank -%}
+    <a href="{{ settings.social_pinterest }}" class="{{ link_class }}" aria-label="Pinterest" target="_blank" rel="noopener">
+      {% render 'icon', icon: 'pinterest', size: icon_size %}
+    </a>
+  {%- endif -%}
+  {%- if settings.social_tiktok != blank -%}
+    <a href="{{ settings.social_tiktok }}" class="{{ link_class }}" aria-label="TikTok" target="_blank" rel="noopener">
+      {% render 'icon', icon: 'tiktok', size: icon_size %}
+    </a>
+  {%- endif -%}
+  {%- if settings.social_twitter != blank -%}
+    <a href="{{ settings.social_twitter }}" class="{{ link_class }}" aria-label="Twitter" target="_blank" rel="noopener">
+      {% render 'icon', icon: 'twitter', size: icon_size %}
+    </a>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .social-media {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .social-media__link {
+    display: flex;
+    align-items: center;
+    color: var(--color-foreground);
+    transition: opacity 0.3s ease;
+  }
+
+  .social-media__link:hover {
+    opacity: 0.6;
+  }
+{% endstylesheet %}

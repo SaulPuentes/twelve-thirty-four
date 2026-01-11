@@ -105,31 +105,7 @@
         {%- endif -%}
 
         <div class="footer__social">
-          {%- liquid
-            assign instagram_url = settings.social_instagram | default: 'https://www.instagram.com/twelvethirtyfourflowers/'
-            assign facebook_url = settings.social_facebook | default: 'https://www.facebook.com/Twelvethirtyfourflowers/'
-          -%}
-          <a href="{{ instagram_url }}" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">
-              {% render 'icon', icon: 'instagram', size: 20 %}
-            </a>
-          <a href="{{ facebook_url }}" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">
-              {% render 'icon', icon: 'facebook', size: 20 %}
-            </a>
-          {%- if settings.social_pinterest != blank -%}
-            <a href="{{ settings.social_pinterest }}" class="footer__social-link" aria-label="Pinterest" target="_blank" rel="noopener">
-              {% render 'icon', icon: 'pinterest', size: 20 %}
-            </a>
-          {%- endif -%}
-          {%- if settings.social_tiktok != blank -%}
-            <a href="{{ settings.social_tiktok }}" class="footer__social-link" aria-label="TikTok" target="_blank" rel="noopener">
-              {% render 'icon', icon: 'tiktok', size: 20 %}
-            </a>
-          {%- endif -%}
-          {%- if settings.social_twitter != blank -%}
-            <a href="{{ settings.social_twitter }}" class="footer__social-link" aria-label="Twitter" target="_blank" rel="noopener">
-              {% render 'icon', icon: 'twitter', size: 20 %}
-            </a>
-          {%- endif -%}
+          {% render 'social-media', class: 'footer__social', link_class: 'footer__social-link', icon_size: 20 %}
         </div>
       </div>
 
