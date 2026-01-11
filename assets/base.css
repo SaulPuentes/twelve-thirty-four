@@ -50,6 +50,25 @@ body {
   }
 }
 
+.text-block {
+  width: 100%;
+}
+
+.text-block > *:first-child,
+.text-block > *:first-child:empty + * {
+  margin-block-start: 0;
+}
+
+.text-block > *:last-child,
+.text-block > *:has(+ *:last-child:empty) {
+  margin-block-end: 0;
+}
+
+/* This is to deal with the margin applied to the p when custom styles are enabled. The p isn't the first child anymore due to the style tag */
+.text-block > style + * {
+  margin-block-start: 0;
+}
+
 /* Dialog styles */
 dialog {
   --backdrop-color-rgb: var(--color-shadow-rgb, 0 0 0);
