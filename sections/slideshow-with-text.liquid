@@ -315,6 +315,8 @@
 
   .slideshow-text__header {
     flex-shrink: 0;
+    position: relative;
+    z-index: 1;
   }
 
   .slideshow-text__heading {
@@ -336,6 +338,15 @@
     flex: 1;
     display: flex;
     align-items: flex-end;
+    width: 100%;
+    overflow: visible;
+  }
+
+  @media screen and (max-width: 749px) {
+    .slideshow-text__slides-text {
+      min-height: 200px;
+      margin-top: 1.5rem;
+    }
   }
 
   .slideshow-text__navigation {
@@ -352,6 +363,7 @@
     left: 0;
     right: 0;
     pointer-events: none;
+    width: 100%;
   }
 
   .slideshow-text__slide-content--active {
@@ -437,12 +449,14 @@
   .slideshow-text__media {
     position: relative;
     aspect-ratio: 3 / 4;
+    max-height: 85vh;
     overflow: hidden;
   }
 
-  @media screen and (min-width: 1024px) {
+  @media screen and (max-width: 749px) {
     .slideshow-text__media {
-      max-height: 85vh;
+      max-height: 70vh;
+      min-height: 300px;
     }
   }
 
