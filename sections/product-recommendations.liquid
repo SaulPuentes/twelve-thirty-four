@@ -169,6 +169,31 @@
 </product-recommendations>
 
 {% stylesheet %}
+  .product-recommendations .section {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    .product-recommendations .section {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .product-recommendations .section {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+
   .product-recommendations__skeleton-item {
     aspect-ratio: 3 / 4;
     background-color: var(--color-foreground);

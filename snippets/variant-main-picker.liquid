@@ -311,30 +311,30 @@
   }
 
   .variant-option__button-label {
-    --variant-picker-stroke-color: var(--color-variant-border);
+    --variant-picker-stroke-color: var(--color-variant-border, rgba(0, 0, 0, 0.1));
 
     cursor: pointer;
     display: flex;
     flex: 0 0 3.25em;
     align-items: center;
     position: relative;
-    padding-block: var(--padding-sm);
-    padding-inline: var(--padding-lg);
-    border: var(--options-border-width) solid var(--color-variant-border);
-    border-radius: var(--options-border-radius);
+    padding-block: var(--padding-sm, 0.5rem);
+    padding-inline: var(--padding-lg, 1rem);
+    border: var(--options-border-width, 1px) solid var(--color-variant-border, rgba(0, 0, 0, 0.1));
+    border-radius: var(--options-border-radius, 4px);
     overflow: clip;
     justify-content: center;
     min-height: 3.25em;
     min-width: fit-content;
     white-space: nowrap;
-    background-color: var(--color-variant-background);
-    color: var(--color-variant-text);
+    background-color: var(--color-variant-background, transparent);
+    color: var(--color-variant-text, currentColor);
 
     &:hover,
     &:hover:has([aria-disabled='true']):has([data-option-available='false']) {
-      background-color: var(--color-variant-hover-background);
-      border-color: var(--color-variant-hover-border);
-      color: var(--color-variant-hover-text);
+      background-color: var(--color-variant-hover-background, rgba(0, 0, 0, 0.05));
+      border-color: var(--color-variant-hover-border, rgba(0, 0, 0, 0.2));
+      color: var(--color-variant-hover-text, currentColor);
     }
 
     /* we need something like overflow-clip-margin to use the pseudoelement but it doesn't work in Safari */
@@ -352,7 +352,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      border: var(--options-border-width) solid var(--color-selected-variant-border);
+      border: var(--options-border-width, 1px) solid var(--color-selected-variant-border, rgba(0, 0, 0, 0.3));
       border-radius: inherit;
       pointer-events: none;
       z-index: 2;
@@ -367,12 +367,12 @@
     &:not(.variant-option__button-label--has-swatch)::before {
       /* stylelint-disable-next-line plugin/no-unsupported-browser-features */
       clip-path: inset(0 0 0 0);
-      border-color: var(--color-variant-border);
-      inset: calc(var(--options-border-width) * -1);
+      border-color: var(--color-variant-border, rgba(0, 0, 0, 0.1));
+      inset: calc(var(--options-border-width, 1px) * -1);
     }
 
     &:has(:checked):not(.variant-option__button-label--has-swatch, :has([data-option-available='false']))::before {
-      border-color: var(--color-selected-variant-border);
+      border-color: var(--color-selected-variant-border, rgba(0, 0, 0, 0.3));
     }
 
     /* setting left/right accounts for variant buttons of different widths */
