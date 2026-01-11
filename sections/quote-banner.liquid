@@ -1,239 +1,197 @@
 {%- comment -%}
   Quote Banner Section
-  
-  A centered quote banner with optional logo above the quote.
-  Uses ABC Arizona Flare font for expressive typography.
-  
-  Settings:
-  - Logo image (optional)
-  - Quote text
-  - Author name (optional)
-  - Author title (optional)
-  - Text alignment
-  - Color scheme
-  - Padding
+  Full-width background image with dark overlay and centered quote text
+  Uses ABC Arizona Flare font for expressive, editorial quotes
 {%- endcomment -%}
 
-{%- liquid
-  assign quote_text = section.settings.quote_text
-  assign author_name = section.settings.author_name
-  assign author_title = section.settings.author_title
-  assign logo = section.settings.logo
-  assign text_align = section.settings.text_alignment
-  assign show_quotation_marks = section.settings.show_quotation_marks
--%}
+<section
+  id="QuoteBanner-{{ section.id }}"
+  class="quote-banner"
+>
+  <div class="quote-banner__background">
+    {%- if section.settings.image != blank -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 2000 }}"
+        srcset="
+          {{ section.settings.image | image_url: width: 800 }} 800w,
+          {{ section.settings.image | image_url: width: 1200 }} 1200w,
+          {{ section.settings.image | image_url: width: 1600 }} 1600w,
+          {{ section.settings.image | image_url: width: 2000 }} 2000w
+        "
+        sizes="100vw"
+        alt="{{ section.settings.image.alt | default: 'Background image' | escape }}"
+        class="quote-banner__image"
+        loading="lazy"
+      >
+    {%- endif -%}
+    <div class="quote-banner__overlay" style="--overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};"></div>
+  </div>
 
-<div class="quote-banner color-{{ section.settings.color_scheme }} spacing-style">
-  <div class="quote-banner__inner page-width">
-    {%- if logo != blank -%}
+  <div class="quote-banner__content">
+    {%- if section.settings.logo != blank -%}
       <div class="quote-banner__logo">
         <img
-          src="{{ logo | image_url: width: 200 }}"
-          alt="{{ section.settings.logo_alt | default: shop.name }}"
-          width="200"
+          src="{{ section.settings.logo | image_url: width: 400 }}"
+          srcset="
+            {{ section.settings.logo | image_url: width: 200 }} 200w,
+            {{ section.settings.logo | image_url: width: 300 }} 300w,
+            {{ section.settings.logo | image_url: width: 400 }} 400w
+          "
+          sizes="(max-width: 749px) {{ section.settings.logo_width_mobile }}px, {{ section.settings.logo_width }}px"
+          alt="{{ section.settings.logo.alt | default: shop.name | escape }}"
+          class="quote-banner__logo-image"
+          width="{{ section.settings.logo_width }}"
           height="auto"
           loading="lazy"
-          class="quote-banner__logo-image"
+          style="--logo-width: {{ section.settings.logo_width }}px; --logo-width-mobile: {{ section.settings.logo_width_mobile }}px;"
         >
       </div>
     {%- endif -%}
 
-    {%- if quote_text != blank -%}
+    {%- if section.settings.quote != blank -%}
       <blockquote class="quote-banner__quote accent">
-        {%- if show_quotation_marks -%}
-          <span class="quote-banner__mark quote-banner__mark--open" aria-hidden="true">&ldquo;</span>
-        {%- endif -%}
-        <p class="quote-banner__text">{{ quote_text }}</p>
-        {%- if show_quotation_marks -%}
-          <span class="quote-banner__mark quote-banner__mark--close" aria-hidden="true">&rdquo;</span>
-        {%- endif -%}
-        
-        {%- if author_name != blank or author_title != blank -%}
-          <footer class="quote-banner__author">
-            {%- if author_name != blank -%}
-              <cite class="quote-banner__author-name">{{ author_name }}</cite>
-            {%- endif -%}
-            {%- if author_title != blank -%}
-              <span class="quote-banner__author-title">{{ author_title }}</span>
-            {%- endif -%}
-          </footer>
-        {%- endif -%}
+        {{ section.settings.quote }}
       </blockquote>
     {%- endif -%}
+
+    {%- if section.settings.attribution != blank -%}
+      <cite class="quote-banner__attribution">{{ section.settings.attribution }}</cite>
+    {%- endif -%}
   </div>
-</div>
+</section>
 
 {% stylesheet %}
   .quote-banner {
-    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 4rem 2rem;
     overflow: hidden;
   }
 
-  .quote-banner__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--gap-2xl, 2rem);
-    padding-block: var(--padding-4xl, 4rem);
-    padding-inline: var(--padding-lg, 1rem);
-    text-align: {{ text_align | default: 'center' }};
-  }
-
   @media screen and (min-width: 750px) {
-    .quote-banner__inner {
-      gap: var(--gap-3xl, 3rem);
-      padding-block: var(--padding-6xl, 6rem);
+    .quote-banner {
+      min-height: 70vh;
+      padding: 6rem 4rem;
     }
   }
 
-  /* Logo */
-  .quote-banner__logo {
+  .quote-banner__background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .quote-banner__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .quote-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, var(--overlay-opacity, 0.5));
+  }
+
+  .quote-banner__content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    text-align: center;
+    color: #fff;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: var(--margin-lg, 1rem);
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  /* Logo styles */
+  .quote-banner__logo {
+    margin-bottom: 2rem;
   }
 
   .quote-banner__logo-image {
-    max-width: 100%;
+    width: var(--logo-width-mobile, 120px);
     height: auto;
-    width: auto;
-    max-height: 80px;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   @media screen and (min-width: 750px) {
+    .quote-banner__logo {
+      margin-bottom: 2.5rem;
+    }
+
     .quote-banner__logo-image {
-      max-height: 120px;
+      width: var(--logo-width, 180px);
     }
   }
 
-  /* Quote */
+  /* Quote text - ABC Arizona Flare for expressive, editorial feel */
   .quote-banner__quote {
-    position: relative;
     font-family: var(--font-accent-family);
-    font-weight: var(--font-accent-weight);
+    font-size: 1.25rem;
+    font-weight: 400;
     font-style: italic;
-    line-height: var(--line-height-accent, 1.4);
-    letter-spacing: var(--letter-spacing-accent, 0.02em);
-    margin: 0;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    margin: 0 0 1.5rem 0;
     padding: 0;
     border: none;
-    max-width: 900px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease 0.2s forwards;
   }
 
-  .quote-banner__text {
-    font-size: clamp(1.25rem, 4vw, 2.5rem);
-    margin: 0;
-    padding: 0;
+  @media screen and (min-width: 750px) {
+    .quote-banner__quote {
+      font-size: 1.5rem;
+      line-height: 1.7;
+    }
   }
 
-  /* Quotation Marks */
-  .quote-banner__mark {
-    font-family: var(--font-accent-family);
-    font-size: clamp(2rem, 6vw, 4rem);
-    line-height: 0.8;
-    opacity: 0.3;
-    position: relative;
-    display: inline-block;
+  @media screen and (min-width: 990px) {
+    .quote-banner__quote {
+      font-size: 1.75rem;
+    }
   }
 
-  .quote-banner__mark--open {
-    margin-right: 0.1em;
-  }
-
-  .quote-banner__mark--close {
-    margin-left: 0.1em;
-  }
-
-  /* Author */
-  .quote-banner__author {
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-xs, 0.25rem);
-    margin-top: var(--margin-2xl, 2rem);
+  .quote-banner__attribution {
     font-family: var(--font-body-family);
+    font-size: 0.875rem;
     font-style: normal;
-    font-size: var(--font-size--sm, 0.875rem);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease 0.4s forwards;
-  }
-
-  .quote-banner__author-name {
-    font-weight: 500;
-    font-style: normal;
+    font-weight: 400;
     letter-spacing: 0.05em;
-    text-transform: uppercase;
+    opacity: 0.9;
   }
 
-  .quote-banner__author-title {
-    opacity: 0.7;
-    font-size: var(--font-size--xs, 0.8125rem);
-  }
-
-  /* Text Alignment Variations */
-  .quote-banner__inner[style*="text-align: left"] .quote-banner__logo,
-  .quote-banner__inner[style*="text-align: left"] .quote-banner__quote {
-    align-self: flex-start;
-  }
-
-  .quote-banner__inner[style*="text-align: right"] .quote-banner__logo,
-  .quote-banner__inner[style*="text-align: right"] .quote-banner__quote {
-    align-self: flex-end;
-  }
-
-  /* Animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Reduce motion for accessibility */
-  @media (prefers-reduced-motion: reduce) {
-    .quote-banner__logo,
-    .quote-banner__quote,
-    .quote-banner__author {
-      animation: none;
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  /* Mobile adjustments */
-  @media screen and (max-width: 749px) {
-    .quote-banner__inner {
-      padding-inline: var(--padding-md, 1.5rem);
-    }
-
-    .quote-banner__text {
-      font-size: clamp(1.125rem, 5vw, 1.5rem);
-    }
-
-    .quote-banner__mark {
-      font-size: clamp(1.5rem, 8vw, 2.5rem);
+  @media screen and (min-width: 750px) {
+    .quote-banner__attribution {
+      font-size: 1rem;
     }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "Quote Banner",
+  "name": "Quote banner",
   "tag": "section",
   "class": "section-quote-banner",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay opacity",
+      "default": 50
+    },
     {
       "type": "header",
       "content": "Logo"
@@ -241,15 +199,28 @@
     {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo",
-      "info": "Optional logo to display above the quote"
+      "label": "Logo image",
+      "info": "Displays above the quote text. Recommended: PNG with transparent background."
     },
     {
-      "type": "text",
-      "id": "logo_alt",
-      "label": "Logo alt text",
-      "default": "Logo",
-      "info": "Describe the logo for screen readers"
+      "type": "range",
+      "id": "logo_width",
+      "min": 80,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width (desktop)",
+      "default": 180
+    },
+    {
+      "type": "range",
+      "id": "logo_width_mobile",
+      "min": 60,
+      "max": 200,
+      "step": 10,
+      "unit": "px",
+      "label": "Logo width (mobile)",
+      "default": 120
     },
     {
       "type": "header",
@@ -257,100 +228,22 @@
     },
     {
       "type": "textarea",
-      "id": "quote_text",
-      "label": "Quote text",
-      "default": "Design is not just what it looks like and feels like. Design is how it works.",
-      "info": "The main quote text (uses ABC Arizona Flare font)"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_quotation_marks",
-      "label": "Show quotation marks",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Author"
+      "id": "quote",
+      "label": "Quote",
+      "default": "\"Go outside... amidst the simple beauty of nature... and know that as long as places like this exist, there will be a comfort for every sorrow, whatever the circumstances may be.\""
     },
     {
       "type": "text",
-      "id": "author_name",
-      "label": "Author name",
-      "default": "Steve Jobs"
-    },
-    {
-      "type": "text",
-      "id": "author_title",
-      "label": "Author title",
-      "default": "Co-founder, Apple Inc.",
-      "info": "Optional subtitle for the author (e.g., job title, company)"
-    },
-    {
-      "type": "header",
-      "content": "Layout"
-    },
-    {
-      "type": "select",
-      "id": "text_alignment",
-      "label": "Text alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "center"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "Spacing"
-    },
-    {
-      "type": "range",
-      "id": "padding_top",
-      "min": 0,
-      "max": 200,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding top",
-      "default": 80
-    },
-    {
-      "type": "range",
-      "id": "padding_bottom",
-      "min": 0,
-      "max": 200,
-      "step": 4,
-      "unit": "px",
-      "label": "Padding bottom",
-      "default": 80
+      "id": "attribution",
+      "label": "Attribution",
+      "default": "-Anne Frank"
     }
   ],
   "presets": [
     {
-      "name": "Quote Banner",
-      "settings": {
-        "quote_text": "Design is not just what it looks like and feels like. Design is how it works.",
-        "author_name": "Steve Jobs",
-        "author_title": "Co-founder, Apple Inc.",
-        "show_quotation_marks": true,
-        "text_alignment": "center"
-      }
+      "name": "Quote banner"
     }
   ]
 }
 {% endschema %}
+
