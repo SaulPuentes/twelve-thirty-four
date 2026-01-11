@@ -347,6 +347,37 @@
     flex-wrap: wrap;
   }
 
+  /* Initial state for animation elements */
+  .hero-slideshow__text .hero-slideshow__subheading,
+  .hero-slideshow__text .hero-slideshow__heading,
+  .hero-slideshow__text .hero-slideshow__buttons {
+    opacity: 0;
+  }
+
+  /* Sequence animation for active text elements */
+  .hero-slideshow__text--active .hero-slideshow__subheading {
+    animation: slideInLeft 0.8s var(--animation-easing, ease) both;
+    animation-delay: 0.1s;
+  }
+
+  .hero-slideshow__text--active .hero-slideshow__heading {
+    animation: slideInBottom 0.8s var(--animation-easing, ease) both;
+    animation-delay: 0.3s;
+  }
+
+  .hero-slideshow__text--active .hero-slideshow__buttons {
+    animation: slideInRight 0.8s var(--animation-easing, ease) both;
+    animation-delay: 0.5s;
+  }
+
+  /* Reset animations when text becomes inactive */
+  .hero-slideshow__text:not(.hero-slideshow__text--active) .hero-slideshow__subheading,
+  .hero-slideshow__text:not(.hero-slideshow__text--active) .hero-slideshow__heading,
+  .hero-slideshow__text:not(.hero-slideshow__text--active) .hero-slideshow__buttons {
+    animation: none;
+    opacity: 0;
+  }
+
   .hero-slideshow__content--center .hero-slideshow__buttons {
     justify-content: center;
   }

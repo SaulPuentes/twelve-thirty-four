@@ -186,6 +186,58 @@
   .featured-products .product-card__info {
     padding-top: 1rem;
   }
+
+  /* Fade-in sequence animation for product cards */
+  .featured-products__grid .product-card,
+  .featured-products__grid .product-card--placeholder {
+    opacity: 0;
+    animation: fadeIn 0.6s var(--animation-easing, ease) both;
+  }
+
+  .featured-products__grid .product-card:nth-child(1),
+  .featured-products__grid .product-card--placeholder:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+
+  .featured-products__grid .product-card:nth-child(2),
+  .featured-products__grid .product-card--placeholder:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .featured-products__grid .product-card:nth-child(3),
+  .featured-products__grid .product-card--placeholder:nth-child(3) {
+    animation-delay: 0.15s;
+  }
+
+  .featured-products__grid .product-card:nth-child(4),
+  .featured-products__grid .product-card--placeholder:nth-child(4) {
+    animation-delay: 0.2s;
+  }
+
+  .featured-products__grid .product-card:nth-child(5),
+  .featured-products__grid .product-card--placeholder:nth-child(5) {
+    animation-delay: 0.25s;
+  }
+
+  .featured-products__grid .product-card:nth-child(6),
+  .featured-products__grid .product-card--placeholder:nth-child(6) {
+    animation-delay: 0.3s;
+  }
+
+  .featured-products__grid .product-card:nth-child(7),
+  .featured-products__grid .product-card--placeholder:nth-child(7) {
+    animation-delay: 0.35s;
+  }
+
+  .featured-products__grid .product-card:nth-child(8),
+  .featured-products__grid .product-card--placeholder:nth-child(8) {
+    animation-delay: 0.4s;
+  }
+
+  .featured-products__grid .product-card:nth-child(n+9),
+  .featured-products__grid .product-card--placeholder:nth-child(n+9) {
+    animation-delay: 0.45s;
+  }
 {% endstylesheet %}
 
 {% schema %}
