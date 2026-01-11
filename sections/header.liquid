@@ -24,10 +24,26 @@
       {% render 'icon', icon: 'menu', size: 24 %}
     </button>
 
-    {%- comment -%} Shop Name {%- endcomment -%}
+    {%- comment -%} Logo {%- endcomment -%}
     <div class="header__logo">
       <a href="{{ routes.root_url }}" class="header__logo-link" aria-label="{{ shop.name }}">
-        <span class="header__logo-text">{{ shop.name }}</span>
+        <img
+          src="{{ 'header-logo.png' | asset_url }}"
+          alt="{{ shop.name }}"
+          class="header__logo-image header__logo-image--default"
+          width="180"
+          height="auto"
+          loading="eager"
+        >
+        {%- comment -%} Inverse logo for transparent header with light backgrounds {%- endcomment -%}
+        <img
+          src="{{ 'header-logo.png' | asset_url }}"
+          alt="{{ shop.name }}"
+          class="header__logo-image header__logo-image--inverse"
+          width="180"
+          height="auto"
+          loading="eager"
+        >
       </a>
     </div>
 
