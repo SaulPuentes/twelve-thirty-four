@@ -23,14 +23,32 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "link_column_cUXLDm": {
+        "link_column_6UNgQT": {
           "type": "link_column",
           "settings": {
             "heading": "",
             "link_1_text": "Shop",
-            "link_1_url": "shopify://collections",
-            "link_2_text": "About Us",
-            "link_2_url": "shopify://pages/portfolio",
+            "link_1_url": "shopify://collections/all",
+            "link_2_text": "Collections",
+            "link_2_url": "shopify://collections",
+            "link_3_text": "",
+            "link_3_url": "",
+            "link_4_text": "",
+            "link_4_url": "",
+            "link_5_text": "",
+            "link_5_url": "",
+            "link_6_text": "",
+            "link_6_url": ""
+          }
+        },
+        "link_column_ztkwa4": {
+          "type": "link_column",
+          "settings": {
+            "heading": "",
+            "link_1_text": "About",
+            "link_1_url": "shopify://pages/about",
+            "link_2_text": "Say hello",
+            "link_2_url": "shopify://pages/contact",
             "link_3_text": "",
             "link_3_url": "",
             "link_4_text": "",
@@ -43,7 +61,8 @@
         }
       },
       "block_order": [
-        "link_column_cUXLDm"
+        "link_column_6UNgQT",
+        "link_column_ztkwa4"
       ],
       "settings": {
         "email": "contact@example.com",
