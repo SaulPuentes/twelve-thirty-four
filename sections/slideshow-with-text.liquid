@@ -344,8 +344,9 @@
 
   @media screen and (max-width: 749px) {
     .slideshow-text__slides-text {
-      min-height: 200px;
+      min-height: auto;
       margin-top: 1.5rem;
+      align-items: flex-start;
     }
   }
 
@@ -380,6 +381,27 @@
     position: absolute;
     bottom: 0;
     pointer-events: none;
+  }
+
+  /* Mobile: make active slide relative so parent adapts to content height */
+  @media screen and (max-width: 749px) {
+    .slideshow-text__slide-content {
+      position: absolute;
+      top: 0;
+      bottom: auto;
+    }
+
+    .slideshow-text__slide-content--active {
+      position: relative;
+      top: auto;
+      bottom: auto;
+    }
+
+    .slideshow-text__slide-content--exiting {
+      position: absolute;
+      top: 0;
+      bottom: auto;
+    }
   }
 
   .slideshow-text__slide-title {
