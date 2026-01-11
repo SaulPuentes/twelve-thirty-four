@@ -215,16 +215,7 @@
       goToSlide(next);
     }
 
-    // Navigation dots click
-    navDots.forEach(function(dot, index) {
-      if (dot) {
-        dot.addEventListener('click', function() {
-          goToSlide(index);
-        });
-      }
-    });
-
-    // Autoplay
+    // Autoplay functions
     {% if section.settings.autoplay %}
       function startAutoplay() {
         if (autoplayTimer) {
@@ -240,11 +231,28 @@
         }
       }
 
+      // Start autoplay
       startAutoplay();
 
+      // Pause autoplay on hover
       section.addEventListener('mouseenter', stopAutoplay);
       section.addEventListener('mouseleave', startAutoplay);
+    {% else %}
+      // Autoplay is disabled, define no-op functions
+      function startAutoplay() {}
+      function stopAutoplay() {}
     {% endif %}
+
+    // Navigation dots click
+    navDots.forEach(function(dot, index) {
+      if (dot) {
+        dot.addEventListener('click', function() {
+          goToSlide(index);
+          // Reset autoplay timer after manual navigation
+          startAutoplay();
+        });
+      }
+    });
   });
 </script>
 
