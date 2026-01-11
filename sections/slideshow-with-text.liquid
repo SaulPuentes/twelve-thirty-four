@@ -437,8 +437,13 @@
   .slideshow-text__media {
     position: relative;
     aspect-ratio: 3 / 4;
-    max-height: 85vh;
     overflow: hidden;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .slideshow-text__media {
+      max-height: 85vh;
+    }
   }
 
   .slideshow-text__slide-image {
