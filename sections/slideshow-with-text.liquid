@@ -138,6 +138,7 @@
     const contents = section.querySelectorAll('[data-slide-content]');
     const images = section.querySelectorAll('[data-slide-image]');
     const navDots = section.querySelectorAll('[data-slide-nav]');
+    const slidesTextContainer = section.querySelector('.slideshow-text__slides-text');
 
     if (contents.length <= 1) return;
 
@@ -146,6 +147,87 @@
       console.warn('Slideshow: Content and image counts do not match');
       return;
     }
+
+    // Calculate and set consistent height for slide content container
+    function setSlidesHeight() {
+      if (!slidesTextContainer || contents.length === 0) return;
+
+      const isMobile = window.innerWidth <= 749;
+      if (isMobile) {
+        // On mobile, don't set fixed height as content is relative
+        slidesTextContainer.style.minHeight = '';
+        return;
+      }
+
+      let maxHeight = 0;
+
+      // Create a temporary measurement container
+      const measureContainer = document.createElement('div');
+      measureContainer.style.position = 'absolute';
+      measureContainer.style.visibility = 'hidden';
+      measureContainer.style.top = '-9999px';
+      measureContainer.style.left = '0';
+      measureContainer.style.width = slidesTextContainer.offsetWidth + 'px';
+      measureContainer.style.opacity = '0';
+      slidesTextContainer.parentElement.appendChild(measureContainer);
+
+      // Clone and measure each slide content
+      contents.forEach(function(content) {
+        const clone = content.cloneNode(true);
+        clone.style.position = 'relative';
+        clone.style.opacity = '1';
+        clone.style.visibility = 'visible';
+        clone.style.transform = 'none';
+        clone.style.display = 'block';
+        measureContainer.appendChild(clone);
+
+        const height = clone.offsetHeight;
+        if (height > maxHeight) {
+          maxHeight = height;
+        }
+
+        measureContainer.removeChild(clone);
+      });
+
+      // Clean up measurement container
+      measureContainer.parentElement.removeChild(measureContainer);
+
+      // Set the container height (add some padding for safety)
+      if (maxHeight > 0) {
+        slidesTextContainer.style.minHeight = (maxHeight + 30) + 'px';
+      }
+    }
+
+    // Set initial height after a short delay to ensure content is rendered
+    setTimeout(setSlidesHeight, 100);
+
+    // Also recalculate after images load
+    const imagesInSection = section.querySelectorAll('img');
+    let imagesLoaded = 0;
+    if (imagesInSection.length > 0) {
+      imagesInSection.forEach(function(img) {
+        if (img.complete) {
+          imagesLoaded++;
+        } else {
+          img.addEventListener('load', function() {
+            imagesLoaded++;
+            if (imagesLoaded === imagesInSection.length) {
+              setSlidesHeight();
+            }
+          });
+        }
+      });
+      if (imagesLoaded === imagesInSection.length) {
+        setTimeout(setSlidesHeight, 100);
+      }
+    }
+
+    // Recalculate on window resize
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(setSlidesHeight, 250);
+    });
 
     let currentIndex = 0;
     let isAnimating = false;
@@ -360,12 +442,18 @@
 
   .slideshow-text__slides-text {
     position: relative;
-    min-height: 150px;
+    min-height: 300px;
     flex: 1;
     display: flex;
     align-items: flex-end;
     width: 100%;
     overflow: visible;
+  }
+
+  @media screen and (min-width: 1024px) {
+    .slideshow-text__slides-text {
+      min-height: 350px;
+    }
   }
 
   @media screen and (max-width: 749px) {
