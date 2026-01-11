@@ -153,6 +153,11 @@
     // Set initial text color
     updateTextColor(0);
 
+    // Mark animation as complete after first animation finishes (1.3s total: 0.3s delay + 0.8s animation + 0.2s buffer)
+    setTimeout(function() {
+      heroSection.classList.add('hero-slideshow--animation-complete');
+    }, 1300);
+
     if (slides.length <= 1) return;
 
     let currentIndex = 0;
@@ -376,20 +381,29 @@
     opacity: 0;
   }
 
-  /* Sequence animation for active text elements */
-  .hero-slideshow__text--active .hero-slideshow__subheading {
+  /* Sequence animation for active text elements - only on first load */
+  .hero-slideshow:not(.hero-slideshow--animation-complete) .hero-slideshow__text--active .hero-slideshow__subheading {
     animation: slideInLeft 0.8s var(--animation-easing, ease) both;
     animation-delay: 0.1s;
   }
 
-  .hero-slideshow__text--active .hero-slideshow__heading {
+  .hero-slideshow:not(.hero-slideshow--animation-complete) .hero-slideshow__text--active .hero-slideshow__heading {
     animation: slideInBottom 0.8s var(--animation-easing, ease) both;
     animation-delay: 0.3s;
   }
 
-  .hero-slideshow__text--active .hero-slideshow__buttons {
+  .hero-slideshow:not(.hero-slideshow--animation-complete) .hero-slideshow__text--active .hero-slideshow__buttons {
     animation: slideInRight 0.8s var(--animation-easing, ease) both;
     animation-delay: 0.5s;
+  }
+
+  /* After first animation - keep text visible and centered */
+  .hero-slideshow--animation-complete .hero-slideshow__text--active .hero-slideshow__subheading,
+  .hero-slideshow--animation-complete .hero-slideshow__text--active .hero-slideshow__heading,
+  .hero-slideshow--animation-complete .hero-slideshow__text--active .hero-slideshow__buttons {
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 
   /* Reset animations when text becomes inactive */
