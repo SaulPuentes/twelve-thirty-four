@@ -72,6 +72,16 @@
 
     {%- comment -%} Actions {%- endcomment -%}
     {% render 'header-actions' %}
+
+    {%- comment -%} Mobile menu button {%- endcomment -%}
+    <button
+      type="button"
+      class="header__menu-toggle md:hidden"
+      aria-label="{{ 'accessibility.open_menu' | t }}"
+      data-menu-toggle
+    >
+      {% render 'icon', icon: 'menu', size: 24 %}
+    </button>
   </div>
 </header>
 

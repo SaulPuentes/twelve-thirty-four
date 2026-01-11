@@ -283,14 +283,15 @@
   }
 
   .slideshow-text__grid {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 3rem;
     min-height: 500px;
   }
 
   @media screen and (min-width: 1024px) {
     .slideshow-text__grid {
+      display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4rem;
       min-height: 600px;
@@ -305,11 +306,21 @@
     min-height: 100%;
     width: 100%;
     max-width: 600px;
+    order: 2;
+  }
+
+  .slideshow-text__media {
+    order: 1;
   }
 
   @media screen and (min-width: 1024px) {
     .slideshow-text__content {
       margin-left: auto;
+      order: unset;
+    }
+
+    .slideshow-text__media {
+      order: unset;
     }
   }
 
