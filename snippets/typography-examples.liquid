@@ -1,0 +1,215 @@
+{%- comment -%}
+  Typography Examples Snippet
+  
+  Demonstrates the typography system:
+  - MyriadPro (body) - clarity and readability
+  - GT Ultra (headings) - personality and editorial feel
+  - ABC Arizona Flare (accent) - expressive accents
+  
+  Usage: {% render 'typography-examples' %}
+  
+  Optional parameters:
+  - product: A product object to display real data
+  - show_all: Boolean to show all typography examples (default: false)
+{%- endcomment -%}
+
+{%- liquid
+  assign show_all = show_all | default: true
+  assign example_product = product | default: nil
+-%}
+
+<div class="typography-examples">
+  {%- comment -%} Example 1: Product Card with Typography Hierarchy {%- endcomment -%}
+  <div class="typography-example typography-example--product-card">
+    {%- if example_product -%}
+      {%- comment -%} Real product data {%- endcomment -%}
+      <span class="badge badge--accent accent">
+        {%- if example_product.available == false -%}
+          {{ 'products.product.sold_out' | t }}
+        {%- elsif example_product.compare_at_price > example_product.price -%}
+          {{ 'products.product.on_sale' | t }}
+        {%- else -%}
+          {{ 'products.product.new' | t | default: 'New Arrival' }}
+        {%- endif -%}
+      </span>
+      
+      <h2 class="product-title h3">{{ example_product.title }}</h2>
+      
+      <p class="product-description">
+        {{ example_product.description | strip_html | truncate: 200 }}
+      </p>
+      
+      <p class="product-price">
+        {{ example_product.price | money }}
+      </p>
+    {%- else -%}
+      {%- comment -%} Placeholder example {%- endcomment -%}
+      <span class="badge badge--accent accent">Limited Edition</span>
+      
+      <h2 class="product-title h3">Artisan Ceramic Vase</h2>
+      
+      <p class="product-description">
+        Hand-crafted by skilled artisans using traditional techniques passed down through generations. 
+        Each piece is unique, featuring subtle variations in glaze and form that celebrate the beauty of handmade objects.
+      </p>
+      
+      <p class="product-price">$185.00</p>
+    {%- endif -%}
+  </div>
+
+  {%- if show_all -%}
+    {%- comment -%} Example 2: Full Typography Scale {%- endcomment -%}
+    <div class="typography-example typography-example--scale">
+      <h3 class="section-title">Typography Scale</h3>
+      
+      <div class="typography-scale">
+        <h1 class="h1">Heading 1 — GT Ultra</h1>
+        <h2 class="h2">Heading 2 — GT Ultra</h2>
+        <h3 class="h3">Heading 3 — GT Ultra</h3>
+        <h4 class="h4">Heading 4 — GT Ultra</h4>
+        <h5 class="h5">Heading 5 — GT Ultra</h5>
+        <h6 class="h6">Heading 6 — GT Ultra</h6>
+        
+        <p class="lead">
+          Lead paragraph text in MyriadPro. Perfect for introductions and key messages that need emphasis without overwhelming the reader.
+        </p>
+        
+        <p>
+          Body text in MyriadPro. This is the standard text style used throughout the theme for product descriptions, 
+          page content, and general reading. It's optimized for clarity and readability across all devices.
+        </p>
+        
+        <p class="small">
+          Small text in MyriadPro. Used for captions, footnotes, and secondary information.
+        </p>
+      </div>
+    </div>
+
+    {%- comment -%} Example 3: Accent Typography Showcase {%- endcomment -%}
+    <div class="typography-example typography-example--accents">
+      <h3 class="section-title">Accent Typography — ABC Arizona Flare</h3>
+      
+      <div class="accent-showcase">
+        <div class="accent-item">
+          <span class="badge badge--primary accent">New Arrival</span>
+        </div>
+        
+        <div class="accent-item">
+          <span class="badge badge--secondary accent">Best Seller</span>
+        </div>
+        
+        <div class="accent-item">
+          <span class="badge badge--accent accent">Limited Edition</span>
+        </div>
+        
+        <div class="accent-item">
+          <span class="highlight accent">Featured Collection</span>
+        </div>
+        
+        <div class="accent-item">
+          <span class="promo-title accent">Summer Sale — 30% Off</span>
+        </div>
+        
+        <div class="accent-item">
+          <span class="special-callout accent">Handcrafted</span>
+        </div>
+      </div>
+      
+      <blockquote class="quote">
+        "Design is not just what it looks like and feels like. Design is how it works."
+        <cite>— Steve Jobs</cite>
+      </blockquote>
+    </div>
+
+    {%- comment -%} Example 4: Hero Section {%- endcomment -%}
+    <div class="typography-example typography-example--hero">
+      <h1 class="hero-title">Curated Living</h1>
+      <p class="lead">
+        Discover thoughtfully designed pieces that transform your space into a sanctuary of style and comfort.
+      </p>
+      <span class="special-callout accent">Shop the Collection</span>
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+  .typography-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .typography-example {
+    padding: 2rem;
+    border: 1px solid var(--color-border, #e5e5e5);
+    border-radius: 8px;
+  }
+
+  .typography-example--product-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .typography-example--product-card .badge {
+    align-self: flex-start;
+  }
+
+  .typography-example--product-card .product-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .typography-example--product-card .product-description {
+    opacity: 0.8;
+    margin-bottom: 1rem;
+  }
+
+  .typography-example--product-card .product-price {
+    font-size: var(--font-size--lg, 1.125rem);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .typography-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .accent-showcase {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .accent-item {
+    display: inline-flex;
+  }
+
+  .typography-example--hero {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, var(--color-background) 0%, rgba(0,0,0,0.02) 100%);
+  }
+
+  .typography-example--hero .hero-title {
+    margin-bottom: 1rem;
+  }
+
+  .typography-example--hero .lead {
+    max-width: 600px;
+    margin: 0 auto 2rem;
+  }
+
+  blockquote cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: var(--font-size--sm, 0.875rem);
+    font-style: normal;
+    opacity: 0.7;
+  }
+</style>

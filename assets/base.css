@@ -1,6 +1,11 @@
 /**
  * Base CSS
  * Essential styles for twelve-thirty-four theme components
+ * 
+ * Typography System:
+ * - Body: MyriadPro (clarity, readability)
+ * - Headings: GT Ultra (personality, editorial)
+ * - Accent: ABC Arizona Flare (expressive accents)
  */
 
 * {
@@ -14,6 +19,8 @@ body {
   flex-direction: column;
   margin: 0;
   min-height: 100svh;
+  font-family: var(--font-body-family);
+  font-size: var(--font-size-base, 16px);
 }
 
 /* Utility classes */
@@ -71,10 +78,10 @@ body {
 
 /* Spacing style */
 .spacing-style {
-  --spacing-scale: var(--spacing-scale-md);
+  --spacing-scale: var(--spacing-scale-md, 0.7);
 
   @media screen and (min-width: 990px) {
-    --spacing-scale: var(--spacing-scale-default);
+    --spacing-scale: var(--spacing-scale-default, 1.0);
   }
 
   /* Must disable this, when you use these with calc and another unit type, things break — see logo.liquid */
@@ -95,10 +102,10 @@ body {
 
 .spacing-style,
 .inherit-spacing {
-  padding-block: calc(var(--padding-block-start) + var(--section-top-offset, 0px)) var(--padding-block-end);
-  padding-inline: var(--padding-inline-start) var(--padding-inline-end);
-  margin-block: var(--margin-block-start) var(--margin-block-end);
-  margin-inline: var(--margin-inline-start) var(--margin-inline-end);
+  padding-block: calc(var(--padding-block-start, 0px) + var(--section-top-offset, 0px)) var(--padding-block-end, 0px);
+  padding-inline: var(--padding-inline-start, 0px) var(--padding-inline-end, 0px);
+  margin-block: var(--margin-block-start, 0px) var(--margin-block-end, 0px);
+  margin-inline: var(--margin-inline-start, 0px) var(--margin-inline-end, 0px);
 }
 
 /* Dialog styles */

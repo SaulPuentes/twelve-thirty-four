@@ -1,15 +1,7 @@
 <style>
   :root {
-    /* Typography */
-    --font-body-family: {{ settings.type_body_font.family }}, {{ settings.type_body_font.fallback_families }};
-    --font-body-style: {{ settings.type_body_font.style }};
-    --font-body-weight: {{ settings.type_body_font.weight }};
-
-    --font-heading-family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
-    --font-heading-style: {{ settings.type_heading_font.style }};
-    --font-heading-weight: {{ settings.type_heading_font.weight }};
-
-    --font-size-base: {{ settings.body_font_size }}px;
+    /* Typography - Base font size from settings */
+    --font-size-base: {{ settings.body_font_size | default: 16 }}px;
 
     /* Font family aliases for components */
     --font-paragraph--family: var(--font-body-family);
