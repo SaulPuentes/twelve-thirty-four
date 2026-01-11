@@ -70,18 +70,20 @@
       </ul>
     </nav>
 
-    {%- comment -%} Actions {%- endcomment -%}
-    {% render 'header-actions' %}
+    {%- comment -%} Actions & Mobile Menu {%- endcomment -%}
+    <div class="header__actions-wrapper">
+      {% render 'header-actions' %}
 
-    {%- comment -%} Mobile menu button {%- endcomment -%}
-    <button
-      type="button"
-      class="header__menu-toggle md:hidden"
-      aria-label="{{ 'accessibility.open_menu' | t }}"
-      data-menu-toggle
-    >
-      {% render 'icon', icon: 'menu', size: 24 %}
-    </button>
+      {%- comment -%} Mobile menu button {%- endcomment -%}
+      <button
+        type="button"
+        class="header__menu-toggle md:hidden"
+        aria-label="{{ 'accessibility.open_menu' | t }}"
+        data-menu-toggle
+      >
+        {% render 'icon', icon: 'menu', size: 24 %}
+      </button>
+    </div>
   </div>
 </header>
 
@@ -334,6 +336,12 @@
 
   .header__dropdown-link:hover {
     opacity: 0.7;
+  }
+
+  .header__actions-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
   }
 
   .header__actions {
