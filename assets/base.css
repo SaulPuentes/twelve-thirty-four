@@ -12,6 +12,10 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 body {
   color: var(--color-foreground);
   background: var(--color-background);
@@ -21,6 +25,7 @@ body {
   min-height: 100svh;
   font-family: var(--font-body-family);
   font-size: var(--font-size-base, 16px);
+  overflow-x: hidden;
 }
 
 /* Utility classes */
