@@ -31,8 +31,11 @@
     {%- endif -%}
     
     {%- if product.description != blank -%}
-      <div class="slideshow-product__description">
-        {{ product.description | strip_html }} <a href="{{ product.url }}" class="slideshow-product__read-more">Read more</a>
+      <div class="slideshow-product__description-wrapper">
+        <div class="slideshow-product__description">
+          {{ product.description | strip_html }}
+        </div>
+        <a href="{{ product.url }}" class="slideshow-product__read-more">Read more</a>
       </div>
     {%- endif -%}
     
@@ -138,22 +141,30 @@
     margin: 0;
   }
   
+  .slideshow-product__description-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    max-width: 450px;
+  }
+
   .slideshow-product__description {
     font-family: var(--font-body-family);
     font-size: 0.9375rem;
     line-height: 1.7;
     color: var(--color-foreground);
     opacity: 0.7;
-    max-width: 450px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 0;
   }
   
   .slideshow-product__read-more {
-    display: inline;
-    margin-left: 0.25rem;
+    display: inline-block;
     font-family: var(--font-body-family);
     font-size: 0.9375rem;
     font-weight: 500;
@@ -163,6 +174,7 @@
     text-underline-offset: 2px;
     transition: opacity 0.3s ease;
     white-space: nowrap;
+    flex-shrink: 0;
   }
   
   .slideshow-product__read-more:hover {
