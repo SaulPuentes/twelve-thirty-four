@@ -38,15 +38,8 @@
                   {%- endif -%}
 
                   {%- if block.settings.description != blank -%}
-                    <div class="slideshow-text__slide-description-wrapper">
-                      <div class="slideshow-text__slide-description">
-                        {{ block.settings.description }}
-                      </div>
-                      {%- if block.settings.product != blank -%}
-                        <a href="{{ block.settings.product.url }}" class="slideshow-text__slide-link">
-                          {%- render 'animated-arrow' -%}
-                        </a>
-                      {%- endif -%}
+                    <div class="slideshow-text__slide-description">
+                      {{ block.settings.description }}
                     </div>
                   {%- endif -%}
 
@@ -99,14 +92,27 @@
             {%- case block.type -%}
               {%- when 'slide' -%}
                 {%- if block.settings.image != blank -%}
-                  <img
-                    src="{{ block.settings.image | image_url: width: 1200 }}"
-                    alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
-                    width="600"
-                    height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
-                    class="slideshow-text__image"
-                    loading="lazy"
-                  >
+                  {%- if block.settings.product != blank -%}
+                    <a href="{{ block.settings.product.url }}" class="slideshow-text__product-link">
+                      <img
+                        src="{{ block.settings.image | image_url: width: 1200 }}"
+                        alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                        width="600"
+                        height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
+                        class="slideshow-text__image slideshow-text__image--product"
+                        loading="lazy"
+                      >
+                    </a>
+                  {%- else -%}
+                    <img
+                      src="{{ block.settings.image | image_url: width: 1200 }}"
+                      alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                      width="600"
+                      height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
+                      class="slideshow-text__image"
+                      loading="lazy"
+                    >
+                  {%- endif -%}
                 {%- else -%}
                   {{ 'lifestyle-1' | placeholder_svg_tag: 'slideshow-text__placeholder' }}
                 {%- endif -%}
@@ -348,40 +354,19 @@
     }
   }
 
-  .slideshow-text__slide-description-wrapper {
-    display: flex;
-    align-items: flex-end;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-
   .slideshow-text__slide-description {
     font-family: var(--font-body-family);
     font-size: 0.9375rem;
     line-height: 1.7;
     color: var(--color-foreground);
     opacity: 0.7;
+    margin-bottom: 1.25rem;
     max-width: 450px;
-    flex-shrink: 0;
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-
-  .slideshow-text__slide-link {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--color-foreground);
-    text-decoration: none;
-    flex-shrink: 0;
-    transition: opacity var(--animation-speed, 0.2s) ease;
-
-    &:hover {
-      opacity: 0.8;
-    }
   }
 
   .slideshow-text__slide-meta {
