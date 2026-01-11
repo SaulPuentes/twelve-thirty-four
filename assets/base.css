@@ -840,7 +840,7 @@ fly-to-cart.fly-to-cart--sticky {
 
 /* Cart Drawer Quantity Selector */
 .cart-drawer .quantity-selector {
-  --quantity-selector-width: 90px;
+  --quantity-selector-width: 120px;
   --icon-stroke-width: 1.5;
 
   display: flex;
