@@ -33,9 +33,10 @@
     {%- if product.description != blank -%}
       <div class="slideshow-text__slide-description-wrapper">
         <div class="slideshow-text__slide-description">
-          {{ product.description | strip_html }} <a href="{{ product.url }}" class="slideshow-product__read-more"> Read more</a>
+          {{ product.description | strip_html }}
         </div>
           <a href="{{ product.url }}" class="slideshow-text__slide-link">
+            <span>View Details</span>
             {%- render 'animated-arrow' -%}
           </a>
       </div>

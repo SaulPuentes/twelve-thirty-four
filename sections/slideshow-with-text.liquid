@@ -350,7 +350,7 @@
 
   .slideshow-text__slide-description-wrapper {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 1rem;
     margin-bottom: 1.25rem;
   }
@@ -363,15 +363,20 @@
     opacity: 0.7;
     max-width: 450px;
     flex-shrink: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .slideshow-text__slide-link {
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     color: var(--color-foreground);
     text-decoration: none;
     flex-shrink: 0;
-    margin-top: 0.25rem;
     transition: opacity var(--animation-speed, 0.2s) ease;
 
     &:hover {
