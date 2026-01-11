@@ -229,6 +229,28 @@
 </script>
 
 {% stylesheet %}
+  /* Side link animations with vertical centering */
+  @keyframes slideInLeftWithCenter {
+    from {
+      opacity: 0;
+      transform: translateX(-60px) translateY(-50%);
+    }
+    to {
+      opacity: 0.8;
+      transform: translateX(0) translateY(-50%);
+    }
+  }
+
+  @keyframes slideInRightWithCenter {
+    from {
+      opacity: 0;
+      transform: translateX(60px) translateY(-50%);
+    }
+    to {
+      opacity: 0.8;
+      transform: translateX(0) translateY(-50%);
+    }
+  }
   .hero-slideshow {
     position: relative;
     width: 100%;
@@ -415,13 +437,13 @@
     text-transform: uppercase;
     text-decoration: none;
     color: currentColor;
-    opacity: 0.8;
+    opacity: 0;
     pointer-events: auto;
     transition: opacity 0.3s ease;
   }
 
   .hero-slideshow__side-link:hover {
-    opacity: 1;
+    opacity: 1 !important;
   }
 
   .hero-slideshow__side-link-underline {
@@ -440,14 +462,16 @@
     position: absolute;
     left: 2rem;
     top: 50%;
-    transform: translateY(-50%);
+    animation: slideInLeftWithCenter 0.8s var(--animation-easing, ease) forwards;
+    animation-delay: 0.7s;
   }
 
   .hero-slideshow__side-link--right {
     position: absolute;
     right: 2rem;
     top: 50%;
-    transform: translateY(-50%);
+    animation: slideInRightWithCenter 0.8s var(--animation-easing, ease) forwards;
+    animation-delay: 0.7s;
   }
 
   /* Navigation Dots */
