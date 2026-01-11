@@ -92,27 +92,14 @@
             {%- case block.type -%}
               {%- when 'slide' -%}
                 {%- if block.settings.image != blank -%}
-                  {%- if block.settings.product != blank -%}
-                    <a href="{{ block.settings.product.url }}" class="slideshow-text__product-link">
-                      <img
-                        src="{{ block.settings.image | image_url: width: 1200 }}"
-                        alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
-                        width="600"
-                        height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
-                        class="slideshow-text__image slideshow-text__image--product"
-                        loading="lazy"
-                      >
-                    </a>
-                  {%- else -%}
-                    <img
-                      src="{{ block.settings.image | image_url: width: 1200 }}"
-                      alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
-                      width="600"
-                      height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
-                      class="slideshow-text__image"
-                      loading="lazy"
-                    >
-                  {%- endif -%}
+                  <img
+                    src="{{ block.settings.image | image_url: width: 1200 }}"
+                    alt="{{ block.settings.image.alt | default: block.settings.title | escape }}"
+                    width="600"
+                    height="{{ 600 | divided_by: block.settings.image.aspect_ratio | round }}"
+                    class="slideshow-text__image"
+                    loading="lazy"
+                  >
                 {%- else -%}
                   {{ 'lifestyle-1' | placeholder_svg_tag: 'slideshow-text__placeholder' }}
                 {%- endif -%}
@@ -156,27 +143,45 @@
 
     if (contents.length <= 1) return;
 
+    // Ensure arrays have matching lengths
+    if (contents.length !== images.length) {
+      console.warn('Slideshow: Content and image counts do not match');
+      return;
+    }
+
     let currentIndex = 0;
     let isAnimating = false;
     const autoplayInterval = {{ section.settings.autoplay_speed }}000;
+    let autoplayTimer = null;
 
     function goToSlide(index) {
+      // Validate index
+      if (index < 0 || index >= contents.length) return;
       if (isAnimating || index === currentIndex) return;
-      isAnimating = true;
+      if (!contents[index] || !images[index]) return;
 
+      isAnimating = true;
       const oldIndex = currentIndex;
 
       // Update navigation dots immediately
-      if (navDots.length) {
-        navDots[oldIndex].classList.remove('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
-        navDots[index].classList.add('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
+      if (navDots.length > 0) {
+        if (navDots[oldIndex]) {
+          navDots[oldIndex].classList.remove('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
+        }
+        if (navDots[index]) {
+          navDots[index].classList.add('slideshow-nav__dot--active', 'slideshow-text__nav-dot--active');
+        }
       }
 
       // Start exit animation on old slide
-      contents[oldIndex].classList.add('slideshow-text__slide-content--exiting');
-      contents[oldIndex].classList.remove('slideshow-text__slide-content--active');
-      images[oldIndex].classList.add('slideshow-text__slide-image--exiting');
-      images[oldIndex].classList.remove('slideshow-text__slide-image--active');
+      if (contents[oldIndex]) {
+        contents[oldIndex].classList.add('slideshow-text__slide-content--exiting');
+        contents[oldIndex].classList.remove('slideshow-text__slide-content--active');
+      }
+      if (images[oldIndex]) {
+        images[oldIndex].classList.add('slideshow-text__slide-image--exiting');
+        images[oldIndex].classList.remove('slideshow-text__slide-image--active');
+      }
 
       // Update current index
       currentIndex = index;
@@ -184,12 +189,20 @@
       // Wait for exit animation to complete, then show new slide
       setTimeout(function() {
         // Clean up old slide
-        contents[oldIndex].classList.remove('slideshow-text__slide-content--exiting');
-        images[oldIndex].classList.remove('slideshow-text__slide-image--exiting');
+        if (contents[oldIndex]) {
+          contents[oldIndex].classList.remove('slideshow-text__slide-content--exiting');
+        }
+        if (images[oldIndex]) {
+          images[oldIndex].classList.remove('slideshow-text__slide-image--exiting');
+        }
 
         // Show new slide (enters from left)
-        contents[index].classList.add('slideshow-text__slide-content--active');
-        images[index].classList.add('slideshow-text__slide-image--active');
+        if (contents[index]) {
+          contents[index].classList.add('slideshow-text__slide-content--active');
+        }
+        if (images[index]) {
+          images[index].classList.add('slideshow-text__slide-image--active');
+        }
 
         // Reset animation lock after entry animation completes
         setTimeout(function() {
@@ -199,28 +212,40 @@
     }
 
     function nextSlide() {
+      if (contents.length === 0) return;
       const next = (currentIndex + 1) % contents.length;
       goToSlide(next);
     }
 
     // Navigation dots click
     navDots.forEach(function(dot, index) {
-      dot.addEventListener('click', function() {
-        goToSlide(index);
-      });
+      if (dot) {
+        dot.addEventListener('click', function() {
+          goToSlide(index);
+        });
+      }
     });
 
     // Autoplay
     {% if section.settings.autoplay %}
-      let autoplayTimer = setInterval(nextSlide, autoplayInterval);
-
-      section.addEventListener('mouseenter', function() {
-        clearInterval(autoplayTimer);
-      });
-
-      section.addEventListener('mouseleave', function() {
+      function startAutoplay() {
+        if (autoplayTimer) {
+          clearInterval(autoplayTimer);
+        }
         autoplayTimer = setInterval(nextSlide, autoplayInterval);
-      });
+      }
+
+      function stopAutoplay() {
+        if (autoplayTimer) {
+          clearInterval(autoplayTimer);
+          autoplayTimer = null;
+        }
+      }
+
+      startAutoplay();
+
+      section.addEventListener('mouseenter', stopAutoplay);
+      section.addEventListener('mouseleave', startAutoplay);
     {% endif %}
   });
 </script>

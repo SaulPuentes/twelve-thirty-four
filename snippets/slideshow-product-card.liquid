@@ -35,7 +35,9 @@
         <div class="slideshow-product__description">
           {{ product.description | strip_html }}
         </div>
-        <a href="{{ product.url }}" class="slideshow-product__read-more">Read more</a>
+        <a href="{{ product.url }}" class="slideshow-product__read-more">
+          {%- render 'animated-arrow' -%}
+        </a>
       </div>
     {%- endif -%}
     
