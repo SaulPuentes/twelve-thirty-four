@@ -315,6 +315,9 @@
     transition: opacity 0.3s var(--animation-easing, ease);
     padding-block-start: var(--padding-xl, 2rem);
   }
+  .recipient-fields .field {
+    position: relative;
+  }
 
   .recipient-fields[hidden] {
     display: none;
@@ -351,23 +354,50 @@
   }
 
   .recipient-fields__input {
-    flex-grow: 1;
-    transition: background-color var(--animation-speed, 0.2s) ease;
+    width: 100%;
+    min-height: 44px;
     padding: var(--input-padding, 0.75rem);
     background-color: var(--color-input-background, transparent);
     color: var(--color-input-text, currentColor);
     text-align: left;
     font-size: var(--font-paragraph--size, 1rem);
+    line-height: 1.5;
     border: var(--style-border-width-inputs, 1px) solid var(--color-input-border, rgba(0, 0, 0, 0.1));
     border-radius: var(--style-border-radius-inputs, 4px);
+    appearance: none;
+    outline: none;
+    transition: background-color var(--animation-speed, 0.2s) var(--animation-easing, ease),
+      border-color var(--animation-speed, 0.2s) var(--animation-easing, ease),
+      box-shadow var(--animation-speed, 0.2s) var(--animation-easing, ease);
+
+    &::placeholder {
+      color: var(--color-input-text, currentColor);
+      opacity: 0.6;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-input-hover-background, rgba(0, 0, 0, 0.05));
+      border-color: var(--color-input-border, rgba(0, 0, 0, 0.15));
+    }
+
+    &:focus-visible {
+      outline: var(--focus-outline-width, 2px) solid var(--color-input-border, rgba(0, 0, 0, 0.2));
+      outline-offset: var(--focus-outline-offset, 2px);
+      border-color: var(--color-input-border, rgba(0, 0, 0, 0.2));
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background-color: var(--input-disabled-background-color, rgba(0, 0, 0, 0.05));
+      border-color: var(--input-disabled-border-color, rgba(0, 0, 0, 0.1));
+      color: var(--input-disabled-text-color, rgba(0, 0, 0, 0.5));
+    }
 
     &:autofill {
       background-color: var(--color-input-background, transparent);
       color: var(--color-input-text, currentColor);
-    }
-
-    &:is(:focus) {
-      outline-color: var(--color-input-background, transparent);
+      border-color: var(--color-input-border, rgba(0, 0, 0, 0.1));
     }
   }
 
