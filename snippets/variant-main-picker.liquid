@@ -689,4 +689,66 @@
     text-align: right;
     justify-content: right;
   }
+
+  .quantity-selector {
+    color: var(--color-input-text, currentColor);
+    background-color: var(--color-input-background, transparent);
+    border: var(--style-border-width-inputs, 1px) solid var(--color-input-border, rgba(0, 0, 0, 0.1));
+    border-radius: var(--style-border-radius-inputs, 4px);
+    flex: 1 1 var(--quantity-selector-width, 124px);
+    transition: background-color var(--animation-speed, 0.2s) var(--animation-easing, ease);
+
+    &:hover {
+      background-color: var(--color-input-hover-background, rgba(0, 0, 0, 0.05));
+    }
+
+    :is(.quantity-minus, .quantity-plus) {
+      width: var(--minimum-touch-target, 44px);
+      height: var(--minimum-touch-target, 44px);
+      color: var(--color-input-text, currentColor);
+    }
+
+    .quantity-minus {
+      border-start-start-radius: var(--style-border-radius-inputs, 4px);
+      border-end-start-radius: var(--style-border-radius-inputs, 4px);
+    }
+
+    .quantity-plus {
+      border-start-end-radius: var(--style-border-radius-inputs, 4px);
+      border-end-end-radius: var(--style-border-radius-inputs, 4px);
+    }
+
+    .svg-wrapper {
+      transition: transform var(--animation-speed, 0.2s) var(--animation-easing, ease);
+    }
+
+    svg {
+      width: var(--icon-size-xs, 16px);
+      height: var(--icon-size-xs, 16px);
+    }
+
+    input[type='number'] {
+      max-width: calc(var(--quantity-selector-width, 124px) - var(--minimum-touch-target, 44px) * 2);
+      border-radius: var(--style-border-radius-buttons, 4px);
+      color: var(--color-input-text, currentColor);
+    }
+  }
+
+  .product-form-buttons:has(.add-to-cart-button.button-secondary) .quantity-selector {
+    border-radius: var(--style-border-radius-buttons-secondary, 4px);
+  }
+
+  .product-details .quantity-selector {
+    border-radius: var(--style-border-radius-buttons-primary, 4px);
+
+    .quantity-minus {
+      border-start-start-radius: var(--style-border-radius-buttons-primary, 4px);
+      border-end-start-radius: var(--style-border-radius-buttons-primary, 4px);
+    }
+
+    .quantity-plus {
+      border-start-end-radius: var(--style-border-radius-buttons-primary, 4px);
+      border-end-end-radius: var(--style-border-radius-buttons-primary, 4px);
+    }
+  }
 {% endstylesheet %}

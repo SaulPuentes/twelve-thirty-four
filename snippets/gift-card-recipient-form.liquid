@@ -226,23 +226,23 @@
 
 {% stylesheet %}
   .recipient-form {
-    --options-border-radius: var(--variant-picker-button-radius);
-    --options-border-width: var(--variant-picker-button-border-width);
+    --options-border-radius: var(--variant-picker-button-radius, 4px);
+    --options-border-width: var(--variant-picker-button-border-width, 1px);
 
     display: flex;
     flex-direction: column;
-    padding-bottom: var(--padding-2xl);
+    padding-bottom: var(--padding-2xl, 3rem);
   }
 
   .recipient-form__send-to {
     padding: 0;
-    margin-block-end: var(--margin-xs);
+    margin-block-end: var(--margin-xs, 0.5rem);
   }
 
   .gift-card-form-option {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--gap-sm);
+    gap: var(--gap-sm, 0.75rem);
     padding: 0;
     border: none;
   }
@@ -251,45 +251,45 @@
     display: flex;
     align-items: center;
     position: relative;
-    padding-block: var(--padding-sm);
-    padding-inline: var(--padding-lg);
-    border: var(--style-border-width) solid var(--color-variant-border);
-    border-radius: var(--options-border-radius);
-    border-width: var(--options-border-width);
+    padding-block: var(--padding-sm, 0.5rem);
+    padding-inline: var(--padding-lg, 1rem);
+    border: var(--style-border-width, 1px) solid var(--color-variant-border, rgba(0, 0, 0, 0.1));
+    border-radius: var(--options-border-radius, 4px);
+    border-width: var(--options-border-width, 1px);
     overflow: clip;
     justify-content: center;
     min-width: auto;
-    background-color: var(--color-variant-background);
-    color: var(--color-variant-text);
-    transition: background-color var(--animation-speed) var(--animation-easing),
-      border-color var(--animation-speed) var(--animation-easing);
+    background-color: var(--color-variant-background, transparent);
+    color: var(--color-variant-text, currentColor);
+    transition: background-color var(--animation-speed, 0.2s) var(--animation-easing, ease),
+      border-color var(--animation-speed, 0.2s) var(--animation-easing, ease);
 
     &:hover {
-      background-color: var(--color-variant-hover-background);
-      border-color: var(--color-variant-hover-border);
-      color: var(--color-variant-hover-text);
+      background-color: var(--color-variant-hover-background, rgba(0, 0, 0, 0.05));
+      border-color: var(--color-variant-hover-border, rgba(0, 0, 0, 0.2));
+      color: var(--color-variant-hover-text, currentColor);
     }
   }
 
   .gift-card-form-option__button-label:has(:focus-visible) {
-    --variant-picker-stroke-color: var(--color-foreground);
+    --variant-picker-stroke-color: var(--color-foreground, currentColor);
 
-    border-color: var(--color-foreground);
-    outline: var(--focus-outline-width) solid var(--color-foreground);
-    outline-offset: var(--focus-outline-offset);
+    border-color: var(--color-foreground, currentColor);
+    outline: var(--focus-outline-width, 2px) solid var(--color-foreground, currentColor);
+    outline-offset: var(--focus-outline-offset, 2px);
   }
 
   .gift-card-form-option__button-label:has(:checked) {
-    color: var(--color-selected-variant-text);
-    background-color: var(--color-selected-variant-background);
-    border-color: var(--color-selected-variant-border);
-    transition: background-color var(--animation-speed) var(--animation-easing),
-      border-color var(--animation-speed) var(--animation-easing);
+    color: var(--color-selected-variant-text, currentColor);
+    background-color: var(--color-selected-variant-background, rgba(0, 0, 0, 0.1));
+    border-color: var(--color-selected-variant-border, rgba(0, 0, 0, 0.3));
+    transition: background-color var(--animation-speed, 0.2s) var(--animation-easing, ease),
+      border-color var(--animation-speed, 0.2s) var(--animation-easing, ease);
 
     &:hover {
-      background-color: var(--color-selected-variant-hover-background);
-      border-color: var(--color-selected-variant-hover-border);
-      color: var(--color-selected-variant-hover-text);
+      background-color: var(--color-selected-variant-hover-background, rgba(0, 0, 0, 0.15));
+      border-color: var(--color-selected-variant-hover-border, rgba(0, 0, 0, 0.4));
+      color: var(--color-selected-variant-hover-text, currentColor);
     }
   }
 
@@ -311,9 +311,9 @@
   .recipient-fields {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-sm);
-    transition: opacity 0.3s var(--animation-easing);
-    padding-block-start: var(--padding-xl);
+    gap: var(--gap-sm, 0.75rem);
+    transition: opacity 0.3s var(--animation-easing, ease);
+    padding-block-start: var(--padding-xl, 2rem);
   }
 
   .recipient-fields[hidden] {
@@ -329,16 +329,16 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: var(--gap-sm);
-    margin-top: var(--margin-sm);
+    gap: var(--gap-sm, 0.75rem);
+    margin-top: var(--margin-sm, 0.75rem);
   }
 
   .recipient-form-field-label {
     position: absolute;
-    left: var(--padding-sm);
-    bottom: var(--padding-sm);
+    left: var(--padding-sm, 0.5rem);
+    bottom: var(--padding-sm, 0.5rem);
     font-style: italic;
-    color: var(--color-input-text);
+    color: var(--color-input-text, currentColor);
   }
 
   .recipient-fields__textarea {
@@ -346,28 +346,28 @@
     overflow-y: auto;
 
     /* Space for the character count */
-    padding-bottom: calc(var(--padding-sm) * 3);
-    scroll-padding-bottom: calc(var(--padding-sm) * 3);
+    padding-bottom: calc(var(--padding-sm, 0.5rem) * 3);
+    scroll-padding-bottom: calc(var(--padding-sm, 0.5rem) * 3);
   }
 
   .recipient-fields__input {
     flex-grow: 1;
-    transition: background-color var(--animation-speed) ease;
-    padding: var(--input-padding);
-    background-color: var(--color-input-background);
-    color: var(--color-input-text);
+    transition: background-color var(--animation-speed, 0.2s) ease;
+    padding: var(--input-padding, 0.75rem);
+    background-color: var(--color-input-background, transparent);
+    color: var(--color-input-text, currentColor);
     text-align: left;
-    font-size: var(--font-paragraph--size);
-    border: var(--style-border-width-inputs) solid var(--color-input-border);
-    border-radius: var(--style-border-radius-inputs);
+    font-size: var(--font-paragraph--size, 1rem);
+    border: var(--style-border-width-inputs, 1px) solid var(--color-input-border, rgba(0, 0, 0, 0.1));
+    border-radius: var(--style-border-radius-inputs, 4px);
 
     &:autofill {
-      background-color: var(--color-input-background);
-      color: var(--color-input-text);
+      background-color: var(--color-input-background, transparent);
+      color: var(--color-input-text, currentColor);
     }
 
     &:is(:focus) {
-      outline-color: var(--color-input-background);
+      outline-color: var(--color-input-background, transparent);
     }
   }
 
@@ -393,7 +393,7 @@
   .field--send-on .recipient-fields__input::-webkit-datetime-edit-month-field,
   .field--send-on .recipient-fields__input::-webkit-datetime-edit-day-field {
     /* Override the disabled color */
-    color: var(--color-input-text);
+    color: var(--color-input-text, currentColor);
   }
 
   /* Fallback for other browsers */
