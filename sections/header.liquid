@@ -72,6 +72,16 @@
 
     {%- comment -%} Actions {%- endcomment -%}
     {% render 'header-actions' %}
+
+    {%- comment -%} Mobile menu button {%- endcomment -%}
+    <button
+      type="button"
+      class="header__menu-toggle md:hidden"
+      aria-label="{{ 'accessibility.open_menu' | t }}"
+      data-menu-toggle
+    >
+      {% render 'icon', icon: 'menu', size: 24 %}
+    </button>
   </div>
 </header>
 
@@ -356,7 +366,12 @@
     padding: 0;
     cursor: pointer;
     color: var(--color-foreground);
-    transition: color var(--animation-speed) var(--animation-easing);
+    transition: opacity var(--animation-speed) var(--animation-easing),
+                color var(--animation-speed) var(--animation-easing);
+  }
+
+  .header__menu-toggle:hover {
+    opacity: 0.7;
   }
 
   /* Mobile Menu */
