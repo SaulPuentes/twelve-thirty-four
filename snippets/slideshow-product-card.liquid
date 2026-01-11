@@ -31,13 +31,8 @@
     {%- endif -%}
     
     {%- if product.description != blank -%}
-      <div class="slideshow-product__description-wrapper">
-        <div class="slideshow-product__description">
-          {{ product.description | strip_html }}
-        </div>
-        <a href="{{ product.url }}" class="slideshow-product__arrow">
-          {%- render 'animated-arrow' -%}
-        </a>
+      <div class="slideshow-product__description">
+        {{ product.description | strip_html }}
       </div>
     {%- endif -%}
     
@@ -143,12 +138,6 @@
     margin: 0;
   }
   
-  .slideshow-product__description-wrapper {
-    display: flex;
-    align-items: flex-end;
-    gap: 0.5rem;
-  }
-
   .slideshow-product__description {
     font-family: var(--font-body-family);
     font-size: 0.9375rem;
@@ -160,28 +149,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 480px;
-    flex-grow: 0;
-    flex-shrink: 0;
-  }
-  
-  .slideshow-product__arrow {
-    display: inline-flex;
-    align-items: center;
-    padding-left: 1rem;
-    font-family: var(--font-body-family);
-    font-size: 0.9375rem;
-    font-weight: 500;
-    color: var(--color-foreground);
-    text-decoration: none;
-    transition: opacity 0.3s ease;
-    white-space: nowrap;
-    flex-grow: 0;
-    flex-shrink: 0;
-  }
-  
-  .slideshow-product__arrow:hover {
-    opacity: 0.7;
+    max-width: 500px;
   }
   
   .slideshow-product__price-info {

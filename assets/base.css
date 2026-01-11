@@ -509,6 +509,136 @@ dialog {
   outline-offset: var(--focus-outline-offset, 0.2em);
 }
 
+/* Collapsible row / Accordion */
+.icon-caret svg {
+  transition: transform var(--animation-speed, 0.2s) var(--animation-easing, ease);
+}
+
+.icon-caret--forward svg {
+  transform: rotate(-90deg);
+}
+
+.icon-caret--backward svg {
+  transform: rotate(90deg);
+}
+
+summary {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+  padding-block: var(--padding-sm, 0.5rem);
+}
+
+summary:hover {
+  color: var(--color-primary-hover, currentColor);
+}
+
+summary .svg-wrapper {
+  margin-inline-start: auto;
+  height: var(--icon-size-xs, 16px);
+  width: var(--icon-size-xs, 16px);
+  transition: transform var(--animation-speed, 0.2s) var(--animation-easing, ease);
+}
+
+/* iOS fix: hide the default arrow on the summary */
+summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] > summary .icon-animated > svg {
+  transform: rotate(180deg);
+}
+
+details[open] .summary-closed {
+  display: none;
+}
+
+details:not([open]) .summary-open {
+  display: none;
+}
+
+/* Shared plus/minus icon animations */
+summary .icon-plus :is(.horizontal, .vertical),
+.show-more__button .icon-plus :is(.horizontal, .vertical) {
+  transition: transform var(--animation-speed, 0.2s) var(--animation-easing, ease);
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
+  opacity: 1;
+}
+
+details[open] > summary .icon-plus .horizontal,
+.details-open > summary .icon-plus .horizontal,
+.show-more:where([data-expanded='true']) .show-more__button .icon-plus .horizontal {
+  transform: rotate(90deg);
+}
+
+details[open] > summary .icon-plus .vertical,
+.details-open > summary .icon-plus .vertical,
+.show-more:where([data-expanded='true']) .show-more__button .icon-plus .vertical {
+  transform: rotate(90deg);
+  opacity: 0;
+}
+
+accordion-custom {
+  details {
+    &::details-content,
+    .details-content {
+      block-size: 0;
+      overflow-y: clip;
+      opacity: 0;
+      interpolate-size: allow-keywords;
+      transition: content-visibility var(--animation-speed-slow, 0.3s) allow-discrete,
+        padding-block var(--animation-speed-slow, 0.3s) var(--animation-easing, ease),
+        opacity var(--animation-speed-slow, 0.3s) var(--animation-easing, ease),
+        block-size var(--animation-speed-slow, 0.3s) var(--animation-easing, ease);
+    }
+
+    /* Disable transitions when the content toggle is not caused by the direct user interaction, e.g. opening the filters on mobile. */
+    &:not(:focus-within)::details-content,
+    &:not(:focus-within) .details-content {
+      transition: none;
+    }
+
+    &:not([open]) {
+      &::details-content,
+      .details-content {
+        padding-block: 0;
+      }
+    }
+
+    &[open] {
+      &::details-content,
+      .details-content {
+        opacity: 1;
+        block-size: auto;
+
+        @starting-style {
+          block-size: 0;
+          opacity: 0;
+          overflow-y: clip;
+        }
+
+        &:focus-within {
+          overflow-y: visible;
+        }
+      }
+    }
+  }
+}
+
+accordion-custom[data-disable-on-mobile='true'] summary {
+  @media screen and (max-width: 749px) {
+    cursor: auto;
+  }
+}
+
+accordion-custom[data-disable-on-desktop='true'] summary {
+  @media screen and (min-width: 750px) {
+    cursor: auto;
+  }
+}
+
 /* Images */
 img,
 picture,
