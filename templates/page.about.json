@@ -117,7 +117,7 @@
         "movement_direction": "normal",
         "color_scheme": "scheme-1",
         "logo_height": 120,
-        "gap_between_elements": 48
+        "gap_between_elements": 64
       }
     },
     "quote-banner": {
