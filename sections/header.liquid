@@ -214,6 +214,10 @@
     color: #000;
   }
 
+  body[data-hero-text-color="white"] .header--transparent:not(.header--scrolled) .header__logo-image {
+    filter: invert(1);
+  }
+
   .header--transparent:not(.header--scrolled) .header__logo-image--default {
     display: none;
   }
