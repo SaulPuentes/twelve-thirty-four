@@ -20,7 +20,7 @@
       assign columns_desktop = 3
     else
       assign columns_tablet = 2
-      assign columns_desktop = section.settings.columns_desktop
+      assign columns_desktop = 3
   endcase
 -%}
 
@@ -515,17 +515,7 @@
   "name": "Shop showcase",
   "tag": "section",
   "class": "section-shop-showcase",
-  "settings": [
-    {
-      "type": "range",
-      "id": "columns_desktop",
-      "min": 2,
-      "max": 4,
-      "step": 1,
-      "default": 4,
-      "label": "Desktop columns (4+ items)"
-    }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "product",

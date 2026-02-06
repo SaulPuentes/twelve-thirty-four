@@ -92,7 +92,6 @@
         "description": "Discover our curated selection of blooms and hand-made objects, from locally crafted ceramics to candles and keepsakes sourced from artists around the world.",
         "columns": 4,
         "gap": 24,
-        "show_vendor": false,
         "show_view_all": true,
         "view_all_label": "Explore the shop",
         "view_all_link": "shopify://collections"
@@ -140,9 +139,7 @@
         "product_apBmTJ"
       ],
       "name": "Shop showcase",
-      "settings": {
-        "columns_desktop": 4
-      }
+      "settings": {}
     },
     "workshops": {
       "type": "slideshow-with-text",
