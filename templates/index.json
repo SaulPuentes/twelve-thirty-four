@@ -20,10 +20,7 @@
             "overlay_opacity": 30,
             "text_color": "black",
             "subheading": "",
-            "heading": "All things floral",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "secondary"
+            "heading": "All things floral"
           }
         },
         "slide-2": {
@@ -34,10 +31,7 @@
             "overlay_opacity": 20,
             "text_color": "white",
             "subheading": "",
-            "heading": "All things floral",
-            "button_label": "",
-            "button_link": "",
-            "button_style": "secondary"
+            "heading": "All things floral"
           }
         }
       },

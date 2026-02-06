@@ -62,17 +62,6 @@
           {%- if block.settings.heading != blank -%}
             <h1 class="hero-slideshow__heading">{{ block.settings.heading }}</h1>
           {%- endif -%}
-
-          {%- if block.settings.button_label != blank -%}
-            <div class="hero-slideshow__buttons">
-              <a
-                href="{{ block.settings.button_link }}"
-                class="button button--{{ block.settings.button_style }}"
-              >
-                {{ block.settings.button_label }}
-              </a>
-            </div>
-          {%- endif -%}
         </div>
       {%- endfor -%}
 
@@ -369,16 +358,9 @@
     color: currentColor;
   }
 
-  .hero-slideshow__buttons {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-  }
-
   /* Initial state for animation elements */
   .hero-slideshow__text .hero-slideshow__subheading,
-  .hero-slideshow__text .hero-slideshow__heading,
-  .hero-slideshow__text .hero-slideshow__buttons {
+  .hero-slideshow__text .hero-slideshow__heading {
     opacity: 0;
   }
 
@@ -393,15 +375,9 @@
     animation-delay: 0.3s;
   }
 
-  .hero-slideshow:not(.hero-slideshow--animation-complete) .hero-slideshow__text--active .hero-slideshow__buttons {
-    animation: slideInRight 0.8s var(--animation-easing, ease) both;
-    animation-delay: 0.5s;
-  }
-
   /* After first animation - keep text visible and centered */
   .hero-slideshow--animation-complete .hero-slideshow__text--active .hero-slideshow__subheading,
-  .hero-slideshow--animation-complete .hero-slideshow__text--active .hero-slideshow__heading,
-  .hero-slideshow--animation-complete .hero-slideshow__text--active .hero-slideshow__buttons {
+  .hero-slideshow--animation-complete .hero-slideshow__text--active .hero-slideshow__heading {
     opacity: 1;
     transform: none;
     animation: none;
@@ -409,18 +385,9 @@
 
   /* Reset animations when text becomes inactive */
   .hero-slideshow__text:not(.hero-slideshow__text--active) .hero-slideshow__subheading,
-  .hero-slideshow__text:not(.hero-slideshow__text--active) .hero-slideshow__heading,
-  .hero-slideshow__text:not(.hero-slideshow__text--active) .hero-slideshow__buttons {
+  .hero-slideshow__text:not(.hero-slideshow__text--active) .hero-slideshow__heading {
     animation: none;
     opacity: 0;
-  }
-
-  .hero-slideshow__content--center .hero-slideshow__buttons {
-    justify-content: center;
-  }
-
-  .hero-slideshow__content--right .hero-slideshow__buttons {
-    justify-content: flex-end;
   }
 
   /* Side Links */
@@ -748,26 +715,6 @@
           "id": "heading",
           "label": "Heading",
           "default": "All things floral"
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button label"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button link"
-        },
-        {
-          "type": "select",
-          "id": "button_style",
-          "label": "Button style",
-          "options": [
-            { "value": "primary", "label": "Primary" },
-            { "value": "secondary", "label": "Secondary" }
-          ],
-          "default": "primary"
         }
       ]
     }
