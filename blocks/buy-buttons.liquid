@@ -392,6 +392,12 @@
     padding-block: var(--padding-lg);
   }
 
+  .product-form-buttons button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
   .quantity-selector {
     flex-grow: 0;
     flex-shrink: 0;
@@ -450,6 +456,12 @@
   .add-to-cart-button {
     height: var(--height-buy-buttons);
     text-transform: var(--button-text-case-primary);
+  }
+
+  .add-to-cart-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   .add-to-cart-button.button-secondary {
