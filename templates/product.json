@@ -72,10 +72,10 @@
               "type": "text",
               "name": "t:names.title",
               "settings": {
-                "text": "<h1>{{ closest.product.title }}</h1>",
+                "text": "<h2>{{ closest.product.title }}</h2>",
                 "width": "100%",
                 "max_width": "normal",
-                "alignment": "center",
+                "alignment": "left",
                 "type_preset": "h3",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
@@ -88,7 +88,7 @@
                 "background_color": "#00000026",
                 "corner_radius": 0,
                 "padding-block-start": 50,
-                "padding-block-end": 0,
+                "padding-block-end": 15,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
@@ -110,7 +110,7 @@
                 "case": "none",
                 "color": "var(--color-foreground)",
                 "padding-block-start": 0,
-                "padding-block-end": 50,
+                "padding-block-end": 20,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
