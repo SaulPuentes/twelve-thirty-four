@@ -53,6 +53,70 @@
         "right_link_url": "shopify://collections/all"
       }
     },
+    "shop_showcase_Djwkrd": {
+      "type": "shop-showcase",
+      "blocks": {
+        "custom_link_gWmPeK": {
+          "type": "custom_link",
+          "settings": {
+            "image": "shopify://shop_images/image7.heic",
+            "label": "Florals",
+            "url": "shopify://collections/florals",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        },
+        "custom_link_by9yki": {
+          "type": "custom_link",
+          "settings": {
+            "image": "shopify://shop_images/DanielScoggins.jpg",
+            "label": "Art",
+            "url": "shopify://collections/art",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        },
+        "custom_link_UgNdPe": {
+          "type": "custom_link",
+          "settings": {
+            "image": "shopify://shop_images/FullSizeRender_9c0a2de4-b6cd-46f0-805e-ba8f2fbc4b50.jpg",
+            "label": "Objects",
+            "url": "shopify://collections/objects",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        },
+        "custom_link_XhMKtV": {
+          "type": "custom_link",
+          "settings": {
+            "image": "shopify://shop_images/66efc217d9602a0a105a6f572ddb1fb21b53f809c49fd108b9de9f7b5835c132.jpg",
+            "label": "Plants",
+            "url": "shopify://collections/plants",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        }
+      },
+      "block_order": [
+        "custom_link_gWmPeK",
+        "custom_link_by9yki",
+        "custom_link_UgNdPe",
+        "custom_link_XhMKtV"
+      ],
+      "custom_css": [
+        ".shop-showcase {--columns-desktop: 2 !important; --columns-tablet: 2 !important;}"
+      ],
+      "name": "Shop showcase",
+      "settings": {}
+    },
     "featured-products": {
       "type": "featured-products",
       "blocks": {
@@ -183,6 +247,7 @@
   },
   "order": [
     "hero",
+    "shop_showcase_Djwkrd",
     "featured-products",
     "shop_showcase_jndnAQ",
     "workshops",
