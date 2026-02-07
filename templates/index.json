@@ -50,7 +50,7 @@
         "left_link_label": "Artwork",
         "left_link_url": "shopify://collections",
         "right_link_label": "Shop",
-        "right_link_url": "shopify://collections"
+        "right_link_url": "shopify://collections/all"
       }
     },
     "featured-products": {
