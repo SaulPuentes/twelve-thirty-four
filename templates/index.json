@@ -73,7 +73,7 @@
           "settings": {
             "image": "shopify://shop_images/DanielScoggins.jpg",
             "label": "Art",
-            "url": "shopify://collections/art",
+            "url": "shopify://collections",
             "open_in_new_tab": false,
             "show_product_info": false,
             "title": "",
