@@ -28,7 +28,7 @@
         "menu": "new-menu",
         "enable_sticky": true,
         "enable_transparent": true,
-        "show_search": false,
+        "show_search": true,
         "padding": 24
       }
     },
