@@ -97,7 +97,7 @@
       <h3 class="main-collection__sidebar-title">{{ section.settings.categories_title | default: 'Categories' }}</h3>
       
       {%- comment -%} Fetch the Category filter {%- endcomment -%}
-      {%- assign category_filter = collection.filters | where: "label", "Category" | first -%}
+      {%- assign category_filter = collection.filters | where: "label", "Browse" | first -%}
       
       {% if category_filter %}
         <nav class="main-collection__nav">
