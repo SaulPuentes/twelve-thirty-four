@@ -47,7 +47,7 @@
             "heading": "",
             "link_1_text": "About",
             "link_1_url": "shopify://pages/about",
-            "link_2_text": "Say hello",
+            "link_2_text": "Say Hello",
             "link_2_url": "shopify://pages/contact",
             "link_3_text": "",
             "link_3_url": "",
@@ -67,7 +67,7 @@
       "settings": {
         "email": "contact@bypatriciorivera.com",
         "address": "4034 Swiss Avenue · Dallas, Texas 75204",
-        "show_say_hello": true,
+        "show_say_hello": false,
         "copyright_text": "All rights reserved."
       }
     }
