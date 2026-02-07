@@ -66,6 +66,7 @@
         "product_rWzYey",
         "product_bjhrxd"
       ],
+      "disabled": true,
       "name": "Featured products",
       "settings": {
         "heading": "Custom Floral Arrangements",
@@ -145,6 +146,7 @@
         "product_BtTcjC",
         "product_6JDwwi"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Workshops",
         "autoplay": true,
