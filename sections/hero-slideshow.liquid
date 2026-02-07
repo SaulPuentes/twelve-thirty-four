@@ -55,13 +55,16 @@
           class="hero-slideshow__text hero-slideshow--text-{{ block.settings.text_color }}{% if forloop.first %} hero-slideshow__text--active{% endif %}"
           data-text="{{ forloop.index0 }}"
         >
+          
+          {%- if block.settings.heading != blank -%}
+            <h1 class="hero-slideshow__heading">{{ block.settings.heading }}</h1>
+          {%- endif -%}
+
           {%- if block.settings.subheading != blank -%}
             <p class="hero-slideshow__subheading">{{ block.settings.subheading }}</p>
           {%- endif -%}
 
-          {%- if block.settings.heading != blank -%}
-            <h1 class="hero-slideshow__heading">{{ block.settings.heading }}</h1>
-          {%- endif -%}
+
         </div>
       {%- endfor -%}
 
@@ -344,7 +347,7 @@
     font-weight: 400;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    margin: 0 0 1rem;
+    margin: 1.5rem 0 0;
     color: currentColor;
     opacity: 0.8;
   }
