@@ -31,10 +31,132 @@
         "show_search": false,
         "padding": 24
       }
+    },
+    "featured_products_xFFzat": {
+      "type": "featured-products",
+      "blocks": {
+        "product_wMchx3": {
+          "type": "product",
+          "settings": {
+            "product": "custom-twelve-thirty-four-floral-arrangement-medium"
+          }
+        },
+        "product_HQE7YR": {
+          "type": "product",
+          "settings": {
+            "product": "custom-floral-arrangement-medium"
+          }
+        },
+        "product_rWzYey": {
+          "type": "product",
+          "settings": {
+            "product": "custom-floral-arrangement-large"
+          }
+        },
+        "product_bjhrxd": {
+          "type": "product",
+          "settings": {
+            "product": "custom-floral-arrangement-extra-large"
+          }
+        }
+      },
+      "block_order": [
+        "product_wMchx3",
+        "product_HQE7YR",
+        "product_rWzYey",
+        "product_bjhrxd"
+      ],
+      "name": "Featured products",
+      "settings": {
+        "heading": "Custom Floral Arrangements",
+        "description": "Discover our curated selection of blooms",
+        "columns": 4,
+        "gap": 24,
+        "show_view_all": true,
+        "view_all_label": "Explore the shop",
+        "view_all_link": ""
+      }
+    },
+    "shop_showcase_EYA4be": {
+      "type": "shop-showcase",
+      "blocks": {
+        "custom_link_pXQNhE": {
+          "type": "custom_link",
+          "settings": {
+            "label": "Shop All",
+            "url": "",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        },
+        "custom_link_9TLLna": {
+          "type": "custom_link",
+          "settings": {
+            "label": "New Arrivals",
+            "url": "",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        },
+        "custom_link_KH98Am": {
+          "type": "custom_link",
+          "settings": {
+            "label": "Best Sellers",
+            "url": "",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        }
+      },
+      "block_order": [
+        "custom_link_pXQNhE",
+        "custom_link_9TLLna",
+        "custom_link_KH98Am"
+      ],
+      "disabled": true,
+      "name": "Shop showcase",
+      "settings": {}
+    },
+    "slideshow_with_text_hL44WN": {
+      "type": "slideshow-with-text",
+      "blocks": {
+        "product_BtTcjC": {
+          "type": "product",
+          "settings": {
+            "product": "group-private-floral-design-class-2-8-people",
+            "show_vendor": false
+          }
+        },
+        "product_6JDwwi": {
+          "type": "product",
+          "settings": {
+            "product": "private-floral-design-class",
+            "show_vendor": false
+          }
+        }
+      },
+      "block_order": [
+        "product_BtTcjC",
+        "product_6JDwwi"
+      ],
+      "settings": {
+        "heading": "Workshops",
+        "autoplay": true,
+        "autoplay_speed": 5
+      }
     }
   },
   "order": [
     "announcement-bar",
-    "header"
+    "header",
+    "featured_products_xFFzat",
+    "shop_showcase_EYA4be",
+    "slideshow_with_text_hL44WN"
   ]
 }
