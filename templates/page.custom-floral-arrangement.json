@@ -11,10 +11,58 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "settings": {
+        "show_title": true,
+        "title_alignment": "center",
+        "content_alignment": "left",
+        "content_width": 800
+      }
+    },
+    "shop_showcase_kTfJU9": {
+      "type": "shop-showcase",
+      "blocks": {
+        "product_xL7kmq": {
+          "type": "product",
+          "settings": {
+            "product": "custom-twelve-thirty-four-floral-arrangement-medium",
+            "label": "Small",
+            "custom_title": "",
+            "show_add_to_cart": false,
+            "open_in_new_tab": false
+          }
+        },
+        "product_RAYE6A": {
+          "type": "product",
+          "settings": {
+            "product": "custom-floral-arrangement-medium",
+            "label": "Medium",
+            "custom_title": "",
+            "show_add_to_cart": false,
+            "open_in_new_tab": false
+          }
+        },
+        "product_eWLGGw": {
+          "type": "product",
+          "settings": {
+            "product": "custom-floral-arrangement-large",
+            "label": "Large",
+            "custom_title": "",
+            "show_add_to_cart": false,
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "product_xL7kmq",
+        "product_RAYE6A",
+        "product_eWLGGw"
+      ],
+      "name": "Shop showcase",
       "settings": {}
     }
   },
   "order": [
-    "main"
+    "main",
+    "shop_showcase_kTfJU9"
   ]
 }
