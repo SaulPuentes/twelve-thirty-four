@@ -1,6 +1,11 @@
 {%- liquid
   assign columns = section.settings.columns
   assign gap_value = section.settings.gap | default: 16
+  assign product_count = section.blocks.size
+  assign is_slider = false
+  if product_count > columns
+    assign is_slider = true
+  endif
 -%}
 
 <script src="{{ 'product-card.js' | asset_url }}" defer></script>
@@ -33,7 +38,7 @@
     </div>
 
     {%- comment -%} Products Grid {%- endcomment -%}
-    <div class="featured-products__grid">
+    <div class="featured-products__grid{% if is_slider %} featured-products__grid--slider{% endif %}">
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'product' -%}
@@ -179,6 +184,36 @@
   @media screen and (min-width: 750px) {
     .featured-products__grid {
       grid-template-columns: repeat(var(--featured-products-columns, 4), 1fr);
+    }
+  }
+
+  /* Slider mode: horizontal scroll when products exceed columns */
+  .featured-products__grid--slider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .featured-products__grid--slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .featured-products__grid--slider > * {
+    flex: 0 0 calc((100% - 2 * var(--featured-products-gap, 24px) - 1rem) / 2);
+    scroll-snap-align: start;
+  }
+
+  @media screen and (min-width: 750px) {
+    .featured-products__grid--slider > * {
+      flex: 0 0 calc(
+        (100% - var(--featured-products-columns, 4) * var(--featured-products-gap, 24px) - 2rem)
+        / var(--featured-products-columns, 4)
+      );
     }
   }
 
