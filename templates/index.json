@@ -117,6 +117,48 @@
       "name": "Shop showcase",
       "settings": {}
     },
+    "image_with_text_WMCEDg": {
+      "type": "image-with-text",
+      "blocks": {
+        "logo_pxQhXJ": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_wLbD73": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_qHpR9M": {
+          "type": "logo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "logo_pxQhXJ",
+        "logo_wLbD73",
+        "logo_qHpR9M"
+      ],
+      "custom_css": [
+        ".image-text__button-arrow {display: none !important;}",
+        ".image-text__button.button {background: none !important; border: none !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important; border-radius: 0 !important; box-shadow: none !important;}",
+        ".image-text__button.button:hover {text-decoration: none !important; background: none !important;}"
+      ],
+      "name": "Image with text",
+      "settings": {
+        "image": "shopify://shop_images/IMG-1137.heic",
+        "caption": "",
+        "image_width": 50,
+        "layout": "image-left",
+        "subheading": "Featured Artist",
+        "heading": "Chase Gamblin",
+        "text": "<p>Sculptural lighting handmade in Dallas. Each piece is built from reclaimed and raw materials — no two are alike.</p>",
+        "button_label": "View the Collection",
+        "button_link": "shopify://collections/chase-gamblin",
+        "button_style": "primary",
+        "show_logos": false,
+        "color_scheme": ""
+      }
+    },
     "featured-products": {
       "type": "featured-products",
       "blocks": {
@@ -248,6 +290,7 @@
   "order": [
     "hero",
     "shop_showcase_Djwkrd",
+    "image_with_text_WMCEDg",
     "featured-products",
     "shop_showcase_jndnAQ",
     "workshops",
