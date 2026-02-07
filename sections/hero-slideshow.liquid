@@ -97,7 +97,7 @@
           type="button"
           class="hero-slideshow__nav-dot{% if forloop.first %} hero-slideshow__nav-dot--active{% endif %}"
           data-slide-nav="{{ forloop.index0 }}"
-          aria-label="{{ 'accessibility.slide_number' | t: number: forloop.index }}"
+          aria-label="Slide {{ forloop.index }}"
         ></button>
       {%- endfor -%}
     </div>
