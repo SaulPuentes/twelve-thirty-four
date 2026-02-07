@@ -59,10 +59,39 @@
       ],
       "name": "Shop showcase",
       "settings": {}
+    },
+    "slideshow_with_text_EtQB8B": {
+      "type": "slideshow-with-text",
+      "blocks": {
+        "product_6QwHa6": {
+          "type": "product",
+          "settings": {
+            "product": "group-private-floral-design-class-2-8-people",
+            "show_vendor": false
+          }
+        },
+        "product_gnQ4Gy": {
+          "type": "product",
+          "settings": {
+            "product": "private-floral-design-class",
+            "show_vendor": false
+          }
+        }
+      },
+      "block_order": [
+        "product_6QwHa6",
+        "product_gnQ4Gy"
+      ],
+      "settings": {
+        "heading": "Floral Workshops",
+        "autoplay": true,
+        "autoplay_speed": 5
+      }
     }
   },
   "order": [
     "main",
-    "shop_showcase_kTfJU9"
+    "shop_showcase_kTfJU9",
+    "slideshow_with_text_EtQB8B"
   ]
 }
