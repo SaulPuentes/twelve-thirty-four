@@ -15,8 +15,9 @@
         "collection-4": {
           "type": "collection",
           "settings": {
-            "collection": "plants",
+            "collection": "chase-gamblin",
             "custom_title": "",
+            "description": "",
             "show_product_count": false,
             "card_width": "half"
           }
@@ -24,8 +25,9 @@
         "collection-5": {
           "type": "collection",
           "settings": {
-            "collection": "florals",
+            "collection": "bury-me-west-collection",
             "custom_title": "",
+            "description": "",
             "show_product_count": false,
             "card_width": "half"
           }
@@ -33,8 +35,9 @@
         "collection-3": {
           "type": "collection",
           "settings": {
-            "collection": "custom-floral-arrangements",
+            "collection": "simon-waranch",
             "custom_title": "",
+            "description": "",
             "show_product_count": false,
             "card_width": "full"
           }
@@ -44,6 +47,7 @@
           "settings": {
             "collection": "giselle-hicks",
             "custom_title": "",
+            "description": "",
             "show_product_count": false,
             "card_width": "half"
           }
@@ -51,8 +55,9 @@
         "collection-2": {
           "type": "collection",
           "settings": {
-            "collection": "bury-me-west-collection",
+            "collection": "elizabeth-hooper-studio",
             "custom_title": "",
+            "description": "",
             "show_product_count": false,
             "card_width": "half"
           }
@@ -68,6 +73,7 @@
       "settings": {
         "heading": "",
         "description": "",
+        "enable_modal": false,
         "gap": 16,
         "card_height": 450,
         "card_height_mobile": 300,
