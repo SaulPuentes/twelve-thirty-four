@@ -95,6 +95,50 @@
       "name": "Shop showcase",
       "settings": {}
     },
+    "image_with_text_HUtJ4h": {
+      "type": "image-with-text",
+      "blocks": {
+        "logo_VQQreH": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_xfhtHN": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_NBL6Kf": {
+          "type": "logo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "logo_VQQreH",
+        "logo_xfhtHN",
+        "logo_NBL6Kf"
+      ],
+      "custom_css": [
+        ".image-text__button-arrow {display: none !important;}",
+        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important;}",
+        ".image-text {padding: 0 !important;}",
+        ".image-text__content {gap: 0 !important; justify-content: center !important;}",
+        ".image-text__content {padding: 0 0 30px 20px !important;}"
+      ],
+      "name": "Image with text",
+      "settings": {
+        "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_6.09.02_PM_d35c381e-e264-4857-a7d1-b0bdcf8bd317.png",
+        "caption": "",
+        "image_width": 50,
+        "layout": "image-left",
+        "subheading": "Experiences",
+        "heading": "Private Workshops",
+        "text": "<p>An intimate floral design experience in our Swiss Avenue studio, guided by Patricio Rivera. Fresh sourced stems, hands-on instruction, and an arrangement to take home.</p>",
+        "button_label": "Explore",
+        "button_link": "shopify://pages/experiences",
+        "button_style": "primary",
+        "show_logos": false,
+        "color_scheme": ""
+      }
+    },
     "shop_showcase_Djwkrd": {
       "type": "shop-showcase",
       "blocks": {
@@ -158,50 +202,6 @@
       ],
       "name": "Shop showcase",
       "settings": {}
-    },
-    "image_with_text_HUtJ4h": {
-      "type": "image-with-text",
-      "blocks": {
-        "logo_VQQreH": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo_xfhtHN": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo_NBL6Kf": {
-          "type": "logo",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "logo_VQQreH",
-        "logo_xfhtHN",
-        "logo_NBL6Kf"
-      ],
-      "custom_css": [
-        ".image-text__button-arrow {display: none !important;}",
-        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important;}",
-        ".image-text {padding: 0 !important;}",
-        ".image-text__content {gap: 0 !important; justify-content: center !important;}",
-        ".image-text__heading {margin: 0 0 0.75rem !important;}"
-      ],
-      "name": "Image with text",
-      "settings": {
-        "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_6.09.02_PM_d35c381e-e264-4857-a7d1-b0bdcf8bd317.png",
-        "caption": "",
-        "image_width": 50,
-        "layout": "image-left",
-        "subheading": "Experiences",
-        "heading": "Private Workshops",
-        "text": "<p>An intimate floral design experience in our Swiss Avenue studio, guided by Patricio Rivera. Fresh sourced stems, hands-on instruction, and an arrangement to take home.</p>",
-        "button_label": "Explore",
-        "button_link": "shopify://pages/experiences",
-        "button_style": "primary",
-        "show_logos": false,
-        "color_scheme": ""
-      }
     },
     "featured-products": {
       "type": "featured-products",
@@ -271,10 +271,10 @@
       ],
       "custom_css": [
         ".image-text__button-arrow {display: none !important;}",
-        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important;}",
+        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important;}",
         ".image-text {padding: 0 !important;}",
         ".image-text__content {gap: 0 !important; justify-content: center !important;}",
-        "@media (max-width: 749px) {.image-text {display: none !important; }}"
+        ".image-text__content {padding: 0 0 30px 20px !important;}"
       ],
       "name": "Image with text",
       "settings": {
