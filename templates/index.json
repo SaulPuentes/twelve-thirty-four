@@ -274,7 +274,7 @@
         ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important;}",
         ".image-text {padding: 0 !important;}",
         ".image-text__content {gap: 0 !important; justify-content: center !important;}",
-        ".image-text__content {padding: 0 0 30px 20px !important;}"
+        ".image-text__content {padding: 0 30px 30px 20px !important;}"
       ],
       "name": "Image with text",
       "settings": {
