@@ -12,7 +12,7 @@
 
 <section
   id="FeaturedProducts-{{ section.id }}"
-  class="featured-products"
+  class="featured-products{% if is_slider %} featured-products--has-slider{% endif %}"
   style="
     --featured-products-columns: {{ columns }};
     --featured-products-gap: {{ gap_value }}px;
@@ -187,6 +187,23 @@
     }
   }
 
+  /* Slider layout: remove right padding so grid bleeds to edge */
+  .featured-products--has-slider {
+    padding-right: 0;
+  }
+
+  .featured-products--has-slider .featured-products__heading,
+  .featured-products--has-slider .featured-products__header {
+    padding-right: 2rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    .featured-products--has-slider .featured-products__heading,
+    .featured-products--has-slider .featured-products__header {
+      padding-right: 4rem;
+    }
+  }
+
   /* Slider mode: horizontal scroll when products exceed columns */
   .featured-products__grid--slider {
     display: flex;
@@ -197,6 +214,13 @@
     scroll-behavior: smooth;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding-right: 2rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    .featured-products__grid--slider {
+      padding-right: 4rem;
+    }
   }
 
   .featured-products__grid--slider::-webkit-scrollbar {
