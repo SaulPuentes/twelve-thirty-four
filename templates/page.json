@@ -18,6 +18,56 @@
         "content_width": 800
       }
     },
+    "slideshow_with_text_W7RpXJ": {
+      "type": "slideshow-with-text",
+      "blocks": {
+        "slide_iaWadP": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_6.09.02_PM_d35c381e-e264-4857-a7d1-b0bdcf8bd317.png",
+            "title": "Private Group Workshop",
+            "description": "<p>A private floral design session for two to eight guests in our Swiss Avenue studio, guided by Patricio Rivera. Each participant works hands-on with fresh sourced stems to design their own arrangement. All tools, materials, and florals included — everyone takes their creation home.</p>",
+            "date": "By Appointment",
+            "contact": "contact@bypatriciorivera.com"
+          }
+        },
+        "slide_h6tjFM": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_5.53.15_PM.png",
+            "title": "Private Floral Workshop",
+            "description": "<p>A one-hour private session with Patricio Rivera in our Swiss Avenue studio. You'll work hands-on with fresh sourced stems, selecting and arranging under Patricio's guidance. All tools, materials, and florals included — your finished arrangement goes home with you.</p>",
+            "date": "By Appointment",
+            "contact": "contact@bypatriciorivera.com"
+          }
+        },
+        "product_eDDcVp": {
+          "type": "product",
+          "settings": {
+            "product": "private-group-workshop",
+            "show_vendor": false
+          }
+        },
+        "product_d6QbpT": {
+          "type": "product",
+          "settings": {
+            "product": "private-floral-workshop",
+            "show_vendor": false
+          }
+        }
+      },
+      "block_order": [
+        "slide_iaWadP",
+        "slide_h6tjFM",
+        "product_eDDcVp",
+        "product_d6QbpT"
+      ],
+      "settings": {
+        "heading": "Private Workshops",
+        "autoplay": true,
+        "autoplay_speed": 5
+      }
+    },
     "image_with_text_qcdL4r": {
       "type": "image-with-text",
       "blocks": {
@@ -39,92 +89,32 @@
         "logo_i6VrmA",
         "logo_MPRgfM"
       ],
-      "disabled": true,
+      "custom_css": [
+        ".image-text__button-arrow {display: none !important;}",
+        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important;}",
+        ".image-text {padding: 0 !important;}",
+        ".image-text__content {gap: 0 !important; justify-content: center !important;}"
+      ],
       "name": "Image with text",
       "settings": {
+        "image": "shopify://shop_images/bobd_twelve_thirtyfour25670_lowqual.jpg",
         "caption": "",
         "image_width": 50,
         "layout": "image-left",
-        "subheading": "",
-        "heading": "Back to the Roots",
-        "text": "<p>Back to the Roots is a floral arrangement workshop born from a micro grant awarded by the City of Dallas Office of Culture and Arts, benefiting Vogel Alcove.</p><p>This experience will be offered to ten parents experiencing homelessness, creating a safe space to reconnect with nature, creativity, and community.</p>",
-        "button_label": "Get directions",
-        "button_link": "",
+        "subheading": "For Teams & Clients",
+        "heading": "Private Floral Experience",
+        "text": "<p>A curated floral design experience for 8 to 30 guests, hosted in our Swiss Avenue studio or at a venue of your choosing. Each session is tailored to your occasion — from palette and stems to setting and pacing.</p>",
+        "button_label": "Inquire",
+        "button_link": "shopify://pages/contact",
         "button_style": "link",
-        "show_logos": true,
-        "color_scheme": ""
-      }
-    },
-    "slideshow_with_text_W7RpXJ": {
-      "type": "slideshow-with-text",
-      "blocks": {
-        "product_eDDcVp": {
-          "type": "product",
-          "settings": {
-            "product": "private-group-workshop",
-            "show_vendor": false
-          }
-        },
-        "product_d6QbpT": {
-          "type": "product",
-          "settings": {
-            "product": "private-floral-workshop",
-            "show_vendor": false
-          }
-        }
-      },
-      "block_order": [
-        "product_eDDcVp",
-        "product_d6QbpT"
-      ],
-      "settings": {
-        "heading": "Private Workshops",
-        "autoplay": true,
-        "autoplay_speed": 5
-      }
-    },
-    "image_with_text_Uxatn6": {
-      "type": "image-with-text",
-      "blocks": {
-        "logo_4bJw6d": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo_Lxaezi": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo_qqepxB": {
-          "type": "logo",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "logo_4bJw6d",
-        "logo_Lxaezi",
-        "logo_qqepxB"
-      ],
-      "disabled": true,
-      "name": "Image with text",
-      "settings": {
-        "caption": "",
-        "image_width": 50,
-        "layout": "image-left",
-        "subheading": "",
-        "heading": "Back to the Roots",
-        "text": "<p>Back to the Roots is a floral arrangement workshop born from a micro grant awarded by the City of Dallas Office of Culture and Arts, benefiting Vogel Alcove.</p><p>This experience will be offered to ten parents experiencing homelessness, creating a safe space to reconnect with nature, creativity, and community.</p>",
-        "button_label": "Get directions",
-        "button_link": "",
-        "button_style": "link",
-        "show_logos": true,
+        "show_logos": false,
         "color_scheme": ""
       }
     }
   },
   "order": [
     "main",
-    "image_with_text_qcdL4r",
     "slideshow_with_text_W7RpXJ",
-    "image_with_text_Uxatn6"
+    "image_with_text_qcdL4r"
   ]
 }
