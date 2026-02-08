@@ -60,7 +60,7 @@
           "type": "product",
           "settings": {
             "product": "custom-twelve-thirty-four-floral-arrangement-medium",
-            "label": "Small",
+            "label": "Petite",
             "custom_title": "",
             "show_add_to_cart": true,
             "open_in_new_tab": false
@@ -70,7 +70,7 @@
           "type": "product",
           "settings": {
             "product": "custom-floral-arrangement-medium",
-            "label": "Medium",
+            "label": "Classic",
             "custom_title": "",
             "show_add_to_cart": true,
             "open_in_new_tab": false
@@ -80,7 +80,7 @@
           "type": "product",
           "settings": {
             "product": "custom-floral-arrangement-large",
-            "label": "Large",
+            "label": "Grand",
             "custom_title": "",
             "show_add_to_cart": true,
             "open_in_new_tab": false
@@ -92,7 +92,6 @@
         "product_eKQ8xk",
         "product_6cDnGm"
       ],
-      "disabled": true,
       "name": "Shop showcase",
       "settings": {}
     },
@@ -194,6 +193,7 @@
         "product-2",
         "product-4"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Arrangements",
         "description": "Each composition is designed to order. Select a size and our studio will create something original for you.",
@@ -257,7 +257,7 @@
             "image": "shopify://shop_images/ScreenShot2023-11-30at3.47.40PM.png",
             "label": "Bury Me West",
             "url": "shopify://collections/bury-me-west-collection",
-            "open_in_new_tab": false,
+            "open_in_new_tab": true,
             "show_product_info": false,
             "title": "",
             "price": ""
@@ -266,9 +266,10 @@
         "custom_link_iyb6Hb": {
           "type": "custom_link",
           "settings": {
+            "image": "shopify://shop_images/IMG-1890.webp",
             "label": "Chase Gamblin",
             "url": "shopify://collections/chase-gamblin",
-            "open_in_new_tab": false,
+            "open_in_new_tab": true,
             "show_product_info": false,
             "title": "",
             "price": ""
@@ -280,7 +281,7 @@
             "image": "shopify://shop_images/elizabeth-hooper.webp",
             "label": "Elizabeth Hooper",
             "url": "shopify://collections/elizabeth-hooper-studio",
-            "open_in_new_tab": false,
+            "open_in_new_tab": true,
             "show_product_info": false,
             "title": "",
             "price": ""
@@ -299,6 +300,7 @@
         },
         "product_apBmTJ": {
           "type": "product",
+          "disabled": true,
           "settings": {
             "product": "chase-gamblin-multicolored-vase",
             "label": "Chase Gamblin",
