@@ -61,6 +61,26 @@
             "show_product_count": false,
             "card_width": "half"
           }
+        },
+        "collection_eq9ibT": {
+          "type": "collection",
+          "settings": {
+            "collection": "brooks-oliver-ceramics",
+            "custom_title": "",
+            "description": "",
+            "show_product_count": false,
+            "card_width": "half"
+          }
+        },
+        "collection_igXt3g": {
+          "type": "collection",
+          "settings": {
+            "collection": "",
+            "custom_title": "",
+            "description": "",
+            "show_product_count": false,
+            "card_width": "half"
+          }
         }
       },
       "block_order": [
@@ -68,7 +88,9 @@
         "collection-5",
         "collection-3",
         "collection-1",
-        "collection-2"
+        "collection-2",
+        "collection_eq9ibT",
+        "collection_igXt3g"
       ],
       "settings": {
         "heading": "",
