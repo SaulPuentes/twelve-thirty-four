@@ -11,61 +11,12 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
-        "show_title": true,
+        "show_title": false,
         "title_alignment": "center",
         "content_alignment": "left",
         "content_width": 800
-      }
-    },
-    "slideshow_with_text_W7RpXJ": {
-      "type": "slideshow-with-text",
-      "blocks": {
-        "slide_iaWadP": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_6.09.02_PM_d35c381e-e264-4857-a7d1-b0bdcf8bd317.png",
-            "title": "Private Group Workshop",
-            "description": "<p>A private floral design session for two to eight guests in our Swiss Avenue studio, guided by Patricio Rivera. Each participant works hands-on with fresh sourced stems to design their own arrangement. All tools, materials, and florals included — everyone takes their creation home.</p>",
-            "date": "By Appointment",
-            "contact": "contact@bypatriciorivera.com"
-          }
-        },
-        "slide_h6tjFM": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_5.53.15_PM.png",
-            "title": "Private Floral Workshop",
-            "description": "<p>A one-hour private session with Patricio Rivera in our Swiss Avenue studio. You'll work hands-on with fresh sourced stems, selecting and arranging under Patricio's guidance. All tools, materials, and florals included — your finished arrangement goes home with you.</p>",
-            "date": "By Appointment",
-            "contact": "contact@bypatriciorivera.com"
-          }
-        },
-        "product_eDDcVp": {
-          "type": "product",
-          "settings": {
-            "product": "private-group-workshop",
-            "show_vendor": false
-          }
-        },
-        "product_d6QbpT": {
-          "type": "product",
-          "settings": {
-            "product": "private-floral-workshop",
-            "show_vendor": false
-          }
-        }
-      },
-      "block_order": [
-        "slide_iaWadP",
-        "slide_h6tjFM",
-        "product_eDDcVp",
-        "product_d6QbpT"
-      ],
-      "settings": {
-        "heading": "Private Workshops",
-        "autoplay": true,
-        "autoplay_speed": 5
       }
     },
     "image_with_text_qcdL4r": {
@@ -102,7 +53,7 @@
         "image_width": 50,
         "layout": "image-left",
         "subheading": "For Teams & Clients",
-        "heading": "Private Floral Experience",
+        "heading": "Private Floral Experiences",
         "text": "<p>A curated floral design experience for 8 to 30 guests, hosted in our Swiss Avenue studio or at a venue of your choosing. Each session is tailored to your occasion — from palette and stems to setting and pacing.</p>",
         "button_label": "Inquire",
         "button_link": "shopify://pages/contact",
@@ -110,11 +61,63 @@
         "show_logos": false,
         "color_scheme": ""
       }
+    },
+    "slideshow_with_text_BLFaxj": {
+      "type": "slideshow-with-text",
+      "blocks": {
+        "slide_Fx8nXE": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_6.09.02_PM_d35c381e-e264-4857-a7d1-b0bdcf8bd317.png",
+            "title": "Private Group Workshop",
+            "description": "<p>A private floral design session for two to eight guests in our Swiss Avenue studio, guided by Patricio Rivera. Each participant works hands-on with fresh sourced stems to design their own arrangement. All tools, materials, and florals included — everyone takes their creation home.</p>",
+            "date": "By Appointment",
+            "contact": "contact@bypatriciorivera.com"
+          }
+        },
+        "slide_EFxgjc": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_5.53.15_PM.png",
+            "title": "Private Floral Workshop",
+            "description": "<p>A one-hour private session with Patricio Rivera in our Swiss Avenue studio. You'll work hands-on with fresh sourced stems, selecting and arranging under Patricio's guidance. All tools, materials, and florals included — your finished arrangement goes home with you.</p>",
+            "date": "By Appointment",
+            "contact": "contact@bypatriciorivera.com"
+          }
+        },
+        "product_wAWf6f": {
+          "type": "product",
+          "settings": {
+            "product": "private-group-workshop",
+            "show_vendor": false
+          }
+        },
+        "product_b8YjjE": {
+          "type": "product",
+          "settings": {
+            "product": "private-floral-workshop",
+            "show_vendor": false
+          }
+        }
+      },
+      "block_order": [
+        "slide_Fx8nXE",
+        "slide_EFxgjc",
+        "product_wAWf6f",
+        "product_b8YjjE"
+      ],
+      "settings": {
+        "heading": "Private Workshops",
+        "autoplay": true,
+        "autoplay_speed": 5
+      }
     }
   },
   "order": [
     "main",
-    "slideshow_with_text_W7RpXJ",
-    "image_with_text_qcdL4r"
+    "image_with_text_qcdL4r",
+    "slideshow_with_text_BLFaxj"
   ]
 }
