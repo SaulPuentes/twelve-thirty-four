@@ -266,9 +266,9 @@
         "custom_link_iyb6Hb": {
           "type": "custom_link",
           "settings": {
-            "image": "shopify://shop_images/IMG-1890.webp",
-            "label": "Chase Gamblin",
-            "url": "shopify://collections/chase-gamblin",
+            "image": "shopify://shop_images/6507D571-03B2-4030-A7FE-104DC8E2FE6C.jpg",
+            "label": "Brooks Oliver",
+            "url": "shopify://collections/brooks-oliver-ceramics",
             "open_in_new_tab": true,
             "show_product_info": false,
             "title": "",
@@ -350,7 +350,7 @@
       ],
       "name": "Image with text",
       "settings": {
-        "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_5.53.15_PM.png",
+        "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_6.09.02_PM_d35c381e-e264-4857-a7d1-b0bdcf8bd317.png",
         "caption": "",
         "image_width": 50,
         "layout": "image-left",
@@ -386,6 +386,7 @@
         "product_cJbi6e",
         "product_MdYFbk"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Workshops",
         "autoplay": true,
