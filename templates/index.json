@@ -92,6 +92,7 @@
         "product_eKQ8xk",
         "product_6cDnGm"
       ],
+      "disabled": true,
       "name": "Shop showcase",
       "settings": {}
     },
@@ -113,7 +114,7 @@
         "custom_link_by9yki": {
           "type": "custom_link",
           "settings": {
-            "image": "shopify://shop_images/danielscoggins6_ab295ac4-869d-43c1-8b5b-7ebf53c6f00c.jpg",
+            "image": "shopify://shop_images/DanielScoggins_2d31958f-163a-45da-9a98-fa107410840a.jpg",
             "label": "Art",
             "url": "shopify://collections",
             "open_in_new_tab": false,
@@ -250,14 +251,27 @@
     "shop_showcase_jndnAQ": {
       "type": "shop-showcase",
       "blocks": {
-        "product_P6HAeJ": {
-          "type": "product",
+        "custom_link_xjDYUd": {
+          "type": "custom_link",
           "settings": {
-            "product": "bury-me-west-12-one-of-a-kind-stoneware-vase",
-            "label": "Bury me west",
-            "custom_title": "",
-            "show_add_to_cart": false,
-            "open_in_new_tab": false
+            "image": "shopify://shop_images/ScreenShot2023-11-30at3.47.40PM.png",
+            "label": "Bury Me West",
+            "url": "shopify://collections/bury-me-west-collection",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
+          }
+        },
+        "custom_link_iyb6Hb": {
+          "type": "custom_link",
+          "settings": {
+            "label": "Chase Gamblin",
+            "url": "shopify://collections/chase-gamblin",
+            "open_in_new_tab": false,
+            "show_product_info": false,
+            "title": "",
+            "price": ""
           }
         },
         "custom_link_yMtwgN": {
@@ -272,6 +286,17 @@
             "price": ""
           }
         },
+        "product_P6HAeJ": {
+          "type": "product",
+          "disabled": true,
+          "settings": {
+            "product": "bury-me-west-12-one-of-a-kind-stoneware-vase",
+            "label": "Bury me west",
+            "custom_title": "",
+            "show_add_to_cart": false,
+            "open_in_new_tab": false
+          }
+        },
         "product_apBmTJ": {
           "type": "product",
           "settings": {
@@ -284,8 +309,10 @@
         }
       },
       "block_order": [
-        "product_P6HAeJ",
+        "custom_link_xjDYUd",
+        "custom_link_iyb6Hb",
         "custom_link_yMtwgN",
+        "product_P6HAeJ",
         "product_apBmTJ"
       ],
       "name": "Shop showcase",
