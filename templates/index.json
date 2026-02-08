@@ -226,11 +226,11 @@
         "logo_qHpR9M"
       ],
       "custom_css": [
-        ".image-text__button-arrow {display: none !important;}",
-        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important;}",
-        ".image-text {padding: 0 !important;}",
-        ".image-text__content {gap: 0 !important; justify-content: center !important;}",
-        ".image-text__heading {margin: 0 0 0.75rem !important;}"
+        ".image-text__button-arrow{display:none!important}",
+        ".image-text__button.button{background:0!important;border:0!important;padding:0!important;color:inherit!important;font-size:.75rem!important;letter-spacing:.15em!important;text-transform:uppercase!important;text-decoration:underline!important}",
+        ".image-text{padding:0!important}",
+        ".image-text__content{gap:0!important;justify-content:center!important}",
+        "@media(max-width:749px){.image-text{display:none!important}}"
       ],
       "name": "Image with text",
       "settings": {
@@ -350,7 +350,7 @@
       ],
       "name": "Image with text",
       "settings": {
-        "image": "shopify://shop_images/chase.webp",
+        "image": "shopify://shop_images/Screen_Shot_2023-12-21_at_5.53.15_PM.png",
         "caption": "",
         "image_width": 50,
         "layout": "image-left",
