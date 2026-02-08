@@ -53,6 +53,48 @@
         "right_link_url": "shopify://collections/all"
       }
     },
+    "shop_showcase_F9pqL9": {
+      "type": "shop-showcase",
+      "blocks": {
+        "product_zMN4pA": {
+          "type": "product",
+          "settings": {
+            "product": "custom-twelve-thirty-four-floral-arrangement-medium",
+            "label": "Small",
+            "custom_title": "",
+            "show_add_to_cart": true,
+            "open_in_new_tab": false
+          }
+        },
+        "product_eKQ8xk": {
+          "type": "product",
+          "settings": {
+            "product": "custom-floral-arrangement-medium",
+            "label": "Medium",
+            "custom_title": "",
+            "show_add_to_cart": true,
+            "open_in_new_tab": false
+          }
+        },
+        "product_6cDnGm": {
+          "type": "product",
+          "settings": {
+            "product": "custom-floral-arrangement-large",
+            "label": "Large",
+            "custom_title": "",
+            "show_add_to_cart": true,
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "product_zMN4pA",
+        "product_eKQ8xk",
+        "product_6cDnGm"
+      ],
+      "name": "Shop showcase",
+      "settings": {}
+    },
     "shop_showcase_Djwkrd": {
       "type": "shop-showcase",
       "blocks": {
@@ -71,7 +113,7 @@
         "custom_link_by9yki": {
           "type": "custom_link",
           "settings": {
-            "image": "shopify://shop_images/DanielScoggins.jpg",
+            "image": "shopify://shop_images/danielscoggins6_ab295ac4-869d-43c1-8b5b-7ebf53c6f00c.jpg",
             "label": "Art",
             "url": "shopify://collections",
             "open_in_new_tab": false,
@@ -117,50 +159,6 @@
       "name": "Shop showcase",
       "settings": {}
     },
-    "image_with_text_WMCEDg": {
-      "type": "image-with-text",
-      "blocks": {
-        "logo_pxQhXJ": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo_wLbD73": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo_qHpR9M": {
-          "type": "logo",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "logo_pxQhXJ",
-        "logo_wLbD73",
-        "logo_qHpR9M"
-      ],
-      "custom_css": [
-        ".image-text__button-arrow {display: none !important;}",
-        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important; border-radius: 0 !important;}",
-        ".image-text {padding: 2rem 0 !important;}",
-        ".image-text__heading {margin: 0 0 0.75rem !important;}",
-        ".image-text__content {gap: 0 !important;}"
-      ],
-      "name": "Image with text",
-      "settings": {
-        "image": "shopify://shop_images/chase.webp",
-        "caption": "",
-        "image_width": 50,
-        "layout": "image-left",
-        "subheading": "Featured Artist",
-        "heading": "Chase Gamblin",
-        "text": "<p>Ceramic vessels and sculptural forms built from thrown components and layered slip. Trained at Tennessee Tech's Appalachian Center for Craft and Texas Tech, with residencies in Vicchio and Sanbao. Gold luster on matte stoneware — light reveals the surface differently every hour of the day.</p>",
-        "button_label": "View the Collection",
-        "button_link": "shopify://collections/chase-gamblin",
-        "button_style": "primary",
-        "show_logos": false,
-        "color_scheme": ""
-      }
-    },
     "featured-products": {
       "type": "featured-products",
       "blocks": {
@@ -195,15 +193,58 @@
         "product-2",
         "product-4"
       ],
-      "disabled": true,
       "settings": {
-        "heading": "Thoughtful Gifts\n& Floral Creations",
-        "description": "Discover our curated selection of blooms and hand-made objects, from locally crafted ceramics to candles and keepsakes sourced from artists around the world.",
-        "columns": 4,
+        "heading": "Arrangements",
+        "description": "Each composition is designed to order. Select a size and our studio will create something original for you.",
+        "columns": 3,
         "gap": 24,
-        "show_view_all": true,
-        "view_all_label": "Explore the shop",
+        "show_view_all": false,
+        "view_all_label": "View All",
         "view_all_link": "shopify://collections"
+      }
+    },
+    "image_with_text_WMCEDg": {
+      "type": "image-with-text",
+      "blocks": {
+        "logo_pxQhXJ": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_wLbD73": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_qHpR9M": {
+          "type": "logo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "logo_pxQhXJ",
+        "logo_wLbD73",
+        "logo_qHpR9M"
+      ],
+      "custom_css": [
+        ".image-text__button-arrow {display: none !important;}",
+        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important;}",
+        ".image-text {padding: 0 !important;}",
+        ".image-text__content {gap: 0 !important; justify-content: center !important;}",
+        ".image-text__heading {margin: 0 0 0.75rem !important;}"
+      ],
+      "name": "Image with text",
+      "settings": {
+        "image": "shopify://shop_images/chase.webp",
+        "caption": "",
+        "image_width": 50,
+        "layout": "image-left",
+        "subheading": "Featured Artist",
+        "heading": "Chase Gamblin",
+        "text": "<p>Ceramic vessels and sculptural forms built from thrown components and layered slip. Trained at Tennessee Tech's Appalachian Center for Craft and Texas Tech, with residencies in Vicchio and Sanbao. Gold luster on matte stoneware — light reveals the surface differently every hour of the day.</p>",
+        "button_label": "View the Collection",
+        "button_link": "shopify://collections/chase-gamblin",
+        "button_style": "primary",
+        "show_logos": false,
+        "color_scheme": ""
       }
     },
     "shop_showcase_jndnAQ": {
@@ -215,7 +256,7 @@
             "product": "bury-me-west-12-one-of-a-kind-stoneware-vase",
             "label": "Bury me west",
             "custom_title": "",
-            "show_add_to_cart": true,
+            "show_add_to_cart": false,
             "open_in_new_tab": false
           }
         },
@@ -237,7 +278,7 @@
             "product": "chase-gamblin-multicolored-vase",
             "label": "Chase Gamblin",
             "custom_title": "",
-            "show_add_to_cart": true,
+            "show_add_to_cart": false,
             "open_in_new_tab": false
           }
         }
@@ -249,6 +290,50 @@
       ],
       "name": "Shop showcase",
       "settings": {}
+    },
+    "image_with_text_HUtJ4h": {
+      "type": "image-with-text",
+      "blocks": {
+        "logo_VQQreH": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_xfhtHN": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_NBL6Kf": {
+          "type": "logo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "logo_VQQreH",
+        "logo_xfhtHN",
+        "logo_NBL6Kf"
+      ],
+      "custom_css": [
+        ".image-text__button-arrow {display: none !important;}",
+        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important;}",
+        ".image-text {padding: 0 !important;}",
+        ".image-text__content {gap: 0 !important; justify-content: center !important;}",
+        ".image-text__heading {margin: 0 0 0.75rem !important;}"
+      ],
+      "name": "Image with text",
+      "settings": {
+        "image": "shopify://shop_images/chase.webp",
+        "caption": "",
+        "image_width": 50,
+        "layout": "image-left",
+        "subheading": "Featured Artist",
+        "heading": "Chase Gamblin",
+        "text": "<p>Ceramic vessels and sculptural forms built from thrown components and layered slip. Trained at Tennessee Tech's Appalachian Center for Craft and Texas Tech, with residencies in Vicchio and Sanbao. Gold luster on matte stoneware — light reveals the surface differently every hour of the day.</p>",
+        "button_label": "View the Collection",
+        "button_link": "shopify://collections/chase-gamblin",
+        "button_style": "primary",
+        "show_logos": false,
+        "color_scheme": ""
+      }
     },
     "workshops": {
       "type": "slideshow-with-text",
@@ -292,10 +377,12 @@
   },
   "order": [
     "hero",
+    "shop_showcase_F9pqL9",
     "shop_showcase_Djwkrd",
-    "image_with_text_WMCEDg",
     "featured-products",
+    "image_with_text_WMCEDg",
     "shop_showcase_jndnAQ",
+    "image_with_text_HUtJ4h",
     "workshops",
     "visit-boutique"
   ]
