@@ -1,12 +1,130 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-page",
       "settings": {
-        "color_scheme": "scheme-1"
+        "show_title": true,
+        "title_alignment": "center",
+        "content_alignment": "left",
+        "content_width": 800
+      }
+    },
+    "image_with_text_qcdL4r": {
+      "type": "image-with-text",
+      "blocks": {
+        "logo_7KEQ6K": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_i6VrmA": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_MPRgfM": {
+          "type": "logo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "logo_7KEQ6K",
+        "logo_i6VrmA",
+        "logo_MPRgfM"
+      ],
+      "disabled": true,
+      "name": "Image with text",
+      "settings": {
+        "caption": "",
+        "image_width": 50,
+        "layout": "image-left",
+        "subheading": "",
+        "heading": "Back to the Roots",
+        "text": "<p>Back to the Roots is a floral arrangement workshop born from a micro grant awarded by the City of Dallas Office of Culture and Arts, benefiting Vogel Alcove.</p><p>This experience will be offered to ten parents experiencing homelessness, creating a safe space to reconnect with nature, creativity, and community.</p>",
+        "button_label": "Get directions",
+        "button_link": "",
+        "button_style": "link",
+        "show_logos": true,
+        "color_scheme": ""
+      }
+    },
+    "slideshow_with_text_W7RpXJ": {
+      "type": "slideshow-with-text",
+      "blocks": {
+        "product_eDDcVp": {
+          "type": "product",
+          "settings": {
+            "product": "group-private-floral-design-class-2-8-people",
+            "show_vendor": false
+          }
+        },
+        "product_d6QbpT": {
+          "type": "product",
+          "settings": {
+            "product": "private-floral-design-class",
+            "show_vendor": false
+          }
+        }
+      },
+      "block_order": [
+        "product_eDDcVp",
+        "product_d6QbpT"
+      ],
+      "settings": {
+        "heading": "Private Workshops",
+        "autoplay": true,
+        "autoplay_speed": 5
+      }
+    },
+    "image_with_text_Uxatn6": {
+      "type": "image-with-text",
+      "blocks": {
+        "logo_4bJw6d": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_Lxaezi": {
+          "type": "logo",
+          "settings": {}
+        },
+        "logo_qqepxB": {
+          "type": "logo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "logo_4bJw6d",
+        "logo_Lxaezi",
+        "logo_qqepxB"
+      ],
+      "disabled": true,
+      "name": "Image with text",
+      "settings": {
+        "caption": "",
+        "image_width": 50,
+        "layout": "image-left",
+        "subheading": "",
+        "heading": "Back to the Roots",
+        "text": "<p>Back to the Roots is a floral arrangement workshop born from a micro grant awarded by the City of Dallas Office of Culture and Arts, benefiting Vogel Alcove.</p><p>This experience will be offered to ten parents experiencing homelessness, creating a safe space to reconnect with nature, creativity, and community.</p>",
+        "button_label": "Get directions",
+        "button_link": "",
+        "button_style": "link",
+        "show_logos": true,
+        "color_scheme": ""
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "image_with_text_qcdL4r",
+    "slideshow_with_text_W7RpXJ",
+    "image_with_text_Uxatn6"
+  ]
 }
-
