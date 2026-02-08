@@ -33,6 +33,24 @@
             "link_2_url": "shopify://pages/custom-floral-arrangements",
             "link_3_text": "Collections",
             "link_3_url": "shopify://collections",
+            "link_4_text": "",
+            "link_4_url": "shopify://pages/experiences",
+            "link_5_text": "",
+            "link_5_url": "shopify://pages/about",
+            "link_6_text": "",
+            "link_6_url": "shopify://pages/contact"
+          }
+        },
+        "link_column_aTn6xn": {
+          "type": "link_column",
+          "settings": {
+            "heading": "",
+            "link_1_text": "",
+            "link_1_url": "shopify://collections/all",
+            "link_2_text": "",
+            "link_2_url": "shopify://pages/custom-floral-arrangements",
+            "link_3_text": "",
+            "link_3_url": "shopify://collections",
             "link_4_text": "Experiences",
             "link_4_url": "shopify://pages/experiences",
             "link_5_text": "About",
@@ -43,8 +61,10 @@
         }
       },
       "block_order": [
-        "link_column_6UNgQT"
+        "link_column_6UNgQT",
+        "link_column_aTn6xn"
       ],
+      "custom_css": [],
       "settings": {
         "email": "contact@bypatriciorivera.com",
         "address": "4034 Swiss Avenue · Dallas, Texas 75204",
