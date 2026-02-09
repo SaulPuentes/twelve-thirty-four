@@ -1704,12 +1704,13 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
 }
 
 /* Predictive search card hover overrides */
+.resource-card,
 .predictive-search-results__card--product,
 .predictive-search-results__card {
   position: relative;
-  transition: transform var(--animation-speed-medium) var(--animation-timing-default),
-    box-shadow var(--animation-speed-medium) var(--animation-timing-hover);
-  z-index: var(--layer-flat);
+  transition: transform var(--animation-speed-medium, 0.15s) var(--animation-timing-default, cubic-bezier(0, 0, 0.2, 1)),
+    box-shadow var(--animation-speed-medium, 0.15s) var(--animation-timing-hover, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+  z-index: var(--layer-flat, 1);
 }
 
 .predictive-search-results__card .product-card,
@@ -1728,8 +1729,9 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
 }
 
 /* Z-index on hover */
+.resource-card:hover,
 .predictive-search-results__card--product:hover,
 .predictive-search-results__card:hover {
   position: relative;
-  z-index: var(--layer-raised);
+  z-index: var(--layer-raised, 2);
 }
