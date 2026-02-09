@@ -147,7 +147,7 @@
           "settings": {
             "image": "shopify://shop_images/image7.heic",
             "label": "Florals",
-            "url": "shopify://collections/florals",
+            "url": "shopify://pages/florals",
             "open_in_new_tab": false,
             "show_product_info": false,
             "title": "",
@@ -183,7 +183,7 @@
           "settings": {
             "image": "shopify://shop_images/66efc217d9602a0a105a6f572ddb1fb21b53f809c49fd108b9de9f7b5835c132.jpg",
             "label": "Plants",
-            "url": "shopify://collections/plants",
+            "url": "shopify://collections/all",
             "open_in_new_tab": false,
             "show_product_info": false,
             "title": "",
