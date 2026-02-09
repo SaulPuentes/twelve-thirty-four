@@ -1,0 +1,620 @@
+{%- comment -%}
+  Collection Alt Section
+  Alternative collection layout with section header, designers horizontal slider,
+  category filter bar, and product grid.
+{%- endcomment -%}
+
+{%- liquid
+  assign products_per_page = section.settings.products_per_page | default: 24
+  assign designer_count = 0
+  for collection_item in collections
+    if collection_item.products.size > 0
+      assign designer_count = designer_count | plus: 1
+    endif
+  endfor
+-%}
+
+<script src="{{ 'product-card.js' | asset_url }}" defer></script>
+
+<section
+  id="CollectionAlt-{{ section.id }}"
+  class="collection-alt"
+  style="
+    --product-columns: {{ section.settings.products_per_row }};
+    --product-gap: {{ section.settings.product_gap }}px;
+    --designer-columns: {{ designer_count | at_most: 5 }};
+  "
+>
+  <div class="collection-alt__inner">
+    {%- comment -%} Section Header (reusable snippet) {%- endcomment -%}
+    {%- render 'section-header',
+      heading: section.settings.heading,
+      description: section.settings.description,
+      show_view_all: section.settings.show_view_all,
+      view_all_link: section.settings.view_all_link,
+      view_all_label: section.settings.view_all_label
+    -%}
+
+    {%- comment -%} Designers Slider {%- endcomment -%}
+    <div class="collection-alt__designers" data-designers-slider>
+      <div class="collection-alt__designers-track">
+        {%- for collection_item in collections -%}
+          {%- if collection_item.products.size > 0 -%}
+            <a
+              href="{{ collection_item.url }}"
+              class="collection-alt__designer-card{% if collection_item.handle == collection.handle %} collection-alt__designer-card--active{% endif %}"
+              aria-label="{{ collection_item.title }}"
+            >
+              <div class="collection-alt__designer-image">
+                {%- if collection_item.image -%}
+                  <img
+                    src="{{ collection_item.image | image_url: width: 800 }}"
+                    srcset="
+                      {{ collection_item.image | image_url: width: 400 }} 400w,
+                      {{ collection_item.image | image_url: width: 600 }} 600w,
+                      {{ collection_item.image | image_url: width: 800 }} 800w
+                    "
+                    sizes="(max-width: 749px) 70vw, 30vw"
+                    alt="{{ collection_item.title | escape }}"
+                    width="{{ collection_item.image.width }}"
+                    height="{{ collection_item.image.height }}"
+                    loading="lazy"
+                    class="collection-alt__designer-img"
+                  >
+                {%- else -%}
+                  {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'collection-alt__designer-placeholder' }}
+                {%- endif -%}
+              </div>
+              <span class="collection-alt__designer-label">/ {{ collection_item.title }}</span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Filter Bar {%- endcomment -%}
+    {%- assign category_filter = collection.filters | where: "label", "Browse" | first -%}
+
+    <div class="collection-alt__filter-bar">
+      <div class="collection-alt__filter-left">
+        <span class="collection-alt__filter-label">{{ section.settings.categories_title | default: 'Shop by category' }}</span>
+
+        <a href="{{ collection.url }}" class="collection-alt__filter-btn-view-all">
+          View all
+        </a>
+
+        {%- if category_filter -%}
+          <div class="collection-alt__filter-tags">
+            {%- for value in category_filter.values -%}
+              {%- if value.count > 0 or value.active -%}
+                <a
+                  href="{{ value.url_to_add }}"
+                  class="collection-alt__filter-tag{% if value.active %} collection-alt__filter-tag--active{% endif %}"
+                >
+                  {{ value.label }}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <span class="collection-alt__filter-divider" aria-hidden="true"></span>
+
+      <div class="collection-alt__filter-right">
+        <a href="{{ collection.url }}" class="collection-alt__filter-reset">
+          {% render 'animated-arrow' %}
+          <span>Reset filters</span>
+        </a>
+      </div>
+    </div>
+
+    {%- comment -%} Product Grid {%- endcomment -%}
+    {%- paginate collection.products by products_per_page -%}
+      {%- if collection.products.size > 0 -%}
+        <ul class="collection-alt__grid" id="ProductGrid">
+          {%- for product in collection.products -%}
+            {%- if product.available -%}
+              <li class="collection-alt__grid-item">
+                {%- render 'product-card',
+                  product: product,
+                  show_add_to_cart: true,
+                  image_sizes: '(max-width: 749px) 50vw, 25vw',
+                  lazy_load: true
+                -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if paginate.pages > 1 -%}
+          <div class="collection-alt__pagination">
+            {{ paginate | default_pagination }}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="collection-alt__empty">
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  /* ============================================================
+     Collection Alt - Section Layout
+     ============================================================ */
+  .collection-alt {
+    padding: 5rem 2rem;
+    background-color: var(--color-background, #fff);
+  }
+
+  @media screen and (min-width: 768px) {
+    .collection-alt {
+      padding: 7rem 4rem;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .collection-alt {
+      padding: 8rem 4rem;
+    }
+  }
+
+  .collection-alt__inner {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* ============================================================
+     Designers Slider
+     ============================================================ */
+  .collection-alt__designers {
+    margin-bottom: 3rem;
+    overflow: hidden;
+  }
+
+  .collection-alt__designers-track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 0.5rem;
+  }
+
+  .collection-alt__designers-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .collection-alt__designer-card {
+    flex: 0 0 calc((100% - 0.5rem) / 1.5);
+    scroll-snap-align: start;
+    text-decoration: none;
+    color: var(--color-foreground);
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-alt__designer-card {
+      flex: 0 0 calc((100% - 2rem) / 3);
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .collection-alt__designer-card {
+      flex: 0 0 calc((100% - 3rem) / 4);
+    }
+  }
+
+  @media screen and (min-width: 1400px) {
+    .collection-alt__designer-card {
+      flex: 0 0 calc((100% - 4rem) / 5);
+    }
+  }
+
+  .collection-alt__designer-card:hover {
+    opacity: 0.85;
+  }
+
+  .collection-alt__designer-card--active {
+    opacity: 1;
+  }
+
+  .collection-alt__designer-card--active .collection-alt__designer-label {
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  .collection-alt__designer-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 1;
+    overflow: hidden;
+    border-radius: 2px;
+    background-color: var(--color-foreground);
+    opacity: 0.08;
+  }
+
+  .collection-alt__designer-card .collection-alt__designer-image {
+    opacity: 1;
+    background-color: transparent;
+  }
+
+  .collection-alt__designer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .collection-alt__designer-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .collection-alt__designer-label {
+    display: block;
+    margin-top: 0.625rem;
+    font-family: var(--font-body-family);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .collection-alt__designer-card:hover .collection-alt__designer-label {
+    opacity: 1;
+  }
+
+  /* ============================================================
+     Filter Bar
+     ============================================================ */
+  .collection-alt__filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    margin-bottom: 3rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-alt__filter-bar {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .collection-alt__filter-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .collection-alt__filter-left::-webkit-scrollbar {
+    display: none;
+  }
+
+  .collection-alt__filter-label {
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    opacity: 0.5;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .collection-alt__filter-btn-view-all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.25rem;
+    font-family: var(--font-body-family);
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-background, #fff);
+    background-color: var(--color-foreground, #000);
+    border: none;
+    border-radius: 2px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+  }
+
+  .collection-alt__filter-btn-view-all:hover {
+    opacity: 0.8;
+  }
+
+  .collection-alt__filter-tags {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  .collection-alt__filter-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 1rem;
+    font-family: var(--font-body-family);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    background-color: rgba(0, 0, 0, 0.06);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+    cursor: pointer;
+  }
+
+  .collection-alt__filter-tag:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .collection-alt__filter-tag--active {
+    background-color: var(--color-foreground, #000);
+    color: var(--color-background, #fff);
+  }
+
+  .collection-alt__filter-tag--active:hover {
+    background-color: var(--color-foreground, #000);
+    opacity: 0.85;
+  }
+
+  /* Vertical divider */
+  .collection-alt__filter-divider {
+    display: none;
+    width: 1px;
+    height: 2rem;
+    background-color: var(--color-foreground);
+    opacity: 0.15;
+    flex-shrink: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-alt__filter-divider {
+      display: block;
+    }
+  }
+
+  .collection-alt__filter-right {
+    flex-shrink: 0;
+  }
+
+  .collection-alt__filter-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body-family);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .collection-alt__filter-reset:hover {
+    opacity: 1;
+  }
+
+  /* ============================================================
+     Product Grid
+     ============================================================ */
+  .collection-alt__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--product-gap, 1.5rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .collection-alt__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .collection-alt__grid {
+      grid-template-columns: repeat(var(--product-columns, 4), 1fr);
+    }
+  }
+
+  .collection-alt__grid-item {
+    position: relative;
+    opacity: 0;
+    animation: fadeInUp 0.6s var(--animation-easing, ease) both;
+  }
+
+  .collection-alt__grid-item:nth-child(1) { animation-delay: 0.05s; }
+  .collection-alt__grid-item:nth-child(2) { animation-delay: 0.1s; }
+  .collection-alt__grid-item:nth-child(3) { animation-delay: 0.15s; }
+  .collection-alt__grid-item:nth-child(4) { animation-delay: 0.2s; }
+  .collection-alt__grid-item:nth-child(5) { animation-delay: 0.25s; }
+  .collection-alt__grid-item:nth-child(6) { animation-delay: 0.3s; }
+  .collection-alt__grid-item:nth-child(7) { animation-delay: 0.35s; }
+  .collection-alt__grid-item:nth-child(8) { animation-delay: 0.4s; }
+
+  .collection-alt__grid-item:nth-child(n+9) {
+    opacity: 1;
+    animation: none;
+  }
+
+  /* ============================================================
+     Empty State & Pagination
+     ============================================================ */
+  .collection-alt__empty {
+    padding: 4rem 2rem;
+    text-align: center;
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    color: var(--color-foreground);
+    opacity: 0.7;
+  }
+
+  .collection-alt__pagination {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .collection-alt__pagination a,
+  .collection-alt__pagination span {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    color: var(--color-foreground);
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+
+  .collection-alt__pagination a:hover {
+    opacity: 1;
+  }
+
+  .collection-alt__pagination span.current {
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  /* ============================================================
+     Designers card fade-in sequence
+     ============================================================ */
+  .collection-alt__designer-card {
+    opacity: 0;
+    animation: fadeIn 0.5s var(--animation-easing, ease) both;
+  }
+
+  .collection-alt__designer-card:nth-child(1) { animation-delay: 0.05s; }
+  .collection-alt__designer-card:nth-child(2) { animation-delay: 0.1s; }
+  .collection-alt__designer-card:nth-child(3) { animation-delay: 0.15s; }
+  .collection-alt__designer-card:nth-child(4) { animation-delay: 0.2s; }
+  .collection-alt__designer-card:nth-child(5) { animation-delay: 0.25s; }
+  .collection-alt__designer-card:nth-child(6) { animation-delay: 0.3s; }
+  .collection-alt__designer-card:nth-child(7) { animation-delay: 0.35s; }
+  .collection-alt__designer-card:nth-child(8) { animation-delay: 0.4s; }
+
+  .collection-alt__designer-card:nth-child(n+9) {
+    animation-delay: 0.45s;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Collection alt",
+  "tag": "section",
+  "class": "section-collection-alt",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Explore\nOur Designers"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Discover curated collections from independent designers and makers whose work celebrates craft, materiality, and thoughtful design."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show 'View all' link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View all label",
+      "default": "Explore the shop"
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
+    },
+    {
+      "type": "header",
+      "content": "Filter bar"
+    },
+    {
+      "type": "text",
+      "id": "categories_title",
+      "label": "Categories label",
+      "default": "Shop by category"
+    },
+    {
+      "type": "header",
+      "content": "Product grid"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "product_gap",
+      "label": "Product gap",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ]
+}
+{% endschema %}
