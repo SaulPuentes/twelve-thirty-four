@@ -134,7 +134,7 @@
               "settings": {
                 "stacking": true,
                 "show_pickup_availability": false,
-                "gift_card_form": true,
+                "gift_card_form": false,
                 "padding-block-start": 5,
                 "padding-block-end": 24,
                 "padding-inline-start": 0,
