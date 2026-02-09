@@ -200,6 +200,7 @@
 
   .header--transparent:not(.header--scrolled) .header__nav-link,
   .header--transparent:not(.header--scrolled) .header__action,
+  .header--transparent:not(.header--scrolled) .header-actions__action,
   .header--transparent:not(.header--scrolled) .header__menu-toggle,
   .header--transparent:not(.header--scrolled) .header__logo-text {
     color: #fff;
@@ -209,6 +210,7 @@
   /* Header text color based on hero slide */
   body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__nav-link,
   body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__action,
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header-actions__action,
   body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__menu-toggle,
   body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__logo-text {
     color: #000;
@@ -237,6 +239,25 @@
 
   body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .header__logo-image--inverse {
     display: none;
+  }
+
+  /* Cart bubble colors on transparent header */
+  /* White text state — bubble needs white background, dark text */
+  .header--transparent:not(.header--scrolled) .cart-bubble__background {
+    background-color: #fff;
+  }
+
+  .header--transparent:not(.header--scrolled) .cart-bubble__text {
+    color: #000;
+  }
+
+  /* Black text state — bubble reverts to dark background, light text */
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .cart-bubble__background {
+    background-color: #000;
+  }
+
+  body[data-hero-text-color="black"] .header--transparent:not(.header--scrolled) .cart-bubble__text {
+    color: #fff;
   }
 
   .header__inner {
