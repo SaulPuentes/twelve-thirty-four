@@ -25,6 +25,7 @@
     "currency_code_enabled_product_pages": true,
     "quick_add": true,
     "quick_add_color_scheme": "scheme-1",
+    "empty_state_collection": "florals",
     "body_font_size": "16",
     "heading_scale": "medium",
     "section_spacing": "48",
