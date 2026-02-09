@@ -318,8 +318,11 @@
           ]
         }
       },
+      "custom_css": [
+        ".product {display: flex !important; flex-direction: column !important; }"
+      ],
       "settings": {
-        "content_width": "content-center-aligned",
+        "content_width": "content-full-width",
         "desktop_media_position": "left",
         "equal_columns": true,
         "limit_details_width": true,
