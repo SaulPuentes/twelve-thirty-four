@@ -319,7 +319,7 @@
         }
       },
       "custom_css": [
-        "@media (min-width: 750px) {.product-media-container {max-height: 60vh !important; display: flex !important; align-items: center !important; justify-content: center !important; } .product-media__image {max-height: 60vh !important; object-fit: contain !important; margin: 0 auto !important; }}"
+        "@media (max-width: 749px) {.product-information__grid {grid-template-columns: 1fr !important; } .product-information__grid > .product-details {grid-column: 1 !important; } .product-information__grid > .product-information__media {grid-column: 1 !important; }}"
       ],
       "settings": {
         "content_width": "content-full-width",
