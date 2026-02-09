@@ -256,7 +256,30 @@ function registerEventListeners() {
             : element.closest(selector)
           : getClosestComponent(element);
 
-        if (!(instance instanceof Component) || !method) return;
+        // Debug logging for search-related events
+        if (eventName === 'click' && value.includes('search')) {
+          console.log('[Component] Search-related click event', {
+            eventName,
+            element,
+            attribute: value,
+            selector,
+            method,
+            instance,
+            instanceType: instance?.constructor?.name,
+            hasCallback: instance && typeof instance[method] === 'function',
+          });
+        }
+
+        if (!(instance instanceof Component) || !method) {
+          if (eventName === 'click' && value.includes('search')) {
+            console.warn('[Component] No valid instance or method found', {
+              instance,
+              method,
+              isComponent: instance instanceof Component,
+            });
+          }
+          return;
+        }
 
         method = method.replace(/\?.*/, '');
 
@@ -264,6 +287,9 @@ function registerEventListeners() {
 
         if (typeof callback === 'function') {
           try {
+            if (eventName === 'click' && value.includes('search')) {
+              console.log('[Component] Calling method', { method, instance: instance.tagName });
+            }
             /** @type {(Event | Data)[]} */
             const args = [proxiedEvent];
 
@@ -271,8 +297,15 @@ function registerEventListeners() {
 
             callback.call(instance, ...args);
           } catch (error) {
+            console.error('[Component] Error calling method', { method, error });
             console.error(error);
           }
+        } else if (eventName === 'click' && value.includes('search')) {
+          console.warn('[Component] Method not found or not a function', {
+            method,
+            callback,
+            availableMethods: Object.getOwnPropertyNames(Object.getPrototypeOf(instance)),
+          });
         }
       },
       { capture: true }

@@ -1,6 +1,8 @@
 import { Component } from '@theme/component';
 import { debounce, isClickedOutside, onAnimationEnd } from '@theme/utilities';
 
+console.log('[Dialog] Module loaded');
+
 /**
  * A custom element that manages a dialog.
  *
@@ -14,6 +16,7 @@ export class DialogComponent extends Component {
 
   connectedCallback() {
     super.connectedCallback();
+    console.log('[Dialog] Component connected', { id: this.id, element: this });
 
     if (this.minWidth || this.maxWidth) {
       window.addEventListener('resize', this.#handleResize);
@@ -22,6 +25,7 @@ export class DialogComponent extends Component {
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    console.log('[Dialog] Component disconnected', { id: this.id });
     if (this.minWidth || this.maxWidth) {
       window.removeEventListener('resize', this.#handleResize);
     }
@@ -34,6 +38,7 @@ export class DialogComponent extends Component {
 
     const windowWidth = window.innerWidth;
     if (windowWidth < minWidth || windowWidth > maxWidth) {
+      console.log('[Dialog] Closing due to resize', { windowWidth, minWidth, maxWidth });
       this.closeDialog();
     }
   }, 50);
@@ -44,12 +49,23 @@ export class DialogComponent extends Component {
    * Shows the dialog.
    */
   showDialog() {
+    console.log('[Dialog] showDialog called', { id: this.id, isOpen: this.refs.dialog?.open });
     const { dialog } = this.refs;
 
-    if (dialog.open) return;
+    if (!dialog) {
+      console.error('[Dialog] Dialog ref not found!', { refs: this.refs });
+      return;
+    }
+
+    if (dialog.open) {
+      console.log('[Dialog] Dialog already open, skipping');
+      return;
+    }
 
     const scrollY = window.scrollY;
     this.#previousScrollY = scrollY;
+
+    console.log('[Dialog] Opening dialog', { scrollY });
 
     // Prevent layout thrashing by separating DOM reads from DOM writes
     requestAnimationFrame(() => {
@@ -58,6 +74,7 @@ export class DialogComponent extends Component {
       document.body.style.top = `-${scrollY}px`;
 
       dialog.showModal();
+      console.log('[Dialog] showModal() executed', { isOpen: dialog.open });
       this.dispatchEvent(new DialogOpenEvent());
 
       this.addEventListener('click', this.#handleClick);
@@ -69,9 +86,13 @@ export class DialogComponent extends Component {
    * Closes the dialog.
    */
   closeDialog = async () => {
+    console.log('[Dialog] closeDialog called', { id: this.id, isOpen: this.refs.dialog?.open });
     const { dialog } = this.refs;
 
-    if (!dialog.open) return;
+    if (!dialog.open) {
+      console.log('[Dialog] Dialog not open, skipping close');
+      return;
+    }
 
     this.removeEventListener('click', this.#handleClick);
     this.removeEventListener('keydown', this.#handleKeyDown);
@@ -87,6 +108,7 @@ export class DialogComponent extends Component {
     dialog.classList.add('dialog-closing');
     dialog.style.animation = '';
 
+    console.log('[Dialog] Waiting for close animation');
     await onAnimationEnd(dialog, undefined, {
       subtree: false,
     });
@@ -99,6 +121,7 @@ export class DialogComponent extends Component {
     dialog.close();
     dialog.classList.remove('dialog-closing');
 
+    console.log('[Dialog] Dialog closed', { id: this.id });
     this.dispatchEvent(new DialogCloseEvent());
   };
 
@@ -106,6 +129,7 @@ export class DialogComponent extends Component {
    * Toggles the dialog.
    */
   toggleDialog = () => {
+    console.log('[Dialog] toggleDialog called', { isOpen: this.refs.dialog?.open });
     if (this.refs.dialog.open) {
       this.closeDialog();
     } else {
@@ -122,6 +146,7 @@ export class DialogComponent extends Component {
     const { dialog } = this.refs;
 
     if (isClickedOutside(event, dialog)) {
+      console.log('[Dialog] Click outside detected, closing');
       this.closeDialog();
     }
   }
@@ -134,6 +159,7 @@ export class DialogComponent extends Component {
   #handleKeyDown(event) {
     if (event.key !== 'Escape') return;
 
+    console.log('[Dialog] Escape key pressed, closing');
     event.preventDefault();
     this.closeDialog();
   }
@@ -157,7 +183,12 @@ export class DialogComponent extends Component {
   }
 }
 
-if (!customElements.get('dialog-component')) customElements.define('dialog-component', DialogComponent);
+if (!customElements.get('dialog-component')) {
+  customElements.define('dialog-component', DialogComponent);
+  console.log('[Dialog] Custom element "dialog-component" registered');
+} else {
+  console.log('[Dialog] Custom element "dialog-component" already registered');
+}
 
 export class DialogOpenEvent extends CustomEvent {
   constructor() {
