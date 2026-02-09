@@ -55,7 +55,7 @@
         "layout": "image-left",
         "subheading": "For Teams & Clients",
         "heading": "Private Floral Experiences",
-        "text": "<p>A curated floral design experience for 8 to 30 guests, hosted in our Swiss Avenue studio or at a venue of your choosing. Each session is tailored to your occasion — from palette and stems to setting and pacing.</p>",
+        "text": "<p>A curated floral design experience for 8 to 30 guests, hosted in our Swiss Avenue location or at a venue of your choosing. Each session is tailored to your occasion — from palette and stems to setting and pacing.</p>",
         "button_label": "Inquire",
         "button_link": "shopify://pages/contact",
         "button_style": "link",
@@ -110,7 +110,7 @@
         "product_b8YjjE"
       ],
       "settings": {
-        "heading": "Book an Experience",
+        "heading": "Book an",
         "autoplay": true,
         "autoplay_speed": 5
       }
