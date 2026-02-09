@@ -122,10 +122,10 @@
                 "variant_style": "buttons",
                 "show_swatches": true,
                 "alignment": "left",
-                "padding-block-start": 12,
+                "padding-block-start": 10,
                 "padding-block-end": 24,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
+                "padding-inline-start": 10,
+                "padding-inline-end": 10
               },
               "blocks": {}
             },
@@ -135,7 +135,7 @@
                 "stacking": true,
                 "show_pickup_availability": false,
                 "gift_card_form": true,
-                "padding-block-start": 0,
+                "padding-block-start": 5,
                 "padding-block-end": 24,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
