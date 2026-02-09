@@ -223,6 +223,7 @@
                 },
                 "accordion_row_iJM37V": {
                   "type": "_accordion-row",
+                  "disabled": true,
                   "settings": {
                     "heading": "Care",
                     "open_by_default": false,
@@ -262,6 +263,7 @@
                 },
                 "accordion_row_pLFDcD": {
                   "type": "_accordion-row",
+                  "disabled": true,
                   "settings": {
                     "heading": "Design",
                     "open_by_default": false,
