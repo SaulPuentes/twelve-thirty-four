@@ -1379,6 +1379,16 @@ fly-to-cart.fly-to-cart--sticky {
   pointer-events: none;
 }
 
+/* Sold-out product visual treatment */
+.product-card--sold-out .product-card__image {
+  opacity: 0.6;
+}
+
+.product-card--sold-out .product-card__add-to-cart {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 /* ============================================
    Product Grid Styles
    ============================================ */

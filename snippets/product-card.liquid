@@ -20,7 +20,7 @@
   assign product_image = product.featured_media | default: product.featured_image
 -%}
 
-<div class="product-card {{ class }}" {% if block %}{{ block.shopify_attributes }}{% endif %}>
+<div class="product-card {{ class }}{% unless first_variant.available %} product-card--sold-out{% endunless %}" {% if block %}{{ block.shopify_attributes }}{% endif %}>
   <a href="{{ product.url }}" class="product-card__link" aria-label="{{ product.title }}">
     <div class="product-card__media">
       {%- if product_image -%}
