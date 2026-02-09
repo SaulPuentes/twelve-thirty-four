@@ -36,6 +36,8 @@
 
     {%- comment -%} Import map and module scripts - must load before any module scripts in body {%- endcomment -%}
     {% render 'scripts' %}
+    {%- render 'theme-styles-variables' -%}
+    {%- render 'color-schemes' -%}
 
     {{ content_for_header }}
 
