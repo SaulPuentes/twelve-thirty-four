@@ -69,7 +69,7 @@
         "product_eKQ8xk": {
           "type": "product",
           "settings": {
-            "product": "custom-floral-arrangement-medium",
+            "product": "the-arrangement-classic",
             "label": "Classic",
             "custom_title": "",
             "show_add_to_cart": true,
@@ -215,7 +215,7 @@
         "product-1": {
           "type": "product",
           "settings": {
-            "product": "custom-floral-arrangement-medium"
+            "product": "the-arrangement-classic"
           }
         },
         "product-2": {
