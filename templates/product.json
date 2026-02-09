@@ -319,7 +319,7 @@
         }
       },
       "custom_css": [
-        ".product {display: flex !important; flex-direction: column !important;}"
+        "@media (max-width: 749px) {.product-information__grid {grid-template-columns: 1fr !important; }}"
       ],
       "settings": {
         "content_width": "content-center-aligned",
