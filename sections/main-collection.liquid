@@ -125,6 +125,43 @@
           Admin setup required: Add "Category" filter in Search & Discovery app.
         </p>
       {% endif %}
+
+      {%- comment -%} Availability Filter {%- endcomment -%}
+      {%- if section.settings.show_availability_filter -%}
+        {%- assign availability_filter = collection.filters | where: "param_name", "filter.v.availability" | first -%}
+        
+        {%- if availability_filter -%}
+          <div class="main-collection__filter-group">
+            <h3 class="main-collection__sidebar-title">
+              {{ section.settings.availability_title | default: 'Availability' }}
+            </h3>
+            <nav class="main-collection__nav">
+              <ul class="main-collection__nav-list">
+                {%- comment -%} "All" option - clears the availability filter {%- endcomment -%}
+                <li class="main-collection__nav-item">
+                  <a
+                    href="{{ availability_filter.url_to_remove }}"
+                    class="main-collection__nav-link{% unless availability_filter.active_values.size > 0 %} main-collection__nav-link--active{% endunless %}"
+                  >
+                    ALL
+                  </a>
+                </li>
+                {%- for value in availability_filter.values -%}
+                  <li class="main-collection__nav-item">
+                    <a
+                      href="{{ value.url_to_add }}"
+                      class="main-collection__nav-link{% if value.active %} main-collection__nav-link--active{% endif %}"
+                    >
+                      {{ value.label }}
+                      <span class="main-collection__filter-count">({{ value.count }})</span>
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </nav>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
     </aside>
   </div>
 </section>
@@ -216,6 +253,18 @@
 
   .main-collection__nav-link--active {
     font-weight: 500;
+  }
+
+  /* Availability filter group */
+  .main-collection__filter-group {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(var(--color-foreground-rgb, 0, 0, 0), 0.1);
+  }
+
+  .main-collection__filter-count {
+    font-size: 0.75rem;
+    opacity: 0.5;
   }
 
   /* Main Content */
@@ -411,6 +460,23 @@
       "id": "categories_title",
       "label": "Categories sidebar title",
       "default": "Categories"
+    },
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_availability_filter",
+      "label": "Show availability filter",
+      "info": "Enable the 'Product availability' filter in Shopify Admin → Search & Discovery",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "availability_title",
+      "label": "Availability filter title",
+      "default": "Availability"
     },
     {
       "type": "header",
