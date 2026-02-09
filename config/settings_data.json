@@ -256,5 +256,10 @@
         }
       }
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      "/* Product layout - image above title */.product {display: flex !important; flex-direction: column !important; }"
+    ]
   }
 }
