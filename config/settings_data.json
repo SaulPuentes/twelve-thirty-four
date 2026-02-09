@@ -258,9 +258,6 @@
     }
   },
   "platform_customizations": {
-    "custom_css": [
-      "/* Product layout - image above title */.product {display: flex !important; flex-direction: column !important;}",
-      "/* Force grid layout to stack vertically */.product.grid {display: grid !important; grid-template-columns: 1fr !important; grid-template-rows: auto auto !important; }"
-    ]
+    "custom_css": []
   }
 }
