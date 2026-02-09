@@ -319,7 +319,7 @@
         }
       },
       "custom_css": [
-        "@media (max-width: 749px) {.product-information__grid {grid-template-columns: 1fr !important; } .product-information__grid > .product-details {grid-column: 1 !important; } .product-information__grid > .product-information__media {grid-column: 1 !important; }}"
+        "@media (max-width: 749px) {.product-information__grid {grid-template-columns: 1fr !important; } .product-information__grid > .product-details {grid-column: 1 !important; } .product-information__grid > .product-information__media {grid-column: 1 !important; } .product-information__media {display: flex !important; justify-content: center !important; } .product-media__image {margin: 0 auto !important; }}"
       ],
       "settings": {
         "content_width": "content-center-aligned",
