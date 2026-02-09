@@ -12,9 +12,9 @@
 <div class="header-actions">
   {%- comment -%} Search icon {%- endcomment -%}
   {%- if section.settings.show_search -%}
-    <a href="{{ routes.search_url }}" class="header-actions__action hidden md:flex" aria-label="{{ 'accessibility.search' | t }}">
-      {% render 'icon', icon: 'search', size: 20 %}
-    </a>
+    <div class="hidden md:flex">
+      {% render 'search' %}
+    </div>
   {%- endif -%}
 
   {%- comment -%} Account icon {%- endcomment -%}

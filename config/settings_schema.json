@@ -187,6 +187,53 @@
     ]
   },
   {
+    "name": "Search",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "empty_state_collection",
+        "label": "Empty state collection",
+        "info": "Collection to show when the search modal is opened before any query is entered. Defaults to all products if not set."
+      },
+      {
+        "type": "color_scheme",
+        "id": "popover_color_scheme",
+        "label": "Search modal color scheme",
+        "default": "scheme-1"
+      },
+      {
+        "type": "range",
+        "id": "product_corner_radius",
+        "label": "Product card corner radius",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "card_corner_radius",
+        "label": "Resource card corner radius",
+        "min": 0,
+        "max": 24,
+        "step": 1,
+        "unit": "px",
+        "default": 8
+      },
+      {
+        "type": "select",
+        "id": "card_title_case",
+        "label": "Card title case",
+        "options": [
+          { "value": "none", "label": "None" },
+          { "value": "uppercase", "label": "Uppercase" }
+        ],
+        "default": "none"
+      }
+    ]
+  },
+  {
     "name": "Social Media",
     "settings": [
       {
