@@ -1714,9 +1714,9 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
 .predictive-search-results__card--product,
 .predictive-search-results__card {
   position: relative;
-  transition: transform var(--hover-transition-duration, 0.25s) var(--hover-transition-timing, ease-out),
-    box-shadow var(--hover-transition-duration, 0.25s) var(--hover-transition-timing, ease-out);
-  z-index: var(--layer-flat);
+  transition: transform var(--animation-speed-medium, 0.15s) var(--animation-timing-default, cubic-bezier(0, 0, 0.2, 1)),
+    box-shadow var(--animation-speed-medium, 0.15s) var(--animation-timing-hover, cubic-bezier(0.25, 0.46, 0.45, 0.94));
+  z-index: var(--layer-flat, 1);
 }
 
 /*
@@ -1826,23 +1826,9 @@ media-gallery.media-gallery--grid .media-gallery__grid .product-media-container 
 }
 
 /* Z-index on hover */
-.product-card:hover,
-.collection-card:hover,
 .resource-card:hover,
 .predictive-search-results__card--product:hover,
 .predictive-search-results__card:hover {
   position: relative;
-  z-index: var(--layer-raised);
-}
-
-/* Disable z-index elevation in header/drawer */
-.header .product-card:hover,
-.header .collection-card:hover,
-.header .resource-card:hover,
-.header-drawer .product-card:hover,
-.header-drawer .collection-card:hover,
-.header-drawer .resource-card:hover {
-  z-index: auto;
-  transform: none;
-  box-shadow: none;
+  z-index: var(--layer-raised, 2);
 }
