@@ -17,9 +17,9 @@
           "static": true,
           "settings": {
             "media_presentation": "grid",
-            "media_columns": "one",
+            "media_columns": "two",
             "image_gap": 0,
-            "large_first_image": false,
+            "large_first_image": true,
             "icons_style": "arrow",
             "slideshow_controls_style": "counter",
             "slideshow_mobile_controls_style": "counter",
@@ -36,7 +36,7 @@
             "hide_variants": true,
             "padding-block-start": 0,
             "padding-block-end": 0,
-            "padding-inline-start": 30,
+            "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {}
