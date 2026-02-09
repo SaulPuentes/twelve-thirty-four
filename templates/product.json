@@ -322,7 +322,7 @@
         "@media (max-width: 749px) {.product-information__grid {grid-template-columns: 1fr !important; } .product-information__grid > .product-details {grid-column: 1 !important; } .product-information__grid > .product-information__media {grid-column: 1 !important; }}"
       ],
       "settings": {
-        "content_width": "content-full-width",
+        "content_width": "content-center-aligned",
         "desktop_media_position": "left",
         "equal_columns": true,
         "limit_details_width": true,
