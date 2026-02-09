@@ -34,6 +34,9 @@
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
+    {%- comment -%} Import map and module scripts - must load before any module scripts in body {%- endcomment -%}
+    {% render 'scripts' %}
+
     {{ content_for_header }}
 
     <script>
@@ -61,8 +64,6 @@
 
     {%- comment -%} Search Modal - Global search dialog {%- endcomment -%}
     {% render 'search-modal' %}
-
-    {% render 'scripts' %}
   </body>
 </html>
 
