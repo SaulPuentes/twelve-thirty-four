@@ -59,13 +59,7 @@
     assign product_grid_class = product_grid_class | append: ' product-information--media-left'
   endif
 
-  if settings.equal_columns
-    assign product_grid_class = product_grid_class | append: ' product-information__grid--half'
-
-    if settings.limit_details_width
-      assign product_grid_class = product_grid_class | append: ' product-information__grid--limit-details'
-    endif
-  endif
+  assign product_grid_class = product_grid_class | append: ' product-information__grid--half product-information__grid--limit-details'
 
   # Determine content width
   case settings.content_width
@@ -79,9 +73,9 @@
   assign gap_value = settings.gap | default: 16
 %}
 
-<div class="section-background color-{{ settings.color_scheme }}"></div>
+<div class="section-background color-scheme-1"></div>
 <div
-  class="product-information section section--{{ content_width }} spacing-style color-{{ settings.color_scheme }} relative"
+  class="product-information section section--{{ content_width }} spacing-style color-scheme-1 relative"
   style="{% render 'spacing-style', settings: settings %} --gap: {{ gap_value }}px;"
   data-testid="product-information"
 >
