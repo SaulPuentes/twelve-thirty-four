@@ -29,6 +29,12 @@
             </a>
           {%- endif -%}
 
+          {%- if section.settings.phone != blank -%}
+            <a href="tel:{{ section.settings.phone | replace: ' ', '' | replace: '-', '' | replace: '(', '' | replace: ')', '' }}" class="footer__phone">
+              {{ section.settings.phone }}
+            </a>
+          {%- endif -%}
+
           {%- if section.settings.address != blank -%}
             <address class="footer__address">
               {{ section.settings.address | newline_to_br }}
@@ -212,7 +218,8 @@
     }
   }
 
-  .footer__email {
+  .footer__email,
+  .footer__phone {
     display: block;
     font-size: 0.875rem;
     color: var(--color-foreground);
@@ -362,6 +369,12 @@
       "id": "email",
       "label": "Email",
       "default": "contact@example.com"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone",
+      "default": "+1 (555) 123-4567"
     },
     {
       "type": "textarea",
