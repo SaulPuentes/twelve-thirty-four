@@ -120,6 +120,26 @@
     gap: var(--gap, 16px) 0;
   }
 
+  /* Page width: same padding-inline as product-recommendations */
+  .product-information.section--page-width {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media screen and (min-width: 768px) {
+    .product-information.section--page-width {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .product-information.section--page-width {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+
   /* Base grid layout */
   .product-information__grid {
     display: grid;
