@@ -56,12 +56,6 @@
 
     {%- comment -%} Main Content - Product Grid {%- endcomment -%}
     <div class="main-collection__content">
-      {%- if collection.description != blank and section.settings.show_description -%}
-        <div class="main-collection__description">
-          {{ collection.description }}
-        </div>
-      {%- endif -%}
-
       {%- assign products_per_page = section.settings.products_per_page | default: 24 -%}
 
       {%- paginate collection.products by products_per_page -%}
@@ -223,14 +217,6 @@
   /* Main Content */
   .main-collection__content {
     min-width: 0;
-  }
-
-  .main-collection__description {
-    font-family: var(--font-body-family);
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 2rem;
-    max-width: 600px;
   }
 
   /* Product Grid */
@@ -396,12 +382,6 @@
       "type": "checkbox",
       "id": "show_unavailable_products",
       "label": "Show sold out and unavailable products",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "show_description",
-      "label": "Show collection description",
       "default": false
     },
     {

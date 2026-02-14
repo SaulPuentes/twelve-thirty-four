@@ -163,7 +163,7 @@
     height: 100%;
   }
 
-  /* Mobile styles */
+  /* Mobile and tablet: full stacked style */
   @media screen and (max-width: 749px) {
     .product-information__grid {
       grid-template-columns: 1fr !important;
@@ -189,6 +189,32 @@
 
     .product-details {
       grid-column: 1;
+    }
+  }
+
+  /* Full width option: tablet also uses stacked style; two columns only on desktop */
+  @media screen and (min-width: 750px) and (max-width: 1023px) {
+    .product-information.section--full-width .product-information__grid {
+      grid-column: 1 / -1;
+      grid-template-columns: 1fr !important;
+    }
+
+    .product-information.section--full-width .product-information__grid > .product-details,
+    .product-information.section--full-width .product-information__grid > .product-information__media {
+      grid-column: 1 !important;
+    }
+
+    .product-information.section--full-width .product-information__media,
+    .product-information.section--full-width .product-media-container,
+    .product-information.section--full-width .product-media {
+      display: flex !important;
+      justify-content: center !important;
+      width: 100% !important;
+    }
+
+    .product-information.section--full-width .product-media__image {
+      margin: 0 auto !important;
+      display: block !important;
     }
   }
 
@@ -284,7 +310,10 @@
       }
     }
 
-    /* Handle full width section */
+    /* Handle full width section: two columns only on desktop (1024px+) */
+  }
+
+  @media screen and (min-width: 1024px) {
     .section--full-width {
       .product-information__grid:not(.product-information--media-none) {
         &.product-information--media-left,
