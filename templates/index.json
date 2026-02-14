@@ -53,6 +53,48 @@
         "right_link_url": "shopify://collections/all"
       }
     },
+    "shop_showcase_F9pqL9": {
+      "type": "shop-showcase",
+      "blocks": {
+        "product_zMN4pA": {
+          "type": "product",
+          "settings": {
+            "product": "the-arrangement-petite",
+            "label": "Petite",
+            "custom_title": "",
+            "show_add_to_cart": false,
+            "open_in_new_tab": false
+          }
+        },
+        "product_eKQ8xk": {
+          "type": "product",
+          "settings": {
+            "product": "the-arrangement-classic",
+            "label": "Classic",
+            "custom_title": "",
+            "show_add_to_cart": false,
+            "open_in_new_tab": false
+          }
+        },
+        "product_6cDnGm": {
+          "type": "product",
+          "settings": {
+            "product": "the-arrangement-grand",
+            "label": "Grand",
+            "custom_title": "",
+            "show_add_to_cart": false,
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "product_zMN4pA",
+        "product_eKQ8xk",
+        "product_6cDnGm"
+      ],
+      "name": "Shop showcase",
+      "settings": {}
+    },
     "image_with_text_HUtJ4h": {
       "type": "image-with-text",
       "blocks": {
@@ -161,47 +203,49 @@
       "name": "Shop showcase",
       "settings": {}
     },
-    "shop_showcase_F9pqL9": {
-      "type": "shop-showcase",
+    "image_with_text_WMCEDg": {
+      "type": "image-with-text",
       "blocks": {
-        "product_zMN4pA": {
-          "type": "product",
-          "settings": {
-            "product": "the-arrangement-petite",
-            "label": "Petite",
-            "custom_title": "",
-            "show_add_to_cart": true,
-            "open_in_new_tab": false
-          }
+        "logo_pxQhXJ": {
+          "type": "logo",
+          "settings": {}
         },
-        "product_eKQ8xk": {
-          "type": "product",
-          "settings": {
-            "product": "the-arrangement-classic",
-            "label": "Classic",
-            "custom_title": "",
-            "show_add_to_cart": true,
-            "open_in_new_tab": false
-          }
+        "logo_wLbD73": {
+          "type": "logo",
+          "settings": {}
         },
-        "product_6cDnGm": {
-          "type": "product",
-          "settings": {
-            "product": "the-arrangement-grand",
-            "label": "Grand",
-            "custom_title": "",
-            "show_add_to_cart": true,
-            "open_in_new_tab": false
-          }
+        "logo_qHpR9M": {
+          "type": "logo",
+          "settings": {}
         }
       },
       "block_order": [
-        "product_zMN4pA",
-        "product_eKQ8xk",
-        "product_6cDnGm"
+        "logo_pxQhXJ",
+        "logo_wLbD73",
+        "logo_qHpR9M"
       ],
-      "name": "Shop showcase",
-      "settings": {}
+      "custom_css": [
+        ".image-text__button-arrow {display: none !important;}",
+        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important;}",
+        ".image-text {padding: 0 !important;}",
+        ".image-text__content {gap: 0 !important; justify-content: center !important;}",
+        ".image-text__content {padding: 0 30px 30px 20px !important;}"
+      ],
+      "name": "Image with text",
+      "settings": {
+        "image": "shopify://shop_images/chase.webp",
+        "caption": "",
+        "image_width": 50,
+        "layout": "image-left",
+        "subheading": "Featured Artist",
+        "heading": "Chase Gamblin",
+        "text": "<p>Ceramic vessels and sculptural forms built from thrown components and layered slip. Trained at Tennessee Tech's Appalachian Center for Craft and Texas Tech, with residencies in Vicchio and Sanbao. Gold luster on matte stoneware — light reveals the surface differently every hour of the day.</p>",
+        "button_label": "View the Collection",
+        "button_link": "shopify://collections/chase-gamblin",
+        "button_style": "primary",
+        "show_logos": false,
+        "color_scheme": ""
+      }
     },
     "featured-products": {
       "type": "featured-products",
@@ -246,50 +290,6 @@
         "show_view_all": false,
         "view_all_label": "View All",
         "view_all_link": "shopify://collections"
-      }
-    },
-    "image_with_text_WMCEDg": {
-      "type": "image-with-text",
-      "blocks": {
-        "logo_pxQhXJ": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo_wLbD73": {
-          "type": "logo",
-          "settings": {}
-        },
-        "logo_qHpR9M": {
-          "type": "logo",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "logo_pxQhXJ",
-        "logo_wLbD73",
-        "logo_qHpR9M"
-      ],
-      "custom_css": [
-        ".image-text__button-arrow {display: none !important;}",
-        ".image-text__button.button {background: 0 !important; border: 0 !important; padding: 0 !important; color: inherit !important; font-size: 0.75rem !important; letter-spacing: 0.15em !important; text-transform: uppercase !important; text-decoration: underline !important; text-underline-offset: 4px !important;}",
-        ".image-text {padding: 0 !important;}",
-        ".image-text__content {gap: 0 !important; justify-content: center !important;}",
-        ".image-text__content {padding: 0 30px 30px 20px !important;}"
-      ],
-      "name": "Image with text",
-      "settings": {
-        "image": "shopify://shop_images/chase.webp",
-        "caption": "",
-        "image_width": 50,
-        "layout": "image-left",
-        "subheading": "Featured Artist",
-        "heading": "Chase Gamblin",
-        "text": "<p>Ceramic vessels and sculptural forms built from thrown components and layered slip. Trained at Tennessee Tech's Appalachian Center for Craft and Texas Tech, with residencies in Vicchio and Sanbao. Gold luster on matte stoneware — light reveals the surface differently every hour of the day.</p>",
-        "button_label": "View the Collection",
-        "button_link": "shopify://collections/chase-gamblin",
-        "button_style": "primary",
-        "show_logos": false,
-        "color_scheme": ""
       }
     },
     "shop_showcase_jndnAQ": {
