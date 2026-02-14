@@ -53,48 +53,6 @@
         "right_link_url": "shopify://collections/all"
       }
     },
-    "shop_showcase_F9pqL9": {
-      "type": "shop-showcase",
-      "blocks": {
-        "product_zMN4pA": {
-          "type": "product",
-          "settings": {
-            "product": "the-arrangement-petite",
-            "label": "Petite",
-            "custom_title": "",
-            "show_add_to_cart": true,
-            "open_in_new_tab": false
-          }
-        },
-        "product_eKQ8xk": {
-          "type": "product",
-          "settings": {
-            "product": "the-arrangement-classic",
-            "label": "Classic",
-            "custom_title": "",
-            "show_add_to_cart": true,
-            "open_in_new_tab": false
-          }
-        },
-        "product_6cDnGm": {
-          "type": "product",
-          "settings": {
-            "product": "the-arrangement-grand",
-            "label": "Grand",
-            "custom_title": "",
-            "show_add_to_cart": true,
-            "open_in_new_tab": false
-          }
-        }
-      },
-      "block_order": [
-        "product_zMN4pA",
-        "product_eKQ8xk",
-        "product_6cDnGm"
-      ],
-      "name": "Shop showcase",
-      "settings": {}
-    },
     "image_with_text_HUtJ4h": {
       "type": "image-with-text",
       "blocks": {
@@ -130,7 +88,7 @@
         "image_width": 50,
         "layout": "image-left",
         "subheading": "Experiences",
-        "heading": "Private Workshops",
+        "heading": "Private Floral Experiences",
         "text": "<p>An intimate floral design experience in our Swiss Avenue studio, guided by Patricio Rivera. Fresh sourced stems, hands-on instruction, and an arrangement to take home.</p>",
         "button_label": "Explore",
         "button_link": "shopify://pages/experiences",
@@ -199,6 +157,48 @@
       ],
       "custom_css": [
         ".shop-showcase {--columns-desktop: 2 !important; --columns-tablet: 2 !important;}"
+      ],
+      "name": "Shop showcase",
+      "settings": {}
+    },
+    "shop_showcase_F9pqL9": {
+      "type": "shop-showcase",
+      "blocks": {
+        "product_zMN4pA": {
+          "type": "product",
+          "settings": {
+            "product": "the-arrangement-petite",
+            "label": "Petite",
+            "custom_title": "",
+            "show_add_to_cart": true,
+            "open_in_new_tab": false
+          }
+        },
+        "product_eKQ8xk": {
+          "type": "product",
+          "settings": {
+            "product": "the-arrangement-classic",
+            "label": "Classic",
+            "custom_title": "",
+            "show_add_to_cart": true,
+            "open_in_new_tab": false
+          }
+        },
+        "product_6cDnGm": {
+          "type": "product",
+          "settings": {
+            "product": "the-arrangement-grand",
+            "label": "Grand",
+            "custom_title": "",
+            "show_add_to_cart": true,
+            "open_in_new_tab": false
+          }
+        }
+      },
+      "block_order": [
+        "product_zMN4pA",
+        "product_eKQ8xk",
+        "product_6cDnGm"
       ],
       "name": "Shop showcase",
       "settings": {}
@@ -410,8 +410,8 @@
     "shop_showcase_F9pqL9",
     "image_with_text_HUtJ4h",
     "shop_showcase_Djwkrd",
-    "featured-products",
     "image_with_text_WMCEDg",
+    "featured-products",
     "shop_showcase_jndnAQ",
     "workshops",
     "visit-boutique"
