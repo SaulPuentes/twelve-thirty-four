@@ -46,24 +46,26 @@
     assign calculate_grid_column = true
   endif
 
+  assign equal_columns = section.settings.equal_columns | default: true
+
   # Set up default sizes
   if calculate_single_column
     # Default for carousel or single column grid (or first image in large_first_image mode)
-    if section.settings.equal_columns == false
+    if equal_columns == false
       assign default_sizes = '(min-width: 750px) calc(100vw - 25rem - [gap_half]), 100vw' | replace: '[gap_half]', gap_half
     else
       assign default_sizes = '(min-width: 750px) calc(50vw - [gap_half]), 100vw' | replace: '[gap_half]', gap_half
     endif
   else
     # Default for two column grid - includes image gap and quarter section gap
-    if section.settings.equal_columns == false
+    if equal_columns == false
       assign default_sizes = '(min-width: 750px) calc((100vw - 25rem) / 2 - [gap_quarter] - [image_gap_half]), 100vw' | replace: '[gap_quarter]', gap_quarter | replace: '[image_gap_half]', image_gap_half
     else
       assign default_sizes = '(min-width: 750px) calc(50vw / 2 - [gap_quarter] - [image_gap_half]), 100vw' | replace: '[gap_quarter]', gap_quarter | replace: '[image_gap_half]', image_gap_half
     endif
   endif
 
-  # Override for center-aligned content
+  # Override for center-aligned content (uses equal_columns set above)
   if section.settings.content_width == 'content-center-aligned'
     # Define breakpoints and base sizes based on page width
     # Breakpoints are the page width setting + margin (where 2 x margin is 80px = 5rem)
@@ -83,7 +85,7 @@
     endcase
 
     # Select the appropriate base size
-    if section.settings.equal_columns
+    if equal_columns
       assign media_base_size = media_base_size_equal_columns
     else
       assign media_base_size = media_base_size_unequal_columns
@@ -97,7 +99,7 @@
     endif
 
     # Calculate medium screen size
-    if section.settings.equal_columns
+    if equal_columns
       assign medium_base = '50vw'
     else
       assign medium_base = '100vw - 25rem'

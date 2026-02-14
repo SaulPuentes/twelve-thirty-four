@@ -5,26 +5,23 @@
 
 {%- liquid
   assign product = section.settings.product | default: product
-  assign section_color_scheme = section.settings.color_scheme | default: 'scheme-1'
   assign desktop_media_position = section.settings.desktop_media_position | default: 'left'
-  assign equal_columns = section.settings.equal_columns | default: true
-  assign limit_details_width = section.settings.limit_details_width | default: true
 -%}
 
 <section
   id="shopify-section-{{ section.id }}"
-  class="product-information color-{{ section_color_scheme }}"
+  class="product-information color-scheme-1"
   data-section-id="{{ section.id }}"
   data-section-type="product-information"
 >
-  <div class="container product-information__container product-information__container--{{ desktop_media_position }}{% if equal_columns %} product-information__container--equal{% endif %}">
+  <div class="container product-information__container product-information__container--{{ desktop_media_position }}">
     {%- comment -%} Product Media Gallery {%- endcomment -%}
     <div class="product-information__media">
       {% content_for 'block', type: '_product-media-gallery', static: true %}
     </div>
 
     {%- comment -%} Product Details {%- endcomment -%}
-    <div class="product-information__details{% if limit_details_width %} product-information__details--limited{% endif %}">
+    <div class="product-information__details product-information__details--limited">
       {% content_for 'block', type: '_product-details', static: true %}
     </div>
   </div>
@@ -58,10 +55,6 @@
       gap: var(--gap-3xl, 3rem);
     }
 
-    .product-information__container--equal {
-      grid-template-columns: 1fr 1fr;
-    }
-
     .product-information__container--left {
       grid-template-columns: 1fr 1fr;
     }
@@ -73,12 +66,6 @@
 
     .product-information__container--right > * {
       direction: ltr;
-    }
-  }
-
-  @media screen and (min-width: 1024px) {
-    .product-information__container:not(.product-information__container--equal) {
-      grid-template-columns: 6fr 5fr;
     }
   }
 
@@ -157,19 +144,6 @@
       "default": "left"
     },
     {
-      "type": "checkbox",
-      "id": "equal_columns",
-      "label": "Equal column widths",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "limit_details_width",
-      "label": "Limit details column width",
-      "default": true,
-      "info": "Limits the product details to a comfortable reading width"
-    },
-    {
       "type": "range",
       "id": "gap",
       "label": "Gap between columns",
@@ -178,18 +152,6 @@
       "step": 4,
       "unit": "px",
       "default": 20
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_sticky_add_to_cart",
-      "label": "Enable sticky add to cart",
-      "default": true
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
     },
     {
       "type": "header",

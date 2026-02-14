@@ -9,7 +9,11 @@
 
 {% unless product_resource.has_only_default_variant %}
   {% liquid
-    assign button_background_brightness = section.settings.color_scheme.settings.foreground | color_brightness
+    assign scheme_foreground = '#000000'
+    if section.settings.color_scheme
+      assign scheme_foreground = section.settings.color_scheme.settings.foreground
+    endif
+    assign button_background_brightness = scheme_foreground | color_brightness
     if button_background_brightness < 105
       assign strikethrough_color_mix = '#000'
     else
