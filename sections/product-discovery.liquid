@@ -110,8 +110,6 @@
         {%- endif -%}
       </div>
 
-      <span class="product-discovery__filter-divider" aria-hidden="true"></span>
-
       <div class="product-discovery__filter-right">
         <a href="{{ collection.url }}#shop-by-category" class="product-discovery__filter-reset">
           {% render 'animated-arrow' %}
@@ -331,6 +329,8 @@
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     flex-wrap: wrap;
+    /* Offset for fixed header anchor links */
+    scroll-margin-top: 100px;
   }
 
   @media screen and (min-width: 750px) {
@@ -405,22 +405,6 @@
     align-items: center;
     gap: 0.5rem;
     flex-shrink: 0;
-  }
-
-  /* Vertical divider */
-  .product-discovery__filter-divider {
-    display: none;
-    width: 1px;
-    height: 2rem;
-    background-color: var(--color-foreground);
-    opacity: 0.15;
-    flex-shrink: 0;
-  }
-
-  @media screen and (min-width: 750px) {
-    .product-discovery__filter-divider {
-      display: block;
-    }
   }
 
   .product-discovery__filter-right {
