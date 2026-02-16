@@ -52,7 +52,7 @@
         {%- for collection_item in collections -%}
           {%- if collection_item.products.size > 0 -%}
             <a
-              href="{{ collection_item.url }}#browse-designers"
+              href="{{ collection_item.url }}#ProductDiscovery-{{ section.id }}"
               class="product-discovery__designer-card{% if collection_item.handle == collection.handle %} product-discovery__designer-card--active{% endif %}"
               aria-label="{{ collection_item.title }}"
             >
@@ -190,7 +190,7 @@
     margin-left: calc(-1 * var(--section-padding-inline));
     margin-right: calc(-1 * var(--section-padding-inline));
     /* Offset for fixed header anchor links */
-    scroll-margin-top: 84px;
+    scroll-margin-top: 100px;
   }
 
   @media screen and (min-width: 750px) {
@@ -333,7 +333,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     flex-wrap: wrap;
     /* Offset for fixed header anchor links */
-    scroll-margin-top: 84px;
+    scroll-margin-top: 80px;
   }
 
   @media screen and (min-width: 750px) {
