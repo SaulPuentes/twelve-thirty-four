@@ -13,7 +13,8 @@
       "type": "product-discovery",
       "settings": {
         "heading": "Browse by Designer\nor Collection.",
-        "description": "<p>Discover curated <strong>collaborations and collections<\/strong> from independent designers and makers whose work celebrates craft, materiality, and thoughtful design.<\/p>",
+        "description": "<p>Discover curated <strong>collaborations and collections</strong> from independent designers and makers whose work celebrates craft, materiality, and thoughtful design.</p>",
+        "designers_per_row": 6,
         "categories_title": "Shop by category",
         "products_per_row": 4,
         "products_per_page": 24,
