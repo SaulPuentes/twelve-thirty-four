@@ -33,7 +33,7 @@
   style="
     --product-columns: {{ section.settings.products_per_row }};
     --product-gap: {{ section.settings.product_gap }}px;
-    --designer-columns: {{ designer_count | at_most: 5 }};
+    --designer-slides: {{ section.settings.designers_per_row | default: 5 }};
   "
 >
   <div class="product-discovery__inner">
@@ -157,7 +157,7 @@
      Product Discovery - Section Layout
      ============================================================ */
   .product-discovery {
-    padding: 5rem 2rem;
+    padding: 2rem 2rem 5rem;
     background-color: var(--color-background, #fff);
   }
 
@@ -203,6 +203,7 @@
   }
 
   .product-discovery__designer-card {
+    /* Mobile: ~1.5 visible cards */
     flex: 0 0 calc((100% - 0.5rem) / 1.5);
     scroll-snap-align: start;
     text-decoration: none;
@@ -213,19 +214,22 @@
 
   @media screen and (min-width: 750px) {
     .product-discovery__designer-card {
-      flex: 0 0 calc((100% - 2rem) / 3);
+      /* Tablet: setting minus 2, minimum 2 */
+      flex: 0 0 calc((100% - (max(2, var(--designer-slides) - 2) - 1) * 1rem) / max(2, var(--designer-slides) - 2));
     }
   }
 
   @media screen and (min-width: 1024px) {
     .product-discovery__designer-card {
-      flex: 0 0 calc((100% - 3rem) / 4);
+      /* Desktop: setting minus 1, minimum 4 */
+      flex: 0 0 calc((100% - (max(4, var(--designer-slides) - 1) - 1) * 1rem) / max(4, var(--designer-slides) - 1));
     }
   }
 
   @media screen and (min-width: 1400px) {
     .product-discovery__designer-card {
-      flex: 0 0 calc((100% - 4rem) / 5);
+      /* Large: full setting value, minimum 4 */
+      flex: 0 0 calc((100% - (max(4, var(--designer-slides)) - 1) * 1rem) / max(4, var(--designer-slides)));
     }
   }
 
@@ -555,6 +559,20 @@
       "id": "description",
       "label": "Description",
       "default": "<p>Discover curated <strong>collaborations and collections</strong> from independent designers and makers whose work celebrates craft, materiality, and thoughtful design.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Designer carousel"
+    },
+    {
+      "type": "range",
+      "id": "designers_per_row",
+      "label": "Designer slides visible",
+      "min": 4,
+      "max": 8,
+      "step": 1,
+      "default": 5,
+      "info": "Number of slides on large screens. Scales down at smaller breakpoints (minimum 4 on desktop)."
     },
     {
       "type": "header",
