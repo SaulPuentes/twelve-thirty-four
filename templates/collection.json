@@ -12,8 +12,9 @@
     "main": {
       "type": "product-discovery",
       "settings": {
-        "heading": "Browse by Designer\nor Collection.",
-        "description": "<p>Discover curated <strong>collaborations and collections</strong> from independent designers and makers whose work celebrates craft, materiality, and thoughtful design.</p>",
+        "heading": "Browse by Designer or Collection.",
+        "heading_size": "small",
+        "description": "<p>Explore unique collaborations and collections from the talented<br/>artists featured in our boutique.</p>",
         "designers_per_row": 6,
         "categories_title": "Shop by category",
         "products_per_row": 4,
