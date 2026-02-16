@@ -1,0 +1,603 @@
+{%- comment -%}
+  Product Discovery Section
+  Modern gallery-like collection layout with designer carousel,
+  category filter pills, and full-width product grid.
+{%- endcomment -%}
+
+{%- liquid
+  assign products_per_page = section.settings.products_per_page | default: 24
+  assign designer_count = 0
+  for collection_item in collections
+    if collection_item.products.size > 0
+      assign designer_count = designer_count | plus: 1
+    endif
+  endfor
+
+  assign category_filter = collection.filters | where: "label", "Browse" | first
+  assign has_active_filter = false
+  if category_filter
+    for value in category_filter.values
+      if value.active
+        assign has_active_filter = true
+        break
+      endif
+    endfor
+  endif
+-%}
+
+<script src="{{ 'product-card.js' | asset_url }}" defer></script>
+
+<section
+  id="ProductDiscovery-{{ section.id }}"
+  class="product-discovery"
+  style="
+    --product-columns: {{ section.settings.products_per_row }};
+    --product-gap: {{ section.settings.product_gap }}px;
+    --designer-columns: {{ designer_count | at_most: 5 }};
+  "
+>
+  <div class="product-discovery__inner">
+    {%- comment -%} Section Header {%- endcomment -%}
+    {%- render 'section-header',
+      heading: section.settings.heading,
+      description: section.settings.description,
+      description_is_richtext: true,
+      show_view_all: false
+    -%}
+
+    {%- comment -%} Designer Carousel {%- endcomment -%}
+    <div class="product-discovery__designers" data-designers-slider>
+      <div class="product-discovery__designers-track">
+        {%- for collection_item in collections -%}
+          {%- if collection_item.products.size > 0 -%}
+            <a
+              href="{{ collection_item.url }}"
+              class="product-discovery__designer-card{% if collection_item.handle == collection.handle %} product-discovery__designer-card--active{% endif %}"
+              aria-label="{{ collection_item.title }}"
+            >
+              <div class="product-discovery__designer-image">
+                {%- if collection_item.image -%}
+                  <img
+                    src="{{ collection_item.image | image_url: width: 800 }}"
+                    srcset="
+                      {{ collection_item.image | image_url: width: 400 }} 400w,
+                      {{ collection_item.image | image_url: width: 600 }} 600w,
+                      {{ collection_item.image | image_url: width: 800 }} 800w
+                    "
+                    sizes="(max-width: 749px) 70vw, 30vw"
+                    alt="{{ collection_item.title | escape }}"
+                    width="{{ collection_item.image.width }}"
+                    height="{{ collection_item.image.height }}"
+                    loading="lazy"
+                    class="product-discovery__designer-img"
+                  >
+                {%- else -%}
+                  {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'product-discovery__designer-placeholder' }}
+                {%- endif -%}
+              </div>
+              <span class="product-discovery__designer-label">/ {{ collection_item.title }}</span>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+
+    {%- comment -%} Filter Bar {%- endcomment -%}
+    <div class="product-discovery__filter-bar">
+      <div class="product-discovery__filter-left">
+        <span class="product-discovery__filter-label">{{ section.settings.categories_title | default: 'Shop by category' }}</span>
+
+        <a
+          href="{{ collection.url }}"
+          class="product-discovery__pill{% unless has_active_filter %} product-discovery__pill--active{% endunless %}"
+        >
+          View all
+        </a>
+
+        {%- if category_filter -%}
+          <div class="product-discovery__filter-tags">
+            {%- for value in category_filter.values -%}
+              {%- if value.count > 0 or value.active -%}
+                <a
+                  href="{{ value.url_to_add }}"
+                  class="product-discovery__pill{% if value.active %} product-discovery__pill--active{% endif %}"
+                >
+                  {{ value.label }}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      <span class="product-discovery__filter-divider" aria-hidden="true"></span>
+
+      <div class="product-discovery__filter-right">
+        <a href="{{ collection.url }}" class="product-discovery__filter-reset">
+          {% render 'animated-arrow' %}
+          <span>Reset filters</span>
+        </a>
+      </div>
+    </div>
+
+    {%- comment -%} Product Grid {%- endcomment -%}
+    {%- paginate collection.products by products_per_page -%}
+      {%- if collection.products.size > 0 -%}
+        <ul class="product-discovery__grid" id="ProductGrid">
+          {%- for product in collection.products -%}
+            {%- if product.available -%}
+              <li class="product-discovery__grid-item">
+                {%- render 'product-card',
+                  product: product,
+                  show_add_to_cart: true,
+                  image_sizes: '(max-width: 749px) 50vw, 25vw',
+                  lazy_load: true
+                -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if paginate.pages > 1 -%}
+          <div class="product-discovery__pagination">
+            {{ paginate | default_pagination }}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="product-discovery__empty">
+          <p>{{ 'collections.general.no_matches' | t }}</p>
+        </div>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% stylesheet %}
+  /* ============================================================
+     Product Discovery - Section Layout
+     ============================================================ */
+  .product-discovery {
+    padding: 5rem 2rem;
+    background-color: var(--color-background, #fff);
+  }
+
+  @media screen and (min-width: 768px) {
+    .product-discovery {
+      padding: 7rem 4rem;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .product-discovery {
+      padding: 8rem 4rem;
+    }
+  }
+
+  .product-discovery__inner {
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* ============================================================
+     Designer Carousel
+     ============================================================ */
+  .product-discovery__designers {
+    margin-bottom: 3rem;
+    overflow: hidden;
+  }
+
+  .product-discovery__designers-track {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-bottom: 0.5rem;
+  }
+
+  .product-discovery__designers-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-discovery__designer-card {
+    flex: 0 0 calc((100% - 0.5rem) / 1.5);
+    scroll-snap-align: start;
+    text-decoration: none;
+    color: var(--color-foreground);
+    display: block;
+    transition: opacity 0.3s ease;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-discovery__designer-card {
+      flex: 0 0 calc((100% - 2rem) / 3);
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .product-discovery__designer-card {
+      flex: 0 0 calc((100% - 3rem) / 4);
+    }
+  }
+
+  @media screen and (min-width: 1400px) {
+    .product-discovery__designer-card {
+      flex: 0 0 calc((100% - 4rem) / 5);
+    }
+  }
+
+  .product-discovery__designer-card:hover {
+    opacity: 0.85;
+  }
+
+  .product-discovery__designer-card--active {
+    opacity: 1;
+  }
+
+  .product-discovery__designer-card--active .product-discovery__designer-label {
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  .product-discovery__designer-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 1;
+    overflow: hidden;
+    background-color: transparent;
+  }
+
+  .product-discovery__designer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85) brightness(0.95);
+  }
+
+  .product-discovery__designer-card--active .product-discovery__designer-img {
+    filter: none;
+  }
+
+  .product-discovery__designer-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-discovery__designer-label {
+    display: block;
+    margin-top: 0.625rem;
+    font-family: var(--font-body-family);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--color-foreground);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .product-discovery__designer-card:hover .product-discovery__designer-label {
+    opacity: 1;
+  }
+
+  /* ============================================================
+     Filter Bar
+     ============================================================ */
+  .product-discovery__filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    margin-bottom: 3rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-discovery__filter-bar {
+      flex-wrap: nowrap;
+    }
+  }
+
+  .product-discovery__filter-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .product-discovery__filter-left::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-discovery__filter-label {
+    font-family: var(--font-body-family);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-foreground);
+    opacity: 0.5;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Unified pill style for View All and category tags */
+  .product-discovery__pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.4rem 1rem;
+    font-family: var(--font-body-family);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    background-color: rgba(0, 0, 0, 0.06);
+    border: 1px solid transparent;
+    border-radius: 999px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
+    cursor: pointer;
+  }
+
+  .product-discovery__pill:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .product-discovery__pill--active {
+    background-color: var(--color-foreground, #000);
+    color: var(--color-background, #fff);
+    font-weight: 500;
+  }
+
+  .product-discovery__pill--active:hover {
+    background-color: var(--color-foreground, #000);
+    opacity: 0.85;
+  }
+
+  .product-discovery__filter-tags {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+
+  /* Vertical divider */
+  .product-discovery__filter-divider {
+    display: none;
+    width: 1px;
+    height: 2rem;
+    background-color: var(--color-foreground);
+    opacity: 0.15;
+    flex-shrink: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-discovery__filter-divider {
+      display: block;
+    }
+  }
+
+  .product-discovery__filter-right {
+    flex-shrink: 0;
+  }
+
+  .product-discovery__filter-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body-family);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    color: var(--color-foreground);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .product-discovery__filter-reset:hover {
+    opacity: 1;
+  }
+
+  /* ============================================================
+     Product Grid
+     ============================================================ */
+  .product-discovery__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--product-gap, 1.5rem);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-discovery__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media screen and (min-width: 990px) {
+    .product-discovery__grid {
+      grid-template-columns: repeat(var(--product-columns, 4), 1fr);
+    }
+  }
+
+  .product-discovery__grid-item {
+    position: relative;
+    opacity: 0;
+    animation: fadeInUp 0.6s var(--animation-easing, ease) both;
+  }
+
+  .product-discovery__grid-item:nth-child(1) { animation-delay: 0.05s; }
+  .product-discovery__grid-item:nth-child(2) { animation-delay: 0.1s; }
+  .product-discovery__grid-item:nth-child(3) { animation-delay: 0.15s; }
+  .product-discovery__grid-item:nth-child(4) { animation-delay: 0.2s; }
+  .product-discovery__grid-item:nth-child(5) { animation-delay: 0.25s; }
+  .product-discovery__grid-item:nth-child(6) { animation-delay: 0.3s; }
+  .product-discovery__grid-item:nth-child(7) { animation-delay: 0.35s; }
+  .product-discovery__grid-item:nth-child(8) { animation-delay: 0.4s; }
+
+  .product-discovery__grid-item:nth-child(n+9) {
+    opacity: 1;
+    animation: none;
+  }
+
+  /* ============================================================
+     Empty State & Pagination
+     ============================================================ */
+  .product-discovery__empty {
+    padding: 4rem 2rem;
+    text-align: center;
+    font-family: var(--font-body-family);
+    font-size: 1rem;
+    color: var(--color-foreground);
+    opacity: 0.7;
+  }
+
+  .product-discovery__pagination {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .product-discovery__pagination a,
+  .product-discovery__pagination span {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem;
+    text-decoration: none;
+    color: var(--color-foreground);
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+
+  .product-discovery__pagination a:hover {
+    opacity: 1;
+  }
+
+  .product-discovery__pagination span.current {
+    opacity: 1;
+    font-weight: 500;
+  }
+
+  /* ============================================================
+     Designer card fade-in sequence
+     ============================================================ */
+  .product-discovery__designer-card {
+    opacity: 0;
+    animation: fadeIn 0.5s var(--animation-easing, ease) both;
+  }
+
+  .product-discovery__designer-card:nth-child(1) { animation-delay: 0.05s; }
+  .product-discovery__designer-card:nth-child(2) { animation-delay: 0.1s; }
+  .product-discovery__designer-card:nth-child(3) { animation-delay: 0.15s; }
+  .product-discovery__designer-card:nth-child(4) { animation-delay: 0.2s; }
+  .product-discovery__designer-card:nth-child(5) { animation-delay: 0.25s; }
+  .product-discovery__designer-card:nth-child(6) { animation-delay: 0.3s; }
+  .product-discovery__designer-card:nth-child(7) { animation-delay: 0.35s; }
+  .product-discovery__designer-card:nth-child(8) { animation-delay: 0.4s; }
+
+  .product-discovery__designer-card:nth-child(n+9) {
+    animation-delay: 0.45s;
+  }
+
+  /* ============================================================
+     Richtext description overrides
+     ============================================================ */
+  .section-header__description strong {
+    font-weight: 600;
+    opacity: 1;
+    color: var(--color-foreground);
+  }
+
+  .section-header__description p {
+    margin: 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Product discovery",
+  "tag": "section",
+  "class": "section-product-discovery",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section header"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Browse by Designer\nor Collection."
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Discover curated <strong>collaborations and collections</strong> from independent designers and makers whose work celebrates craft, materiality, and thoughtful design.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Filter bar"
+    },
+    {
+      "type": "text",
+      "id": "categories_title",
+      "label": "Categories label",
+      "default": "Shop by category"
+    },
+    {
+      "type": "header",
+      "content": "Product grid"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "product_gap",
+      "label": "Product gap",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    }
+  ]
+}
+{% endschema %}

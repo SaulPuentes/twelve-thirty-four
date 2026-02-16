@@ -5,6 +5,7 @@
   Parameters:
   - heading: Section heading text (supports newlines via newline_to_br)
   - description: Description paragraph text
+  - description_is_richtext: Boolean — when true, renders description in a <div> (for richtext settings that already include block-level HTML)
   - show_view_all: Boolean to show/hide the view-all link
   - view_all_link: URL for the view-all link
   - view_all_label: Label text for the view-all link (default: 'Explore the shop')
@@ -25,7 +26,11 @@
 
 <div class="section-header__bar">
   {%- if description != blank -%}
-    <p class="section-header__description">{{ description }}</p>
+    {%- if description_is_richtext -%}
+      <div class="section-header__description">{{ description }}</div>
+    {%- else -%}
+      <p class="section-header__description">{{ description }}</p>
+    {%- endif -%}
   {%- endif -%}
 
   {%- if show_view_all and view_all_link != blank -%}
