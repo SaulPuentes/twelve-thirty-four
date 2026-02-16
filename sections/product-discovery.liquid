@@ -88,7 +88,7 @@
         <span class="product-discovery__filter-label">{{ section.settings.categories_title | default: 'Shop by category' }}</span>
 
         <a
-          href="{{ collection.url }}"
+          href="{{ collection.url }}#ProductDiscovery-{{ section.id }}"
           class="product-discovery__pill{% unless has_active_filter %} product-discovery__pill--active{% endunless %}"
         >
           View all
@@ -99,7 +99,7 @@
             {%- for value in category_filter.values -%}
               {%- if value.count > 0 or value.active -%}
                 <a
-                  href="{{ value.url_to_add }}"
+                  href="{{ value.url_to_add }}#ProductDiscovery-{{ section.id }}"
                   class="product-discovery__pill{% if value.active %} product-discovery__pill--active{% endif %}"
                 >
                   {{ value.label }}
@@ -113,7 +113,7 @@
       <span class="product-discovery__filter-divider" aria-hidden="true"></span>
 
       <div class="product-discovery__filter-right">
-        <a href="{{ collection.url }}" class="product-discovery__filter-reset">
+        <a href="{{ collection.url }}#ProductDiscovery-{{ section.id }}" class="product-discovery__filter-reset">
           {% render 'animated-arrow' %}
           <span>Reset filters</span>
         </a>
@@ -159,17 +159,20 @@
   .product-discovery {
     padding: 2rem 2rem 5rem;
     background-color: var(--color-background, #fff);
+    --section-padding-inline: 2rem;
   }
 
   @media screen and (min-width: 768px) {
     .product-discovery {
       padding: 3rem 4rem 7rem;
+      --section-padding-inline: 4rem;
     }
   }
 
   @media screen and (min-width: 1024px) {
     .product-discovery {
       padding: 4rem 4rem 8rem;
+      --section-padding-inline: 4rem;
     }
   }
 
@@ -184,6 +187,17 @@
   .product-discovery__designers {
     margin-bottom: 3rem;
     overflow: hidden;
+    /* Mobile: full-bleed both sides */
+    margin-left: calc(-1 * var(--section-padding-inline));
+    margin-right: calc(-1 * var(--section-padding-inline));
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-discovery__designers {
+      /* Tablet+: respect left padding, bleed right */
+      margin-left: 0;
+      margin-right: calc(-1 * var(--section-padding-inline));
+    }
   }
 
   .product-discovery__designers-track {
@@ -196,6 +210,17 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding-bottom: 0.5rem;
+    /* Add right padding so last card doesn't clip at edge */
+    padding-right: var(--section-padding-inline);
+    /* Mobile: add left padding for full-bleed */
+    padding-left: var(--section-padding-inline);
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-discovery__designers-track {
+      /* Tablet+: remove left padding */
+      padding-left: 0;
+    }
   }
 
   .product-discovery__designers-track::-webkit-scrollbar {
@@ -214,22 +239,25 @@
 
   @media screen and (min-width: 750px) {
     .product-discovery__designer-card {
-      /* Tablet: setting minus 2, minimum 2 */
-      flex: 0 0 calc((100% - (max(2, var(--designer-slides) - 2) - 1) * 1rem) / max(2, var(--designer-slides) - 2));
+      /* Tablet: show (setting - 2) cards, minimum 2 */
+      --visible-cards: max(2, var(--designer-slides) - 2);
+      flex: 0 0 calc((100% - (var(--visible-cards) - 1) * 1rem) / var(--visible-cards));
     }
   }
 
   @media screen and (min-width: 1024px) {
     .product-discovery__designer-card {
-      /* Desktop: setting minus 1, minimum 4 */
-      flex: 0 0 calc((100% - (max(4, var(--designer-slides) - 1) - 1) * 1rem) / max(4, var(--designer-slides) - 1));
+      /* Desktop: show (setting - 1) cards, minimum 4 */
+      --visible-cards: max(4, var(--designer-slides) - 1);
+      flex: 0 0 calc((100% - (var(--visible-cards) - 1) * 1rem) / var(--visible-cards));
     }
   }
 
   @media screen and (min-width: 1400px) {
     .product-discovery__designer-card {
-      /* Large: full setting value, minimum 4 */
-      flex: 0 0 calc((100% - (max(4, var(--designer-slides)) - 1) * 1rem) / max(4, var(--designer-slides)));
+      /* Large: show exact setting value */
+      --visible-cards: var(--designer-slides);
+      flex: 0 0 calc((100% - (var(--visible-cards) - 1) * 1rem) / var(--visible-cards));
     }
   }
 
