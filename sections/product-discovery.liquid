@@ -414,6 +414,13 @@
     flex-shrink: 0;
   }
 
+  @media screen and (max-width: 749px) {
+    .product-discovery__filter-right {
+      flex-basis: 100%;
+      width: 100%;
+    }
+  }
+
   .product-discovery__filter-reset {
     display: inline-flex;
     align-items: center;
@@ -534,6 +541,42 @@
 
   .product-discovery__designer-card:nth-child(n+9) {
     animation-delay: 0.45s;
+  }
+
+  /* ============================================================
+     Section header – reduced title sizes
+     ============================================================ */
+  .product-discovery .section-header__heading {
+    font-size: 1.5rem;
+  }
+  @media screen and (min-width: 1024px) {
+    .product-discovery .section-header__heading {
+      font-size: 2rem;
+    }
+  }
+  .product-discovery .section-header__heading--small {
+    font-size: 1.25rem;
+  }
+  @media screen and (min-width: 1024px) {
+    .product-discovery .section-header__heading--small {
+      font-size: 1.5rem;
+    }
+  }
+  .product-discovery .section-header__heading--medium {
+    font-size: 1.5rem;
+  }
+  @media screen and (min-width: 1024px) {
+    .product-discovery .section-header__heading--medium {
+      font-size: 2rem;
+    }
+  }
+  .product-discovery .section-header__heading--large {
+    font-size: 1.75rem;
+  }
+  @media screen and (min-width: 1024px) {
+    .product-discovery .section-header__heading--large {
+      font-size: 2.5rem;
+    }
   }
 
   /* ============================================================
