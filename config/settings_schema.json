@@ -122,6 +122,18 @@
     ]
   },
   {
+    "name": "Products",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_unavailable_products",
+        "label": "Show sold out and unavailable products",
+        "info": "When disabled, sold out products are hidden on collection and search pages",
+        "default": false
+      }
+    ]
+  },
+  {
     "name": "Buttons",
     "settings": [
       {

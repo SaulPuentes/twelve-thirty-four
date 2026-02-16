@@ -62,7 +62,7 @@
         {%- if collection.products.size > 0 -%}
           <ul class="main-collection__grid" id="ProductGrid">
             {%- for product in collection.products -%}
-              {%- if product.available or section.settings.show_unavailable_products -%}
+              {%- if product.available or settings.show_unavailable_products -%}
                 <li class="main-collection__grid-item">
                   {%- render 'product-card',
                     product: product,
@@ -377,12 +377,6 @@
       "step": 4,
       "unit": "px",
       "default": 24
-    },
-    {
-      "type": "checkbox",
-      "id": "show_unavailable_products",
-      "label": "Show sold out and unavailable products",
-      "default": false
     },
     {
       "type": "header",

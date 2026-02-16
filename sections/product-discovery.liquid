@@ -42,7 +42,8 @@
       heading: section.settings.heading,
       description: section.settings.description,
       description_is_richtext: true,
-      show_view_all: false
+      show_view_all: false,
+      heading_size: section.settings.heading_size
     -%}
 
     {%- comment -%} Designer Carousel {%- endcomment -%}
@@ -123,7 +124,7 @@
       {%- if collection.products.size > 0 -%}
         <ul class="product-discovery__grid" id="ProductGrid">
           {%- for product in collection.products -%}
-            {%- if product.available -%}
+            {%- if product.available or settings.show_unavailable_products -%}
               <li class="product-discovery__grid-item">
                 {%- render 'product-card',
                   product: product,
@@ -567,6 +568,17 @@
       "id": "heading",
       "label": "Heading",
       "default": "Browse by Designer\nor Collection."
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
     },
     {
       "type": "richtext",
