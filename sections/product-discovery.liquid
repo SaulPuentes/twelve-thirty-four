@@ -28,7 +28,7 @@
 <script src="{{ 'product-card.js' | asset_url }}" defer></script>
 
 <section
-  id="ProductDiscovery-{{ section.id }}"
+  id="shop-by-category"
   class="product-discovery"
   style="
     --product-columns: {{ section.settings.products_per_row }};
@@ -88,7 +88,7 @@
         <span class="product-discovery__filter-label">{{ section.settings.categories_title | default: 'Shop by category' }}</span>
 
         <a
-          href="{{ collection.url }}#ProductDiscovery-{{ section.id }}"
+          href="{{ collection.url }}#shop-by-category"
           class="product-discovery__pill{% unless has_active_filter %} product-discovery__pill--active{% endunless %}"
         >
           View all
@@ -99,7 +99,7 @@
             {%- for value in category_filter.values -%}
               {%- if value.count > 0 or value.active -%}
                 <a
-                  href="{{ value.url_to_add }}#ProductDiscovery-{{ section.id }}"
+                  href="{{ value.url_to_add }}#shop-by-category"
                   class="product-discovery__pill{% if value.active %} product-discovery__pill--active{% endif %}"
                 >
                   {{ value.label }}
@@ -113,7 +113,7 @@
       <span class="product-discovery__filter-divider" aria-hidden="true"></span>
 
       <div class="product-discovery__filter-right">
-        <a href="{{ collection.url }}#ProductDiscovery-{{ section.id }}" class="product-discovery__filter-reset">
+        <a href="{{ collection.url }}#shop-by-category" class="product-discovery__filter-reset">
           {% render 'animated-arrow' %}
           <span>Reset filters</span>
         </a>
