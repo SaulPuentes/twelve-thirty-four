@@ -28,7 +28,7 @@
 <script src="{{ 'product-card.js' | asset_url }}" defer></script>
 
 <section
-  id="shop-by-category"
+  id="ProductDiscovery-{{ section.id }}"
   class="product-discovery"
   style="
     --product-columns: {{ section.settings.products_per_row }};
@@ -83,7 +83,7 @@
     </div>
 
     {%- comment -%} Filter Bar {%- endcomment -%}
-    <div class="product-discovery__filter-bar">
+    <div id="shop-by-category" class="product-discovery__filter-bar">
       <div class="product-discovery__filter-left">
         <span class="product-discovery__filter-label">{{ section.settings.categories_title | default: 'Shop by category' }}</span>
 
