@@ -8,16 +8,8 @@
 {%- liquid
   assign section_id = section.id
   assign gap = section.settings.gap
-  assign height_unit = section.settings.height_unit
-  if height_unit == 'vw'
-    assign card_height = section.settings.card_height_vw
-    assign card_height_mobile = section.settings.card_height_mobile_vw
-    assign height_suffix = 'vw'
-  else
-    assign card_height = section.settings.card_height
-    assign card_height_mobile = section.settings.card_height_mobile
-    assign height_suffix = 'px'
-  endif
+  assign card_height = section.settings.card_height
+  assign card_height_mobile = section.settings.card_height_mobile
   assign title_position_horizontal = section.settings.title_position_horizontal
   assign title_position_vertical = section.settings.title_position_vertical
   assign enable_modal = section.settings.enable_modal
@@ -36,8 +28,8 @@
   class="masonry-grid{% if full_bleed %} masonry-grid--full-bleed{% endif %}"
   style="
     --masonry-gap: {{ gap }}px;
-    --masonry-card-height: {{ card_height }}{{ height_suffix }};
-    --masonry-card-height-mobile: {{ card_height_mobile }}{{ height_suffix }};
+    --masonry-card-height: {{ card_height }}px;
+    --masonry-card-height-mobile: {{ card_height_mobile }}px;
     --padding-block-start: {{ section.settings.padding_top }}px;
     --padding-block-end: {{ section.settings.padding_bottom }}px;
   "
@@ -952,22 +944,11 @@
       "default": 16
     },
     {
-      "type": "select",
-      "id": "height_unit",
-      "label": "Height unit",
-      "options": [
-        { "value": "px", "label": "Pixels (px)" },
-        { "value": "vw", "label": "Viewport width (vw)" }
-      ],
-      "default": "px",
-      "info": "Viewport width makes card heights scale with the browser width"
-    },
-    {
       "type": "range",
       "id": "card_height",
       "label": "Card height (desktop)",
       "min": 250,
-      "max": 700,
+      "max": 900,
       "step": 25,
       "unit": "px",
       "default": 450
@@ -977,30 +958,10 @@
       "id": "card_height_mobile",
       "label": "Card height (mobile)",
       "min": 200,
-      "max": 500,
+      "max": 600,
       "step": 25,
       "unit": "px",
       "default": 300
-    },
-    {
-      "type": "range",
-      "id": "card_height_vw",
-      "label": "Card height in vw (desktop)",
-      "min": 10,
-      "max": 100,
-      "step": 5,
-      "unit": "vw",
-      "default": 50
-    },
-    {
-      "type": "range",
-      "id": "card_height_mobile_vw",
-      "label": "Card height in vw (mobile)",
-      "min": 10,
-      "max": 100,
-      "step": 5,
-      "unit": "vw",
-      "default": 40
     },
     {
       "type": "header",

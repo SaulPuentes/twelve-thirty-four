@@ -14,6 +14,16 @@
   "
 >
   <div class="header__inner page-width">
+    {%- comment -%} Mobile menu button (left side on mobile) {%- endcomment -%}
+    <button
+      type="button"
+      class="header__menu-toggle md:hidden"
+      aria-label="{{ 'accessibility.open_menu' | t }}"
+      data-menu-toggle
+    >
+      {% render 'icon', icon: 'menu', size: 24 %}
+    </button>
+
     {%- comment -%} Logo {%- endcomment -%}
     <div class="header__logo">
       <a href="{{ routes.root_url }}" class="header__logo-link" aria-label="{{ shop.name }}">
@@ -70,19 +80,9 @@
       </ul>
     </nav>
 
-    {%- comment -%} Actions & Mobile Menu {%- endcomment -%}
+    {%- comment -%} Actions {%- endcomment -%}
     <div class="header__actions-wrapper">
       {% render 'header-actions' %}
-
-      {%- comment -%} Mobile menu button {%- endcomment -%}
-      <button
-        type="button"
-        class="header__menu-toggle md:hidden"
-        aria-label="{{ 'accessibility.open_menu' | t }}"
-        data-menu-toggle
-      >
-        {% render 'icon', icon: 'menu', size: 24 %}
-      </button>
     </div>
   </div>
 </header>
@@ -593,6 +593,22 @@
 
   .overflow-hidden {
     overflow: hidden;
+  }
+
+  /* Mobile: menu-left / logo-center / actions-right */
+  @media screen and (max-width: 767px) {
+    .header__menu-toggle {
+      flex: 0 0 auto;
+    }
+
+    .header__logo {
+      flex: 1 1 0;
+      text-align: center;
+    }
+
+    .header__actions-wrapper {
+      flex: 0 0 auto;
+    }
   }
 
   @media screen and (min-width: 768px) {
