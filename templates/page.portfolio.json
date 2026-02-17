@@ -9,87 +9,76 @@
  */
 {
   "sections": {
-    "portfolio-grid": {
-      "type": "masonry-grid",
+    "custom_photo_gallery_eKTX6X": {
+      "type": "custom-photo-gallery",
       "blocks": {
-        "item-1": {
-          "type": "custom_link",
+        "image_block_KVzCK3": {
+          "type": "image_block",
           "settings": {
-            "title": "Floral Arrangements",
-            "subtitle": "Wedding & Events",
-            "card_width": "half",
-            "open_new_tab": false
+            "image": "shopify://shop_images/IMG_7969.jpg",
+            "link": "",
+            "alt_text": ""
           }
         },
-        "item-2": {
-          "type": "custom_link",
+        "image_block_98NpJN": {
+          "type": "image_block",
           "settings": {
-            "title": "Botanical Installations",
-            "subtitle": "Large Scale",
-            "card_width": "half",
-            "open_new_tab": false
+            "image": "shopify://shop_images/IMG_7972.jpg",
+            "link": "",
+            "alt_text": ""
           }
         },
-        "item-3": {
-          "type": "custom_link",
+        "image_block_R74zUM": {
+          "type": "image_block",
           "settings": {
-            "title": "Editorial Work",
-            "subtitle": "Publications & Press",
-            "card_width": "full",
-            "open_new_tab": false
+            "image": "shopify://shop_images/IMG_7970.jpg",
+            "link": "",
+            "alt_text": ""
           }
         },
-        "item-4": {
-          "type": "collection",
+        "image_block_TQ6PDw": {
+          "type": "image_block",
           "settings": {
-            "custom_title": "Ceramics Collection",
-            "card_width": "half",
-            "show_product_count": false
+            "image": "shopify://shop_images/IMG_7968.jpg",
+            "link": "",
+            "alt_text": ""
           }
         },
-        "item-5": {
-          "type": "custom_link",
+        "image_block_CM3c9h": {
+          "type": "image_block",
           "settings": {
-            "title": "Corporate Events",
-            "subtitle": "Brand Activations",
-            "card_width": "half",
-            "open_new_tab": false
+            "image": "shopify://shop_images/IMG_7967.jpg",
+            "link": "",
+            "alt_text": ""
           }
         },
-        "item-6": {
-          "type": "custom_link",
+        "image_block_QXXPHt": {
+          "type": "image_block",
           "settings": {
-            "title": "Private Commissions",
-            "subtitle": "Bespoke Creations",
-            "card_width": "full",
-            "open_new_tab": false
+            "image": "shopify://shop_images/IMG_7971.jpg",
+            "link": "",
+            "alt_text": ""
           }
         }
       },
       "block_order": [
-        "item-1",
-        "item-2",
-        "item-3",
-        "item-4",
-        "item-5",
-        "item-6"
+        "image_block_KVzCK3",
+        "image_block_98NpJN",
+        "image_block_R74zUM",
+        "image_block_TQ6PDw",
+        "image_block_CM3c9h",
+        "image_block_QXXPHt"
       ],
+      "name": "Photo Gallery",
       "settings": {
-        "heading": "Portfolio",
-        "description": "A curated selection of our floral artistry, from intimate arrangements to grand installations.",
-        "enable_modal": true,
-        "gap": 16,
-        "card_height": 500,
-        "card_height_mobile": 300,
-        "title_position_horizontal": "left",
-        "title_position_vertical": "bottom",
-        "padding_top": 64,
-        "padding_bottom": 64
+        "heading": "Photo Gallery",
+        "subheading": "Captured moments from our desert trips and scenic routes.",
+        "grid_gap": 10,
+        "border_radius": 16
       }
     }
   },
   "order": [
-    "portfolio-grid"
+    "custom_photo_gallery_eKTX6X"
   ]
 }
-
