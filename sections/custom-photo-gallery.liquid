@@ -205,11 +205,42 @@
               }
             }
 
+            function getFocusable() {
+              return lightbox.querySelectorAll('button:not([hidden]):not([disabled])');
+            }
+
+            function trapFocus(e) {
+              var focusable = getFocusable();
+              var first = focusable[0];
+              var last = focusable[focusable.length - 1];
+              if (e.key === 'Tab') {
+                if (e.shiftKey) {
+                  if (document.activeElement === first) {
+                    e.preventDefault();
+                    last.focus();
+                  }
+                } else {
+                  if (document.activeElement === last) {
+                    e.preventDefault();
+                    first.focus();
+                  }
+                }
+              }
+            }
+
+            function onKeydown(e) {
+              if (e.key === 'Escape') { close(); return; }
+              if (e.key === 'ArrowLeft') { show(current - 1); return; }
+              if (e.key === 'ArrowRight') { show(current + 1); return; }
+              trapFocus(e);
+            }
+
             function open(index) {
               previouslyFocused = document.activeElement;
               show(index);
               lightbox.hidden = false;
               document.body.style.overflow = 'hidden';
+              document.addEventListener('keydown', onKeydown);
               requestAnimationFrame(function() {
                 lightbox.classList.add('photo-gallery__lightbox--open');
               });
@@ -217,6 +248,7 @@
             }
 
             function close() {
+              document.removeEventListener('keydown', onKeydown);
               lightbox.classList.remove('photo-gallery__lightbox--open');
               lightbox.addEventListener('transitionend', function handler() {
                 lightbox.hidden = true;
@@ -241,12 +273,6 @@
               thumb.addEventListener('click', function() {
                 show(parseInt(this.dataset.thumbIndex, 10));
               });
-            });
-
-            lightbox.addEventListener('keydown', function(e) {
-              if (e.key === 'Escape') close();
-              if (e.key === 'ArrowLeft') show(current - 1);
-              if (e.key === 'ArrowRight') show(current + 1);
             });
           })();
         </script>
@@ -647,9 +673,10 @@
     display: flex;
     gap: 8px;
     overflow-x: auto;
-    justify-content: center;
+    justify-content: safe center;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    padding: 0 0.5rem;
   }
 
   .photo-gallery__lightbox-thumbs-track::-webkit-scrollbar {
