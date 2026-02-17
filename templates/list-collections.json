@@ -101,7 +101,7 @@
         "card_height": 60,
         "card_height_mobile": 450,
         "title_position_horizontal": "left",
-        "title_position_vertical": "bottom",
+        "title_position_vertical": "top",
         "padding_top": 48,
         "padding_bottom": 48
       }
