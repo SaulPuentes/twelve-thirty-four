@@ -17,8 +17,10 @@
           "settings": {
             "title": "Floral Arrangements",
             "subtitle": "Wedding & Events",
-            "card_width": "half",
-            "open_new_tab": false
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "half"
           }
         },
         "item-2": {
@@ -26,8 +28,10 @@
           "settings": {
             "title": "Botanical Installations",
             "subtitle": "Large Scale",
-            "card_width": "half",
-            "open_new_tab": false
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "half"
           }
         },
         "item-3": {
@@ -35,16 +39,20 @@
           "settings": {
             "title": "Editorial Work",
             "subtitle": "Publications & Press",
-            "card_width": "full",
-            "open_new_tab": false
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "full"
           }
         },
         "item-4": {
           "type": "collection",
           "settings": {
+            "collection": "",
             "custom_title": "Ceramics Collection",
-            "card_width": "half",
-            "show_product_count": false
+            "description": "",
+            "show_product_count": false,
+            "card_width": "half"
           }
         },
         "item-5": {
@@ -52,8 +60,10 @@
           "settings": {
             "title": "Corporate Events",
             "subtitle": "Brand Activations",
-            "card_width": "half",
-            "open_new_tab": false
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "half"
           }
         },
         "item-6": {
@@ -61,8 +71,10 @@
           "settings": {
             "title": "Private Commissions",
             "subtitle": "Bespoke Creations",
-            "card_width": "full",
-            "open_new_tab": false
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "full"
           }
         }
       },
@@ -86,10 +98,78 @@
         "padding_top": 64,
         "padding_bottom": 64
       }
+    },
+    "custom_photo_gallery_eKTX6X": {
+      "type": "custom-photo-gallery",
+      "blocks": {
+        "image_block_KVzCK3": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7969.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_98NpJN": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7972.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_R74zUM": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7970.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_TQ6PDw": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7968.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_CM3c9h": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7967.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_QXXPHt": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7971.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_block_KVzCK3",
+        "image_block_98NpJN",
+        "image_block_R74zUM",
+        "image_block_TQ6PDw",
+        "image_block_CM3c9h",
+        "image_block_QXXPHt"
+      ],
+      "name": "Photo Gallery",
+      "settings": {
+        "heading": "Photo Gallery",
+        "subheading": "Captured moments from our desert trips and scenic routes.",
+        "grid_gap": 20,
+        "border_radius": 16
+      }
     }
   },
   "order": [
-    "portfolio-grid"
+    "portfolio-grid",
+    "custom_photo_gallery_eKTX6X"
   ]
 }
-
