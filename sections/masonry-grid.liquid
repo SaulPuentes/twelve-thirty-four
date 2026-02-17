@@ -22,7 +22,14 @@
   assign title_position_vertical = section.settings.title_position_vertical
   assign enable_modal = section.settings.enable_modal
   assign full_bleed = section.settings.full_bleed
+  assign remove_main_padding_top = section.settings.remove_main_padding_top
 -%}
+
+{%- if remove_main_padding_top -%}
+  <style>
+    #MainContent { padding-top: 0 !important; }
+  </style>
+{%- endif -%}
 
 <section
   id="MasonryGrid-{{ section_id }}"
@@ -919,6 +926,13 @@
     {
       "type": "header",
       "content": "Card layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "remove_main_padding_top",
+      "label": "Remove header offset from top",
+      "info": "Zeroes the top padding added by the fixed header. Use when the section should start at the very top of the viewport.",
+      "default": false
     },
     {
       "type": "checkbox",

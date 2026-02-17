@@ -96,6 +96,7 @@
         "heading": "",
         "description": "",
         "enable_modal": false,
+        "remove_main_padding_top": true,
         "full_bleed": true,
         "gap": 16,
         "card_height": 700,

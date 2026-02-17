@@ -12,9 +12,7 @@
 <div class="header-actions">
   {%- comment -%} Search icon {%- endcomment -%}
   {%- if section.settings.show_search -%}
-    <div class="hidden md:flex">
-      {% render 'search' %}
-    </div>
+    {% render 'search' %}
   {%- endif -%}
 
   {%- comment -%} Account icon {%- endcomment -%}
