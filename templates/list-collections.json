@@ -99,7 +99,7 @@
         "full_bleed": true,
         "gap": 16,
         "card_height": 60,
-        "card_height_mobile": 300,
+        "card_height_mobile": 400,
         "title_position_horizontal": "left",
         "title_position_vertical": "bottom",
         "padding_top": 48,
