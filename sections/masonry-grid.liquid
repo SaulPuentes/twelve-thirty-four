@@ -13,11 +13,12 @@
   assign title_position_horizontal = section.settings.title_position_horizontal
   assign title_position_vertical = section.settings.title_position_vertical
   assign enable_modal = section.settings.enable_modal
+  assign full_bleed = section.settings.full_bleed
 -%}
 
 <section
   id="MasonryGrid-{{ section_id }}"
-  class="masonry-grid"
+  class="masonry-grid{% if full_bleed %} masonry-grid--full-bleed{% endif %}"
   style="
     --masonry-gap: {{ gap }}px;
     --masonry-card-height: {{ card_height }}px;
@@ -868,6 +869,16 @@
   .masonry-modal__link:hover svg {
     transform: translateX(2px);
   }
+
+  /* Full-bleed layout: edge-to-edge, zero spacing */
+  .masonry-grid--full-bleed {
+    padding: 0;
+  }
+
+  .masonry-grid--full-bleed .masonry-grid__container {
+    max-width: none;
+    gap: 0;
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -900,6 +911,13 @@
     {
       "type": "header",
       "content": "Card layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_bleed",
+      "label": "Full-screen layout",
+      "info": "Removes all spacing and padding for an edge-to-edge grid with seamless background images",
+      "default": false
     },
     {
       "type": "range",
