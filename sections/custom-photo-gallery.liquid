@@ -517,12 +517,16 @@
     position: fixed;
     inset: 0;
     z-index: 9999;
-    display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+  }
+
+  .photo-gallery__lightbox:not([hidden]) {
+    display: flex;
   }
 
   .photo-gallery__lightbox--open {
