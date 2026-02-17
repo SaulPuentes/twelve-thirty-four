@@ -124,9 +124,9 @@
         "card_height": 360,
         "card_height_mobile": 280,
         "left_link_text": "View more",
-        "left_link_url": "",
-        "right_link_text": "Contact",
-        "right_link_url": ""
+        "left_link_url": "shopify://pages/portfolio",
+        "right_link_text": "Casa Simonett",
+        "right_link_url": "shopify://pages/casa-simonett-colombia"
       }
     }
   },
