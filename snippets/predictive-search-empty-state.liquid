@@ -23,22 +23,20 @@
         assign default_title = 'content.search_results_resource_products' | t
         assign title = settings.empty_state_collection.title | default: default_title
       -%}
-      {%- paginate collection.products by 4 -%}
-        {%- assign products = collection.products -%}
-        {%- comment -%} Only show products section if there are products to display {%- endcomment -%}
-        {%- if products.size > 0 -%}
-          {%- render 'predictive-search-products-list',
-            products_test_id: products_test_id,
-            title: title,
-            products: products,
-            limit: 4
-          -%}
-        {%- else -%}
-          <div class="predictive-search-results__no-results">
-            <p>{{ 'content.no_products_found' | t }}</p>
-          </div>
-        {%- endif -%}
-      {%- endpaginate -%}
+      {%- assign products = collection.products | limit: 4 -%}
+      {%- comment -%} Only show products section if there are products to display {%- endcomment -%}
+      {%- if products.size > 0 -%}
+        {%- render 'predictive-search-products-list',
+          products_test_id: products_test_id,
+          title: title,
+          products: products,
+          limit: 4
+        -%}
+      {%- else -%}
+        <div class="predictive-search-results__no-results">
+          <p>{{ 'content.no_products_found' | t }}</p>
+        </div>
+      {%- endif -%}
     </div>
   {%- endif -%}
 </div>
