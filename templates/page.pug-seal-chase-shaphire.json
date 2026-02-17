@@ -12,37 +12,19 @@
     "custom_photo_gallery_eKTX6X": {
       "type": "custom-photo-gallery",
       "blocks": {
-        "image_block_KVzCK3": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/IMG_7969.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "image_block_98NpJN": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/IMG_7972.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "image_block_R74zUM": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/IMG_7970.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
-          }
-        },
         "image_block_TQ6PDw": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/IMG_7968.jpg",
+            "image": "shopify://shop_images/IMG_7985.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_KVzCK3": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7979.jpg",
             "size": "standard",
             "link": "",
             "alt_text": ""
@@ -51,7 +33,61 @@
         "image_block_CM3c9h": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/IMG_7967.jpg",
+            "image": "shopify://shop_images/IMG_7991.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_98NpJN": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7992.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_yRcA9Q": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7981.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_EXaGQQ": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7983.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_w3VNGQ": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7986.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_qXw73c": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7988.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_R74zUM": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7993.jpg",
             "size": "standard",
             "link": "",
             "alt_text": ""
@@ -60,7 +96,25 @@
         "image_block_QXXPHt": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/IMG_7971.jpg",
+            "image": "shopify://shop_images/IMG_7982.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_yeRnfK": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7990.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_7xaD9J": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7987.jpg",
             "size": "standard",
             "link": "",
             "alt_text": ""
@@ -68,21 +122,31 @@
         }
       },
       "block_order": [
-        "image_block_KVzCK3",
-        "image_block_98NpJN",
-        "image_block_R74zUM",
         "image_block_TQ6PDw",
+        "image_block_KVzCK3",
         "image_block_CM3c9h",
-        "image_block_QXXPHt"
+        "image_block_98NpJN",
+        "image_block_yRcA9Q",
+        "image_block_EXaGQQ",
+        "image_block_w3VNGQ",
+        "image_block_qXw73c",
+        "image_block_R74zUM",
+        "image_block_QXXPHt",
+        "image_block_yeRnfK",
+        "image_block_7xaD9J"
       ],
       "name": "Photo Gallery",
       "settings": {
-        "heading": "Casa Simonett",
-        "subheading": "Colombia",
+        "heading": "Pug Seal",
+        "subheading": "Chase Shaphire Reserved - Oaxaca",
         "grid_gap": 10,
         "border_radius": 16,
         "card_height": 360,
-        "card_height_mobile": 280
+        "card_height_mobile": 280,
+        "left_link_text": "View more",
+        "left_link_url": "",
+        "right_link_text": "Contact",
+        "right_link_url": ""
       }
     }
   },
