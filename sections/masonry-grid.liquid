@@ -65,6 +65,7 @@
             assign card_title = block.settings.custom_title | default: collection.title | default: 'Collection'
             assign card_description = block.settings.description | default: collection.description
             assign card_link = collection.url | default: '#'
+            assign title_color = block.settings.title_color
           -%}
 
           {%- if enable_modal -%}
@@ -107,7 +108,7 @@
               {%- endif -%}
             </div>
             <div class="masonry-grid__card-overlay"></div>
-            <div class="masonry-grid__card-content masonry-grid__card-content--h-{{ title_position_horizontal }} masonry-grid__card-content--v-{{ title_position_vertical }}">
+            <div class="masonry-grid__card-content masonry-grid__card-content--h-{{ title_position_horizontal }} masonry-grid__card-content--v-{{ title_position_vertical }}"{% if title_color != 'auto' %} style="color: {{ title_color }};"{% endif %}>
               <span class="masonry-grid__card-title">{{ card_title }}</span>
               {%- if block.settings.show_product_count and collection != blank -%}
                 <span class="masonry-grid__card-count">{{ collection.products_count }} {{ 'collections.general.items' | t }}</span>
@@ -126,7 +127,8 @@
             assign card_description = block.settings.description
             assign card_link = block.settings.url | default: '#'
             assign open_new_tab = block.settings.open_new_tab
-          -%}
+            assign title_color = block.settings.title_color
+          -%>
 
           {%- if enable_modal -%}
             <button
@@ -169,7 +171,7 @@
               {%- endif -%}
             </div>
             <div class="masonry-grid__card-overlay"></div>
-            <div class="masonry-grid__card-content masonry-grid__card-content--h-{{ title_position_horizontal }} masonry-grid__card-content--v-{{ title_position_vertical }}">
+            <div class="masonry-grid__card-content masonry-grid__card-content--h-{{ title_position_horizontal }} masonry-grid__card-content--v-{{ title_position_vertical }}"{% if title_color != 'auto' %} style="color: {{ title_color }};"{% endif %}>
               <span class="masonry-grid__card-title">{{ card_title }}</span>
               {%- if block.settings.subtitle != blank -%}
                 <span class="masonry-grid__card-subtitle">{{ block.settings.subtitle }}</span>
@@ -926,6 +928,7 @@
       "type": "range",
       "id": "gap",
       "label": "Gap between cards",
+      "info": "Ignored when Full-screen layout is enabled",
       "min": 0,
       "max": 48,
       "step": 4,
@@ -1050,6 +1053,21 @@
             { "value": "full", "label": "Full (100%)" }
           ],
           "default": "half"
+        },
+        {
+          "type": "header",
+          "content": "Title style"
+        },
+        {
+          "type": "select",
+          "id": "title_color",
+          "label": "Title color",
+          "options": [
+            { "value": "auto", "label": "Auto (inherit)" },
+            { "value": "black", "label": "Black" },
+            { "value": "white", "label": "White" }
+          ],
+          "default": "auto"
         }
       ]
     },
@@ -1103,6 +1121,21 @@
             { "value": "full", "label": "Full (100%)" }
           ],
           "default": "half"
+        },
+        {
+          "type": "header",
+          "content": "Title style"
+        },
+        {
+          "type": "select",
+          "id": "title_color",
+          "label": "Title color",
+          "options": [
+            { "value": "auto", "label": "Auto (inherit)" },
+            { "value": "black", "label": "Black" },
+            { "value": "white", "label": "White" }
+          ],
+          "default": "auto"
         }
       ]
     }
