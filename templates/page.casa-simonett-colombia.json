@@ -16,6 +16,7 @@
           "type": "image_block",
           "settings": {
             "image": "shopify://shop_images/IMG_7969.jpg",
+            "size": "standard",
             "link": "",
             "alt_text": ""
           }
@@ -24,6 +25,7 @@
           "type": "image_block",
           "settings": {
             "image": "shopify://shop_images/IMG_7972.jpg",
+            "size": "standard",
             "link": "",
             "alt_text": ""
           }
@@ -32,6 +34,7 @@
           "type": "image_block",
           "settings": {
             "image": "shopify://shop_images/IMG_7970.jpg",
+            "size": "standard",
             "link": "",
             "alt_text": ""
           }
@@ -40,6 +43,7 @@
           "type": "image_block",
           "settings": {
             "image": "shopify://shop_images/IMG_7968.jpg",
+            "size": "standard",
             "link": "",
             "alt_text": ""
           }
@@ -48,6 +52,7 @@
           "type": "image_block",
           "settings": {
             "image": "shopify://shop_images/IMG_7967.jpg",
+            "size": "standard",
             "link": "",
             "alt_text": ""
           }
@@ -56,6 +61,7 @@
           "type": "image_block",
           "settings": {
             "image": "shopify://shop_images/IMG_7971.jpg",
+            "size": "standard",
             "link": "",
             "alt_text": ""
           }
@@ -71,10 +77,12 @@
       ],
       "name": "Photo Gallery",
       "settings": {
-        "heading": "Photo Gallery",
-        "subheading": "Captured moments from our desert trips and scenic routes.",
+        "heading": "Casa Simonett",
+        "subheading": "Colombia",
         "grid_gap": 10,
-        "border_radius": 16
+        "border_radius": 16,
+        "card_height": 360,
+        "card_height_mobile": 280
       }
     }
   },
