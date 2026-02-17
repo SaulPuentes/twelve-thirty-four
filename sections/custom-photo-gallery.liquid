@@ -16,7 +16,12 @@
   assign left_link_text = section.settings.left_link_text
   assign right_link_url = section.settings.right_link_url
   assign right_link_text = section.settings.right_link_text
-  assign enable_slideshow = section.settings.enable_slideshow
+  assign enable_slideshow_desktop = section.settings.enable_slideshow_desktop
+  assign enable_slideshow_mobile = section.settings.enable_slideshow_mobile
+  assign enable_slideshow = false
+  if enable_slideshow_desktop or enable_slideshow_mobile
+    assign enable_slideshow = true
+  endif
 -%}
 
 <section
@@ -53,42 +58,84 @@
           -%}
 
           <div class="photo-gallery__item{% if size == 'large' %} photo-gallery__item--large{% elsif size == 'double' %} photo-gallery__item--double{% endif %}" {{ block.shopify_attributes }}>
-            {%- if enable_slideshow and image != blank -%}
-              <button
-                type="button"
-                class="photo-gallery__slideshow-trigger"
-                data-slide-index="{{ forloop.index0 }}"
-                data-gallery-id="{{ section_id }}"
-                aria-label="Open slideshow at image {{ forloop.index }}"
-              >
-            {%- elsif link != blank -%}
-              <a href="{{ link }}" class="photo-gallery__link">
-            {%- endif -%}
-
             {%- if image != blank -%}
-              <img
-                src="{{ image | image_url: width: 1200 }}"
-                srcset="
-                  {{ image | image_url: width: 600 }} 600w,
-                  {{ image | image_url: width: 900 }} 900w,
-                  {{ image | image_url: width: 1200 }} 1200w,
-                  {{ image | image_url: width: 1600 }} 1600w
-                "
-                sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
-                alt="{{ alt_text | default: image.alt | escape }}"
-                loading="lazy"
-                width="{{ image.width }}"
-                height="{{ image.height }}"
-                class="photo-gallery__image"
-              >
+              {%- capture gallery_image -%}
+                <img
+                  src="{{ image | image_url: width: 1200 }}"
+                  srcset="
+                    {{ image | image_url: width: 600 }} 600w,
+                    {{ image | image_url: width: 900 }} 900w,
+                    {{ image | image_url: width: 1200 }} 1200w,
+                    {{ image | image_url: width: 1600 }} 1600w
+                  "
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw"
+                  alt="{{ alt_text | default: image.alt | escape }}"
+                  loading="lazy"
+                  width="{{ image.width }}"
+                  height="{{ image.height }}"
+                  class="photo-gallery__image"
+                >
+              {%- endcapture -%}
+
+              {%- if enable_slideshow_desktop and enable_slideshow_mobile -%}
+                <button
+                  type="button"
+                  class="photo-gallery__slideshow-trigger"
+                  data-slide-index="{{ forloop.index0 }}"
+                  data-gallery-id="{{ section_id }}"
+                  aria-label="Open slideshow at image {{ forloop.index }}"
+                >
+                  {{ gallery_image }}
+                </button>
+              {%- elsif enable_slideshow_desktop -%}
+                <button
+                  type="button"
+                  class="photo-gallery__slideshow-trigger photo-gallery__desktop-only"
+                  data-slide-index="{{ forloop.index0 }}"
+                  data-gallery-id="{{ section_id }}"
+                  aria-label="Open slideshow at image {{ forloop.index }}"
+                >
+                  {{ gallery_image }}
+                </button>
+                {%- if link != blank -%}
+                  <a href="{{ link }}" class="photo-gallery__link photo-gallery__mobile-only">
+                    {{ gallery_image }}
+                  </a>
+                {%- else -%}
+                  <div class="photo-gallery__image-wrap photo-gallery__mobile-only">
+                    {{ gallery_image }}
+                  </div>
+                {%- endif -%}
+              {%- elsif enable_slideshow_mobile -%}
+                <button
+                  type="button"
+                  class="photo-gallery__slideshow-trigger photo-gallery__mobile-only"
+                  data-slide-index="{{ forloop.index0 }}"
+                  data-gallery-id="{{ section_id }}"
+                  aria-label="Open slideshow at image {{ forloop.index }}"
+                >
+                  {{ gallery_image }}
+                </button>
+                {%- if link != blank -%}
+                  <a href="{{ link }}" class="photo-gallery__link photo-gallery__desktop-only">
+                    {{ gallery_image }}
+                  </a>
+                {%- else -%}
+                  <div class="photo-gallery__image-wrap photo-gallery__desktop-only">
+                    {{ gallery_image }}
+                  </div>
+                {%- endif -%}
+              {%- else -%}
+                {%- if link != blank -%}
+                  <a href="{{ link }}" class="photo-gallery__link">
+                    {{ gallery_image }}
+                  </a>
+                {%- else -%}
+                  {{ gallery_image }}
+                {%- endif -%}
+              {%- endif -%}
             {%- else -%}
               {{ 'image' | placeholder_svg_tag: 'photo-gallery__placeholder' }}
-            {%- endif -%}
-
-            {%- if enable_slideshow and image != blank -%}
-              </button>
-            {%- elsif link != blank -%}
-              </a>
             {%- endif -%}
           </div>
         {%- endfor -%}
@@ -520,6 +567,26 @@
     border-bottom-color: currentColor;
   }
 
+  /* Viewport-specific visibility for slideshow toggles */
+  .photo-gallery .photo-gallery__desktop-only {
+    display: none;
+  }
+
+  .photo-gallery__image-wrap {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media screen and (min-width: 769px) {
+    .photo-gallery .photo-gallery__desktop-only {
+      display: block;
+    }
+
+    .photo-gallery .photo-gallery__mobile-only {
+      display: none;
+    }
+  }
+
   /* Slideshow trigger button */
   .photo-gallery__slideshow-trigger {
     display: block;
@@ -728,11 +795,22 @@
   "class": "section-photo-gallery",
   "settings": [
     {
+      "type": "header",
+      "content": "Slideshow lightbox"
+    },
+    {
       "type": "checkbox",
-      "id": "enable_slideshow",
-      "label": "Enable slideshow lightbox",
+      "id": "enable_slideshow_desktop",
+      "label": "Enable slideshow on desktop",
       "default": true,
-      "info": "Clicking a gallery image opens a fullscreen slideshow"
+      "info": "Clicking a gallery image opens a fullscreen slideshow on desktop"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slideshow_mobile",
+      "label": "Enable slideshow on mobile",
+      "default": true,
+      "info": "Clicking a gallery image opens a fullscreen slideshow on mobile"
     },
     {
       "type": "text",
