@@ -268,7 +268,8 @@
   }
 
   .header__logo {
-    flex-shrink: 0;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .header__logo-link {
@@ -290,6 +291,7 @@
   .header__logo-image {
     height: auto;
     max-height: 40px;
+    max-width: 100%;
     width: auto;
   }
 
@@ -373,6 +375,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
+    flex-shrink: 0;
   }
 
   .header__actions {
