@@ -95,10 +95,10 @@
       "settings": {
         "heading": "",
         "description": "",
-        "remove_main_padding_top": true,
+        "remove_main_padding_top": false,
         "full_bleed": true,
         "gap": 16,
-        "card_height": 50,
+        "card_height": 60,
         "card_height_mobile": 300,
         "title_position_horizontal": "left",
         "title_position_vertical": "bottom",
