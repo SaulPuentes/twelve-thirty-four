@@ -1,6 +1,6 @@
 {%- comment -%}
   Custom Photo Gallery Section
-  A responsive grid gallery with up to 7 images
+  A responsive grid gallery
   Desktop: 3-column layout with asymmetric spans
   Tablet: 2-column layout
   Mobile: 1-column layout
@@ -262,7 +262,8 @@
     animation-delay: 0.3s;
   }
 
-  .photo-gallery__item:nth-child(7) {
+  .photo-gallery__item:nth-child(7),
+  .photo-gallery__item:nth-child(n+8) {
     animation-delay: 0.35s;
   }
 
@@ -426,7 +427,6 @@
     {
       "type": "image_block",
       "name": "Gallery Image",
-      "limit": 7,
       "settings": [
         {
           "type": "image_picker",
