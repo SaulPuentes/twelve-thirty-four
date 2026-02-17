@@ -105,6 +105,13 @@
             </a>
           </li>
         {%- endfor -%}
+        {%- if section.settings.show_search -%}
+          <li class="mobile-menu__item">
+            <button type="button" class="mobile-menu__link mobile-menu__search-trigger" data-mobile-search-trigger>
+              {{ 'general.search.title' | t }}
+            </button>
+          </li>
+        {%- endif -%}
       </ul>
     </nav>
 
@@ -118,12 +125,6 @@
         <a href="{{ routes.account_url }}" class="mobile-menu__footer-link">
           {% render 'icon', icon: 'account', size: 20 %}
           <span>{{ 'customer.account.title' | t }}</span>
-        </a>
-      {%- endif -%}
-      {%- if section.settings.show_search -%}
-        <a href="{{ routes.search_url }}" class="mobile-menu__footer-link">
-          {% render 'icon', icon: 'search', size: 20 %}
-          <span>{{ 'general.search.title' | t }}</span>
         </a>
       {%- endif -%}
     </div>
@@ -151,6 +152,26 @@
         }
         
         lastScroll = currentScroll;
+      });
+    }
+
+    // Mobile search trigger — close menu, then open search modal
+    const searchTrigger = document.querySelector('[data-mobile-search-trigger]');
+    if (searchTrigger) {
+      searchTrigger.addEventListener('click', function() {
+        // Close mobile menu
+        if (mobileMenu) {
+          mobileMenu.setAttribute('aria-hidden', 'true');
+          document.body.classList.remove('overflow-hidden');
+        }
+        // Open search modal
+        const searchModal = document.querySelector('#search-modal');
+        if (searchModal && searchModal.showDialog) {
+          searchModal.showDialog();
+        } else if (searchModal) {
+          const dialog = searchModal.querySelector('dialog');
+          if (dialog) dialog.showModal();
+        }
       });
     }
 
@@ -548,6 +569,17 @@
 
   .mobile-menu__link:hover {
     opacity: 0.6;
+  }
+
+  .mobile-menu__search-trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit;
+    padding: 1.25rem 0;
   }
 
   .mobile-menu__footer {
