@@ -15,7 +15,16 @@
         "image_block_KVzCK3": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/IMG_7969.jpg",
+            "image": "shopify://shop_images/IMG_8814.jpg",
+            "size": "large",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_R74zUM": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8809.jpg",
             "size": "standard",
             "link": "",
             "alt_text": ""
@@ -24,16 +33,7 @@
         "image_block_98NpJN": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/IMG_7972.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "image_block_R74zUM": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/IMG_7970.jpg",
+            "image": "shopify://shop_images/IMG_8797.jpg",
             "size": "standard",
             "link": "",
             "alt_text": ""
@@ -42,7 +42,7 @@
         "image_block_TQ6PDw": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/IMG_7968.jpg",
+            "image": "shopify://shop_images/IMG_8805.jpg",
             "size": "standard",
             "link": "",
             "alt_text": ""
@@ -51,7 +51,7 @@
         "image_block_CM3c9h": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/IMG_7967.jpg",
+            "image": "shopify://shop_images/IMG_8812.jpg",
             "size": "standard",
             "link": "",
             "alt_text": ""
@@ -60,7 +60,16 @@
         "image_block_QXXPHt": {
           "type": "image_block",
           "settings": {
-            "image": "shopify://shop_images/IMG_7971.jpg",
+            "image": "shopify://shop_images/IMG_8807.jpg",
+            "size": "standard",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_9yJM8a": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8802.jpg",
             "size": "standard",
             "link": "",
             "alt_text": ""
@@ -69,20 +78,25 @@
       },
       "block_order": [
         "image_block_KVzCK3",
-        "image_block_98NpJN",
         "image_block_R74zUM",
+        "image_block_98NpJN",
         "image_block_TQ6PDw",
         "image_block_CM3c9h",
-        "image_block_QXXPHt"
+        "image_block_QXXPHt",
+        "image_block_9yJM8a"
       ],
       "name": "Photo Gallery",
       "settings": {
-        "heading": "Casa Simonett",
-        "subheading": "Colombia",
+        "heading": "Casa Silencio",
+        "subheading": "Chase Travel - Oaxaca",
         "grid_gap": 10,
         "border_radius": 16,
         "card_height": 360,
-        "card_height_mobile": 280
+        "card_height_mobile": 280,
+        "left_link_text": "View more",
+        "left_link_url": "",
+        "right_link_text": "Contact",
+        "right_link_url": ""
       }
     }
   },
