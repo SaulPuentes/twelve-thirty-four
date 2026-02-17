@@ -9,96 +9,6 @@
  */
 {
   "sections": {
-    "portfolio-grid": {
-      "type": "masonry-grid",
-      "blocks": {
-        "item-1": {
-          "type": "custom_link",
-          "settings": {
-            "title": "Floral Arrangements",
-            "subtitle": "Wedding & Events",
-            "description": "",
-            "url": "",
-            "open_new_tab": false,
-            "card_width": "half"
-          }
-        },
-        "item-2": {
-          "type": "custom_link",
-          "settings": {
-            "title": "Botanical Installations",
-            "subtitle": "Large Scale",
-            "description": "",
-            "url": "",
-            "open_new_tab": false,
-            "card_width": "half"
-          }
-        },
-        "item-3": {
-          "type": "custom_link",
-          "settings": {
-            "title": "Editorial Work",
-            "subtitle": "Publications & Press",
-            "description": "",
-            "url": "",
-            "open_new_tab": false,
-            "card_width": "full"
-          }
-        },
-        "item-4": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "custom_title": "Ceramics Collection",
-            "description": "",
-            "show_product_count": false,
-            "card_width": "half"
-          }
-        },
-        "item-5": {
-          "type": "custom_link",
-          "settings": {
-            "title": "Corporate Events",
-            "subtitle": "Brand Activations",
-            "description": "",
-            "url": "",
-            "open_new_tab": false,
-            "card_width": "half"
-          }
-        },
-        "item-6": {
-          "type": "custom_link",
-          "settings": {
-            "title": "Private Commissions",
-            "subtitle": "Bespoke Creations",
-            "description": "",
-            "url": "",
-            "open_new_tab": false,
-            "card_width": "full"
-          }
-        }
-      },
-      "block_order": [
-        "item-1",
-        "item-2",
-        "item-3",
-        "item-4",
-        "item-5",
-        "item-6"
-      ],
-      "settings": {
-        "heading": "Portfolio",
-        "description": "A curated selection of our floral artistry, from intimate arrangements to grand installations.",
-        "enable_modal": true,
-        "gap": 16,
-        "card_height": 500,
-        "card_height_mobile": 300,
-        "title_position_horizontal": "left",
-        "title_position_vertical": "bottom",
-        "padding_top": 64,
-        "padding_bottom": 64
-      }
-    },
     "custom_photo_gallery_eKTX6X": {
       "type": "custom-photo-gallery",
       "blocks": {
@@ -163,13 +73,12 @@
       "settings": {
         "heading": "Photo Gallery",
         "subheading": "Captured moments from our desert trips and scenic routes.",
-        "grid_gap": 20,
+        "grid_gap": 10,
         "border_radius": 16
       }
     }
   },
   "order": [
-    "portfolio-grid",
     "custom_photo_gallery_eKTX6X"
   ]
 }
