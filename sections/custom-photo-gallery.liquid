@@ -16,6 +16,7 @@
   assign left_link_text = section.settings.left_link_text
   assign right_link_url = section.settings.right_link_url
   assign right_link_text = section.settings.right_link_text
+  assign enable_slideshow = section.settings.enable_slideshow
 -%}
 
 <section
@@ -52,7 +53,15 @@
           -%}
 
           <div class="photo-gallery__item{% if size == 'large' %} photo-gallery__item--large{% elsif size == 'double' %} photo-gallery__item--double{% endif %}" {{ block.shopify_attributes }}>
-            {%- if link != blank -%}
+            {%- if enable_slideshow and image != blank -%}
+              <button
+                type="button"
+                class="photo-gallery__slideshow-trigger"
+                data-slide-index="{{ forloop.index0 }}"
+                data-gallery-id="{{ section_id }}"
+                aria-label="Open slideshow at image {{ forloop.index }}"
+              >
+            {%- elsif link != blank -%}
               <a href="{{ link }}" class="photo-gallery__link">
             {%- endif -%}
 
@@ -76,7 +85,9 @@
               {{ 'image' | placeholder_svg_tag: 'photo-gallery__placeholder' }}
             {%- endif -%}
 
-            {%- if link != blank -%}
+            {%- if enable_slideshow and image != blank -%}
+              </button>
+            {%- elsif link != blank -%}
               </a>
             {%- endif -%}
           </div>
@@ -90,6 +101,156 @@
         {%- endfor -%}
       {%- endif -%}
       </div>
+
+      {%- if enable_slideshow -%}
+        <div
+          class="photo-gallery__lightbox"
+          id="PhotoGalleryLightbox-{{ section_id }}"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image slideshow"
+          hidden
+        >
+          <div class="photo-gallery__lightbox-backdrop"></div>
+
+          <button type="button" class="photo-gallery__lightbox-close" aria-label="Close slideshow">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+
+          <button type="button" class="photo-gallery__lightbox-arrow photo-gallery__lightbox-arrow--prev" aria-label="Previous image">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="13 16 7 10 13 4"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" class="photo-gallery__lightbox-arrow photo-gallery__lightbox-arrow--next" aria-label="Next image">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="7 4 13 10 7 16"></polyline>
+            </svg>
+          </button>
+
+          <div class="photo-gallery__lightbox-main">
+            <img src="" alt="" class="photo-gallery__lightbox-image" />
+          </div>
+
+          <div class="photo-gallery__lightbox-thumbs">
+            <div class="photo-gallery__lightbox-thumbs-track">
+              {%- for block in section.blocks -%}
+                {%- if block.settings.image != blank -%}
+                  <button
+                    type="button"
+                    class="photo-gallery__lightbox-thumb"
+                    data-thumb-index="{{ forloop.index0 }}"
+                    aria-label="Go to image {{ forloop.index }}"
+                  >
+                    <img
+                      src="{{ block.settings.image | image_url: width: 120 }}"
+                      alt="{{ block.settings.alt_text | default: block.settings.image.alt | escape }}"
+                      loading="lazy"
+                      width="80"
+                      height="60"
+                    >
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+
+        <script>
+          (function() {
+            const sectionId = {{ section_id | json }};
+            const lightbox = document.getElementById('PhotoGalleryLightbox-' + sectionId);
+            if (!lightbox) return;
+
+            const images = [
+              {%- for block in section.blocks -%}
+                {%- if block.settings.image != blank -%}
+                  {
+                    src: {{ block.settings.image | image_url: width: 1800 | json }},
+                    alt: {{ block.settings.alt_text | default: block.settings.image.alt | json }}
+                  },
+                {%- endif -%}
+              {%- endfor -%}
+            ];
+
+            if (images.length === 0) return;
+
+            const mainImg = lightbox.querySelector('.photo-gallery__lightbox-image');
+            const thumbs = lightbox.querySelectorAll('.photo-gallery__lightbox-thumb');
+            const prevBtn = lightbox.querySelector('.photo-gallery__lightbox-arrow--prev');
+            const nextBtn = lightbox.querySelector('.photo-gallery__lightbox-arrow--next');
+            const closeBtn = lightbox.querySelector('.photo-gallery__lightbox-close');
+            const backdrop = lightbox.querySelector('.photo-gallery__lightbox-backdrop');
+            let current = 0;
+            let previouslyFocused = null;
+
+            function show(index) {
+              current = (index + images.length) % images.length;
+              mainImg.src = images[current].src;
+              mainImg.alt = images[current].alt || '';
+              thumbs.forEach(function(t, i) {
+                t.classList.toggle('photo-gallery__lightbox-thumb--active', i === current);
+              });
+              scrollThumbIntoView(current);
+            }
+
+            function scrollThumbIntoView(index) {
+              const thumb = thumbs[index];
+              if (thumb) {
+                thumb.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+              }
+            }
+
+            function open(index) {
+              previouslyFocused = document.activeElement;
+              show(index);
+              lightbox.hidden = false;
+              document.body.style.overflow = 'hidden';
+              requestAnimationFrame(function() {
+                lightbox.classList.add('photo-gallery__lightbox--open');
+              });
+              closeBtn.focus();
+            }
+
+            function close() {
+              lightbox.classList.remove('photo-gallery__lightbox--open');
+              lightbox.addEventListener('transitionend', function handler() {
+                lightbox.hidden = true;
+                document.body.style.overflow = '';
+                if (previouslyFocused) previouslyFocused.focus();
+                lightbox.removeEventListener('transitionend', handler);
+              }, { once: true });
+            }
+
+            document.querySelectorAll('[data-gallery-id="' + sectionId + '"]').forEach(function(trigger) {
+              trigger.addEventListener('click', function() {
+                open(parseInt(this.dataset.slideIndex, 10));
+              });
+            });
+
+            prevBtn.addEventListener('click', function() { show(current - 1); });
+            nextBtn.addEventListener('click', function() { show(current + 1); });
+            closeBtn.addEventListener('click', close);
+            backdrop.addEventListener('click', close);
+
+            thumbs.forEach(function(thumb) {
+              thumb.addEventListener('click', function() {
+                show(parseInt(this.dataset.thumbIndex, 10));
+              });
+            });
+
+            lightbox.addEventListener('keydown', function(e) {
+              if (e.key === 'Escape') close();
+              if (e.key === 'ArrowLeft') show(current - 1);
+              if (e.key === 'ArrowRight') show(current + 1);
+            });
+          })();
+        </script>
+      {%- endif -%}
 
       {%- if left_link_url != blank or right_link_url != blank -%}
         <nav class="photo-gallery__links" aria-label="Custom links">
@@ -332,6 +493,201 @@
   .photo-gallery__link-item:hover {
     border-bottom-color: currentColor;
   }
+
+  /* Slideshow trigger button */
+  .photo-gallery__slideshow-trigger {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .photo-gallery__slideshow-trigger:hover .photo-gallery__image {
+    transform: scale(1.05);
+  }
+
+  /* Lightbox overlay */
+  .photo-gallery__lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .photo-gallery__lightbox--open {
+    opacity: 1;
+  }
+
+  .photo-gallery__lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.88);
+  }
+
+  /* Close button */
+  .photo-gallery__lightbox-close {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .photo-gallery__lightbox-close:hover {
+    color: #fff;
+  }
+
+  /* Navigation arrows */
+  .photo-gallery__lightbox-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(calc(-50% - 30px));
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .photo-gallery__lightbox-arrow:hover {
+    color: #fff;
+  }
+
+  .photo-gallery__lightbox-arrow--prev {
+    left: 1rem;
+  }
+
+  .photo-gallery__lightbox-arrow--next {
+    right: 1rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .photo-gallery__lightbox-arrow--prev {
+      left: 2rem;
+    }
+
+    .photo-gallery__lightbox-arrow--next {
+      right: 2rem;
+    }
+  }
+
+  /* Main image area */
+  .photo-gallery__lightbox-main {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
+    width: 100%;
+    max-height: calc(100vh - 120px);
+    padding: 3.5rem 3.5rem 1rem;
+    box-sizing: border-box;
+  }
+
+  @media screen and (min-width: 750px) {
+    .photo-gallery__lightbox-main {
+      padding: 3.5rem 5rem 1rem;
+    }
+  }
+
+  .photo-gallery__lightbox-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  /* Thumbnail strip */
+  .photo-gallery__lightbox-thumbs {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    flex: 0 0 auto;
+    padding: 0.75rem 1rem 1.25rem;
+    box-sizing: border-box;
+  }
+
+  .photo-gallery__lightbox-thumbs-track {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    justify-content: center;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .photo-gallery__lightbox-thumbs-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .photo-gallery__lightbox-thumb {
+    flex: 0 0 auto;
+    width: 60px;
+    height: 44px;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+    overflow: hidden;
+    opacity: 0.45;
+    transition: opacity 0.2s ease, border-color 0.2s ease;
+  }
+
+  .photo-gallery__lightbox-thumb:hover {
+    opacity: 0.8;
+  }
+
+  .photo-gallery__lightbox-thumb--active {
+    opacity: 1;
+    border-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .photo-gallery__lightbox-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  @media screen and (min-width: 750px) {
+    .photo-gallery__lightbox-thumb {
+      width: 72px;
+      height: 52px;
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -340,6 +696,13 @@
   "tag": "section",
   "class": "section-photo-gallery",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_slideshow",
+      "label": "Enable slideshow lightbox",
+      "default": true,
+      "info": "Clicking a gallery image opens a fullscreen slideshow"
+    },
     {
       "type": "text",
       "id": "heading",
