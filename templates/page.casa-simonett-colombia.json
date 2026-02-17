@@ -1,0 +1,84 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_photo_gallery_eKTX6X": {
+      "type": "custom-photo-gallery",
+      "blocks": {
+        "image_block_KVzCK3": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7969.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_98NpJN": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7972.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_R74zUM": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7970.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_TQ6PDw": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7968.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_CM3c9h": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7967.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        },
+        "image_block_QXXPHt": {
+          "type": "image_block",
+          "settings": {
+            "image": "shopify://shop_images/IMG_7971.jpg",
+            "link": "",
+            "alt_text": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_block_KVzCK3",
+        "image_block_98NpJN",
+        "image_block_R74zUM",
+        "image_block_TQ6PDw",
+        "image_block_CM3c9h",
+        "image_block_QXXPHt"
+      ],
+      "name": "Photo Gallery",
+      "settings": {
+        "heading": "Photo Gallery",
+        "subheading": "Captured moments from our desert trips and scenic routes.",
+        "grid_gap": 10,
+        "border_radius": 16
+      }
+    }
+  },
+  "order": [
+    "custom_photo_gallery_eKTX6X"
+  ]
+}
