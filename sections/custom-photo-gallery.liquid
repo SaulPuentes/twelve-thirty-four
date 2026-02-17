@@ -41,9 +41,10 @@
             assign image = block.settings.image
             assign link = block.settings.link
             assign alt_text = block.settings.alt_text
+            assign size = block.settings.size | default: 'standard'
           -%}
 
-          <div class="photo-gallery__item" {{ block.shopify_attributes }}>
+          <div class="photo-gallery__item{% if size == 'large' %} photo-gallery__item--large{% endif %}" {{ block.shopify_attributes }}>
             {%- if link != blank -%}
               <a href="{{ link }}" class="photo-gallery__link">
             {%- endif -%}
@@ -164,56 +165,29 @@
 
   .photo-gallery__grid {
     display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: 280px;
     gap: var(--gallery-gap, 20px);
     max-width: 1600px;
     margin: 0 auto;
   }
 
-  /* Mobile: 1 column */
-  @media screen and (max-width: 480px) {
-    .photo-gallery__grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
   /* Tablet: 2 columns */
-  @media screen and (min-width: 481px) and (max-width: 768px) {
+  @media screen and (min-width: 481px) {
     .photo-gallery__grid {
       grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 320px;
     }
   }
 
-  /* Desktop: 3 columns with specific spans */
+  /* Desktop: 3 columns */
   @media screen and (min-width: 769px) {
     .photo-gallery__grid {
       grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 360px;
     }
 
-    .photo-gallery__item:nth-child(1) {
-      grid-column: span 2;
-    }
-
-    .photo-gallery__item:nth-child(2) {
-      grid-column: span 1;
-    }
-
-    .photo-gallery__item:nth-child(3) {
-      grid-column: span 1;
-    }
-
-    .photo-gallery__item:nth-child(4) {
-      grid-column: span 1;
-    }
-
-    .photo-gallery__item:nth-child(5) {
-      grid-column: span 1;
-    }
-
-    .photo-gallery__item:nth-child(6) {
-      grid-column: span 1;
-    }
-
-    .photo-gallery__item:nth-child(7) {
+    .photo-gallery__item--large {
       grid-column: span 2;
     }
   }
@@ -222,7 +196,6 @@
     position: relative;
     overflow: hidden;
     border-radius: var(--gallery-border-radius, 16px);
-    aspect-ratio: 4 / 3;
     background-color: #f5f5f5;
     opacity: 0;
     animation: fadeInUp 0.6s ease-out both;
@@ -341,6 +314,17 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "select",
+          "id": "size",
+          "label": "Size",
+          "options": [
+            { "value": "standard", "label": "Standard" },
+            { "value": "large", "label": "Large (spans 2 columns)" }
+          ],
+          "default": "standard",
+          "info": "Large images span 2 columns on desktop"
         },
         {
           "type": "url",
