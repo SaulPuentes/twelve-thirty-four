@@ -46,7 +46,7 @@
             assign size = block.settings.size | default: 'standard'
           -%}
 
-          <div class="photo-gallery__item{% if size == 'large' %} photo-gallery__item--large{% endif %}" {{ block.shopify_attributes }}>
+          <div class="photo-gallery__item{% if size == 'large' %} photo-gallery__item--large{% elsif size == 'double' %} photo-gallery__item--double{% endif %}" {{ block.shopify_attributes }}>
             {%- if link != blank -%}
               <a href="{{ link }}" class="photo-gallery__link">
             {%- endif -%}
@@ -184,6 +184,11 @@
     .photo-gallery__item--large {
       grid-column: span 2;
     }
+
+    .photo-gallery__item--double {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
   }
 
   /* Desktop: 3 columns */
@@ -195,6 +200,11 @@
 
     .photo-gallery__item--large {
       grid-column: span 2;
+    }
+
+    .photo-gallery__item--double {
+      grid-column: span 2;
+      grid-row: span 2;
     }
   }
 
@@ -351,10 +361,11 @@
           "label": "Size",
           "options": [
             { "value": "standard", "label": "Standard" },
-            { "value": "large", "label": "Large (spans 2 columns)" }
+            { "value": "large", "label": "Large (spans 2 columns)" },
+            { "value": "double", "label": "Double (spans 2 columns & 2 rows)" }
           ],
           "default": "standard",
-          "info": "Large images span 2 columns on desktop"
+          "info": "Controls the image size within the grid"
         },
         {
           "type": "url",
