@@ -28,7 +28,7 @@
   class="masonry-grid{% if full_bleed %} masonry-grid--full-bleed{% endif %}"
   style="
     --masonry-gap: {{ gap }}px;
-    --masonry-card-height: {{ card_height }}px;
+    --masonry-card-height: {{ card_height }}vw;
     --masonry-card-height-mobile: {{ card_height_mobile }}px;
     --padding-block-start: {{ section.settings.padding_top }}px;
     --padding-block-end: {{ section.settings.padding_bottom }}px;
@@ -906,17 +906,6 @@
     },
     {
       "type": "header",
-      "content": "Card behavior"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_modal",
-      "label": "Open cards in modal",
-      "info": "When enabled, clicking a card opens a modal with the image and description instead of navigating to the link",
-      "default": false
-    },
-    {
-      "type": "header",
       "content": "Card layout"
     },
     {
@@ -947,11 +936,11 @@
       "type": "range",
       "id": "card_height",
       "label": "Card height (desktop)",
-      "min": 250,
-      "max": 900,
-      "step": 25,
-      "unit": "px",
-      "default": 450
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "vw",
+      "default": 50
     },
     {
       "type": "range",
