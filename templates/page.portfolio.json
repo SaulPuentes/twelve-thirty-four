@@ -19,7 +19,7 @@
             "title": "Chase Travel - Oaxaca",
             "subtitle": "",
             "description": "",
-            "url": "",
+            "url": "shopify://pages/chase-travel-oaxaca",
             "open_new_tab": false,
             "card_width": "half",
             "title_color": "auto"
@@ -32,7 +32,7 @@
             "title": "Casa Simonett",
             "subtitle": "",
             "description": "",
-            "url": "",
+            "url": "shopify://pages/casa-simonett-colombia",
             "open_new_tab": false,
             "card_width": "half",
             "title_color": "auto"
@@ -45,7 +45,7 @@
             "title": "Pug Seal - Chase Sapphire Reserve",
             "subtitle": "",
             "description": "",
-            "url": "",
+            "url": "shopify://pages/pug-seal-chase-shaphire-reserved",
             "open_new_tab": false,
             "card_width": "full",
             "title_color": "auto"
@@ -58,7 +58,7 @@
             "title": "Casa Silencio",
             "subtitle": "",
             "description": "",
-            "url": "",
+            "url": "shopify://pages/casa-silencio-chase-travel-oaxaca",
             "open_new_tab": false,
             "card_width": "half",
             "title_color": "auto"
@@ -71,7 +71,7 @@
             "title": "Maribel & Ryan",
             "subtitle": "",
             "description": "",
-            "url": "",
+            "url": "shopify://pages/maribel-ryan-le-chatea",
             "open_new_tab": false,
             "card_width": "half",
             "title_color": "auto"
