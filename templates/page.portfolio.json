@@ -86,7 +86,7 @@
         "description": "",
         "remove_main_padding_top": false,
         "full_bleed": true,
-        "gap": 16,
+        "gap": 0,
         "card_height": 50,
         "card_height_mobile": 300,
         "title_position_horizontal": "left",
