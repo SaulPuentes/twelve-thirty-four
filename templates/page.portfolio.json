@@ -9,84 +9,94 @@
  */
 {
   "sections": {
-    "custom_photo_gallery_eKTX6X": {
-      "type": "custom-photo-gallery",
+    "masonry_grid_MCj6jK": {
+      "type": "masonry-grid",
       "blocks": {
-        "image_block_KVzCK3": {
-          "type": "image_block",
+        "custom_link_tWXjfq": {
+          "type": "custom_link",
           "settings": {
-            "image": "shopify://shop_images/IMG_7969.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
+            "image": "shopify://shop_images/1234-Oaxaca2025-_K0A6503.jpg",
+            "title": "Chase Travel - Oaxaca",
+            "subtitle": "",
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "half"
           }
         },
-        "image_block_98NpJN": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/IMG_7972.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "image_block_R74zUM": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/IMG_7970.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "image_block_TQ6PDw": {
-          "type": "image_block",
-          "settings": {
-            "image": "shopify://shop_images/IMG_7968.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
-          }
-        },
-        "image_block_CM3c9h": {
-          "type": "image_block",
+        "custom_link_YVb874": {
+          "type": "custom_link",
           "settings": {
             "image": "shopify://shop_images/IMG_7967.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
+            "title": "Casa Simonett",
+            "subtitle": "",
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "half"
           }
         },
-        "image_block_QXXPHt": {
-          "type": "image_block",
+        "custom_link_AnbYbA": {
+          "type": "custom_link",
           "settings": {
-            "image": "shopify://shop_images/IMG_7971.jpg",
-            "size": "standard",
-            "link": "",
-            "alt_text": ""
+            "image": "shopify://shop_images/IMG_7983.jpg",
+            "title": "Chase Shaphire Reserved",
+            "subtitle": "",
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "full"
+          }
+        },
+        "custom_link_EKPtWK": {
+          "type": "custom_link",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8801.jpg",
+            "title": "Casa Silencio",
+            "subtitle": "",
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "half"
+          }
+        },
+        "custom_link_fzVjyU": {
+          "type": "custom_link",
+          "settings": {
+            "image": "shopify://shop_images/IMG_8690.jpg",
+            "title": "Maribel & Ryan",
+            "subtitle": "",
+            "description": "",
+            "url": "",
+            "open_new_tab": false,
+            "card_width": "half"
           }
         }
       },
       "block_order": [
-        "image_block_KVzCK3",
-        "image_block_98NpJN",
-        "image_block_R74zUM",
-        "image_block_TQ6PDw",
-        "image_block_CM3c9h",
-        "image_block_QXXPHt"
+        "custom_link_tWXjfq",
+        "custom_link_YVb874",
+        "custom_link_AnbYbA",
+        "custom_link_EKPtWK",
+        "custom_link_fzVjyU"
       ],
-      "name": "Photo Gallery",
+      "name": "Masonry grid",
       "settings": {
-        "heading": "Casa Simonett",
-        "subheading": "Colombia",
-        "grid_gap": 10,
-        "border_radius": 16,
-        "card_height": 360,
-        "card_height_mobile": 280
+        "heading": "",
+        "description": "",
+        "remove_main_padding_top": false,
+        "full_bleed": true,
+        "gap": 16,
+        "card_height": 50,
+        "card_height_mobile": 300,
+        "title_position_horizontal": "left",
+        "title_position_vertical": "bottom",
+        "padding_top": 48,
+        "padding_bottom": 48
       }
     }
   },
   "order": [
-    "custom_photo_gallery_eKTX6X"
+    "masonry_grid_MCj6jK"
   ]
 }
