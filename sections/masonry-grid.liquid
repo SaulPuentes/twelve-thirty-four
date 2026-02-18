@@ -120,7 +120,7 @@
             </a>
           {%- endif -%}
 
-        {%- when 'custom_link' -%}
+        {%- when 'custom_image' -%}
           {%- liquid
             assign card_image = block.settings.image
             assign card_title = block.settings.title | default: 'Link'
@@ -1072,8 +1072,8 @@
       ]
     },
     {
-      "type": "custom_link",
-      "name": "Custom link",
+      "type": "custom_image",
+      "name": "Custom image",
       "settings": [
         {
           "type": "image_picker",
@@ -1146,7 +1146,7 @@
       "blocks": [
         { "type": "collection", "settings": { "card_width": "half" } },
         { "type": "collection", "settings": { "card_width": "half" } },
-        { "type": "custom_link", "settings": { "card_width": "full", "title": "View All" } },
+        { "type": "custom_image", "settings": { "card_width": "full", "title": "View All" } },
         { "type": "collection", "settings": { "card_width": "half" } }
       ]
     }
