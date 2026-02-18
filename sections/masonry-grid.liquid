@@ -32,6 +32,8 @@
     --masonry-card-height-mobile: {{ card_height_mobile }}px;
     --padding-block-start: {{ section.settings.padding_top }}px;
     --padding-block-end: {{ section.settings.padding_bottom }}px;
+    --masonry-title-font-size: {{ section.settings.title_font_size }}px;
+    --masonry-title-text-transform: {% if section.settings.title_uppercase %}uppercase{% else %}none{% endif %};
   "
   data-masonry-grid
   data-modal-enabled="{{ enable_modal }}"
@@ -595,24 +597,13 @@
 
   .masonry-grid__card-title {
     font-family: var(--font-heading-family);
-    font-size: 1.125rem;
+    font-size: var(--masonry-title-font-size, 1.125rem);
     font-weight: 400;
     line-height: 1.3;
     color: #fff;
     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
     letter-spacing: 0.01em;
-  }
-
-  @media screen and (min-width: 750px) {
-    .masonry-grid__card-title {
-      font-size: 1.375rem;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
-    .masonry-grid__card-title {
-      font-size: 1.625rem;
-    }
+    text-transform: var(--masonry-title-text-transform, none);
   }
 
   .masonry-grid__card-subtitle,
@@ -980,6 +971,26 @@
         { "value": "bottom", "label": "Bottom" }
       ],
       "default": "bottom"
+    },
+    {
+      "type": "header",
+      "content": "Title style"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title font size",
+      "min": 12,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "checkbox",
+      "id": "title_uppercase",
+      "label": "Uppercase titles",
+      "default": false
     },
     {
       "type": "header",
