@@ -94,7 +94,7 @@
         "card_height_mobile": 300,
         "title_font_size": 18,
         "title_uppercase": false,
-        "title_shadow": true,
+        "title_shadow": false,
         "title_position_horizontal": "left",
         "title_position_vertical": "bottom",
         "padding_top": 48,
