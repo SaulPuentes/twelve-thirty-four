@@ -14,14 +14,7 @@
   assign title_position_vertical = section.settings.title_position_vertical
   assign enable_modal = section.settings.enable_modal
   assign full_bleed = section.settings.full_bleed
-  assign remove_main_padding_top = section.settings.remove_main_padding_top
 -%}
-
-{%- if remove_main_padding_top -%}
-  <style>
-    #MainContent { padding-top: 0 !important; }
-  </style>
-{%- endif -%}
 
 <section
   id="MasonryGrid-{{ section_id }}"
@@ -551,13 +544,12 @@
   }
 
   .masonry-grid__card-title {
-    font-family: var(--font-heading-family);
     font-size: var(--masonry-title-font-size, 1.125rem);
     font-weight: 400;
     line-height: 1.3;
     color: #fff;
     text-shadow: var(--masonry-title-text-shadow, 0 1px 4px rgba(0, 0, 0, 0.3));
-    letter-spacing: 0.01em;
+    letter-spacing: 0.15em;
     text-transform: var(--masonry-title-text-transform, none);
   }
 
@@ -566,7 +558,7 @@
     font-family: var(--font-body-family);
     font-size: 0.75rem;
     font-weight: 400;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     opacity: 0.85;
     color: #fff;
@@ -844,55 +836,6 @@
   "settings": [
     {
       "type": "header",
-      "content": "Card layout"
-    },
-    {
-      "type": "checkbox",
-      "id": "remove_main_padding_top",
-      "label": "Remove header offset from top",
-      "info": "Zeroes the top padding added by the fixed header. Use when the section should start at the very top of the viewport.",
-      "default": false
-    },
-    {
-      "type": "checkbox",
-      "id": "full_bleed",
-      "label": "Full-screen layout",
-      "info": "Removes all spacing and padding for an edge-to-edge grid with seamless background images",
-      "default": false
-    },
-    {
-      "type": "range",
-      "id": "gap",
-      "label": "Gap between cards",
-      "info": "Ignored when Full-screen layout is enabled",
-      "min": 0,
-      "max": 48,
-      "step": 4,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "card_height",
-      "label": "Card height (desktop)",
-      "min": 10,
-      "max": 100,
-      "step": 5,
-      "unit": "vw",
-      "default": 50
-    },
-    {
-      "type": "range",
-      "id": "card_height_mobile",
-      "label": "Card height (mobile)",
-      "min": 200,
-      "max": 600,
-      "step": 25,
-      "unit": "px",
-      "default": 300
-    },
-    {
-      "type": "header",
       "content": "Title style"
     },
     {
@@ -942,6 +885,48 @@
         { "value": "bottom", "label": "Bottom" }
       ],
       "default": "bottom"
+    },
+    {
+      "type": "header",
+      "content": "Card layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_bleed",
+      "label": "Full-screen layout",
+      "info": "Removes all spacing and padding for an edge-to-edge grid with seamless background images",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between cards",
+      "info": "Ignored when Full-screen layout is enabled",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Card height (desktop)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "vw",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "label": "Card height (mobile)",
+      "min": 200,
+      "max": 600,
+      "step": 25,
+      "unit": "px",
+      "default": 300
     },
     {
       "type": "header",
