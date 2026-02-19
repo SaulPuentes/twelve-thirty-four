@@ -20,7 +20,10 @@
             "description": "",
             "show_product_count": false,
             "card_width": "half",
-            "title_color": "auto"
+            "title_color": "auto",
+            "override_title_position": false,
+            "title_position_horizontal": "left",
+            "title_position_vertical": "bottom"
           }
         },
         "collection-5": {
@@ -31,7 +34,10 @@
             "description": "",
             "show_product_count": false,
             "card_width": "half",
-            "title_color": "auto"
+            "title_color": "auto",
+            "override_title_position": false,
+            "title_position_horizontal": "left",
+            "title_position_vertical": "bottom"
           }
         },
         "collection-3": {
@@ -42,7 +48,10 @@
             "description": "",
             "show_product_count": false,
             "card_width": "full",
-            "title_color": "auto"
+            "title_color": "auto",
+            "override_title_position": false,
+            "title_position_horizontal": "left",
+            "title_position_vertical": "bottom"
           }
         },
         "collection-1": {
@@ -53,7 +62,10 @@
             "description": "",
             "show_product_count": false,
             "card_width": "half",
-            "title_color": "auto"
+            "title_color": "auto",
+            "override_title_position": false,
+            "title_position_horizontal": "left",
+            "title_position_vertical": "bottom"
           }
         },
         "collection-2": {
@@ -64,7 +76,10 @@
             "description": "",
             "show_product_count": false,
             "card_width": "half",
-            "title_color": "auto"
+            "title_color": "auto",
+            "override_title_position": false,
+            "title_position_horizontal": "left",
+            "title_position_vertical": "bottom"
           }
         },
         "collection_eq9ibT": {
@@ -75,7 +90,10 @@
             "description": "",
             "show_product_count": false,
             "card_width": "half",
-            "title_color": "auto"
+            "title_color": "auto",
+            "override_title_position": false,
+            "title_position_horizontal": "left",
+            "title_position_vertical": "bottom"
           }
         },
         "collection_igXt3g": {
@@ -86,7 +104,10 @@
             "description": "",
             "show_product_count": false,
             "card_width": "half",
-            "title_color": "auto"
+            "title_color": "auto",
+            "override_title_position": false,
+            "title_position_horizontal": "left",
+            "title_position_vertical": "bottom"
           }
         }
       },
@@ -100,7 +121,6 @@
         "collection_igXt3g"
       ],
       "settings": {
-        "remove_main_padding_top": false,
         "full_bleed": true,
         "gap": 0,
         "card_height": 55,
