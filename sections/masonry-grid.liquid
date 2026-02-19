@@ -53,6 +53,13 @@
             assign card_description = block.settings.description | default: collection.description
             assign card_link = collection.url | default: '#'
             assign title_color = block.settings.title_color
+            if block.settings.override_title_position
+              assign card_title_h = block.settings.title_position_horizontal
+              assign card_title_v = block.settings.title_position_vertical
+            else
+              assign card_title_h = title_position_horizontal
+              assign card_title_v = title_position_vertical
+            endif
           -%}
 
           {%- if enable_modal -%}
@@ -95,7 +102,7 @@
               {%- endif -%}
             </div>
             <div class="masonry-grid__card-overlay"></div>
-            <div class="masonry-grid__card-content masonry-grid__card-content--h-{{ title_position_horizontal }} masonry-grid__card-content--v-{{ title_position_vertical }}"{% if title_color != 'auto' %} style="color: {{ title_color }};"{% endif %}>
+            <div class="masonry-grid__card-content masonry-grid__card-content--h-{{ card_title_h }} masonry-grid__card-content--v-{{ card_title_v }}"{% if title_color != 'auto' %} style="color: {{ title_color }};"{% endif %}>
               <span class="masonry-grid__card-title">{{ card_title }}</span>
               {%- if block.settings.show_product_count and collection != blank -%}
                 <span class="masonry-grid__card-count">{{ collection.products_count }} {{ 'collections.general.items' | t }}</span>
@@ -115,6 +122,13 @@
             assign card_link = block.settings.url | default: '#'
             assign open_new_tab = block.settings.open_new_tab
             assign title_color = block.settings.title_color
+            if block.settings.override_title_position
+              assign card_title_h = block.settings.title_position_horizontal
+              assign card_title_v = block.settings.title_position_vertical
+            else
+              assign card_title_h = title_position_horizontal
+              assign card_title_v = title_position_vertical
+            endif
           -%}
 
           {%- if enable_modal -%}
@@ -158,7 +172,7 @@
               {%- endif -%}
             </div>
             <div class="masonry-grid__card-overlay"></div>
-            <div class="masonry-grid__card-content masonry-grid__card-content--h-{{ title_position_horizontal }} masonry-grid__card-content--v-{{ title_position_vertical }}"{% if title_color != 'auto' %} style="color: {{ title_color }};"{% endif %}>
+            <div class="masonry-grid__card-content masonry-grid__card-content--h-{{ card_title_h }} masonry-grid__card-content--v-{{ card_title_v }}"{% if title_color != 'auto' %} style="color: {{ title_color }};"{% endif %}>
               <span class="masonry-grid__card-title">{{ card_title }}</span>
               {%- if block.settings.subtitle != blank -%}
                 <span class="masonry-grid__card-subtitle">{{ block.settings.subtitle }}</span>
@@ -836,6 +850,48 @@
   "settings": [
     {
       "type": "header",
+      "content": "Card layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_bleed",
+      "label": "Full-screen layout",
+      "info": "Removes all spacing and padding for an edge-to-edge grid with seamless background images",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "Gap between cards",
+      "info": "Ignored when Full-screen layout is enabled",
+      "min": 0,
+      "max": 48,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "card_height",
+      "label": "Card height (desktop)",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "vw",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "card_height_mobile",
+      "label": "Card height (mobile)",
+      "min": 200,
+      "max": 600,
+      "step": 25,
+      "unit": "px",
+      "default": 300
+    },
+    {
+      "type": "header",
       "content": "Title style"
     },
     {
@@ -885,48 +941,6 @@
         { "value": "bottom", "label": "Bottom" }
       ],
       "default": "bottom"
-    },
-    {
-      "type": "header",
-      "content": "Card layout"
-    },
-    {
-      "type": "checkbox",
-      "id": "full_bleed",
-      "label": "Full-screen layout",
-      "info": "Removes all spacing and padding for an edge-to-edge grid with seamless background images",
-      "default": false
-    },
-    {
-      "type": "range",
-      "id": "gap",
-      "label": "Gap between cards",
-      "info": "Ignored when Full-screen layout is enabled",
-      "min": 0,
-      "max": 48,
-      "step": 4,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "range",
-      "id": "card_height",
-      "label": "Card height (desktop)",
-      "min": 10,
-      "max": 100,
-      "step": 5,
-      "unit": "vw",
-      "default": 50
-    },
-    {
-      "type": "range",
-      "id": "card_height_mobile",
-      "label": "Card height (mobile)",
-      "min": 200,
-      "max": 600,
-      "step": 25,
-      "unit": "px",
-      "default": 300
     },
     {
       "type": "header",
@@ -1015,6 +1029,39 @@
             { "value": "white", "label": "White" }
           ],
           "default": "auto"
+        },
+        {
+          "type": "header",
+          "content": "Title position"
+        },
+        {
+          "type": "checkbox",
+          "id": "override_title_position",
+          "label": "Override title position",
+          "info": "Use a different position for this card instead of the section default",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "title_position_horizontal",
+          "label": "Horizontal alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "title_position_vertical",
+          "label": "Vertical alignment",
+          "options": [
+            { "value": "top", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "bottom", "label": "Bottom" }
+          ],
+          "default": "bottom"
         }
       ]
     },
@@ -1083,6 +1130,39 @@
             { "value": "white", "label": "White" }
           ],
           "default": "auto"
+        },
+        {
+          "type": "header",
+          "content": "Title position"
+        },
+        {
+          "type": "checkbox",
+          "id": "override_title_position",
+          "label": "Override title position",
+          "info": "Use a different position for this card instead of the section default",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "title_position_horizontal",
+          "label": "Horizontal alignment",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "select",
+          "id": "title_position_vertical",
+          "label": "Vertical alignment",
+          "options": [
+            { "value": "top", "label": "Top" },
+            { "value": "center", "label": "Center" },
+            { "value": "bottom", "label": "Bottom" }
+          ],
+          "default": "bottom"
         }
       ]
     }
