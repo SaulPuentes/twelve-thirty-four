@@ -100,17 +100,16 @@
         "collection_igXt3g"
       ],
       "settings": {
-        "heading": "",
-        "description": "",
         "remove_main_padding_top": false,
         "full_bleed": true,
         "gap": 0,
         "card_height": 55,
         "card_height_mobile": 450,
-        "title_position_horizontal": "left",
-        "title_position_vertical": "top",
         "title_font_size": 16,
         "title_uppercase": true,
+        "title_shadow": false,
+        "title_position_horizontal": "left",
+        "title_position_vertical": "top",
         "padding_top": 48,
         "padding_bottom": 48
       }
